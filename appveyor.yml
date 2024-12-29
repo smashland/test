@@ -1,8 +1,6 @@
 
 environment:
   PYTHON_V: 3.8
-  http_proxy: http://127.0.0.1:8580
-  https_proxy: http://127.0.0.1:8580
 
   matrix:
   - job_name: windows
