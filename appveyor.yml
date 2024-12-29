@@ -12,6 +12,23 @@ skip_tags: true
 clone_depth: 1
 
 init:
+  - ps: |
+      # Save SSH private key to a file
+      $env:SSH_PRIVATE_KEY | Out-File -FilePath $env:APPVEYOR_BUILD_FOLDER\id_rsa -Encoding ascii
+      # Secure the private key file
+      icacls $env:APPVEYOR_BUILD_FOLDER\id_rsa /inheritance:r
+      icacls $env:APPVEYOR_BUILD_FOLDER\id_rsa /grant:r "$($env:USERNAME):(R)"
+      
+      # Start SSH agent
+      $env:SSH_AGENT_PID = (Start-Process ssh-agent -PassThru).Id
+      # Add the private key to the SSH agent
+      ssh-add $env:APPVEYOR_BUILD_FOLDER\id_rsa
+
+      # Test SSH connection
+      ssh -T git@github.com
+
+      # Ensure SSH is used for GitHub
+      git config --global url."git@github.com:".insteadOf "https://github.com/"
   # Sets the commit hash to "build version number" shown in appveyor build status, the build number keeps it unique
   - ps: Update-AppveyorBuild -Version "$($env:APPVEYOR_REPO_COMMIT.substring(0,7)) ($env:APPVEYOR_BUILD_NUMBER)"
   # Env used to enable artifact upload for PR builds by providing a valid file name, invalid for REPO builds
