@@ -1,7 +1,7 @@
 
 environment:
   PYTHON_V: 3.8
-  APPVEYOR_BUILD_FOLDER: "C:/Users/q/2022/.ssh"
+  APPVEYOR_BUILD_FOLDER: "C:/Users/q/2022/.ssh/id_rsa"
 
   matrix:
   - job_name: windows
