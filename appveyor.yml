@@ -14,7 +14,7 @@ clone_depth: 1
 
 init:
   - ps: |
-      $env:GIT_SSH = "$env:APPVEYOR_BUILD_FOLDER\id_rsa"
+      $env:GIT_SSH = "$APPVEYOR_BUILD_FOLDER"
       
 branches:
   only:
