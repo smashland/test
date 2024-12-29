@@ -1,7 +1,6 @@
 
 environment:
   PYTHON_V: 3.8
-  APPVEYOR_BUILD_FOLDER: "C:/Users/q/2022/.ssh/id_rsa"
 
   matrix:
   - job_name: windows
@@ -13,8 +12,14 @@ skip_tags: true
 clone_depth: 1
 
 init:
+  # Sets the commit hash to "build version number" shown in appveyor build status, the build number keeps it unique
+  - ps: Update-AppveyorBuild -Version "$($env:APPVEYOR_REPO_COMMIT.substring(0,7)) ($env:APPVEYOR_BUILD_NUMBER)"
+  # Env used to enable artifact upload for PR builds by providing a valid file name, invalid for REPO builds
   - ps: |
-      $env:GIT_SSH = "$APPVEYOR_BUILD_FOLDER"
+      $env:artifact_prefix = 'disable_artifact'
+      if ([bool]$env:APPVEYOR_PULL_REQUEST_NUMBER -eq $true) {
+        $env:artifact_prefix = 'artisan'
+      }
       
 branches:
   only:
