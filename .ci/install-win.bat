@@ -66,6 +66,7 @@ python -m pip install wheel
 ::
 python -m pip install -r src\requirements.txt | findstr /v /b "Ignoring"
 
+python -m pip install PyQt6
 ::
 :: custom build the pyinstaller bootloader or install a prebuilt
 ::
