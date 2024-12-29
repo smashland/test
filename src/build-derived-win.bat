@@ -61,9 +61,6 @@ if not defined PYQT (
 ::
 
 :: convert help files from .xlsx to .py
-echo ************* help files **************
-python ..\doc\help_dialogs\Script\xlsx_to_artisan_help.py all
-if ERRORLEVEL 1 (echo ** Failed in xlsx_to_artisan_help.py & exit /b 1) else (echo ** Success)
 
 :: convert .ui files to .py files
 echo ************* ui/uic **************

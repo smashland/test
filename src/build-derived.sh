@@ -43,9 +43,6 @@ fi
 #
 
 # convert help files from .xlsx to .py
-echo "************* help files **************"
-python3 ../doc/help_dialogs/Script/xlsx_to_artisan_help.py all
-if [ $? -ne 0 ]; then exit $?; else echo "** Success"; fi
 
 # ui / uix
 echo "************* ui/uic **************"
