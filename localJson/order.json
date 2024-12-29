@@ -1,0 +1,98 @@
+[
+    {
+        "id": 3,
+        "taskName": "烘焙任务",
+        "bakingBatch": "task-2-20241220145200",
+        "createTime": "2024-12-20 14:52:00",
+        "finishTime": "2024-12-20 23:59",
+        "number": "11",
+        "numberOfBeans": "15",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "065168552208575105"
+    },
+    {
+        "id": 4,
+        "taskName": "烘焙任务",
+        "bakingBatch": "task-2-20241220145810",
+        "createTime": "2024-12-20 14:58:10",
+        "finishTime": "2024-12-20 23:59",
+        "number": "11",
+        "numberOfBeans": "15",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "455815538772475799"
+    },
+    {
+        "id": 5,
+        "taskName": "1",
+        "bakingBatch": "task-2-20241221110804",
+        "createTime": "2024-12-21 11:08:04",
+        "finishTime": "2024-12-21 23:59",
+        "number": "11",
+        "numberOfBeans": "11",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "586658395769860836"
+    },
+    {
+        "id": 6,
+        "taskName": "鹅鹅鹅",
+        "bakingBatch": "task-2-20241221112045",
+        "createTime": "2024-12-21 11:20:45",
+        "finishTime": "2024-12-21 23:59",
+        "number": "44",
+        "numberOfBeans": "44",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "835147795866898406"
+    },
+    {
+        "id": 7,
+        "taskName": "6一条鱼",
+        "bakingBatch": "task-2-20241221114108",
+        "createTime": "2024-12-21 11:41:08",
+        "finishTime": "2024-12-21 23:59",
+        "number": "5",
+        "numberOfBeans": "5",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "494225576216606687"
+    },
+    {
+        "id": 8,
+        "taskName": "贴图",
+        "bakingBatch": "task-2-20241221114855",
+        "createTime": "2024-12-21 11:48:55",
+        "finishTime": "2024-12-21 23:59",
+        "number": "4",
+        "numberOfBeans": "4",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "339454680040628881"
+    },
+    {
+        "id": 9,
+        "taskName": "66",
+        "bakingBatch": "task-2-20241222144549",
+        "createTime": "2024-12-22 14:45:49",
+        "finishTime": "2024-12-22 23:59",
+        "number": "66",
+        "numberOfBeans": "66",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "409343257970894384"
+    },
+    {
+        "id": 10,
+        "taskName": "44",
+        "bakingBatch": "task-2-20241223094718",
+        "createTime": "2024-12-23 09:47:18",
+        "finishTime": "2024-12-23 23:59",
+        "number": "4",
+        "numberOfBeans": "4",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "226501929548085634"
+    }
+]

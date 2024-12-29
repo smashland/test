@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d803615b-6865-4cbf-8b4d-0b35ed949131" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/artisan.spec" beforeDir="false" afterPath="$PROJECT_DIR$/artisan.spec" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/artisanlib/axis.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/artisanlib/axis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/artisanlib/canvas.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/artisanlib/canvas.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/artisanlib/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/artisanlib/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Aillio/Bullet_R1.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Aillio/Bullet_R1_IBTS.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Ambex/YM.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Arc/800.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Arc/800_RTD.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Arc/S.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Arc/S_RTD.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Atilla/GOLD_plus_7''.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Atilla/GOLD_plus_7''_2022.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Atilla/GOLD_plus_7''_II.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/BC/Roaster.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Behmor/1kg.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/BellaTW/EVO.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Berto/D.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Berto/One.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Berto/R.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Besca/BSC_automatic.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Besca/BSC_full_automatic.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Besca/BSC_manual_v1.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Besca/BSC_manual_v2.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Besca/Bee.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Besca/Bee_v2.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Bideli/Roaster.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/BlueKing/BK.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Brambati/PLC.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Bühler/RM_20_Playone.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Bühler/RM_20_Simatic.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Bühler/RM_60-240.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Caparao/Prime_Line.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Carmomaq/Caloratto-Materatto_Legacy.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Carmomaq/Caloratto_2.0.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Carmomaq/Masteratto_2.0.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Carmomaq/Speciatto_2.0.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Carmomaq/Stratto_2.0.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Coffed/SR15_automatic.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Coffed/SR15_manual_delta.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Coffed/SR25_automatic.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Coffed/SR3_manual.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Coffed/SR3_manual_delta+_EBM-Papst.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Coffed/SR3_manual_delta+_Honeywell.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Coffed/SR3_manual_delta.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Coffed/SR5_automatic.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Coffed/SR5_manual.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Coffed/SR5_manual_delta+_EBM-Papst.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Coffed/SR5_manual_delta+_Honeywell.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Coffed/SR5_manual_delta.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Coffed/SR60_automatic.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Coffee Maschines Sale/CMS-1.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Coffee Maschines Sale/CMS-6-30.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Coffeetool/R.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Cogen/Series_C.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Craftsmith/Craft.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Craftsmith/Craft_air.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Craftsmith/DIY.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Daetgen/DR.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Daetgen/DW.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Diedrich/4_Sensor_Data_Logging.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Diedrich/6_Sensor_Data_Logging.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Diedrich/6_Sensor_Data_Logging_(Pre-2018).aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Diedrich/DR.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Dongyi/BR.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Dongyi/BY.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Dongyi/DY.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Easyster/Roaster.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Easyster/Roaster_3Temp.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Fabrica/Roasters.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Froco/FRA_Advanced.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Froco/FRA_Improved.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Garanti/GKPX.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Giesen/WxA+.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Giesen/WxA+_IR.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Giesen/WxA+_IR_Env.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Giesen/WxA.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Giesen/WxA_IR.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Giesen/WxA_IR_Env.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Giesen/WxA_coarse.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Golden Roasters/GR_2xEMKO.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Golden Roasters/GR_Automatic.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Golden Roasters/GR_Delta.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Golden Roasters/GR_Legacy.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Golden Roasters/GR_Manual.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/HB/Model_S.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/HB/Standard.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Has Garanti/HGS.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Has Garanti/HSR.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Hive Roaster/Data_Dome.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Hottop/KN-8828B-2K+.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Hottop/TC4.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/IKAWA/HOME.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/IKAWA/PRO.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/IMF/RM.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/IMF/RM_legacy.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/IP-CC/iRm_Series.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Joper/PLC.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Kaldi/Fortis.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Kaleido/Legacy.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Kaleido/Network.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Kaleido/Serial.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/KapoK/USB.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/KapoK/USB_Inlet.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Kirsch+Mausser/PLC.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Kirsch+Mausser/PLC_control.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Kuban/Supreme_(Automatic).aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Kuban/Supreme_(Manual).aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Lilla/PLC.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Loring/S.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Mill City Roasters/Digital_Control_Panel_1000_C.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Mill City Roasters/Digital_Control_Panel_1000_F.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Mill City Roasters/Digital_Control_Panel_1200_C.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Mill City Roasters/Digital_Control_Panel_1200_F.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Mill City Roasters/Phidget.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Mill City Roasters/Phidget_&amp;_Delta_controls_(port_on_the_back).aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Mill City Roasters/Phidget_&amp;_Delta_controls_(port_on_the_right)_C.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Mill City Roasters/Phidget_&amp;_Delta_controls_(port_on_the_right)_F.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Mill City Roasters/Phidget_&amp;_Shihlin_controls_(port_on_the_back).aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Mill City Roasters/Standard_Control_Panel_(Delta)_C.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Mill City Roasters/Standard_Control_Panel_(Delta)_F.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Mill City Roasters/Standard_Control_Panel_(Fotek)_C.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Mill City Roasters/Standard_Control_Panel_(Fotek)_F.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/NOR/A_Series.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/NOR/Extension_MODBUS.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/NOR/N_Series.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Neuhaus Neotec/PLC.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Nordic/DeltaDTA.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Nordic/DeltaDTK.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Nordic/PLC Delta.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Nordic/PLC Microchip.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/OTesla/Roaster.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Opp/MR.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Ozturk/OKS.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Petroncini/TT_ASEM.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Petroncini/TT_Maestro_Avantgarde.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Petroncini/TT_Maestro_i06_Avantgarde.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Petroncini/TT_Traditional.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Phidget/USB_1048_Databridge_2xTC.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Phidget/VINT_Ambient_Modules.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Phidget/VINT_TMP1101_2xTC.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Phidget/VINT_TMP1200_2xRTD.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Phoenix/ORO.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Phoenix/ORO_PXF.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Plugin/Roast_2.0.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Proaster/THCR.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Proaster/THCR_3Temp.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Probat/G_UG.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Probat/G_UG_control.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Probat/P_Series_III.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Probat/Probatone.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Probat/Probatone_7''.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Probat/Sample_Roaster.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Prometheus/Ignis.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/R &amp; R/Automatic.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/R &amp; R/Manual.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Rasco Mac/CRMA.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Roastmax/Roasters.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Rolltech/EL.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/San Franciscan/SF.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/San Franciscan/SF_Eurotherm.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Santoker/1xPXR.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Santoker/2xPXF.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Santoker/2xPXR.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Santoker/BT_USB.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Santoker/Q_Series_Network.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Santoker/Q_Series_Serial-BT.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Santoker/R_Series_Network.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Santoker/R_Series_Serial-BT.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Sedona Elite/Roaster.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Sedona Elite/Roaster_2in1.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Sedona Elite/Roaster_PXF.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Sivetz/SRM.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/TRINITAS/T2.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/TRINITAS/T7.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Titanium/TGX.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Toper/PLC.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Toper/USB.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Tostabar/Genius.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Twino/Ozstar.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Typhoon/Hybrid.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Typhoon/Shoproaster.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/US Roaster Corp/RTU.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/VNT/PID.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/VNT/Phidget.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Vortecs/Pro.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Wintop/WB.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Wintop/WK.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Wintop/WS_2in1.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Wintop/WS_Fuji.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Yangchia/8xxn.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Yoshan/BR.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Yoshan/BY.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Yoshan/DY.aset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/Machines/Yoshan/EC-500.aset" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2igEPkCapQVAmJrg15mD3fQfENt" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.artisan.executor": "Debug",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "dev",
+    "last_opened_file_path": "F:/artisan-2.10.4",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "ts.external.directory.path": "D:\\PyCharm 2024.1.4\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="artisan" type="PythonConfigurationType" factoryName="Python">
+      <module name="artisan-2.10.4" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/artisan.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-ce3d9afa04ac-ba05f1cad1b1-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.20224.347" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\15201\AppData\Roaming\Subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d803615b-6865-4cbf-8b4d-0b35ed949131" name="Changes" comment="" />
+      <created>1719903797395</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1719903797395</updated>
+      <workItem from="1719903798507" duration="3178000" />
+      <workItem from="1720401735942" duration="8551000" />
+      <workItem from="1720488113301" duration="7000" />
+      <workItem from="1720488365813" duration="3968000" />
+      <workItem from="1720577365726" duration="12287000" />
+      <workItem from="1720661463487" duration="380000" />
+      <workItem from="1720661883536" duration="1232000" />
+      <workItem from="1720663386356" duration="17009000" />
+      <workItem from="1721006197114" duration="305000" />
+      <workItem from="1723455681300" duration="186000" />
+      <workItem from="1723455879970" duration="1465000" />
+      <workItem from="1723509814707" duration="8127000" />
+      <workItem from="1723518838867" duration="6764000" />
+      <workItem from="1723530894809" duration="2486000" />
+      <workItem from="1723533531491" duration="5875000" />
+      <workItem from="1723540128230" duration="299000" />
+      <workItem from="1723541906106" duration="150000" />
+      <workItem from="1723542143135" duration="1399000" />
+      <workItem from="1723596471607" duration="67000" />
+      <workItem from="1723596565990" duration="9497000" />
+      <workItem from="1723611596066" duration="3152000" />
+      <workItem from="1723614945106" duration="4593000" />
+      <workItem from="1723619581058" duration="4122000" />
+      <workItem from="1723623761744" duration="3928000" />
+      <workItem from="1723682853240" duration="5119000" />
+      <workItem from="1723689823823" duration="5930000" />
+      <workItem from="1723701727191" duration="1246000" />
+      <workItem from="1723703117257" duration="6708000" />
+      <workItem from="1723711202710" duration="5263000" />
+      <workItem from="1723769578919" duration="8274000" />
+      <workItem from="1723778159115" duration="6498000" />
+      <workItem from="1723789533380" duration="4117000" />
+      <workItem from="1723793724384" duration="4518000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>10728</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/canvas.py</url>
+          <line>15333</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/canvas.py</url>
+          <line>15334</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/canvas.py</url>
+          <line>15341</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/canvas.py</url>
+          <line>15357</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/canvas.py</url>
+          <line>15353</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>10692</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>10689</line>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>12196</line>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>12197</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>10863</line>
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>10864</line>
+          <option name="timeStamp" value="58" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>11436</line>
+          <option name="timeStamp" value="68" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>11438</line>
+          <option name="timeStamp" value="69" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>10870</line>
+          <option name="timeStamp" value="76" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>11028</line>
+          <option name="timeStamp" value="77" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>11030</line>
+          <option name="timeStamp" value="78" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>11032</line>
+          <option name="timeStamp" value="79" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>11859</line>
+          <option name="timeStamp" value="80" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>11860</line>
+          <option name="timeStamp" value="81" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>12108</line>
+          <option name="timeStamp" value="84" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>12116</line>
+          <option name="timeStamp" value="85" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>12117</line>
+          <option name="timeStamp" value="86" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>12118</line>
+          <option name="timeStamp" value="87" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>10761</line>
+          <option name="timeStamp" value="90" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>10767</line>
+          <option name="timeStamp" value="91" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>12121</line>
+          <option name="timeStamp" value="92" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>12119</line>
+          <option name="timeStamp" value="93" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>12120</line>
+          <option name="timeStamp" value="94" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>12215</line>
+          <option name="timeStamp" value="95" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>12216</line>
+          <option name="timeStamp" value="96" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>12217</line>
+          <option name="timeStamp" value="97" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>12980</line>
+          <option name="timeStamp" value="99" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>12981</line>
+          <option name="timeStamp" value="100" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>11816</line>
+          <option name="timeStamp" value="106" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>11817</line>
+          <option name="timeStamp" value="107" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>11818</line>
+          <option name="timeStamp" value="108" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>13262</line>
+          <option name="timeStamp" value="112" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>13264</line>
+          <option name="timeStamp" value="113" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15210</line>
+          <option name="timeStamp" value="114" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15211</line>
+          <option name="timeStamp" value="115" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15297</line>
+          <option name="timeStamp" value="124" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15207</line>
+          <option name="timeStamp" value="125" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15223</line>
+          <option name="timeStamp" value="131" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15451</line>
+          <option name="timeStamp" value="132" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15468</line>
+          <option name="timeStamp" value="133" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15209</line>
+          <option name="timeStamp" value="134" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15229</line>
+          <option name="timeStamp" value="135" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15353</line>
+          <option name="timeStamp" value="137" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15355</line>
+          <option name="timeStamp" value="138" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15375</line>
+          <option name="timeStamp" value="139" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15373</line>
+          <option name="timeStamp" value="140" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15237</line>
+          <option name="timeStamp" value="141" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15292</line>
+          <option name="timeStamp" value="142" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15300</line>
+          <option name="timeStamp" value="144" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15298</line>
+          <option name="timeStamp" value="145" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15384</line>
+          <option name="timeStamp" value="146" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15382</line>
+          <option name="timeStamp" value="147" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15383</line>
+          <option name="timeStamp" value="148" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15387</line>
+          <option name="timeStamp" value="149" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15403</line>
+          <option name="timeStamp" value="150" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15377</line>
+          <option name="timeStamp" value="151" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15372</line>
+          <option name="timeStamp" value="152" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15260</line>
+          <option name="timeStamp" value="155" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15249</line>
+          <option name="timeStamp" value="156" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>12902</line>
+          <option name="timeStamp" value="157" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>12903</line>
+          <option name="timeStamp" value="158" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>12906</line>
+          <option name="timeStamp" value="159" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15407</line>
+          <option name="timeStamp" value="162" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15409</line>
+          <option name="timeStamp" value="163" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15414</line>
+          <option name="timeStamp" value="164" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15411</line>
+          <option name="timeStamp" value="165" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15416</line>
+          <option name="timeStamp" value="166" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15419</line>
+          <option name="timeStamp" value="167" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15253</line>
+          <option name="timeStamp" value="168" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15418</line>
+          <option name="timeStamp" value="169" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15252</line>
+          <option name="timeStamp" value="170" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15412</line>
+          <option name="timeStamp" value="171" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15238</line>
+          <option name="timeStamp" value="172" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/artisanlib/main.py</url>
+          <line>15239</line>
+          <option name="timeStamp" value="173" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/artisan_2_10_4$artisan.coverage" NAME="artisan Coverage Results" MODIFIED="1721006200635" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/artisan$artisan.coverage" NAME="artisan 覆盖结果" MODIFIED="1723795362190" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/artisan_2_10_4$main.coverage" NAME="main Coverage Results" MODIFIED="1720675066937" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/artisanlib" />
+  </component>
+</project>
