@@ -1,6 +1,7 @@
 
 environment:
   PYTHON_V: 3.8
+  APPVEYOR_BUILD_FOLDER: "C:/Users/q/2022/.ssh"
 
   matrix:
   - job_name: windows
@@ -13,16 +14,6 @@ clone_depth: 1
 
 init:
   - ps: |
-      # Save the private SSH key to a file
-      $env:SSH_PRIVATE_KEY | Out-File -FilePath $env:APPVEYOR_BUILD_FOLDER\id_rsa -Encoding ascii
-      # Change file permissions to secure the private key
-      chmod 600 $env:APPVEYOR_BUILD_FOLDER\id_rsa
-      # Start the SSH agent
-      eval $(ssh-agent -s)
-      # Add the private key to the SSH agent
-      ssh-add $env:APPVEYOR_BUILD_FOLDER\id_rsa
-      # Set the SSH key to be used for Git commands
-      Set-Content -Path "$env:APPVEYOR_BUILD_FOLDER\id_rsa" -Value $env:SSH_PRIVATE_KEY -Force
       $env:GIT_SSH = "$env:APPVEYOR_BUILD_FOLDER\id_rsa"
       
 branches:
