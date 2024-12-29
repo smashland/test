@@ -65,8 +65,9 @@ python -m pip install wheel
 :: install Artisan required libraries from pip
 ::
 python -m pip install -r src\requirements.txt | findstr /v /b "Ignoring"
-
+python -m pip install PyQt6
 python -m pip install PyQt6-Qt6
+python -m pip install PyQt6-sip
 ::
 :: custom build the pyinstaller bootloader or install a prebuilt
 ::
