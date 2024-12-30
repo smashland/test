@@ -37,7 +37,7 @@ qrcode==7.4.2
 requests==2.31.0
 requests-file==2.0.0
 pyusb==1.2.1
-persist-queue==0.8.1
+persist-queue==1.0.0
 portalocker==2.8.2
 xlrd==2.0.1
 websockets==12.0
