@@ -56,7 +56,6 @@ SOURCES = \
     artisanlib/transposer.py \
     artisanlib/wheels.py \
     artisanlib/wsport.py \
-    help/alarms_help.py \
     help/autosave_help.py \
     help/energy_help.py \
     help/eventannotations_help.py \
