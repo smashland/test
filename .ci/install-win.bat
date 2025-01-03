@@ -62,6 +62,7 @@ python -m pip install --upgrade pip
 python -m pip install wheel
 
 python -m pip install PyQt6
+python -m pip install PyQt6-tools
 ::
 :: install Artisan required libraries from pip
 ::
