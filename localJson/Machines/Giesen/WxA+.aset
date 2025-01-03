@@ -125,8 +125,10 @@ etypes = Air, Drum, SP, Burner, --
 rendereventsdescr = false
 
 [OtherSettings]
-sethost = 192.168.2.180
+sethost = 192.168.2.189
 setjx = Giesen
-setheating = Natural Gas (NG)
-setheatingtype = 2
+setheating = Propane Gas (LPG)
+setheatingtype = 1
+setsbxl = 001
+setdz = linghao
 

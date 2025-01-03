@@ -168,4 +168,6 @@ sethost = 192.168.1.27
 setjx = Coffee-Tech
 setheating = Natural Gas (NG)
 setheatingtype = 2
+setsbxl = MIIIW
+setdz = 一号房
 

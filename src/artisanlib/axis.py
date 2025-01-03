@@ -950,13 +950,13 @@ class WindowsDlg(ArtisanDialog):
         except Exception: # pylint: disable=broad-except
             self.xaxislencombobox.setCurrentIndex(2)
         if self.aw.qmc.mode == 'F':
-            self.ygridSpinBox.setValue(int(self.aw.qmc.ygrid_C_default))
-            self.aw.qmc.ygrid = self.aw.qmc.ygrid_C_default
-            self.ylimitEdit.setText(str(self.aw.qmc.ylimit_C_default))
-            self.ylimitEdit_min.setText(str(self.aw.qmc.ylimit_min_C_default))
-            self.zlimitEdit.setText(str(self.aw.qmc.zlimit_C_default))
-            self.zlimitEdit_min.setText(str(self.aw.qmc.zlimit_min_C_default))
-            self.zgridSpinBox.setValue(int(self.aw.qmc.zgrid_C_default))
+            self.ygridSpinBox.setValue(int(self.aw.qmc.ygrid_F_default))
+            self.aw.qmc.ygrid = self.aw.qmc.ygrid_F_default
+            self.ylimitEdit.setText(str(self.aw.qmc.ylimit_F_default))
+            self.ylimitEdit_min.setText(str(self.aw.qmc.ylimit_min_F_default))
+            self.zlimitEdit.setText(str(self.aw.qmc.zlimit_F_default))
+            self.zlimitEdit_min.setText(str(self.aw.qmc.zlimit_min_F_default))
+            self.zgridSpinBox.setValue(int(self.aw.qmc.zgrid_F_default))
         else:
             self.ygridSpinBox.setValue(int(self.aw.qmc.ygrid_C_default))
             self.aw.qmc.ygrid = self.aw.qmc.ygrid_C_default

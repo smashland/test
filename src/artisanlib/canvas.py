@@ -312,7 +312,7 @@ class tgraphcanvas(FigureCanvas):
         'segmentpickflag', 'segmentdeltathreshold', 'segmentsamplesthreshold', 'stats_summary_rect', 'title_text', 'title_artist', 'title_width',
         'background_title_width', 'xlabel_text', 'xlabel_artist', 'xlabel_width', 'lazyredraw_on_resize_timer', 'mathdictionary_base',
         'ambient_pressure_sampled', 'ambient_humidity_sampled', 'ambientTemp_sampled', 'backgroundmovespeed', 'chargeTimerPeriod', 'flavors_default_value',
-        'fmt_data_ON', 'l_subtitle', 'projectDeltaFlag', 'weight_units', 'btbreak_params']
+        'fmt_data_ON', 'l_subtitle', 'projectDeltaFlag', 'weight_units', 'btbreak_params', 'changeBool', 'tpChangeBool']
 
 
     def __init__(self, parent:QWidget, dpi:int, locale:str, aw:'ApplicationWindow') -> None:
@@ -340,6 +340,7 @@ class tgraphcanvas(FigureCanvas):
                                         'analysismask': '#bababa', 'statsanalysisbkgnd': '#ffffff'}
         self.palette1 = self.palette.copy()
         self.EvalueColor_default:Final[List[str]] = ['#43a7cf','#49b160','#800080','#ad0427']
+        # self.EvalueColor_default: Final[List[str]] = ['#00ffffff', '#00000000', '#00000000', '#00000000']
         self.EvalueTextColor_default:Final[List[str]] = ['#ffffff','#ffffff','#ffffff','#ffffff']
 
         # standard math functions allowed in symbolic formulas
@@ -1287,6 +1288,8 @@ class tgraphcanvas(FigureCanvas):
         self.backgroundpath:str = ''
         self.backgroundUUID:Optional[str] = None
         self.backgroundmovespeed = 30
+        self.changeBool = False
+        self.tpChangeBool = False
         self.backgroundShowFullflag:bool = False
         self.backgroundKeyboardControlFlag:bool = True
         self.titleB:str = ''
@@ -4251,9 +4254,10 @@ class tgraphcanvas(FigureCanvas):
                 _log.exception(e)
             self.aw.lcd2.display(etstr)
             self.aw.processInfo1WD.setText(etstr)
-            self.aw.sswd.setText(etstr)
-            sys.stdout = open("outputttttttt.log", "w")
-            print('etstr=', etstr)
+            if len(self.aw.getTPMark) == 0 and float(self.aw.processInfo1WD.text()) > 175:
+                self.aw.diologRect.setVisible(True)
+
+
 
             ## BT LCD:
             btstr = resLCD
@@ -4268,7 +4272,12 @@ class tgraphcanvas(FigureCanvas):
             self.aw.lcd3.display(btstr)
             self.aw.processInfoLabel.setText(btstr)
             print('processInfoLabel=',btstr)
-            # self.aw.jieduanInfo()
+            if self.changeBool:
+                self.aw.sswd.setText(btstr)
+                if len(self.aw.getTPMark) > 0:
+                    self.aw.jieduanInfo(self.aw.getTPMark)
+            else:
+                self.aw.sswd.setText(etstr)
 
             ## Delta LCDs:
             deltaetstr = resLCD
@@ -4289,10 +4298,13 @@ class tgraphcanvas(FigureCanvas):
                 _log.exception(e)
             self.aw.lcd4.display(deltaetstr)
             self.aw.lcd5.display(deltabtstr)
+
             try:
                 self.updateLargeDeltaLCDs(deltabt=deltabtstr,deltaet=deltaetstr)
             except Exception as e: # pylint: disable=broad-except
                 _log.exception(e)
+
+            self.aw.processInfo2ROR.setText(deltabtstr)
 
             # Fuji/Delta LCDs
             try:
@@ -9382,7 +9394,7 @@ class tgraphcanvas(FigureCanvas):
                                                                 markersize = self.EvalueMarkerSize[0],
                                                                 picker=True,
                                                                 pickradius=2,#markevery=every,
-                                                                linestyle='-',drawstyle=ds,linewidth = self.Evaluelinethickness[0],alpha = self.Evaluealpha[0],label=self.etypesf(0))
+                                                                linestyle='-',drawstyle=ds,linewidth = self.Evaluelinethickness[0],alpha = 0,label=self.etypesf(0))
                             if len(self.E2timex) > 0 and len(self.E2values) == len(self.E2timex):
                                 pos = max(0,int(round((self.specialeventsvalue[E2_last]-1)*10)))
                                 if not self.clampEvents: # in clamp mode we render also event values higher than 100:
@@ -9409,7 +9421,7 @@ class tgraphcanvas(FigureCanvas):
                                                                 markersize = self.EvalueMarkerSize[1],
                                                                 picker=True,
                                                                 pickradius=2,#markevery=every,
-                                                                linestyle='-',drawstyle=ds,linewidth = self.Evaluelinethickness[1],alpha = self.Evaluealpha[1],label=self.etypesf(1))
+                                                                linestyle='-',drawstyle=ds,linewidth = self.Evaluelinethickness[1],alpha = 0,label=self.etypesf(1))
                             if len(self.E3timex) > 0 and len(self.E3values) == len(self.E3timex):
                                 pos = max(0,int(round((self.specialeventsvalue[E3_last]-1)*10)))
                                 if not self.clampEvents: # in clamp mode we render also event values higher than 100:
@@ -9436,7 +9448,7 @@ class tgraphcanvas(FigureCanvas):
                                                                 markersize = self.EvalueMarkerSize[2],
                                                                 picker=True,
                                                                 pickradius=2,#markevery=every,
-                                                                linestyle='-',drawstyle=ds,linewidth = self.Evaluelinethickness[2],alpha = self.Evaluealpha[2],label=self.etypesf(2))
+                                                                linestyle='-',drawstyle=ds,linewidth = self.Evaluelinethickness[2],alpha = 0,label=self.etypesf(2))
                             if len(self.E4timex) > 0 and len(self.E4values) == len(self.E4timex):
                                 pos = max(0,int(round((self.specialeventsvalue[E4_last]-1)*10)))
                                 if not self.clampEvents: # in clamp mode we render also event values higher than 100:
@@ -9463,7 +9475,7 @@ class tgraphcanvas(FigureCanvas):
                                                                 markersize = self.EvalueMarkerSize[3],
                                                                 picker=True,
                                                                 pickradius=2,#markevery=every,
-                                                                linestyle='-',drawstyle=ds,linewidth = self.Evaluelinethickness[3],alpha = self.Evaluealpha[3],label=self.etypesf(3))
+                                                                linestyle='-',drawstyle=ds,linewidth = self.Evaluelinethickness[3],alpha = 0,label=self.etypesf(3))
                         if Nevents:
                             if self.eventsGraphflag == 4:
                                 # we prepare copies of the Evalues
@@ -9546,7 +9558,7 @@ class tgraphcanvas(FigureCanvas):
                                                              alpha=0.9,
                                                              color=textcolor,
                                                              va='center', ha='center',
-                                                             arrowprops={'arrowstyle':'-','color':boxcolor,'alpha':0.4}, # ,relpos=(0,0)
+                                                             arrowprops={'arrowstyle':'-','color':boxcolor,'alpha':0}, # ,relpos=(0,0)
                                                              bbox={'boxstyle':boxstyle, 'fc':boxcolor, 'ec':'none'},
                                                              fontproperties=fontprop_small,
                                                              path_effects=[PathEffects.withStroke(linewidth=0.5,foreground=self.palette['background'])],
@@ -9948,27 +9960,27 @@ class tgraphcanvas(FigureCanvas):
                         self.l_ETprojection, = self.ax.plot(self.ETprojection_tx, self.ETprojection_temp,color = self.palette['et'],
                                                     dashes=dashes_setup,
                                                     label=self.aw.arabicReshape(QApplication.translate('Label', 'ETprojection')),
-                                                    linestyle = '-.', linewidth= 8, alpha = .3,sketch_params=None,path_effects=[])
+                                                    linestyle = '-.', linewidth= 8, alpha = 0,sketch_params=None,path_effects=[])
                     if self.projectDeltaFlag and self.DeltaETflag and self.delta_ax is not None:
                         trans = self.delta_ax.transData
                         self.l_DeltaETprojection, = self.ax.plot(self.DeltaETprojection_tx, self.DeltaETprojection_temp,color = self.palette['deltaet'],
                                                     dashes=dashes_setup,
                                                     transform=trans,
                                                     label=self.aw.arabicReshape(QApplication.translate('Label', 'DeltaETprojection')),
-                                                    linestyle = '-.', linewidth= 8, alpha = .3,sketch_params=None,path_effects=[])
+                                                    linestyle = '-.', linewidth= 8, alpha = 0,sketch_params=None,path_effects=[])
                 if self.BTprojectFlag:
                     if self.BTcurve:
                         self.l_BTprojection, = self.ax.plot(self.BTprojection_tx, self.BTprojection_temp,color = self.palette['bt'],
                                                     dashes=dashes_setup,
                                                     label=self.aw.arabicReshape(QApplication.translate('Label', 'BTprojection')),
-                                                    linestyle = '-.', linewidth= 8, alpha = .3,sketch_params=None,path_effects=[])
+                                                    linestyle = '-.', linewidth= 8, alpha = 0,sketch_params=None,path_effects=[])
                     if self.projectDeltaFlag and self.DeltaBTflag and self.delta_ax is not None:
                         trans = self.delta_ax.transData
                         self.l_DeltaBTprojection, = self.ax.plot(self.DeltaBTprojection_tx, self.DeltaBTprojection_temp,color = self.palette['deltabt'],
                                                     dashes=dashes_setup,
                                                     transform=trans,
                                                     label=self.aw.arabicReshape(QApplication.translate('Label', 'DeltaBTprojection')),
-                                                    linestyle = '-.', linewidth= 8, alpha = .3,sketch_params=None,path_effects=[])
+                                                    linestyle = '-.', linewidth= 8, alpha = 0,sketch_params=None,path_effects=[])
                 if (self.device == 18 and self.aw.simulator is None) or self.showtimeguide: # not NONE device
                     self.l_timeline = self.ax.axvline(self.timeclock.elapsedMilli(),color = self.palette['timeguide'],
                                             label=self.aw.arabicReshape(QApplication.translate('Label', 'TIMEguide')),
@@ -12219,7 +12231,7 @@ class tgraphcanvas(FigureCanvas):
                 self.aw.TP2DRYlabel.setStyleSheet("background-color:'transparent'; color: " + self.palette['messages'] + ';')
                 self.aw.DRY2FCslabel.setStyleSheet("background-color:'transparent'; color: " + self.palette['messages'] + ';')
             if self.AUClcdFlag:
-                self.aw.AUCLCD.show()
+                 self.aw.AUCLCD.show()
 
             self.phasesLCDmode = self.phasesLCDmode_l[0]
 
@@ -12348,6 +12360,9 @@ class tgraphcanvas(FigureCanvas):
     @pyqtSlot(bool)
     def markCharge(self, noaction:bool = False) -> None:
         removed = False
+        self.changeBool = True
+        self.aw.diologRect.setVisible(False)
+        self.aw.markChargeClick()
         try:
             self.profileDataSemaphore.acquire(1)
             if self.flagstart:
@@ -12505,6 +12520,7 @@ class tgraphcanvas(FigureCanvas):
     # called from sample() and marks the autodetected TP visually on the graph
     def markTP(self) -> None:
         try:
+            self.tpChangeBool = True
             self.profileDataSemaphore.acquire(1)
             if self.flagstart and self.markTPflag and self.TPalarmtimeindex is not None and self.timeindex[0] != -1 and len(self.timex) > self.TPalarmtimeindex and (self.BTcurve or self.ETcurve):
                 temp = (self.temp2[self.TPalarmtimeindex] if self.BTcurve else self.temp1[self.TPalarmtimeindex])
@@ -12535,6 +12551,7 @@ class tgraphcanvas(FigureCanvas):
     # if noaction is True, the button event action is not triggered
     @pyqtSlot(bool)
     def markDryEnd(self, noaction:bool = False) -> None:
+        self.aw.markDryEndClick()
         if len(self.timex) > 1:
             removed = False
             try:
@@ -12651,6 +12668,9 @@ class tgraphcanvas(FigureCanvas):
     # if noaction is True, the button event action is not triggered
     @pyqtSlot(bool)
     def mark1Cstart(self, noaction:bool = False) -> None:
+        self.aw.diologRect.setVisible(True)
+        self.aw.diologRect.setText('请快速出仓！')
+        self.aw.markyibaoClick()
         if len(self.timex) > 1:
             removed = False
             try:
@@ -13104,6 +13124,10 @@ class tgraphcanvas(FigureCanvas):
     # if noaction is True, the button event action is not triggered
     @pyqtSlot(bool)
     def markDrop(self, noaction:bool = False) -> None:
+        self.aw.markDropClick()
+        self.tpChangeBool = False
+        self.changeBool = False
+        self.aw.diologRect.setVisible(False)
         if len(self.timex) > 1:
             removed = False
             try:
@@ -13634,7 +13658,7 @@ class tgraphcanvas(FigureCanvas):
                                         bbox={'boxstyle':'square,pad=0.1', 'fc':self.EvalueColor[etype], 'ec':'none'},
                                         path_effects=[PathEffects.withStroke(linewidth=0.5,foreground=self.palette['background'])],
                                         color=self.EvalueTextColor[etype],
-                                        arrowprops={'arrowstyle':'-','color':self.palette['et'],'alpha':0.4,'relpos':(0,0)},
+                                        arrowprops={'arrowstyle':'-','color':self.palette['et'],'alpha':0,'relpos':(0,0)},
                                         fontsize=fontsize,
                                         fontproperties=fontprop_small)
                                 elif self.BTcurve:
@@ -13646,7 +13670,7 @@ class tgraphcanvas(FigureCanvas):
                                             bbox={'boxstyle':'square,pad=0.1', 'fc':self.EvalueColor[etype], 'ec':'none'},
                                             path_effects=[PathEffects.withStroke(linewidth=0.5,foreground=self.palette['background'])],
                                             color=self.EvalueTextColor[etype],
-                                            arrowprops={'arrowstyle':'-','color':self.palette['bt'],'alpha':0.4,'relpos':(0,0)},
+                                            arrowprops={'arrowstyle':'-','color':self.palette['bt'],'alpha':0,'relpos':(0,0)},
                                             fontsize=fontsize,
                                             fontproperties=fontprop_small)
                                 try:
@@ -13711,7 +13735,7 @@ class tgraphcanvas(FigureCanvas):
                                         anno = self.ax.annotate(f'{firstletter}{secondletter}', xy=(self.timex[index], temp),xytext=(self.timex[index],temp+height),alpha=0.9,
                                                          color=textcolor,
                                                          va='center', ha='center',
-                                                         arrowprops={'arrowstyle':'-','color':boxcolor,'alpha':0.4}, #,relpos=(0,0)),
+                                                         arrowprops={'arrowstyle':'-','color':boxcolor,'alpha':0}, #,relpos=(0,0)),
                                                          bbox={'boxstyle':boxstyle, 'fc':boxcolor, 'ec':'none'},
                                                          fontsize=fontsize,
                                                          fontproperties=fontprop_small,

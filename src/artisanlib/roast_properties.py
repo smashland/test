@@ -2041,7 +2041,7 @@ class editGraphDlg(ArtisanResizeablDialog):
             self.moisture_greens_edit.setStyleSheet(background_white_style)
 
     def updateTitle(self, prev_coffee_label:Optional[str], prev_blend_label:Optional[str]) -> None:
-        titles_to_be_overwritten = [ '', QApplication.translate('Scope Title', ' ') ]
+        titles_to_be_overwritten = [ '', QApplication.translate('Scope Title', 'Roaster Scope') ]
         if prev_coffee_label is not None:
             titles_to_be_overwritten.append(prev_coffee_label)
         if prev_blend_label is not None:
@@ -2054,7 +2054,7 @@ class editGraphDlg(ArtisanResizeablDialog):
                 self.titleedit.textEdited(self.plus_coffee_selected_label)
                 self.titleedit.setEditText(self.plus_coffee_selected_label)
             else:
-                default_title = QApplication.translate('Scope Title', '')
+                default_title = QApplication.translate('Scope Title', 'Roaster Scope')
                 self.titleedit.textEdited(default_title)
                 self.titleedit.setEditText(default_title)
 
@@ -2403,7 +2403,7 @@ class editGraphDlg(ArtisanResizeablDialog):
             title = self.titleedit.currentText()
             weightIn = float(comma2dot(self.weightinedit.text()))
             # add new recent roast entry only if title is not default, beans is not empty and weight-in is not 0
-            if title != QApplication.translate('Scope Title', '') and weightIn != 0:
+            if title != QApplication.translate('Scope Title', 'Roaster Scope') and weightIn != 0:
                 # enable "+" addRecentRoast button
                 self.addRecentButton.setEnabled(True)
                 self.delRecentButton.setEnabled(True)
@@ -2431,7 +2431,7 @@ class editGraphDlg(ArtisanResizeablDialog):
             title = ' '.join(self.titleedit.currentText().split())
             weightIn = float(comma2dot(str(self.weightinedit.text())))
             # add new recent roast entry only if title is not default, beans is not empty and weight-in is not 0
-            if title != QApplication.translate('Scope Title', '') and weightIn != 0:
+            if title != QApplication.translate('Scope Title', 'Roaster Scope') and weightIn != 0:
                 beans = self.beansedit.toPlainText()
                 weightUnit = self.unitsComboBox.currentText()
                 if self.volumeinedit.text() != '':

@@ -155,8 +155,10 @@ capacity = 7
 
 [OtherSettings]
 setimg = localJson/MachinesImg\gou.jpg
-sethost = 127.0.0.1
+sethost = 127.0.0.2
 setjx = Coffee-Tech
 setheating = Propane Gas (LPG)
 setheatingtype = 1
+setsbxl = over
+setdz = gougou
 

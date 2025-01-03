@@ -7,6 +7,12 @@ warnings.simplefilter('ignore', DeprecationWarning)
 
 import sys
 import os
+# 将项目根目录添加到 sys.path
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if BASE_DIR not in sys.path:
+    sys.path.append(BASE_DIR)
+
+from artisanlib import main, command_utility  # 确保导入时不再报错
 from platform import system
 from typing import Any
 
@@ -19,16 +25,16 @@ try:
 # the following two lines seem not to be needed any longer with Qt6.1
 #    if system() == 'Darwin':
 #        os.environ['QT_MAC_WANTS_LAYER'] = '1' # some widgets under PyQt  on macOS seem not to update properly without this (see the discussion on the pyqt mailing list from 15.6.2020 "Widgets are not updated - is this a bug?")
-    # try:
+    try:
         #pylint: disable = E, W, R, C
-    from PyQt6.QtWidgets import QApplication  # @UnusedImport @Reimport  @UnresolvedImport
-    from PyQt6.QtCore import Qt     # @Reimport # @UnusedImport @Reimport  @UnresolvedImport
-    # except Exception: # pylint: disable=broad-except
-    #     #pylint: disable = E, W, R, C
-    #     from PyQt5.QtWidgets import QApplication # type: ignore # @UnusedImport @Reimport  @UnresolvedImport
-    #     from PyQt5.QtCore import Qt # type: ignore # @UnusedImport @Reimport  @UnresolvedImport
-    #     QApplication.setAttribute(Qt.ApplicationAttribute.AA_EnableHighDpiScaling) # type: ignore
-    #     QApplication.setAttribute(Qt.ApplicationAttribute.AA_UseHighDpiPixmaps) # type: ignore
+        from PyQt6.QtWidgets import QApplication  # @UnusedImport @Reimport  @UnresolvedImport
+        from PyQt6.QtCore import Qt     # @Reimport # @UnusedImport @Reimport  @UnresolvedImport
+    except Exception: # pylint: disable=broad-except
+        #pylint: disable = E, W, R, C
+        from PyQt5.QtWidgets import QApplication # type: ignore # @UnusedImport @Reimport  @UnresolvedImport
+        from PyQt5.QtCore import Qt # type: ignore # @UnusedImport @Reimport  @UnresolvedImport
+        QApplication.setAttribute(Qt.ApplicationAttribute.AA_EnableHighDpiScaling) # type: ignore
+        QApplication.setAttribute(Qt.ApplicationAttribute.AA_UseHighDpiPixmaps) # type: ignore
 #    os.environ["QT_SCALE_FACTOR"] = "1"
 except Exception: # pylint: disable=broad-except
     pass
@@ -49,12 +55,12 @@ if system().startswith('Windows'):
                 import site # @Reimport @UnusedImport
                 QApplication.addLibraryPath(site.getsitepackages()[1] + '\\PyQt6\\plugins')
         except Exception:  # pylint: disable=broad-except
-            # from PyQt5.QtWidgets import QApplication # type: ignore # @UnresolvedImport @Reimport @UnusedImport pylint: disable=import-error
+            from PyQt5.QtWidgets import QApplication # type: ignore # @UnresolvedImport @Reimport @UnusedImport pylint: disable=import-error
             if ib:
                 QApplication.addLibraryPath(os.path.join(os.path.dirname(os.path.realpath(sys.executable)), 'plugins'))
             else:
                 import site # @Reimport @UnusedImport
-                # QApplication.addLibraryPath(site.getsitepackages()[1] + '\\PyQt5\\plugins')
+                QApplication.addLibraryPath(site.getsitepackages()[1] + '\\PyQt5\\plugins')
 
     except Exception: # pylint: disable=broad-except
         pass
@@ -69,12 +75,12 @@ else: # Linux
                 import site # @Reimport
                 QApplication.addLibraryPath(os.path.dirname(site.getsitepackages()[0]) + '/PyQt6/qt_plugins')
         except Exception:  # pylint: disable=broad-except
-            # from PyQt5.QtWidgets import QApplication # type: ignore # @UnresolvedImport @Reimport @UnusedImport pylint: disable=import-error
+            from PyQt5.QtWidgets import QApplication # type: ignore # @UnresolvedImport @Reimport @UnusedImport pylint: disable=import-error
             if ib:
                 QApplication.addLibraryPath(os.path.join(os.path.dirname(__file__), 'Resources/qt_plugins'))
             else:
                 import site # @Reimport
-                # QApplication.addLibraryPath(os.path.dirname(site.getsitepackages()[0]) + '/PyQt5/qt_plugins')
+                QApplication.addLibraryPath(os.path.dirname(site.getsitepackages()[0]) + '/PyQt5/qt_plugins')
     except Exception: # pylint: disable=broad-except
         pass
 
