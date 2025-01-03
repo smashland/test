@@ -123,11 +123,11 @@ RequestExecutionLevel admin
 
 
 ; HM NIS Edit Wizard helper defines
-!define pyinstallerOutputDir 'dist/artisan'
-!define PRODUCT_NAME "Artisan"
+!define pyinstallerOutputDir 'dist/风味科学'
+!define PRODUCT_NAME "风味科学"
 !define PRODUCT_PUBLISHER "The Artisan Team"
 !define PRODUCT_WEB_SITE "https://github.com/artisan-roaster-scope/artisan/blob/master/README.md"
-!define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\artisan.exe"
+!define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\风味科学.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 
@@ -158,7 +158,7 @@ SetCompressor lzma
 
 ; MUI Settings
 !define MUI_ABORTWARNING
-!define MUI_ICON "artisan.ico"
+!define MUI_ICON "fwkx.ico"
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
 
 ; Welcome page
