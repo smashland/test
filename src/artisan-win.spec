@@ -93,6 +93,7 @@ logging.info("** QT_TRANSL: %s",QT_TRANSL)
 
 ##
 TARGET = 'dist\\' + NAME + '\\'
+TARGETINTER = 'dist\\' + NAME + '\\_internal\\includes\\'
 PYTHON_PACKAGES = PYTHON + r'\Lib\site-packages'
 PYQT_QT = PYTHON_PACKAGES + r'\PyQt' + PYQT + r'\Qt'
 PYQT_QT_BIN = PYQT_QT + r'\bin'
@@ -167,16 +168,16 @@ copy_file(r'..\vc_redist.x64.exe', TARGET)
 copy_file('README.txt',TARGET)
 copy_file(r'..\LICENSE', TARGET + r'\LICENSE.txt')
 #os.system('copy qt-win.conf ' + TARGET + 'qt.conf')
-make_dir(TARGET + 'Wheels')
-make_dir(TARGET + r'Wheels\Cupping')
-make_dir(TARGET + r'Wheels\Other')
-make_dir(TARGET + r'Wheels\Roasting')
-copy_file(r'Wheels\Cupping\*', TARGET + r'Wheels\Cupping')
-copy_file(r'Wheels\Other\*', TARGET + r'Wheels\Other')
-copy_file(r'Wheels\Roasting\*', TARGET + r'Wheels\Roasting')
+make_dir(TARGETINTER + 'Wheels')
+make_dir(TARGETINTER + r'Wheels\Cupping')
+make_dir(TARGETINTER + r'Wheels\Other')
+make_dir(TARGETINTER + r'Wheels\Roasting')
+copy_file(r'Wheels\Cupping\*', TARGETINTER + r'Wheels\Cupping')
+copy_file(r'Wheels\Other\*', TARGETINTER + r'Wheels\Other')
+copy_file(r'Wheels\Roasting\*', TARGETINTER + r'Wheels\Roasting')
 
-make_dir(TARGET + 'translations')
-copy_file(r'translations\*.qm', TARGET + 'translations')
+make_dir(TARGETINTER + 'translations')
+copy_file(r'translations\*.qm', TARGETINTER + 'translations')
 for tr in [
     'qtbase_ar.qm',
     'qtbase_de.qm',
@@ -200,7 +201,7 @@ for tr in [
 #    'qtconnectivity_ko.qm',
 #    'qtconnectivity_tr.qm',
     ]:
-    copy_file(QT_TRANSL + '\\' + tr, TARGET + 'translations',False)
+    copy_file(QT_TRANSL + '\\' + tr, TARGETINTER + 'translations',False)
 # Add the translations not available in PyQt5 for legacy Windows.
 if not ARTISAN_LEGACY=='True':
     for tr in [
@@ -217,11 +218,11 @@ if not ARTISAN_LEGACY=='True':
 #        'qtconnectivity_pt_BR.qm',
 #        'qtconnectivity_zh_CN.qm',
         ]:
-        copy_file(QT_TRANSL + '\\' + tr, TARGET + 'translations',False)
+        copy_file(QT_TRANSL + '\\' + tr, TARGETINTER + 'translations',False)
 
 
 # this directory no longer exists
-#remove_dir(TARGET + 'mpl-data\sample_data',False)
+#remove_dir(TARGETINTER + 'mpl-data\sample_data',False)
 
 # YOCTO HACK BEGIN: manually copy over the dlls
 make_dir(TARGET + r'_internal\yoctopuce\cdll')
@@ -276,11 +277,17 @@ for fn in [
     ]:
   copy_file(fn, TARGET)
 
+make_dir(TARGETINTER + 'Machines')
+xcopy_files(r'includes\Machines', TARGETINTER + 'Machines')
+
+make_dir(TARGETINTER + 'Themes')
+xcopy_files(r'includes\Themes', TARGETINTER + 'Themes')
+
+make_dir(TARGETINTER + 'Icons')
+xcopy_files(r'includes\Icons', TARGETINTER + 'Icons')
+
+make_dir(TARGET + 'localJson')
+xcopy_files(r'localJson', TARGET + 'localJson')
+
 make_dir(TARGET + 'Machines')
-xcopy_files(r'includes\Machines', TARGET + 'Machines')
-
-make_dir(TARGET + 'Themes')
-xcopy_files(r'includes\Themes', TARGET + 'Themes')
-
-make_dir(TARGET + 'Icons')
-xcopy_files(r'includes\Icons', TARGET + 'Icons')
+xcopy_files(r'Machines', TARGET + 'Machines')
