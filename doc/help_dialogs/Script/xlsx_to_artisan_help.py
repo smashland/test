@@ -299,15 +299,15 @@ if __name__ == '__main__':
                     fname_out = currPath + '../../../src/help/' + fn + '_help.py'
                     fname_htm = currPath + '../Output_html/' + fn + '_help.html'
                     print(f'\n{filename}')
-                    writepyFile(fname_in,fname_out)
-                    writehtmlFile(fname_in,fname_out,fname_htm)
+                    # writepyFile(fname_in,fname_out)
+                    # writehtmlFile(fname_in,fname_out,fname_htm)
         else:   #only one file
             fname_in =  currPath + '../Input_files/' + sys.argv[1] + '.xlsx'
             fname_out = currPath + '../../../src/help/' + sys.argv[1] + '_help.py'
             fname_htm = currPath + '../Output_html/' + sys.argv[1] + '_help.html'
             print(f'\n{sys.argv[1]}.xslx')
-            writepyFile(fname_in,fname_out)
-            writehtmlFile(fname_in,fname_out,fname_htm)
+            # writepyFile(fname_in,fname_out)
+            # writehtmlFile(fname_in,fname_out,fname_htm)
     else:
         print("Requires a <filename> to convert or 'all'")
         sys.exit()
