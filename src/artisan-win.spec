@@ -92,8 +92,8 @@ logging.info("** ARTISAN_LEGACY: %s", ARTISAN_LEGACY)
 logging.info("** QT_TRANSL: %s",QT_TRANSL)
 
 ##
-TARGET = 'dist\\' + NAME + '\\'
-TARGETINTER = 'dist\\' + NAME + '\\_internal\\includes\\'
+TARGET = 'dist\\artisan\\'
+TARGETINTER = 'dist\\artisan\\_internal\\includes\\'
 PYTHON_PACKAGES = PYTHON + r'\Lib\site-packages'
 PYQT_QT = PYTHON_PACKAGES + r'\PyQt' + PYQT + r'\Qt'
 PYQT_QT_BIN = PYQT_QT + r'\bin'

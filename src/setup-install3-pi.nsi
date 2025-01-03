@@ -123,7 +123,7 @@ RequestExecutionLevel admin
 
 
 ; HM NIS Edit Wizard helper defines
-!define pyinstallerOutputDir 'dist/风味科学'
+!define pyinstallerOutputDir 'dist/artisan'
 !define PRODUCT_NAME "风味科学"
 !define PRODUCT_PUBLISHER "The Artisan Team"
 !define PRODUCT_WEB_SITE "https://github.com/artisan-roaster-scope/artisan/blob/master/README.md"
