@@ -173,8 +173,10 @@ make_dir(TARGETINTER + r'Wheels\Cupping')
 make_dir(TARGETINTER + r'Wheels\Other')
 make_dir(TARGETINTER + r'Wheels\Roasting')
 
+
 copy_file(r'Wheels\Cupping\*', TARGETINTER + r'Wheels\Cupping')
 copy_file(r'Wheels\Other\*', TARGETINTER + r'Wheels\Other')
+copy_file(r'Wheels\Roasting\*', TARGETINTER + r'Wheels\Roasting')
 copy_file(r'Wheels\Roasting\*', TARGETINTER + r'Wheels\Roasting')
 
 make_dir(TARGETINTER + 'translations')
@@ -286,6 +288,9 @@ xcopy_files(r'includes\Themes', TARGETINTER + 'Themes')
 
 make_dir(TARGETINTER + 'Icons')
 xcopy_files(r'includes\Icons', TARGETINTER + 'Icons')
+
+make_dir(TARGETINTER + 'Fonts')
+xcopy_files(r'includes\Fonts', TARGETINTER + 'Fonts')
 
 make_dir(TARGET + 'localJson')
 copy_file(r'localJson', TARGET + 'localJson')
