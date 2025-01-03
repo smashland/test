@@ -172,6 +172,7 @@ make_dir(TARGETINTER + 'Wheels')
 make_dir(TARGETINTER + r'Wheels\Cupping')
 make_dir(TARGETINTER + r'Wheels\Other')
 make_dir(TARGETINTER + r'Wheels\Roasting')
+
 copy_file(r'Wheels\Cupping\*', TARGETINTER + r'Wheels\Cupping')
 copy_file(r'Wheels\Other\*', TARGETINTER + r'Wheels\Other')
 copy_file(r'Wheels\Roasting\*', TARGETINTER + r'Wheels\Roasting')
@@ -287,7 +288,4 @@ make_dir(TARGETINTER + 'Icons')
 xcopy_files(r'includes\Icons', TARGETINTER + 'Icons')
 
 make_dir(TARGET + 'localJson')
-xcopy_files(r'localJson', TARGET + 'localJson')
-
-make_dir(TARGET + 'Machines')
-xcopy_files(r'Machines', TARGET + 'Machines')
+copy_file(r'localJson', TARGET + 'localJson')
