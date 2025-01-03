@@ -1,0 +1,68 @@
+[
+    {
+        "id": 1, // id
+        "taskName": "烘焙", // 任务名称
+        "bakingBatch": "SDK-hb-dp-78798797", // 任务编号
+        "createTime": "2024-11-19 13:42:14", // 创建时间
+        "finishTime": "2024-12-12 12:12:12", // 结束时间
+        "numberOfBeans": 15, // 含水量
+        "number": 15, // 生豆
+        "bakingStatue": 1,  // 状态
+        "bakingDeviceId": 2, // 机器
+        "taskId": "065168552348575105",  // 任务ID
+        
+        "dehydrationRate": 40, // 脱水率(烘焙损失率)
+        "defectRate": 40, // 瑕疵率
+        "numberOfRipe": 10, // 熟豆重量
+        "bakingFinishTime": "2024-09-14 02:44:25", //任务结束时间
+        "desncription": "本次产品巴拉巴拉", // 任务反馈
+        // "taskTime": 987.0,// 烘焙时长
+        "agtronValue": 60,
+        "jsonMessage": {
+            "totaltime": "930",
+            "CHARGE_BT": 167.5,
+            "TP_BT": "80℃",
+            "TP_time": "90",
+            "Maillard": "135℃",
+            "Maillard_time": "320",
+            "FCs_BT": "162℃",
+            "FCs_time": "345",
+            "finishphasetime": "231",
+            "DTR": "22%", 
+            "Finish_Time": "187",
+            "target_temperature": [
+                135,
+                165,
+                182,
+                192,
+                198,
+                205
+            ],
+            "target_values": [
+                30,
+                35,
+                40,
+                90,
+                80,
+                65
+            ],
+            "actual_temperature": [ 
+                135,
+                166,
+                182,
+                195,
+                200,
+                205
+            ],
+            "actual_values": [ 
+                35,
+                40,
+                40,
+                90,
+                50,
+                65
+            ],
+            "alogJson": "222222"
+        }
+    }
+]

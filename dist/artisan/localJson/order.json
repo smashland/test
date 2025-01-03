@@ -1,0 +1,1621 @@
+[
+    {
+        "id": 3,
+        "taskName": "烘焙任务",
+        "bakingBatch": "task-2-20241220145200",
+        "createTime": "2024-12-20 14:52:00",
+        "finishTime": "2024-12-20 23:59",
+        "number": "11",
+        "numberOfBeans": "15",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "065168552208575105",
+        "stage1": [
+            100,
+            60,
+            43,
+            62
+        ],
+        "stage2": [
+            152,
+            70,
+            43,
+            63
+        ],
+        "stage3": [
+            175,
+            50,
+            43,
+            63
+        ],
+        "stage4": [
+            185,
+            40,
+            43,
+            62
+        ],
+        "stage5": [
+            195,
+            30,
+            43,
+            62
+        ],
+        "stage6": [
+            186,
+            30,
+            42,
+            62
+        ]
+    },
+    {
+        "id": 4,
+        "taskName": "烘焙任务",
+        "bakingBatch": "task-2-20241220145810",
+        "createTime": "2024-12-20 14:58:10",
+        "finishTime": "2024-12-20 23:59",
+        "number": "11",
+        "numberOfBeans": "15",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "455815538772475799",
+        "stage1": [
+            100,
+            60,
+            43,
+            62
+        ],
+        "stage2": [
+            152,
+            70,
+            43,
+            63
+        ],
+        "stage3": [
+            175,
+            50,
+            43,
+            63
+        ],
+        "stage4": [
+            185,
+            40,
+            43,
+            62
+        ],
+        "stage5": [
+            195,
+            30,
+            43,
+            62
+        ],
+        "stage6": [
+            186,
+            30,
+            42,
+            62
+        ]
+    },
+    {
+        "id": 5,
+        "taskName": "1",
+        "bakingBatch": "task-2-20241221110804",
+        "createTime": "2024-12-21 11:08:04",
+        "finishTime": "2024-12-21 23:59",
+        "number": "11",
+        "numberOfBeans": "11",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "586658395769860836",
+        "stage1": [
+            100,
+            60,
+            43,
+            62
+        ],
+        "stage2": [
+            152,
+            70,
+            43,
+            63
+        ],
+        "stage3": [
+            175,
+            50,
+            43,
+            63
+        ],
+        "stage4": [
+            185,
+            40,
+            43,
+            62
+        ],
+        "stage5": [
+            195,
+            30,
+            43,
+            62
+        ],
+        "stage6": [
+            186,
+            30,
+            42,
+            62
+        ]
+    },
+    {
+        "id": 6,
+        "taskName": "鹅鹅鹅",
+        "bakingBatch": "task-2-20241221112045",
+        "createTime": "2024-12-21 11:20:45",
+        "finishTime": "2024-12-21 23:59",
+        "number": "44",
+        "numberOfBeans": "44",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "835147795866898406",
+        "stage1": [
+            100,
+            60,
+            43,
+            62
+        ],
+        "stage2": [
+            152,
+            70,
+            43,
+            63
+        ],
+        "stage3": [
+            175,
+            50,
+            43,
+            63
+        ],
+        "stage4": [
+            185,
+            40,
+            43,
+            62
+        ],
+        "stage5": [
+            195,
+            30,
+            43,
+            62
+        ],
+        "stage6": [
+            186,
+            30,
+            42,
+            62
+        ]
+    },
+    {
+        "id": 7,
+        "taskName": "6一条鱼",
+        "bakingBatch": "task-2-20241221114108",
+        "createTime": "2024-12-21 11:41:08",
+        "finishTime": "2024-12-21 23:59",
+        "number": "5",
+        "numberOfBeans": "5",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "494225576216606687",
+        "stage1": [
+            100,
+            60,
+            43,
+            62
+        ],
+        "stage2": [
+            152,
+            70,
+            43,
+            63
+        ],
+        "stage3": [
+            175,
+            50,
+            43,
+            63
+        ],
+        "stage4": [
+            185,
+            40,
+            43,
+            62
+        ],
+        "stage5": [
+            195,
+            30,
+            43,
+            62
+        ],
+        "stage6": [
+            186,
+            30,
+            42,
+            62
+        ]
+    },
+    {
+        "id": 8,
+        "taskName": "贴图",
+        "bakingBatch": "task-2-20241221114855",
+        "createTime": "2024-12-21 11:48:55",
+        "finishTime": "2024-12-21 23:59",
+        "number": "4",
+        "numberOfBeans": "4",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "339454680040628881",
+        "stage1": [
+            100,
+            60,
+            43,
+            62
+        ],
+        "stage2": [
+            152,
+            70,
+            43,
+            63
+        ],
+        "stage3": [
+            175,
+            50,
+            43,
+            63
+        ],
+        "stage4": [
+            185,
+            40,
+            43,
+            62
+        ],
+        "stage5": [
+            195,
+            30,
+            43,
+            62
+        ],
+        "stage6": [
+            186,
+            30,
+            42,
+            62
+        ]
+    },
+    {
+        "id": 9,
+        "taskName": "66",
+        "bakingBatch": "task-2-20241222144549",
+        "createTime": "2024-12-22 14:45:49",
+        "finishTime": "2024-12-22 23:59",
+        "number": "66",
+        "numberOfBeans": "66",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "409343257970894384",
+        "stage1": [
+            100,
+            60,
+            43,
+            62
+        ],
+        "stage2": [
+            152,
+            70,
+            43,
+            63
+        ],
+        "stage3": [
+            175,
+            50,
+            43,
+            63
+        ],
+        "stage4": [
+            185,
+            40,
+            43,
+            62
+        ],
+        "stage5": [
+            195,
+            30,
+            43,
+            62
+        ],
+        "stage6": [
+            186,
+            30,
+            42,
+            62
+        ]
+    },
+    {
+        "id": 10,
+        "taskName": "44",
+        "bakingBatch": "task-2-20241223094718",
+        "createTime": "2024-12-23 09:47:18",
+        "finishTime": "2024-12-23 23:59",
+        "number": "4",
+        "numberOfBeans": "4",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "226501929548085634",
+        "stage1": [
+            100,
+            60,
+            43,
+            62
+        ],
+        "stage2": [
+            152,
+            70,
+            43,
+            63
+        ],
+        "stage3": [
+            175,
+            50,
+            43,
+            63
+        ],
+        "stage4": [
+            185,
+            40,
+            43,
+            62
+        ],
+        "stage5": [
+            195,
+            30,
+            43,
+            62
+        ],
+        "stage6": [
+            186,
+            30,
+            42,
+            62
+        ]
+    },
+    {
+        "id": 11,
+        "taskName": "7",
+        "bakingBatch": "task-2-20241230142957",
+        "createTime": "2024-12-30 14:29:57",
+        "finishTime": "2024-12-30 23:59",
+        "number": "6",
+        "numberOfBeans": "6",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "165641947520728059",
+        "stage1": [
+            100,
+            60,
+            43,
+            62
+        ],
+        "stage2": [
+            152,
+            70,
+            43,
+            63
+        ],
+        "stage3": [
+            175,
+            50,
+            43,
+            63
+        ],
+        "stage4": [
+            185,
+            40,
+            43,
+            62
+        ],
+        "stage5": [
+            195,
+            30,
+            43,
+            62
+        ],
+        "stage6": [
+            186,
+            30,
+            42,
+            62
+        ]
+    },
+    {
+        "id": 12,
+        "taskName": "2",
+        "bakingBatch": "task-2-20241230143351",
+        "createTime": "2024-12-30 14:33:51",
+        "finishTime": "2024-12-30 23:59",
+        "number": "2",
+        "numberOfBeans": "2",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "316571803467555247",
+        "stage1": [
+            105,
+            60,
+            42,
+            62
+        ],
+        "stage2": [
+            150,
+            70,
+            42,
+            62
+        ],
+        "stage3": [
+            160,
+            60,
+            42,
+            62
+        ],
+        "stage4": [
+            173,
+            30,
+            42,
+            62
+        ],
+        "stage5": [
+            180,
+            30,
+            42,
+            62
+        ],
+        "stage6": [
+            186,
+            30,
+            42,
+            62
+        ]
+    },
+    {
+        "id": 13,
+        "taskName": "3",
+        "bakingBatch": "task-2-20241230143356",
+        "createTime": "2024-12-30 14:33:56",
+        "finishTime": "2024-12-30 23:59",
+        "number": "3",
+        "numberOfBeans": "3",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "464649309875033602",
+        "stage1": [
+            100,
+            60,
+            43,
+            62
+        ],
+        "stage2": [
+            152,
+            70,
+            43,
+            63
+        ],
+        "stage3": [
+            175,
+            50,
+            43,
+            63
+        ],
+        "stage4": [
+            185,
+            40,
+            43,
+            62
+        ],
+        "stage5": [
+            195,
+            30,
+            43,
+            62
+        ],
+        "stage6": [
+            186,
+            30,
+            42,
+            62
+        ]
+    },
+    {
+        "id": 14,
+        "taskName": "4",
+        "bakingBatch": "task-2-20241230143401",
+        "createTime": "2024-12-30 14:34:01",
+        "finishTime": "2024-12-30 23:59",
+        "number": "4",
+        "numberOfBeans": "4",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "097052771919892743",
+        "stage1": [
+            105,
+            60,
+            42,
+            62
+        ],
+        "stage2": [
+            150,
+            70,
+            42,
+            62
+        ],
+        "stage3": [
+            160,
+            60,
+            42,
+            62
+        ],
+        "stage4": [
+            173,
+            30,
+            42,
+            62
+        ],
+        "stage5": [
+            180,
+            30,
+            42,
+            62
+        ],
+        "stage6": [
+            186,
+            30,
+            42,
+            62
+        ]
+    },
+    {
+        "id": 15,
+        "taskName": "3",
+        "bakingBatch": "task-2-20241230144326",
+        "createTime": "2024-12-30 14:43:26",
+        "finishTime": "2024-12-30 23:59",
+        "number": "3",
+        "numberOfBeans": "3",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "998606693838991518",
+        "stage1": [
+            105,
+            60,
+            42,
+            62
+        ],
+        "stage2": [
+            150,
+            70,
+            42,
+            62
+        ],
+        "stage3": [
+            160,
+            60,
+            42,
+            62
+        ],
+        "stage4": [
+            173,
+            30,
+            42,
+            62
+        ],
+        "stage5": [
+            180,
+            30,
+            42,
+            62
+        ],
+        "stage6": [
+            186,
+            30,
+            42,
+            62
+        ]
+    },
+    {
+        "id": 16,
+        "taskName": "4",
+        "bakingBatch": "task-2-20241230144544",
+        "createTime": "2024-12-30 14:45:44",
+        "finishTime": "2024-12-30 23:59",
+        "number": "4",
+        "numberOfBeans": "4",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "540293563047237409",
+        "stage1": [
+            105,
+            60,
+            42,
+            62
+        ],
+        "stage2": [
+            150,
+            70,
+            42,
+            62
+        ],
+        "stage3": [
+            160,
+            60,
+            42,
+            62
+        ],
+        "stage4": [
+            173,
+            30,
+            42,
+            62
+        ],
+        "stage5": [
+            180,
+            30,
+            42,
+            62
+        ],
+        "stage6": [
+            186,
+            30,
+            42,
+            62
+        ]
+    },
+    {
+        "id": 17,
+        "taskName": "5",
+        "bakingBatch": "task-2-20241230144549",
+        "createTime": "2024-12-30 14:45:49",
+        "finishTime": "2024-12-30 23:59",
+        "number": "5",
+        "numberOfBeans": "5",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "827697959244875241"
+    },
+    {
+        "id": 18,
+        "taskName": "6",
+        "bakingBatch": "task-2-20241230144554",
+        "createTime": "2024-12-30 14:45:54",
+        "finishTime": "2024-12-30 23:59",
+        "number": "6",
+        "numberOfBeans": "6",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "113946257105728811"
+    },
+    {
+        "id": 19,
+        "taskName": "1",
+        "bakingBatch": "task-2-20241230150808",
+        "createTime": "2024-12-30 15:08:08",
+        "finishTime": "2024-12-30 23:59",
+        "number": "11",
+        "numberOfBeans": "1",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "180338468576913363"
+    },
+    {
+        "id": 20,
+        "taskName": "1",
+        "bakingBatch": "task-2-20241230152334",
+        "createTime": "2024-12-30 15:23:34",
+        "finishTime": "2024-12-30 23:59",
+        "number": "1",
+        "numberOfBeans": "1",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "344077826993300236"
+    },
+    {
+        "id": 21,
+        "taskName": "2",
+        "bakingBatch": "task-2-20241230152340",
+        "createTime": "2024-12-30 15:23:40",
+        "finishTime": "2024-12-30 23:59",
+        "number": "2",
+        "numberOfBeans": "2",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "742227568109503617"
+    },
+    {
+        "id": 22,
+        "taskName": "3",
+        "bakingBatch": "task-2-20241230152346",
+        "createTime": "2024-12-30 15:23:46",
+        "finishTime": "2024-12-30 23:59",
+        "number": "3",
+        "numberOfBeans": "3",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "364717122849237892"
+    },
+    {
+        "id": 23,
+        "taskName": "4",
+        "bakingBatch": "task-2-20241230152353",
+        "createTime": "2024-12-30 15:23:53",
+        "finishTime": "2024-12-30 23:59",
+        "number": "4",
+        "numberOfBeans": "4",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "161011555213314392"
+    },
+    {
+        "id": 24,
+        "taskName": "5",
+        "bakingBatch": "task-2-20241230152359",
+        "createTime": "2024-12-30 15:23:59",
+        "finishTime": "2024-12-30 23:59",
+        "number": "5",
+        "numberOfBeans": "5",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "696700248502095669"
+    },
+    {
+        "id": 25,
+        "taskName": "1",
+        "bakingBatch": "task-2-20241230181548",
+        "createTime": "2024-12-30 18:15:48",
+        "finishTime": "2024-12-30 23:59",
+        "number": "1",
+        "numberOfBeans": "1",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "261610828494704576"
+    },
+    {
+        "id": 26,
+        "taskName": "2",
+        "bakingBatch": "task-2-20241230182814",
+        "createTime": "2024-12-30 18:28:14",
+        "finishTime": "2024-12-31 23:59",
+        "number": "2",
+        "numberOfBeans": "2",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "325067183320582630"
+    },
+    {
+        "id": 27,
+        "taskName": "5",
+        "bakingBatch": "task-2-20241230184924",
+        "createTime": "2024-12-30 18:49:24",
+        "finishTime": "2024-12-30 23:59",
+        "number": "5",
+        "numberOfBeans": "5",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "753702743938151090"
+    },
+    {
+        "id": 28,
+        "taskName": "7",
+        "bakingBatch": "task-2-20241230185824",
+        "createTime": "2024-12-30 18:58:24",
+        "finishTime": "2024-12-30 23:59",
+        "number": "7",
+        "numberOfBeans": "7",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "132684698290834776"
+    },
+    {
+        "id": 29,
+        "taskName": "9",
+        "bakingBatch": "task-2-20241230192241",
+        "createTime": "2024-12-30 19:22:41",
+        "finishTime": "2024-12-30 23:59",
+        "number": "9",
+        "numberOfBeans": "9",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "038499588328188641"
+    },
+    {
+        "id": 30,
+        "taskName": "qqq",
+        "bakingBatch": "task-2-20241231090126",
+        "createTime": "2024-12-31 09:01:26",
+        "finishTime": "2024-12-31 23:59",
+        "number": "12",
+        "numberOfBeans": "3",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "862808784705602675",
+        "stage1": [],
+        "stage2": [
+            132,
+            2,
+            2,
+            2
+        ],
+        "stage3": [],
+        "stage4": [],
+        "stage5": [],
+        "stage6": []
+    },
+    {
+        "id": 31,
+        "taskName": "我问问",
+        "bakingBatch": "task-2-20241231090601",
+        "createTime": "2024-12-31 09:06:01",
+        "finishTime": "2024-12-31 23:59",
+        "number": "13",
+        "numberOfBeans": "2",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "180962046474760655",
+        "stage1": [
+            133,
+            23,
+            23,
+            23
+        ],
+        "stage2": [
+            133,
+            23,
+            23,
+            23
+        ],
+        "stage3": [
+            133,
+            23,
+            23,
+            23
+        ],
+        "stage4": [
+            133,
+            23,
+            23,
+            23
+        ],
+        "stage5": [
+            133,
+            23,
+            23,
+            23
+        ],
+        "stage6": [
+            133,
+            23,
+            23,
+            23
+        ]
+    },
+    {
+        "id": 32,
+        "taskName": "通天塔",
+        "bakingBatch": "task-2-20241231091422",
+        "createTime": "2024-12-31 09:14:22",
+        "finishTime": "2024-12-31 23:59",
+        "number": "14",
+        "numberOfBeans": "2",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "953008715101258217",
+        "stage1": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage2": [
+            163,
+            45,
+            45,
+            45
+        ],
+        "stage3": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage4": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage5": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage6": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    {
+        "id": 33,
+        "taskName": "软辅",
+        "bakingBatch": "task-2-20241231091816",
+        "createTime": "2024-12-31 09:18:16",
+        "finishTime": "2024-12-31 23:59",
+        "number": "34",
+        "numberOfBeans": "2",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "236607462461107886",
+        "stage1": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage2": [
+            230,
+            22,
+            2,
+            2
+        ],
+        "stage3": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage4": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage5": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage6": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    {
+        "id": 34,
+        "taskName": "土工布",
+        "bakingBatch": "task-2-20241231092140",
+        "createTime": "2024-12-31 09:21:40",
+        "finishTime": "2024-12-31 23:59",
+        "number": "23",
+        "numberOfBeans": "2",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "990942063345860615",
+        "stage1": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage2": [
+            120,
+            23,
+            23,
+            23
+        ],
+        "stage3": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage4": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage5": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage6": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    {
+        "id": 35,
+        "taskName": "水电费",
+        "bakingBatch": "task-2-20241231093406",
+        "createTime": "2024-12-31 09:34:06",
+        "finishTime": "2024-12-31 23:59",
+        "number": "12",
+        "numberOfBeans": "2",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "696909093779120296",
+        "stage1": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage2": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage3": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage4": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage5": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage6": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    {
+        "id": 36,
+        "taskName": "体育",
+        "bakingBatch": "task-2-20241231093859",
+        "createTime": "2024-12-31 09:38:59",
+        "finishTime": "2024-12-31 23:59",
+        "number": "23",
+        "numberOfBeans": "2",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "720984251977355132",
+        "stage1": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage2": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage3": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage4": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage5": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage6": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    {
+        "id": 37,
+        "taskName": "呃呃呃",
+        "bakingBatch": "task-2-20241231094148",
+        "createTime": "2024-12-31 09:41:48",
+        "finishTime": "2024-12-31 23:59",
+        "number": "22",
+        "numberOfBeans": "1",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "951256710967526051",
+        "stage1": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage2": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage3": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage4": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage5": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage6": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    {
+        "id": 38,
+        "taskName": "啧啧啧",
+        "bakingBatch": "task-2-20241231094628",
+        "createTime": "2024-12-31 09:46:28",
+        "finishTime": "2024-12-31 23:59",
+        "number": "12",
+        "numberOfBeans": "3",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "217952889026854803",
+        "stage1": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage2": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage3": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage4": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage5": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage6": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    {
+        "id": 39,
+        "taskName": "自行车",
+        "bakingBatch": "task-2-20241231094825",
+        "createTime": "2024-12-31 09:48:25",
+        "finishTime": "2024-12-31 23:59",
+        "number": "13",
+        "numberOfBeans": "3",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "155359586429156919",
+        "stage1": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage2": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage3": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage4": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage5": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage6": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    {
+        "id": 40,
+        "taskName": "额尔敦",
+        "bakingBatch": "task-2-20241231113555",
+        "createTime": "2024-12-31 11:35:55",
+        "finishTime": "2024-12-31 23:59",
+        "number": "14",
+        "numberOfBeans": "3",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "789951581340889019",
+        "stage1": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage2": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage3": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage4": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage5": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage6": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    {
+        "id": 41,
+        "taskName": "小程序",
+        "bakingBatch": "task-2-20241231113900",
+        "createTime": "2024-12-31 11:39:00",
+        "finishTime": "2024-12-31 23:59",
+        "number": "14",
+        "numberOfBeans": "2",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "174243683764520854",
+        "stage1": [
+            2,
+            2,
+            2,
+            2
+        ],
+        "stage2": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage3": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage4": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage5": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage6": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    {
+        "id": 42,
+        "taskName": "让让让",
+        "bakingBatch": "task-2-20241231114915",
+        "createTime": "2024-12-31 11:49:15",
+        "finishTime": "2024-12-31 23:59",
+        "number": "12",
+        "numberOfBeans": "2",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "516067594257254935",
+        "stage1": [
+            2,
+            2,
+            2,
+            2
+        ],
+        "stage2": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage3": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage4": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage5": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage6": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    {
+        "id": 43,
+        "taskName": "吞吞吐吐",
+        "bakingBatch": "task-2-20241231115102",
+        "createTime": "2024-12-31 11:51:02",
+        "finishTime": "2024-12-31 23:59",
+        "number": "4",
+        "numberOfBeans": "4",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "601984594674954076",
+        "stage1": [
+            4,
+            4,
+            4,
+            4
+        ],
+        "stage2": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage3": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage4": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage5": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage6": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    {
+        "id": 44,
+        "taskName": "888",
+        "bakingBatch": "task-2-20241231130605",
+        "createTime": "2024-12-31 13:06:05",
+        "finishTime": "2024-12-31 23:59",
+        "number": "3",
+        "numberOfBeans": "3",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "913884018480645683",
+        "stage1": [
+            12,
+            1,
+            1,
+            1
+        ],
+        "stage2": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage3": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage4": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage5": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage6": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    {
+        "id": 45,
+        "taskName": "事实上",
+        "bakingBatch": "task-2-20241231132106",
+        "createTime": "2024-12-31 13:21:06",
+        "finishTime": "2024-12-31 23:59",
+        "number": "111",
+        "numberOfBeans": "3",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "579141047461355767",
+        "stage1": [
+            3,
+            3,
+            3,
+            3
+        ],
+        "stage2": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage3": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage4": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage5": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage6": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    {
+        "id": 46,
+        "taskName": "22",
+        "bakingBatch": "task-2-20241231132354",
+        "createTime": "2024-12-31 13:23:54",
+        "finishTime": "2024-12-31 23:59",
+        "number": "2",
+        "numberOfBeans": "2",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "917075621245928988",
+        "stage1": [
+            22,
+            2,
+            2,
+            2
+        ],
+        "stage2": [
+            3,
+            3,
+            3,
+            3
+        ],
+        "stage3": [
+            2,
+            3,
+            4,
+            5
+        ],
+        "stage4": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage5": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage6": [
+            0,
+            0,
+            0,
+            0
+        ]
+    }
+]
