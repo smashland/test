@@ -1988,7 +1988,7 @@ class ApplicationWindow(
             # print(f"当前屏幕DPI: logical DPI = {self.logical_dpi}, physical DPI = {self.physical_dpi}")
             # print(f"计算的缩放比例: {scale_factor:.2f}")
         else:
-            # print("无法获取屏幕信息")
+             print("无法获取屏幕信息")
 
         self.resize(self.screen_size.width(), self.screen_size.height())
 
