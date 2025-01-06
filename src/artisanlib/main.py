@@ -11076,7 +11076,7 @@ class ApplicationWindow(
         else:
             # self.jieduanTimer.stop()
             # self.label1111.setText('Time is up!')
-            # print('Time is up!')
+            print('Time is up!')
             # self.jieduanInfo()
 
     def todayClick(self):
