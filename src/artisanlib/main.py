@@ -25309,7 +25309,7 @@ class ApplicationWindow(
 
     # this should only be called from reset()
     def restoreExtraDeviceSettingsBackup(self) -> None:
-        # print(000)
+        print(000)
         # if self.simulator is None:
         #     try:
         #         filename = self.getExtraDeviceSettingsPath()
