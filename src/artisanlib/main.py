@@ -77,10 +77,10 @@ from bidi.algorithm import get_display  # type:ignore
 # links CTR-C signals to the system default (ignore)
 import signal
 
-print('当前 Python 解释器路径：')
-print(sys.executable)
+# print('当前 Python 解释器路径：')
+# print(sys.executable)
 
-print("当前工作目录:", os.getcwd())
+# print("当前工作目录:", os.getcwd())
 
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
@@ -1983,12 +1983,12 @@ class ApplicationWindow(
             self.height_scale = self.screen_size.height() / 1080
 
             # 输出屏幕信息
-            print(f"当前屏幕分辨率: {self.screen_size.width()}x{self.screen_size.height()}")
-            print(f"当前屏幕缩放比例: {self.width_scale:.2f}x{self.height_scale:.2f}")
-            print(f"当前屏幕DPI: logical DPI = {self.logical_dpi}, physical DPI = {self.physical_dpi}")
-            print(f"计算的缩放比例: {scale_factor:.2f}")
+            # print(f"当前屏幕分辨率: {self.screen_size.width()}x{self.screen_size.height()}")
+            # print(f"当前屏幕缩放比例: {self.width_scale:.2f}x{self.height_scale:.2f}")
+            # print(f"当前屏幕DPI: logical DPI = {self.logical_dpi}, physical DPI = {self.physical_dpi}")
+            # print(f"计算的缩放比例: {scale_factor:.2f}")
         else:
-            print("无法获取屏幕信息")
+            # print("无法获取屏幕信息")
 
         self.resize(self.screen_size.width(), self.screen_size.height())
 
@@ -3824,7 +3824,7 @@ class ApplicationWindow(
         self.qmc.setGeometry(56*self.width_scale, 50*self.height_scale, 884*self.width_scale, 360*self.height_scale)
         self.qmc.setVisible(True)
 
-        print('canvas=', self.dpi, locale)
+        # print('canvas=', self.dpi, locale)
 
 
         self.chartKey = QLabel(self.chartRect)
@@ -10535,7 +10535,7 @@ class ApplicationWindow(
         # 获取点击的项的文件路径
         file_path = item.data(Qt.ItemDataRole.UserRole)
 
-        print('file_path', file_path)
+        # print('file_path', file_path)
 
         # 创建一个 QAction，并设置相应的属性
         action = QAction(self)
@@ -10653,8 +10653,7 @@ class ApplicationWindow(
 
     def jieduanInfo(self, first_Value):
         # self.processInfoLabel.setText('171.3')
-        sys.stdout = open("lj.log", "w")
-        print(self.qmc.tpChangeBool)
+        # print(self.qmc.tpChangeBool)
         if self.qmc.tpChangeBool == False:
             self.jieduanNum.setText('1')
             self.mbwdNum.setText(str(first_Value[5][0]))
@@ -10662,7 +10661,6 @@ class ApplicationWindow(
             self.hlNumR.setText(str(first_Value[5][1]))
             self.fmNumR.setText(str(first_Value[5][2]))
             self.zsNumR.setText(str(first_Value[5][3]))
-            print('0')  # self.setmuwdNum
             self.setHl.setText(str(first_Value[5][1]))
             self.slider4.setValue(first_Value[5][1])
             self.slider4released()
@@ -10680,7 +10678,6 @@ class ApplicationWindow(
                 self.hlNumR.setText(str(first_Value[5][1]))
                 self.fmNumR.setText(str(first_Value[5][2]))
                 self.zsNumR.setText(str(first_Value[5][3]))
-                print('1')  # self.setmuwdNum
                 self.setHl.setText(str(first_Value[5][1]))
                 self.slider4.setValue(first_Value[5][1])
                 self.slider4released()
@@ -10699,7 +10696,6 @@ class ApplicationWindow(
                 self.hlNumR.setText(str(first_Value[6][1]))
                 self.fmNumR.setText(str(first_Value[6][2]))
                 self.zsNumR.setText(str(first_Value[6][3]))
-                print('2')
                 self.setHl.setText(str(first_Value[6][1]))
                 self.slider4.setValue(first_Value[6][1])
                 self.slider4released()
@@ -10718,7 +10714,6 @@ class ApplicationWindow(
                 self.hlNumR.setText(str(first_Value[7][1]))
                 self.fmNumR.setText(str(first_Value[7][2]))
                 self.zsNumR.setText(str(first_Value[7][3]))
-                print('3')
                 self.setHl.setText(str(first_Value[7][1]))
                 self.slider4.setValue(first_Value[7][1])
                 self.slider4released()
@@ -10737,7 +10732,6 @@ class ApplicationWindow(
                 self.hlNumR.setText(str(first_Value[8][1]))
                 self.fmNumR.setText(str(first_Value[8][2]))
                 self.zsNumR.setText(str(first_Value[8][3]))
-                print('4')
                 self.setHl.setText(str(first_Value[8][1]))
                 self.slider4.setValue(first_Value[8][1])
                 self.slider4released()
@@ -10756,7 +10750,6 @@ class ApplicationWindow(
                 self.hlNumR.setText(str(first_Value[9][1]))
                 self.fmNumR.setText(str(first_Value[9][2]))
                 self.zsNumR.setText(str(first_Value[9][3]))
-                print('5')
                 self.setHl.setText(str(first_Value[9][1]))
                 self.slider4.setValue(first_Value[9][1])
                 self.slider4released()
@@ -10775,7 +10768,6 @@ class ApplicationWindow(
                 self.hlNumR.setText(str(first_Value[10][1]))
                 self.fmNumR.setText(str(first_Value[10][2]))
                 self.zsNumR.setText(str(first_Value[10][3]))
-                print('6')
                 self.setHl.setText(str(first_Value[10][1]))
                 self.slider4.setValue(first_Value[10][1])
                 self.slider4released()
@@ -10794,7 +10786,7 @@ class ApplicationWindow(
         else:
             self.setHuoli = 100  # 设置最大值为 100，防止超出
 
-        print(self.setHuoli)
+        # print(self.setHuoli)
 
         # 更新界面元素
         self.setHl.setText(str(self.setHuoli))
@@ -10809,7 +10801,7 @@ class ApplicationWindow(
 
     def huoli_jian_clicked(self):
         self.setHuoli -= 5
-        print(self.setHuoli)
+        # print(self.setHuoli)
         self.setHl.setText(str(self.setHuoli))
         self.setHl.setStyleSheet(
             f"QLabel{{color: #FFFFFF;background-color: #393939;border-radius: {7*self.height_scale}px;border: 1px solid #222222;}}")
@@ -10818,7 +10810,7 @@ class ApplicationWindow(
 
     def fengmen_jia_clicked(self):
         self.setFengmen += 1
-        print(self.setFengmen)
+        # print(self.setFengmen)
         self.setFm.setText(str(self.setFengmen))
         self.setFm.setStyleSheet(
             f"QLabel{{color: #FFFFFF;background-color: #393939;border-radius: {7*self.height_scale}px;border: 1px solid #222222;}}")
@@ -10827,7 +10819,7 @@ class ApplicationWindow(
 
     def fengmen_jian_clicked(self):
         self.setFengmen -= 1
-        print(self.setFengmen)
+        # print(self.setFengmen)
         self.setFm.setText(str(self.setFengmen))
         self.setFm.setStyleSheet(
             f"QLabel{{color: #FFFFFF;background-color: #393939;border-radius: {7*self.height_scale}px;border: 1px solid #222222;}}")
@@ -10836,7 +10828,7 @@ class ApplicationWindow(
 
     def zhuansu_jia_clicked(self):
         self.setZhuansu += 1
-        print(self.setZhuansu)
+        # print(self.setZhuansu)
         self.setZs.setText(str(self.setZhuansu))
         self.setZs.setStyleSheet(
             f"QLabel{{color: #FFFFFF;background-color: #393939;border-radius: {7*self.height_scale}px;border: 1px solid #222222;}}")
@@ -10845,7 +10837,7 @@ class ApplicationWindow(
 
     def zhuansu_jian_clicked(self):
         self.setZhuansu -= 1
-        print(self.setZhuansu)
+        # print(self.setZhuansu)
         self.setZs.setText(str(self.setZhuansu))
         self.setZs.setStyleSheet(
             f"QLabel{{color: #FFFFFF;background-color: #393939;border-radius: {7*self.height_scale}px;border: 1px solid #222222;}}")
@@ -11080,11 +11072,11 @@ class ApplicationWindow(
         if self.time_left > 0:
             self.time_left -= 1
             # self.label1111.setText(f'Time left: {self.time_left} seconds')
-            print(self.time_left)
+            # print(self.time_left)
         else:
             # self.jieduanTimer.stop()
             # self.label1111.setText('Time is up!')
-            print('Time is up!')
+            # print('Time is up!')
             # self.jieduanInfo()
 
     def todayClick(self):
@@ -15891,11 +15883,9 @@ class ApplicationWindow(
     @pyqtSlot(bool)
     def openMachineSettings(self, file_path: str, _checked: bool = False) -> None:
         action = self.sender()
-        sys.stdout=open("lj.log","w")
         # print(action.data())
         try:
             if action and hasattr(action, 'text'):
-                print("text")
                 label = (action.text())
                 # label = label.replace('&&',
                 #                       '&')  # we reduce those && again to & that were introduced to have the & rendered in the menu entry
@@ -15927,7 +15917,7 @@ class ApplicationWindow(
                 orgResi = 1
 
                 if hasattr(action, 'text'):
-                    print(self.modbus.host, self.qmc.roasterheating, self.qmc.roastersize)
+                 
                     self.qmc.etypes = self.qmc.etypesdefault[:]
                     # keep original information to Cancel
                     org_etypes = self.qmc.etypes
@@ -25319,7 +25309,7 @@ class ApplicationWindow(
 
     # this should only be called from reset()
     def restoreExtraDeviceSettingsBackup(self) -> None:
-        print(000)
+        # print(000)
         # if self.simulator is None:
         #     try:
         #         filename = self.getExtraDeviceSettingsPath()
