@@ -86,7 +86,7 @@ else:
     logging.error(msg)
     sys.exit('Fatal Error')
 
-NAME = 'artisan'
+NAME = '风味科学'
 
 logging.info("** ARTISAN_LEGACY: %s", ARTISAN_LEGACY)
 logging.info("** QT_TRANSL: %s",QT_TRANSL)
