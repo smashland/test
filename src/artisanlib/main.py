@@ -21592,7 +21592,7 @@ class ApplicationWindow(
                 self.readingslcdsflags[0] = 0
 
     def showLCDs(self, changeDefault: bool = True) -> None:
-        self.lcd1.setVisible(True)
+        self.lcd1.setVisible(False)
         self.lcdFrame.setVisible(True)
         self.readingsAction.setChecked(True)
         if changeDefault:

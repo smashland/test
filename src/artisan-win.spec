@@ -280,8 +280,8 @@ for fn in [
     ]:
   copy_file(fn, TARGET)
 
-make_dir(TARGETINTER + 'Machines')
-xcopy_files(r'includes\Machines', TARGETINTER + 'Machines')
+make_dir(TARGET + 'Machines')
+xcopy_files(r'includes\Machines', TARGET + 'Machines')
 
 make_dir(TARGETINTER + 'Themes')
 xcopy_files(r'includes\Themes', TARGETINTER + 'Themes')
