@@ -86,7 +86,7 @@ else:
     logging.error(msg)
     sys.exit('Fatal Error')
 
-NAME = '风味科学'
+NAME = 'artisan'
 
 logging.info("** ARTISAN_LEGACY: %s", ARTISAN_LEGACY)
 logging.info("** QT_TRANSL: %s",QT_TRANSL)
@@ -159,7 +159,7 @@ coll = COLLECT(exe,
                a.datas,
                strip=False, # =True fails
                upx=True, # not installed
-               name="artisan")
+               name=NAME)
 
 
 # assumes the Microsoft Visual C++ 2015 Redistributable Package (x64), vc_redist.x64.exe, is located above the source directory
