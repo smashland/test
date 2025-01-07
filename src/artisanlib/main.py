@@ -103,6 +103,7 @@ try:
 
 
     def md_version(distribution_name: str) -> str:
+        print("distribution_name",distribution_name)
         if distribution_name == 'prettytable':
             return '2.1.0'
         return importlib_metadata.version(distribution_name)
@@ -133,6 +134,7 @@ QtWebEngineSupport: bool = False  # set to True if the QtWebEngine was successfu
 try:
     import importlib.metadata as importlib_metadata # @UnresolvedImport
     def md_version(distribution_name:str) -> str:
+        print("distribution_name",distribution_name)
         if distribution_name == 'prettytable':
             return '2.1.0'
         return importlib_metadata.version(distribution_name)
@@ -16062,7 +16064,7 @@ class ApplicationWindow(
                             #                                          1)  # decimals
                             # if res2 is not None and res2:
                             #     res = res2
-                            self.qmc.roastersize_setup = self.qmc.roastersize = batchsize
+                            self.qmc.roastersize_setup = self.qmc.roastersize
                         else:
                             res = self.qmc.roastersize_setup != 0  # roastersize_setup was loaded from machine setup
                     if res:

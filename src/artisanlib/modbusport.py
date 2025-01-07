@@ -289,10 +289,12 @@ class modbusport:
                     self.readRetries = self.serial_readRetries
                 elif self.type == 3: # TCP
                     from pymodbus.client import ModbusTcpClient
+                    from pymodbus.framer import Framer
                     try:
                         self.master = ModbusTcpClient(
                                 host=self.host,
                                 port=self.port,
+                                framer=Framer.SOCKET,
                                 retries=1,                # number of send retries
                                 retry_on_empty=True,      # retry on empty response
                                 retry_on_invalid=True,    # retry on invalid response # retired
