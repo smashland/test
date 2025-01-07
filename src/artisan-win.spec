@@ -159,7 +159,7 @@ coll = COLLECT(exe,
                a.datas,
                strip=False, # =True fails
                upx=True, # not installed
-               name=NAME)
+               name="artisan")
 
 
 # assumes the Microsoft Visual C++ 2015 Redistributable Package (x64), vc_redist.x64.exe, is located above the source directory

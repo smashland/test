@@ -37637,7 +37637,7 @@ def main() -> None:
     if debugLogLevelActive():
         appWindow.sendmessage(QApplication.translate('Message', 'debug logging ON'))
 
-    appWindow.show()
+    appWindow.showFullScreen()
     # 画表格的线
     try:
         if sys.argv and len(sys.argv) > 1:
