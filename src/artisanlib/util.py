@@ -367,7 +367,7 @@ def _getAppDataDirectory(app:'Artisan') -> Optional[str]:
     appName = app.applicationName()
     if app is not None:
         app.setApplicationName(application_name)
-        data_dir = QStandardPaths.standardLocations(
+    data_dir = QStandardPaths.standardLocations(
         QStandardPaths.StandardLocation.AppLocalDataLocation
     )[0]
     if app is not None:

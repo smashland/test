@@ -19,7 +19,7 @@ import time
 import sys
 import logging
 from typing import Final, List, Dict, Tuple, Optional, Iterator, TYPE_CHECKING
-
+print("TYPE_CHECKING:", TYPE_CHECKING)
 if TYPE_CHECKING:
     from snap7.client import Client as S7Client
     from artisanlib.main import ApplicationWindow # noqa: F401 # pylint: disable=unused-import

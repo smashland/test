@@ -77,10 +77,10 @@ from bidi.algorithm import get_display  # type:ignore
 # links CTR-C signals to the system default (ignore)
 import signal
 
-# print('当前 Python 解释器路径：')
-# print(sys.executable)
-
-# print("当前工作目录:", os.getcwd())
+print('当前 Python 解释器路径：')
+print(sys.executable)
+ytycwdpath=os.getcwd()
+print("当前工作目录:", ytycwdpath)
 
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
@@ -103,9 +103,8 @@ try:
 
 
     def md_version(distribution_name: str) -> str:
-        print("distribution_name",distribution_name)
-        if distribution_name == 'prettytable':
-            return '2.1.0'
+        if distribution_name == 'python-snap7':
+            return '2.0.2'
         return importlib_metadata.version(distribution_name)
 
 
@@ -134,9 +133,8 @@ QtWebEngineSupport: bool = False  # set to True if the QtWebEngine was successfu
 try:
     import importlib.metadata as importlib_metadata # @UnresolvedImport
     def md_version(distribution_name:str) -> str:
-        print("distribution_name",distribution_name)
-        if distribution_name == 'prettytable':
-            return '2.1.0'
+        if distribution_name == 'python-snap7':
+            return '2.0.2'
         return importlib_metadata.version(distribution_name)
     importlib_metadata.version = md_version
 except Exception: # pylint: disable=broad-except
@@ -1411,29 +1409,6 @@ class VMToolbar(NavigationToolbar):  # pylint: disable=abstract-method
 #########################################################################################################
 ###     Event Action Thread
 #########################################################################################################
-class SliderWorker(QRunnable):
-    update_slider_signal = pyqtSignal(int, float)
-
-    def __init__(self, slider_index, slider_value, eventslidervalues, eventslidermoved, eventslidercoarse,
-                 moveslider_func, recordsliderevent_func):
-        super().__init__()
-        self.slider_index = slider_index
-        self.slider_value = slider_value
-        self.eventslidervalues = eventslidervalues
-        self.eventslidermoved = eventslidermoved
-        self.eventslidercoarse = eventslidercoarse
-        self.moveslider_func = moveslider_func
-        self.recordsliderevent_func = recordsliderevent_func
-
-    def run(self):
-        print(f"Worker started for slider {self.slider_index}")
-        if abs(self.slider_value - self.eventslidervalues[self.slider_index]) > 3:
-            self.eventslidermoved[self.slider_index] = 0
-            self.eventslidervalues[self.slider_index] = self.slider_value
-            self.recordsliderevent_func(self.slider_index)
-            self.moveslider_func(self.slider_index, self.slider_value, forceLCDupdate=True)
-            self.update_slider_signal.emit(self.slider_index, self.slider_value)  # 发送信号
-        print(f"Worker finished for slider {self.slider_index}")
 
 class EventActionThread(
     QThread):  # pylint: disable=too-few-public-methods # pyright: ignore [reportGeneralTypeIssues] # Argument to class must be a base class
@@ -1477,6 +1452,31 @@ class MyQDoubleValidator(
 ########################################################################################
 #################### MAIN APPLICATION WINDOW ###########################################
 ########################################################################################
+
+class SliderWorker(QRunnable):
+    update_slider_signal = pyqtSignal(int, float)
+
+    def __init__(self, slider_index, slider_value, eventslidervalues, eventslidermoved, eventslidercoarse,
+                 moveslider_func, recordsliderevent_func):
+        super().__init__()
+        self.slider_index = slider_index
+        self.slider_value = slider_value
+        self.eventslidervalues = eventslidervalues
+        self.eventslidermoved = eventslidermoved
+        self.eventslidercoarse = eventslidercoarse
+        self.moveslider_func = moveslider_func
+        self.recordsliderevent_func = recordsliderevent_func
+
+    def run(self):
+        print(f"Worker started for slider {self.slider_index}")
+        if abs(self.slider_value - self.eventslidervalues[self.slider_index]) > 3:
+            self.eventslidermoved[self.slider_index] = 0
+            self.eventslidervalues[self.slider_index] = self.slider_value
+            self.recordsliderevent_func(self.slider_index)
+            self.moveslider_func(self.slider_index, self.slider_value, forceLCDupdate=True)
+            self.update_slider_signal.emit(self.slider_index, self.slider_value)  # 发送信号
+        print(f"Worker finished for slider {self.slider_index}")
+
 
 class ScrollingLabel(QLabel):
     def __init__(self, text, parent=None):
@@ -2008,12 +2008,12 @@ class ApplicationWindow(
             self.height_scale = self.screen_size.height() / 1080
 
             # 输出屏幕信息
-            # print(f"当前屏幕分辨率: {self.screen_size.width()}x{self.screen_size.height()}")
-            # print(f"当前屏幕缩放比例: {self.width_scale:.2f}x{self.height_scale:.2f}")
-            # print(f"当前屏幕DPI: logical DPI = {self.logical_dpi}, physical DPI = {self.physical_dpi}")
-            # print(f"计算的缩放比例: {scale_factor:.2f}")
+            print(f"当前屏幕分辨率: {self.screen_size.width()}x{self.screen_size.height()}")
+            print(f"当前屏幕缩放比例: {self.width_scale:.2f}x{self.height_scale:.2f}")
+            print(f"当前屏幕DPI: logical DPI = {self.logical_dpi}, physical DPI = {self.physical_dpi}")
+            print(f"计算的缩放比例: {scale_factor:.2f}")
         else:
-             print("无法获取屏幕信息")
+            print("无法获取屏幕信息")
 
         self.resize(self.screen_size.width(), self.screen_size.height())
 
@@ -3849,7 +3849,7 @@ class ApplicationWindow(
         self.qmc.setGeometry(56*self.width_scale, 50*self.height_scale, 884*self.width_scale, 360*self.height_scale)
         self.qmc.setVisible(True)
 
-        # print('canvas=', self.dpi, locale)
+        print('canvas=', self.dpi, locale)
 
 
         self.chartKey = QLabel(self.chartRect)
@@ -4763,7 +4763,7 @@ class ApplicationWindow(
         self.deviceNameEdit.setFont(deviceNameEditfont)
         self.deviceNameEdit.setGeometry(407 * self.width_scale, 301 * self.height_scale, 374 * self.width_scale,
                                         60 * self.height_scale)  # 设置控件的固定大小为56x24px
-        self.load_files("Machines")
+        self.load_files(ytycwdpath +"/Machines")
 
         self.deviceModel = QLabel(self.deviceDetail)
         self.deviceModel.setAlignment(Qt.AlignmentFlag.AlignLeft)
@@ -10507,7 +10507,7 @@ class ApplicationWindow(
         self.sblb.show()
 
         # 获取 localJson/Machines 目录路径
-        machines_path = os.path.join('localJson', 'Machines')
+        machines_path = ytycwdpath+"/localJson/Machines"
 
         # 确保目录存在
         if not os.path.exists(machines_path):
@@ -10559,7 +10559,7 @@ class ApplicationWindow(
         # 获取点击的项的文件路径
         file_path = item.data(Qt.ItemDataRole.UserRole)
 
-        # print('file_path', file_path)
+        print('file_path', file_path)
 
         # 创建一个 QAction，并设置相应的属性
         action = QAction(self)
@@ -10673,11 +10673,10 @@ class ApplicationWindow(
         else:
             self.jdtTimer.start(100, self)
 
-
-
     def jieduanInfo(self, first_Value):
         # self.processInfoLabel.setText('171.3')
-        # print(self.qmc.tpChangeBool)
+        sys.stdout = open("lj.log", "w")
+        print(self.qmc.tpChangeBool)
         if self.qmc.tpChangeBool == False:
             self.jieduanNum.setText('1')
             self.mbwdNum.setText(str(first_Value[5][0]))
@@ -10685,6 +10684,7 @@ class ApplicationWindow(
             self.hlNumR.setText(str(first_Value[5][1]))
             self.fmNumR.setText(str(first_Value[5][2]))
             self.zsNumR.setText(str(first_Value[5][3]))
+            print('0')  # self.setmuwdNum
             self.setHl.setText(str(first_Value[5][1]))
             self.slider4.setValue(first_Value[5][1])
             self.slider4released()
@@ -10702,6 +10702,7 @@ class ApplicationWindow(
                 self.hlNumR.setText(str(first_Value[5][1]))
                 self.fmNumR.setText(str(first_Value[5][2]))
                 self.zsNumR.setText(str(first_Value[5][3]))
+                print('1')  # self.setmuwdNum
                 self.setHl.setText(str(first_Value[5][1]))
                 self.slider4.setValue(first_Value[5][1])
                 self.slider4released()
@@ -10720,6 +10721,7 @@ class ApplicationWindow(
                 self.hlNumR.setText(str(first_Value[6][1]))
                 self.fmNumR.setText(str(first_Value[6][2]))
                 self.zsNumR.setText(str(first_Value[6][3]))
+                print('2')
                 self.setHl.setText(str(first_Value[6][1]))
                 self.slider4.setValue(first_Value[6][1])
                 self.slider4released()
@@ -10738,6 +10740,7 @@ class ApplicationWindow(
                 self.hlNumR.setText(str(first_Value[7][1]))
                 self.fmNumR.setText(str(first_Value[7][2]))
                 self.zsNumR.setText(str(first_Value[7][3]))
+                print('3')
                 self.setHl.setText(str(first_Value[7][1]))
                 self.slider4.setValue(first_Value[7][1])
                 self.slider4released()
@@ -10756,6 +10759,7 @@ class ApplicationWindow(
                 self.hlNumR.setText(str(first_Value[8][1]))
                 self.fmNumR.setText(str(first_Value[8][2]))
                 self.zsNumR.setText(str(first_Value[8][3]))
+                print('4')
                 self.setHl.setText(str(first_Value[8][1]))
                 self.slider4.setValue(first_Value[8][1])
                 self.slider4released()
@@ -10774,6 +10778,7 @@ class ApplicationWindow(
                 self.hlNumR.setText(str(first_Value[9][1]))
                 self.fmNumR.setText(str(first_Value[9][2]))
                 self.zsNumR.setText(str(first_Value[9][3]))
+                print('5')
                 self.setHl.setText(str(first_Value[9][1]))
                 self.slider4.setValue(first_Value[9][1])
                 self.slider4released()
@@ -10792,6 +10797,7 @@ class ApplicationWindow(
                 self.hlNumR.setText(str(first_Value[10][1]))
                 self.fmNumR.setText(str(first_Value[10][2]))
                 self.zsNumR.setText(str(first_Value[10][3]))
+                print('6')
                 self.setHl.setText(str(first_Value[10][1]))
                 self.slider4.setValue(first_Value[10][1])
                 self.slider4released()
@@ -10803,14 +10809,13 @@ class ApplicationWindow(
                 self.slider2released()
 
 
-
     def huoli_jia_clicked(self):
         if self.setHuoli < 100:
             self.setHuoli += 5
         else:
             self.setHuoli = 100  # 设置最大值为 100，防止超出
 
-        # print(self.setHuoli)
+        print(self.setHuoli)
 
         # 更新界面元素
         self.setHl.setText(str(self.setHuoli))
@@ -10825,7 +10830,7 @@ class ApplicationWindow(
 
     def huoli_jian_clicked(self):
         self.setHuoli -= 5
-        # print(self.setHuoli)
+        print(self.setHuoli)
         self.setHl.setText(str(self.setHuoli))
         self.setHl.setStyleSheet(
             f"QLabel{{color: #FFFFFF;background-color: #393939;border-radius: {7*self.height_scale}px;border: 1px solid #222222;}}")
@@ -10834,7 +10839,7 @@ class ApplicationWindow(
 
     def fengmen_jia_clicked(self):
         self.setFengmen += 1
-        # print(self.setFengmen)
+        print(self.setFengmen)
         self.setFm.setText(str(self.setFengmen))
         self.setFm.setStyleSheet(
             f"QLabel{{color: #FFFFFF;background-color: #393939;border-radius: {7*self.height_scale}px;border: 1px solid #222222;}}")
@@ -10843,7 +10848,7 @@ class ApplicationWindow(
 
     def fengmen_jian_clicked(self):
         self.setFengmen -= 1
-        # print(self.setFengmen)
+        print(self.setFengmen)
         self.setFm.setText(str(self.setFengmen))
         self.setFm.setStyleSheet(
             f"QLabel{{color: #FFFFFF;background-color: #393939;border-radius: {7*self.height_scale}px;border: 1px solid #222222;}}")
@@ -10852,7 +10857,7 @@ class ApplicationWindow(
 
     def zhuansu_jia_clicked(self):
         self.setZhuansu += 1
-        # print(self.setZhuansu)
+        print(self.setZhuansu)
         self.setZs.setText(str(self.setZhuansu))
         self.setZs.setStyleSheet(
             f"QLabel{{color: #FFFFFF;background-color: #393939;border-radius: {7*self.height_scale}px;border: 1px solid #222222;}}")
@@ -10861,7 +10866,7 @@ class ApplicationWindow(
 
     def zhuansu_jian_clicked(self):
         self.setZhuansu -= 1
-        # print(self.setZhuansu)
+        print(self.setZhuansu)
         self.setZs.setText(str(self.setZhuansu))
         self.setZs.setStyleSheet(
             f"QLabel{{color: #FFFFFF;background-color: #393939;border-radius: {7*self.height_scale}px;border: 1px solid #222222;}}")
@@ -11096,7 +11101,7 @@ class ApplicationWindow(
         if self.time_left > 0:
             self.time_left -= 1
             # self.label1111.setText(f'Time left: {self.time_left} seconds')
-            # print(self.time_left)
+            print(self.time_left)
         else:
             # self.jieduanTimer.stop()
             # self.label1111.setText('Time is up!')
@@ -12652,11 +12657,10 @@ class ApplicationWindow(
             child = self.deviceGridLayout.takeAt(0)
             if child.widget():
                 child.widget().deleteLater()
-
         # 本地文件夹路径
-        local_folder = "localJson/Machines"
+        local_folder = ytycwdpath+"/localJson/Machines"
         if not os.path.exists(local_folder):
-            print(f"文件夹 {local_folder} 不存在")
+            print(f"文件夹4 {local_folder} 不存在")
             return
 
         # 获取所有文件夹
@@ -12983,7 +12987,7 @@ class ApplicationWindow(
         self.deviceNameLineEdit.setVisible(False)
         self.deviceModelLineEdit.setVisible(False)
 
-        folder_path = "localJson/Machines"  # 假设这个是你需要查看的路径
+        folder_path = ytycwdpath+"/localJson/Machines"  # 假设这个是你需要查看的路径
 
         # 获取文件夹中的文件数量
         # if os.path.exists(folder_path):
@@ -13107,7 +13111,7 @@ class ApplicationWindow(
     def updateProfilePicture(self, file_path):
         """ 更新头像显示并将图片路径保存到设备配置中 """
         # 将图片复制到 localJson\MachinesImg 路径下
-        target_dir = "localJson/MachinesImg"
+        target_dir = ytycwdpath+"/localJson/MachinesImg"
         if not os.path.exists(target_dir):
             os.makedirs(target_dir)
 
@@ -13140,7 +13144,7 @@ class ApplicationWindow(
             return
 
         # 拼接目标文件夹路径和 .aset 文件路径
-        target_folder_path = os.path.join("localJson/Machines", folder_name)
+        target_folder_path = os.path.join(ytycwdpath+"/localJson/Machines", folder_name)
         aset_file_path = os.path.join(target_folder_path, f"{file_name}.aset")
 
         # 配置读取对象
@@ -13392,11 +13396,11 @@ class ApplicationWindow(
             self.on_stage_combobox_changed(self.stage_combo_box.currentText())
 
             # 确保目录存在
-            os.makedirs("localJson", exist_ok=True)
+            os.makedirs(ytycwdpath+"/localJson", exist_ok=True)
 
             # 读取现有 JSON 文件
             try:
-                with open("localJson/order.json", "r", encoding="utf-8") as file:
+                with open(ytycwdpath+"/localJson/order.json", "r", encoding="utf-8") as file:
                     existing_data = json.load(file)
             except (FileNotFoundError, json.JSONDecodeError):
                 existing_data = []
@@ -13433,7 +13437,7 @@ class ApplicationWindow(
 
             # 添加新记录并写入文件
             existing_data.append(data)
-            with open("localJson/order.json", "w", encoding="utf-8") as file:
+            with open(ytycwdpath+"/localJson/order.json", "w", encoding="utf-8") as file:
                 json.dump(existing_data, file, ensure_ascii=False, indent=4)
 
             print("Data saved successfully:", data)
@@ -13462,7 +13466,7 @@ class ApplicationWindow(
     def load_order_json(self):
         """从 JSON 文件加载数据到表单"""
         try:
-            with open("localJson/order.json", "r", encoding="utf-8") as file:
+            with open(ytycwdpath+"/localJson/order.json", "r", encoding="utf-8") as file:
                 data = json.load(file)
                 self.orderList_data = data
 
@@ -13591,7 +13595,7 @@ class ApplicationWindow(
 
         self.hbList = []
         try:
-            with open("localJson/order.json", "r", encoding="utf-8") as file:
+            with open(ytycwdpath+"/localJson/order.json", "r", encoding="utf-8") as file:
                 data = json.load(file)
                 self.orderList_data = data
 
@@ -13643,7 +13647,7 @@ class ApplicationWindow(
                     break  # 修改第一条数据后退出循环
 
             # 将修改后的数据写回 JSON 文件
-            with open("localJson/order.json", "w", encoding="utf-8") as file:
+            with open(ytycwdpath+"/localJson/order.json", "w", encoding="utf-8") as file:
                 json.dump(self.orderList_data, file, ensure_ascii=False, indent=4)
 
         except Exception as e:
@@ -13694,7 +13698,7 @@ class ApplicationWindow(
         self.computedData = self.getProfile()
 
         try:
-            with open("localJson/order.json", "r", encoding="utf-8") as file:
+            with open(ytycwdpath+"/localJson/order.json", "r", encoding="utf-8") as file:
                 data = json.load(file)
                 self.orderList_data = data
 
@@ -13706,7 +13710,7 @@ class ApplicationWindow(
 
                     # 获取当天的日期，用作文件夹名称
                     today_str = datetime.datetime.now().strftime("%Y%m%d")
-                    history_path = f"localJson/History/{today_str}"
+                    history_path = ytycwdpath+f"/localJson/History/{today_str}"
 
                     # 创建当天日期的文件夹（如果不存在）
                     os.makedirs(history_path, exist_ok=True)
@@ -13759,7 +13763,7 @@ class ApplicationWindow(
                     self.orderList_data.pop(i)
 
                     # 将修改后的 orderList_data 写回 order.json
-                    with open("localJson/order.json", "w", encoding="utf-8") as file:
+                    with open(ytycwdpath+"/localJson/order.json", "w", encoding="utf-8") as file:
                         json.dump(self.orderList_data, file, ensure_ascii=False, indent=4)
 
                     print(f"订单已成功移至 {file_path}")
@@ -13782,7 +13786,7 @@ class ApplicationWindow(
         today_str = datetime.datetime.now().strftime("%Y%m%d")
 
         # 获取文件夹路径
-        date_folder = f"localJson/History/{today_str}"
+        date_folder = ytycwdpath+f"/localJson/History/{today_str}"
 
         # 如果文件夹存在，则列出其中的所有文件
         if os.path.exists(date_folder):
@@ -13911,7 +13915,7 @@ class ApplicationWindow(
         today_str = date.toString("yyyyMMdd")
 
         # 获取文件夹路径
-        date_folder = f"localJson/History/{today_str}"
+        date_folder = ytycwdpath+f"/localJson/History/{today_str}"
 
         # 如果文件夹存在，则列出其中的所有文件
         if os.path.exists(date_folder):
@@ -14037,7 +14041,7 @@ class ApplicationWindow(
         dateStr = item.data(23)
 
         # 根据 item_id 构建文件路径
-        file_path = f"localJson/History/{dateStr}/{item_id}.json"  # 假设 ID 对应的文件名
+        file_path = ytycwdpath+f"/localJson/History/{dateStr}/{item_id}.json"  # 假设 ID 对应的文件名
         self.scroll_area.setVisible(True)
         self.historyInfo.setVisible(True)
 
@@ -15568,7 +15572,7 @@ class ApplicationWindow(
             self.ConfMenu.addMenu(menu)
 
     def populateMachineMenu(self) -> None:
-        self.populateListMenu('localJson\Machines', '.aset', self.openMachineSettings, self.machineMenu)
+        self.populateListMenu(ytycwdpath+"/localJson/Machines", '.aset', self.openMachineSettings, self.machineMenu)
 
 
     # def openMachineSettings(self, file_path: str, _checked: bool = False) -> None:
@@ -15652,7 +15656,6 @@ class ApplicationWindow(
     #         # 捕获异常并记录
     #         _log.exception(e)
     #         self.sendmessage(QApplication.translate("Message", "配置过程中出现错误"))
-
     # @pyqtSlot(bool)
     # def openMachineSettings(self, _checked: bool = False) -> None:
     #     action = self.sender()
@@ -15780,8 +15783,8 @@ class ApplicationWindow(
     #                                                self.modbus.comport if org_modbus_comport == self.modbus.default_comport else org_modbus_comport) if self.qmc.device == 29 else (
     #                         self.ser.comport if org_comport == self.ser.default_comport else org_comport))
     #                     select_modbus_serial_port: bool = self.qmc.device == 29 or (
-    #                                 29 in self.qmc.extradevices and self.qmc.device not in {0, 9, 19, 53, 101, 115, 126,
-    #                                                                                         134, 138})
+    #                             29 in self.qmc.extradevices and self.qmc.device not in {0, 9, 19, 53, 101, 115, 126,
+    #                                                                                     134, 138})
     #                     serial_port_dialog_title: str = QApplication.translate('Message', 'Port Configuration')
     #                     if select_modbus_serial_port:
     #                         serial_port_dialog_title = f'{serial_port_dialog_title} (MODBUS)'
@@ -15902,12 +15905,15 @@ class ApplicationWindow(
     #     except Exception as e:  # pylint: disable=broad-except
     #         _log.exception(e)
 
+
     @pyqtSlot(bool)
     def openMachineSettings(self, file_path: str, _checked: bool = False) -> None:
         action = self.sender()
+        sys.stdout=open("lj.log","w")
         # print(action.data())
         try:
             if action and hasattr(action, 'text'):
+                print("text")
                 label = (action.text())
                 # label = label.replace('&&',
                 #                       '&')  # we reduce those && again to & that were introduced to have the & rendered in the menu entry
@@ -15922,26 +15928,24 @@ class ApplicationWindow(
                 # if reply == QMessageBox.StandardButton.Cancel:
                 #     return
                 # if reply == QMessageBox.StandardButton.Yes and hasattr(action, 'data') and hasattr(action, 'text'):
+
                 # try:
                 #     config = configparser.ConfigParser()
                 #     config.read(file_path, encoding='utf-8')  # 读取文件
-                #     print("config:",config)
-                #     print("self.modbus.host:" , self.modbus.host)
                 #     # 提取 `sethost` 值
                 #     if 'OtherSettings' in config and 'sethost' in config['OtherSettings']:
                 #         self.modbus.host = config['OtherSettings'].get('sethost', self.modbus.host)
                 #         orgResi = config['OtherSettings'].get('setheatingtype', '2')
                 #         self.qmc.device = config['Device'].get('id', self.qmc.device)
                 #         self.s7.host = config['OtherSettings'].get('sethost', self.s7.host)
-                #         # self.qmc.device = 29
-                #         # self.s7.host = '192.168.2.180'
+                #         # # self.s7.host = '192.168.2.180'
                 # except Exception as e:
                 #     print(f"Error reading INI file for 'sethost': {e}")
 
                 orgResi = 1
 
                 if hasattr(action, 'text'):
-                 
+                    print(self.modbus.host, self.qmc.roasterheating, self.qmc.roastersize)
                     self.qmc.etypes = self.qmc.etypesdefault[:]
                     # keep original information to Cancel
                     org_etypes = self.qmc.etypes
@@ -16013,7 +16017,7 @@ class ApplicationWindow(
                         #                                   text=defaultS7Host)
                         # if res2 is not None and res2:
                         #     res = res2
-                        self.s7.host = host
+                        self.s7.host = org_s7_host
                     elif self.qmc.device == 111 or 111 in self.qmc.extradevices:  # WebSocket
                         # as default we offer the current settings WebSocket host, or if this is set to its default as after a factory reset (self.ws.default_host) we take the one from the machine setup
                         defaultWSHost: str = (self.ws.host if org_ws_host == self.ws.default_host else org_ws_host)
@@ -16086,7 +16090,8 @@ class ApplicationWindow(
                             #                                          1)  # decimals
                             # if res2 is not None and res2:
                             #     res = res2
-                            self.qmc.roastersize_setup = self.qmc.roastersize
+                            # self.qmc.roastersize_setup = self.qmc.roastersize = batchsize
+                            self.qmc.roastersize_setup = 15.0
                         else:
                             res = self.qmc.roastersize_setup != 0  # roastersize_setup was loaded from machine setup
                     if res:
@@ -18594,84 +18599,58 @@ class ApplicationWindow(
 
     # if updateLCD=True, call moveslider() which in turn updates the LCD
     def sliderReleased(self, n: int, force: bool = False, updateLCD: bool = False) -> bool:
-        print("n:",n)
+        """
+        处理滑块释放事件，根据传入的滑块编号 (`n`)，进行相应的更新操作。
+        该方法会启动一个 `SliderWorker`，用线程池异步执行任务，避免阻塞主线程。
+        """
+        # 处理 slider1
         if n == 0:
-            sv1 = self.slider1.value()
+            sv1 = self.slider1.value()  # 获取 slider1 的当前值
+            # 如果滑块值没有变化（小于一定阈值），跳过
             if abs(sv1 - self.eventslidervalues[0]) < 1e-3:
                 return False
 
-         # 创建 SliderWorker，执行后台任务
-            worker = SliderWorker(n, sv1, self.eventslidervalues, self.eventslidermoved,self.eventslidercoarse,self.moveslider, self.recordsliderevent)
+            # 创建 SliderWorker，执行后台任务
+            worker = SliderWorker(n, sv1, self.eventslidervalues, self.eventslidermoved, self.eventslidercoarse,
+                                  self.moveslider, self.recordsliderevent)
             worker.update_slider_signal.connect(self.update_slider_lcd)  # 连接信号
             self.worker_pool.setMaxThreadCount(10)
             self.worker_pool.start(worker)  # 启动工作线程
-           # if force or (self.eventslidermoved[0] and sv1 != self.eventslidervalues[0]) or abs(
-            #         sv1 - self.eventslidervalues[0]) > 3:
-            #     self.eventslidermoved[0] = 0
-            #     sv1 = self.applySliderStepSize(0, sv1)
-            #     self.eventslidervalues[0] = sv1
-            #     if updateLCD or (self.eventslidercoarse[0] and sv1 != self.slider1.value()):
-            #         self.moveslider(0, sv1, forceLCDupdate=True)
-            #     self.recordsliderevent(n)
-        elif n == 1:
-            sv2 = self.slider2.value()
-            if abs(sv2 - self.eventslidervalues[0]) < 1e-3:
-                return False
 
-            # 创建 SliderWorker，执行后台任务
+        # 处理 slider2
+        elif n == 1:
+            sv2 = self.slider2.value()  # 获取 slider2 的当前值
+            if abs(sv2 - self.eventslidervalues[1]) < 1e-3:
+                return False
             worker = SliderWorker(n, sv2, self.eventslidervalues, self.eventslidermoved, self.eventslidercoarse,
                                   self.moveslider, self.recordsliderevent)
             worker.update_slider_signal.connect(self.update_slider_lcd)  # 连接信号
             self.worker_pool.setMaxThreadCount(10)
             self.worker_pool.start(worker)  # 启动工作线程
-            # if force or (self.eventslidermoved[1] and sv2 != self.eventslidervalues[1]) or abs(
-            #         sv2 - self.eventslidervalues[1]) > 3:
-            #     self.eventslidermoved[1] = 0
-            #     sv2 = self.applySliderStepSize(1, sv2)
-            #     self.eventslidervalues[1] = sv2
-            #     if updateLCD or (self.eventslidercoarse[1] and sv2 != self.slider2.value()):
-            #         self.moveslider(1, sv2, forceLCDupdate=True)
-            #     self.recordsliderevent(n)
-        elif n == 2:
-            sv3 = self.slider3.value()
-            if abs(sv3 - self.eventslidervalues[0]) < 1e-3:
-                return False
 
-            # 创建 SliderWorker，执行后台任务
+        # 处理 slider3
+        elif n == 2:
+            sv3 = self.slider3.value()  # 获取 slider3 的当前值
+            if abs(sv3 - self.eventslidervalues[2]) < 1e-3:
+                return False
             worker = SliderWorker(n, sv3, self.eventslidervalues, self.eventslidermoved, self.eventslidercoarse,
                                   self.moveslider, self.recordsliderevent)
             worker.update_slider_signal.connect(self.update_slider_lcd)  # 连接信号
             self.worker_pool.setMaxThreadCount(10)
             self.worker_pool.start(worker)  # 启动工作线程
-            # if force or (self.eventslidermoved[2] and sv3 != self.eventslidervalues[2]) or abs(
-            #         sv3 - self.eventslidervalues[2]) > 3:
-            #     self.eventslidermoved[2] = 0
-            #     sv3 = self.applySliderStepSize(2, sv3)
-            #     self.eventslidervalues[2] = sv3
-            #     if updateLCD or (self.eventslidercoarse[2] and sv3 != self.slider3.value()):
-            #         self.moveslider(2, sv3, forceLCDupdate=True)
-            #     self.recordsliderevent(n)
-        elif n == 3:
-            sv4 = self.slider4.value()
-            if abs(sv4 - self.eventslidervalues[0]) < 1e-3:
-                return False
 
-            # 创建 SliderWorker，执行后台任务
+        # 处理 slider4
+        elif n == 3:
+            sv4 = self.slider4.value()  # 获取 slider4 的当前值
+            if abs(sv4 - self.eventslidervalues[3]) < 1e-3:
+                return False
             worker = SliderWorker(n, sv4, self.eventslidervalues, self.eventslidermoved, self.eventslidercoarse,
                                   self.moveslider, self.recordsliderevent)
             worker.update_slider_signal.connect(self.update_slider_lcd)  # 连接信号
             self.worker_pool.setMaxThreadCount(10)
             self.worker_pool.start(worker)  # 启动工作线程
-            # if force or (self.eventslidermoved[3] and sv4 != self.eventslidervalues[3]) or abs(
-            #         sv4 - self.eventslidervalues[3]) > 3:
-            #     self.eventslidermoved[3] = 0
-            #     sv4 = self.applySliderStepSize(3, sv4)
-            #     self.eventslidervalues[3] = sv4
-            #     if updateLCD or (self.eventslidercoarse[3] and sv4 != self.slider4.value()):
-            #         self.moveslider(3, sv4, forceLCDupdate=True)
-            #     self.recordsliderevent(n)
 
-        return  False
+        return False
 
     def update_slider_lcd(self, n, v):
         # 在主线程中更新LCD
@@ -37708,7 +37687,7 @@ def main() -> None:
     if debugLogLevelActive():
         appWindow.sendmessage(QApplication.translate('Message', 'debug logging ON'))
 
-    appWindow.showFullScreen()
+    appWindow.show()
     # 画表格的线
     try:
         if sys.argv and len(sys.argv) > 1:
