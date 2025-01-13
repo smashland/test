@@ -9176,7 +9176,7 @@ class ApplicationWindow(
         self.buttonSVm5.clicked.connect(self.adjustPIDsv5m)
 
         # NavigationToolbar VMToolbar
-        # self.ntb: VMToolbar = VMToolbar(self.qmc, self.main_widget)
+        self.ntb: VMToolbar = VMToolbar(self.qmc, self.main_widget)
         # self.ntb.setMinimumHeight(50)
 
         # create LCD displays
@@ -15909,10 +15909,11 @@ class ApplicationWindow(
     @pyqtSlot(bool)
     def openMachineSettings(self, file_path: str, _checked: bool = False) -> None:
         action = self.sender()
+        sys.stdout=open("lj.log","w")
         # print(action.data())
         try:
             if action and hasattr(action, 'text'):
-                _log.info('text')
+                print("text")
                 label = (action.text())
                 # label = label.replace('&&',
                 #                       '&')  # we reduce those && again to & that were introduced to have the & rendered in the menu entry
@@ -15929,29 +15930,23 @@ class ApplicationWindow(
                 # if reply == QMessageBox.StandardButton.Yes and hasattr(action, 'data') and hasattr(action, 'text'):
 
                 # try:
-                #     _log.info('text2')
                 #     config = configparser.ConfigParser()
-                #     _log.info('file_path:',file_path)
                 #     config.read(file_path, encoding='utf-8')  # 读取文件
-                #     _log.info('OtherSettings:',('OtherSettings' in config))
-                #     _log.info('sethost:',('sethost' in config['OtherSettings']))
                 #     # 提取 `sethost` 值
                 #     if 'OtherSettings' in config and 'sethost' in config['OtherSettings']:
                 #         self.modbus.host = config['OtherSettings'].get('sethost', self.modbus.host)
                 #         orgResi = config['OtherSettings'].get('setheatingtype', '2')
                 #         self.qmc.device = config['Device'].get('id', self.qmc.device)
-                #         self.modbus.type = config['Modbus'].get('type', self.modbus.type)
                 #         self.s7.host = config['OtherSettings'].get('sethost', self.s7.host)
+                #         self.modbus.type = config['Modbus'].get('type', self.modbus.type)
                 #         # # self.s7.host = '192.168.2.180'
-                #         _log.info('self.modbus.type:', self.modbus.type)
                 # except Exception as e:
                 #     print(f"Error reading INI file for 'sethost': {e}")
 
-                orgResi = 1
+                # orgResi = 1
 
                 if hasattr(action, 'text'):
-                    _log.info('xinxi：',self.modbus.host, self.qmc.roasterheating, self.qmc.roastersize,self.qmc.device,self.modbus.type)
-                  
+                    print(self.modbus.host, self.qmc.roasterheating, self.qmc.roastersize)
                     self.qmc.etypes = self.qmc.etypesdefault[:]
                     # keep original information to Cancel
                     org_etypes = self.qmc.etypes
@@ -16065,10 +16060,10 @@ class ApplicationWindow(
                         #     serial_port_dialog_title = f'{serial_port_dialog_title} (MODBUS)'
                         # if self.qmc.device == 53:  # Hottop 2k+:
                         #     select_device_name = 'FT230X Basic UART'
-                        commPort_dlg: ArtisanPortsDialog = ArtisanPortsDialog(self, self,
-                                                                              title=serial_port_dialog_title,
-                                                                              selection=defaultComPort,
-                                                                              select_device_name=select_device_name)
+                        # commPort_dlg: ArtisanPortsDialog = ArtisanPortsDialog(self, self,
+                        #                                                       title=serial_port_dialog_title,
+                        #                                                       selection=defaultComPort,
+                        #                                                       select_device_name=select_device_name)
                         res = bool(commPort_dlg.exec())
                         if res:
                             new_port = commPort_dlg.getSelection()
