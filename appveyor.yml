@@ -25,6 +25,7 @@ branches:
   only:
     - master
     - main
+    - thread
 
 stack:
   python ${PYTHON_V}
