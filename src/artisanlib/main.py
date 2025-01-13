@@ -10675,7 +10675,6 @@ class ApplicationWindow(
 
     def jieduanInfo(self, first_Value):
         # self.processInfoLabel.setText('171.3')
-        sys.stdout = open("lj.log", "w")
         print(self.qmc.tpChangeBool)
         if self.qmc.tpChangeBool == False:
             self.jieduanNum.setText('1')
@@ -15909,7 +15908,6 @@ class ApplicationWindow(
     @pyqtSlot(bool)
     def openMachineSettings(self, file_path: str, _checked: bool = False) -> None:
         action = self.sender()
-        sys.stdout=open("lj.log","w")
         # print(action.data())
         try:
             if action and hasattr(action, 'text'):
