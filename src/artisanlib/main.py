@@ -15909,11 +15909,10 @@ class ApplicationWindow(
     @pyqtSlot(bool)
     def openMachineSettings(self, file_path: str, _checked: bool = False) -> None:
         action = self.sender()
-        sys.stdout=open("lj.log","w")
         # print(action.data())
         try:
             if action and hasattr(action, 'text'):
-                print("text")
+                _log.info('text')
                 label = (action.text())
                 # label = label.replace('&&',
                 #                       '&')  # we reduce those && again to & that were introduced to have the & rendered in the menu entry
@@ -15929,23 +15928,25 @@ class ApplicationWindow(
                 #     return
                 # if reply == QMessageBox.StandardButton.Yes and hasattr(action, 'data') and hasattr(action, 'text'):
 
-                # try:
-                #     config = configparser.ConfigParser()
-                #     config.read(file_path, encoding='utf-8')  # 读取文件
-                #     # 提取 `sethost` 值
-                #     if 'OtherSettings' in config and 'sethost' in config['OtherSettings']:
-                #         self.modbus.host = config['OtherSettings'].get('sethost', self.modbus.host)
-                #         orgResi = config['OtherSettings'].get('setheatingtype', '2')
-                #         self.qmc.device = config['Device'].get('id', self.qmc.device)
-                #         self.s7.host = config['OtherSettings'].get('sethost', self.s7.host)
-                #         # # self.s7.host = '192.168.2.180'
-                # except Exception as e:
-                #     print(f"Error reading INI file for 'sethost': {e}")
+                try:
+                    config = configparser.ConfigParser()
+                    config.read(file_path, encoding='utf-8')  # 读取文件
+                    # 提取 `sethost` 值
+                    if 'OtherSettings' in config and 'sethost' in config['OtherSettings']:
+                        self.modbus.host = config['OtherSettings'].get('sethost', self.modbus.host)
+                        orgResi = config['OtherSettings'].get('setheatingtype', '2')
+                        self.qmc.device = config['Device'].get('id', self.qmc.device)
+                        self.modbus.type = config['Modbus'].get('type', self.modbus.type)
+                        self.s7.host = config['OtherSettings'].get('sethost', self.s7.host)
+                        # # self.s7.host = '192.168.2.180'
+                except Exception as e:
+                    print(f"Error reading INI file for 'sethost': {e}")
 
-                orgResi = 1
+                # orgResi = 1
 
                 if hasattr(action, 'text'):
-                    print(self.modbus.host, self.qmc.roasterheating, self.qmc.roastersize)
+                    _log.info(self.modbus.host, self.qmc.roasterheating, self.qmc.roastersize,self.qmc.device，self.modbus.type)
+                  
                     self.qmc.etypes = self.qmc.etypesdefault[:]
                     # keep original information to Cancel
                     org_etypes = self.qmc.etypes
