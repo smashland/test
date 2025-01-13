@@ -15945,7 +15945,7 @@ class ApplicationWindow(
                 # orgResi = 1
 
                 if hasattr(action, 'text'):
-                    _log.info(self.modbus.host, self.qmc.roasterheating, self.qmc.roastersize,self.qmc.device，self.modbus.type)
+                    _log.info(self.modbus.host, self.qmc.roasterheating, self.qmc.roastersize,self.qmc.device,self.modbus.type)
                   
                     self.qmc.etypes = self.qmc.etypesdefault[:]
                     # keep original information to Cancel
