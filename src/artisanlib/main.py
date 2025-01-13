@@ -9176,8 +9176,8 @@ class ApplicationWindow(
         self.buttonSVm5.clicked.connect(self.adjustPIDsv5m)
 
         # NavigationToolbar VMToolbar
-        self.ntb: VMToolbar = VMToolbar(self.qmc, self.main_widget)
-        self.ntb.setMinimumHeight(50)
+        # self.ntb: VMToolbar = VMToolbar(self.qmc, self.main_widget)
+        # self.ntb.setMinimumHeight(50)
 
         # create LCD displays
         # RIGHT COLUMN
