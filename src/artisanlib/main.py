@@ -18594,7 +18594,7 @@ class ApplicationWindow(
 
     # if updateLCD=True, call moveslider() which in turn updates the LCD
     def sliderReleased(self, n: int, force: bool = False, updateLCD: bool = False) -> bool:
-                if n == 0:
+        if n == 0:
             sv1 = self.slider1.value()
             if abs(sv1 - self.eventslidervalues[0]) < 1e-3:
                 return False
