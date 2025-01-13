@@ -9176,8 +9176,8 @@ class ApplicationWindow(
         self.buttonSVm5.clicked.connect(self.adjustPIDsv5m)
 
         # NavigationToolbar VMToolbar
-        # self.ntb: VMToolbar = VMToolbar(self.qmc, self.main_widget)
-        # self.ntb.setMinimumHeight(50)
+        self.ntb: VMToolbar = VMToolbar(self.qmc, self.main_widget)
+        self.ntb.setMinimumHeight(50)
 
         # create LCD displays
         # RIGHT COLUMN
@@ -18594,6 +18594,7 @@ class ApplicationWindow(
 
     # if updateLCD=True, call moveslider() which in turn updates the LCD
     def sliderReleased(self, n: int, force: bool = False, updateLCD: bool = False) -> bool:
+        print("n:",n)
         if n == 0:
             sv1 = self.slider1.value()
             if abs(sv1 - self.eventslidervalues[0]) < 1e-3:
