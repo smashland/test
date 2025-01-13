@@ -2303,7 +2303,7 @@ class tgraphcanvas(FigureCanvas):
             s = f'{QApplication.translate("Label","Background")} {self.aw.BTname}'
         elif self.fmt_data_curve == 4:
             s = f'{QApplication.translate("Label","Background")} {self.aw.ETname}'
-        self.aw.ntb.update_message()
+        # self.aw.ntb.update_message()
         self.aw.sendmessage(QApplication.translate('Message', 'set y-coordinate to {}').format(s))
 
     @pyqtSlot(str, bool)
@@ -3000,7 +3000,7 @@ class tgraphcanvas(FigureCanvas):
                     self.base_horizontalcrossline, = self.ax.plot(numpy.array(self.baseX), numpy.array(self.baseY), 'r+', markersize=20)
                     self.base_verticalcrossline, = self.ax.plot(numpy.array(self.baseX), numpy.array(self.baseY), 'wo', markersize = 2)
 
-            elif event.button == 3 and event.inaxes and not self.designerflag and not self.wheelflag and self.aw.ntb.mode not in ['pan/zoom', 'zoom rect']:# and not self.flagon:
+            elif event.button == 3 and event.inaxes and not self.designerflag and not self.wheelflag:# and not self.flagon: and self.aw.ntb.mode not in ['pan/zoom', 'zoom rect']
                 # popup not available if pan/zoom or zoom rect is active as it interacts
                 event_xdata = event.xdata
                 event_ydata = event.ydata
@@ -6626,10 +6626,10 @@ class tgraphcanvas(FigureCanvas):
 
             self.aw.setTimerColor('timer')
 
-            try:
-                self.aw.ntb.update() # reset the MPL navigation history
-            except Exception as e: # pylint: disable=broad-except
-                _log.error(e)
+            # try:
+            #     self.aw.ntb.update() # reset the MPL navigation history
+            # except Exception as e: # pylint: disable=broad-except
+            #     _log.error(e)
 
             #roast flags
             self.heavyFC_flag = False
@@ -11615,10 +11615,10 @@ class tgraphcanvas(FigureCanvas):
             self.aw.buttonRESET.setVisible(False)
 
             # disable "green flag" menu:
-            try:
-                self.aw.ntb.disable_edit_curve_parameters()
-            except Exception as e: # pylint: disable=broad-except
-                _log.exception(e)
+            # try:
+            #     self.aw.ntb.disable_edit_curve_parameters()
+            # except Exception as e: # pylint: disable=broad-except
+            #     _log.exception(e)
 
             if self.aw.simulator:
                 self.aw.buttonONOFF.setStyleSheet(self.aw.pushbuttonstyles_simulator['ON'])
@@ -11736,10 +11736,10 @@ class tgraphcanvas(FigureCanvas):
             self.aw.time_stopped = 0
 
             # enable "green flag" menu:
-            try:
-                self.aw.ntb.enable_edit_curve_parameters()
-            except Exception as e: # pylint: disable=broad-except
-                _log.exception(e)
+            # try:
+            #     self.aw.ntb.enable_edit_curve_parameters()
+            # except Exception as e: # pylint: disable=broad-except
+            #     _log.exception(e)
 
             if self.aw.simulator:
                 self.aw.buttonONOFF.setStyleSheet(self.aw.pushbuttonstyles_simulator['OFF'])
@@ -12273,10 +12273,10 @@ class tgraphcanvas(FigureCanvas):
             if len(self.timex) > 2:
                 self.fileDirtySignal.emit()
                 self.aw.autoAdjustAxis() # automatic adjust axis after roast if auto axis is enabled
-                try:
-                    self.aw.ntb.update() # reset the MPL navigation history
-                except Exception as e: # pylint: disable=broad-except
-                    _log.error(e)
+                # try:
+                #     self.aw.ntb.update() # reset the MPL navigation history
+                # except Exception as e: # pylint: disable=broad-except
+                #     _log.error(e)
             try:
                 if self.aw.clusterEventsFlag:
                     self.aw.clusterEvents()
@@ -12296,10 +12296,10 @@ class tgraphcanvas(FigureCanvas):
             self.aw.hideEventsMinieditor()
 
             # enable "green flag" menu:
-            try:
-                self.aw.ntb.enable_edit_curve_parameters()
-            except Exception as e: # pylint: disable=broad-except
-                _log.exception(e)
+            # try:
+            #     self.aw.ntb.enable_edit_curve_parameters()
+            # except Exception as e: # pylint: disable=broad-except
+            #     _log.exception(e)
         except Exception as ex: # pylint: disable=broad-except
             _log.exception(ex)
             _, _, exc_tb = sys.exc_info()
@@ -15812,8 +15812,8 @@ class tgraphcanvas(FigureCanvas):
             self.releaseMouse()
             self.mousepress = False
             # reset the zoom rectangles
-            self.aw.ntb.release_pan(event)
-            self.aw.ntb.release_zoom(event)
+            # self.aw.ntb.release_pan(event)
+            # self.aw.ntb.release_zoom(event)
             # set cursor
             self.setCursor(Qt.CursorShape.PointingHandCursor)
 

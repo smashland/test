@@ -15943,14 +15943,14 @@ class ApplicationWindow(
                 #         self.modbus.type = config['Modbus'].get('type', self.modbus.type)
                 #         self.s7.host = config['OtherSettings'].get('sethost', self.s7.host)
                 #         # # self.s7.host = '192.168.2.180'
-                #         _log.info('self.modbus.type:' self.modbus.type)
+                #         _log.info('self.modbus.type:', self.modbus.type)
                 # except Exception as e:
                 #     print(f"Error reading INI file for 'sethost': {e}")
 
                 orgResi = 1
 
                 if hasattr(action, 'text'):
-                    _log.info(self.modbus.host, self.qmc.roasterheating, self.qmc.roastersize,self.qmc.device,self.modbus.type)
+                    _log.info('xinxi：',self.modbus.host, self.qmc.roasterheating, self.qmc.roastersize,self.qmc.device,self.modbus.type)
                   
                     self.qmc.etypes = self.qmc.etypesdefault[:]
                     # keep original information to Cancel
@@ -16065,10 +16065,10 @@ class ApplicationWindow(
                         #     serial_port_dialog_title = f'{serial_port_dialog_title} (MODBUS)'
                         # if self.qmc.device == 53:  # Hottop 2k+:
                         #     select_device_name = 'FT230X Basic UART'
-                        # commPort_dlg: ArtisanPortsDialog = ArtisanPortsDialog(self, self,
-                        #                                                       title=serial_port_dialog_title,
-                        #                                                       selection=defaultComPort,
-                        #                                                       select_device_name=select_device_name)
+                        commPort_dlg: ArtisanPortsDialog = ArtisanPortsDialog(self, self,
+                                                                              title=serial_port_dialog_title,
+                                                                              selection=defaultComPort,
+                                                                              select_device_name=select_device_name)
                         res = bool(commPort_dlg.exec())
                         if res:
                             new_port = commPort_dlg.getSelection()
