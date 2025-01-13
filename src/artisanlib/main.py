@@ -187,7 +187,7 @@ try:
                           qVersion, QVersionNumber, QTime, QTimer, QFile, QIODevice, QTextStream,
                           QSettings,  # @Reimport @UnresolvedImport @UnusedImport
                           QRegularExpression, QDate, QUrl, QUrlQuery, QDir, Qt, QPoint, QEvent, QDateTime, QThread,
-                          qInstallMessageHandler, QBasicTimer, QDate, QRectF) # @Reimport @UnresolvedImport @UnusedImport
+                          qInstallMessageHandler, QBasicTimer, QDate, QRectF, QRunnable) # @Reimport @UnresolvedImport @UnusedImport
     from PyQt6.QtNetwork import QLocalSocket, QNetworkAccessManager, QNetworkRequest, QNetworkReply # @Reimport @UnresolvedImport @UnusedImport
     #QtWebEngineWidgets must be imported before a QCoreApplication instance is created
     try:
@@ -302,7 +302,7 @@ except Exception:  # pylint: disable=broad-except
     pass
 
 from artisanlib.util import (appFrozen, uchr, decodeLocal, decodeLocalStrict, encodeLocal, encodeLocalStrict, s2a,
-                             fill_gaps,
+                             fill_gaps, getDataDirectory,
                              deltaLabelPrefix, deltaLabelUTF8, deltaLabelBigPrefix, stringfromseconds,
                              stringtoseconds,
                              fromFtoCstrict, fromCtoFstrict, RoRfromFtoCstrict, RoRfromCtoFstrict,
@@ -715,22 +715,22 @@ if not appFrozen() and __revision__ in {'', '0'}:
         pass
 
 # configure logging
-# try:
-#     with open(os.path.join(getResourcePath(), 'logging.yaml'), encoding='utf-8') as logging_conf:
-#         conf = yaml_load(logging_conf)
-#         try:
-#             # set log file to Artisan data directory
-#             _datadir = getDataDirectory()
-#             if _datadir is not None:
-#                 if app.artisanviewerMode:
-#                     conf['handlers']['file']['filename'] = os.path.join(_datadir, 'artisanViewer.log')
-#                 else:
-#                     conf['handlers']['file']['filename'] = os.path.join(_datadir, 'artisan.log')
-#         except Exception:  # pylint: disable=broad-except
-#             pass
-#         logging.config.dictConfig(conf)
-# except Exception:  # pylint: disable=broad-except
-#     pass
+try:
+    with open(os.path.join(getResourcePath(), 'logging.yaml'), encoding='utf-8') as logging_conf:
+        conf = yaml_load(logging_conf)
+        try:
+            # set log file to Artisan data directory
+            _datadir = getDataDirectory()
+            if _datadir is not None:
+                if app.artisanviewerMode:
+                    conf['handlers']['file']['filename'] = os.path.join(_datadir, 'artisanViewer.log')
+                else:
+                    conf['handlers']['file']['filename'] = os.path.join(_datadir, 'artisan.log')
+        except Exception:  # pylint: disable=broad-except
+            pass
+        logging.config.dictConfig(conf)
+except Exception:  # pylint: disable=broad-except
+    pass
 
 _log: Final[logging.Logger] = logging.getLogger(__name__)
 
@@ -1411,6 +1411,29 @@ class VMToolbar(NavigationToolbar):  # pylint: disable=abstract-method
 #########################################################################################################
 ###     Event Action Thread
 #########################################################################################################
+class SliderWorker(QRunnable):
+    update_slider_signal = pyqtSignal(int, float)
+
+    def __init__(self, slider_index, slider_value, eventslidervalues, eventslidermoved, eventslidercoarse,
+                 moveslider_func, recordsliderevent_func):
+        super().__init__()
+        self.slider_index = slider_index
+        self.slider_value = slider_value
+        self.eventslidervalues = eventslidervalues
+        self.eventslidermoved = eventslidermoved
+        self.eventslidercoarse = eventslidercoarse
+        self.moveslider_func = moveslider_func
+        self.recordsliderevent_func = recordsliderevent_func
+
+    def run(self):
+        print(f"Worker started for slider {self.slider_index}")
+        if abs(self.slider_value - self.eventslidervalues[self.slider_index]) > 3:
+            self.eventslidermoved[self.slider_index] = 0
+            self.eventslidervalues[self.slider_index] = self.slider_value
+            self.recordsliderevent_func(self.slider_index)
+            self.moveslider_func(self.slider_index, self.slider_value, forceLCDupdate=True)
+            self.update_slider_signal.emit(self.slider_index, self.slider_value)  # 发送信号
+        print(f"Worker finished for slider {self.slider_index}")
 
 class EventActionThread(
     QThread):  # pylint: disable=too-few-public-methods # pyright: ignore [reportGeneralTypeIssues] # Argument to class must be a base class
@@ -7765,8 +7788,7 @@ class ApplicationWindow(
         self.eventslidervisibilities: List[int] = [0] * self.eventsliders
         self.eventsliderKeyboardControl: bool = True  # 如果使用向上/向下键无法移动错误滑块
         self.eventsliderAlternativeLayout: bool = False  # 如果为True，则组合滑块1+4和2+3，而不是滑块1+2和3+4
-        self.eventslideractions: List[int] = [
-                                                 0] * self.eventsliders  # 0:无，1:串行命令，2: Modbus命令，3: DTA命令，4:调用程序，5:热顶加热器，6:热顶风扇
+        self.eventslideractions: List[int] = [0] * self.eventsliders  # 0:无，1:串行命令，2: Modbus命令，3: DTA命令，4:调用程序，5:热顶加热器，6:热顶风扇
         self.eventslidercommands: List[str] = [''] * self.eventsliders
         self.eventslideroffsets: List[float] = [0] * self.eventsliders
         self.eventsliderfactors: List[float] = [1.0] * self.eventsliders
@@ -13604,8 +13626,6 @@ class ApplicationWindow(
 
         first_Value = self.hbList[0]
         self.getTPMark = first_Value
-        if len(self.getTPMark) > 0:
-            self.jieduanInfo(self.getTPMark)
         self.task_name_label2.setText(first_Value[1])
         new_text = f"任务订单: {first_Value[2]}"
         self.task_no_label2.original_text = new_text  # 更新原始文本
@@ -15902,19 +15922,21 @@ class ApplicationWindow(
                 # if reply == QMessageBox.StandardButton.Cancel:
                 #     return
                 # if reply == QMessageBox.StandardButton.Yes and hasattr(action, 'data') and hasattr(action, 'text'):
-                # try:
-                #     config = configparser.ConfigParser()
-                #     config.read(file_path, encoding='utf-8')  # 读取文件
-                #     print("config:",config)
-                #     print("self.modbus.host:" , self.modbus.host)
-                #     # 提取 `sethost` 值
-                #     if 'OtherSettings' in config and 'sethost' in config['OtherSettings']:
-                #         self.modbus.host = config['OtherSettings'].get('sethost', self.modbus.host)
-                #         orgResi = config['OtherSettings'].get('setheatingtype', '2')
-                #         # self.qmc.device = 29
-                #         # self.s7.host = '192.168.2.180'
-                # except Exception as e:
-                #     print(f"Error reading INI file for 'sethost': {e}")
+                try:
+                    config = configparser.ConfigParser()
+                    config.read(file_path, encoding='utf-8')  # 读取文件
+                    print("config:",config)
+                    print("self.modbus.host:" , self.modbus.host)
+                    # 提取 `sethost` 值
+                    if 'OtherSettings' in config and 'sethost' in config['OtherSettings']:
+                        self.modbus.host = config['OtherSettings'].get('sethost', self.modbus.host)
+                        orgResi = config['OtherSettings'].get('setheatingtype', '2')
+                        self.qmc.device = config['Device'].get('id', self.qmc.device)
+                        self.s7.host = config['OtherSettings'].get('sethost', self.s7.host)
+                        # self.qmc.device = 29
+                        # self.s7.host = '192.168.2.180'
+                except Exception as e:
+                    print(f"Error reading INI file for 'sethost': {e}")
 
                 orgResi = 1
 
@@ -15983,15 +16005,15 @@ class ApplicationWindow(
                         self.modbus.host = org_modbus_host
                     elif self.qmc.device == 79 or 79 in self.qmc.extradevices:  # S7
                         # as default we offer the current settings S7 host, or if this is set to its default as after a factory reset (self.s7.default_host) we take the one from the machine setup
-                        defaultS7Host: str = (self.s7.host if org_s7_host == self.s7.default_host else org_s7_host)
-                        host, res2 = QInputDialog.getText(self,
-                                                          f"{QApplication.translate('Message', 'Machine')} (S7)",
-                                                          QApplication.translate('Message',
-                                                                                 'Network name or IP address'),
-                                                          text=defaultS7Host)
-                        if res2 is not None and res2:
-                            res = res2
-                            self.s7.host = host
+                        # defaultS7Host: str = (self.s7.host if org_s7_host == self.s7.default_host else org_s7_host)
+                        # host, res2 = QInputDialog.getText(self,
+                        #                                   f"{QApplication.translate('Message', 'Machine')} (S7)",
+                        #                                   QApplication.translate('Message',
+                        #                                                          'Network name or IP address'),
+                        #                                   text=defaultS7Host)
+                        # if res2 is not None and res2:
+                        #     res = res2
+                        self.s7.host = host
                     elif self.qmc.device == 111 or 111 in self.qmc.extradevices:  # WebSocket
                         # as default we offer the current settings WebSocket host, or if this is set to its default as after a factory reset (self.ws.default_host) we take the one from the machine setup
                         defaultWSHost: str = (self.ws.host if org_ws_host == self.ws.default_host else org_ws_host)
@@ -18572,47 +18594,95 @@ class ApplicationWindow(
 
     # if updateLCD=True, call moveslider() which in turn updates the LCD
     def sliderReleased(self, n: int, force: bool = False, updateLCD: bool = False) -> bool:
-        if n == 0:
+                if n == 0:
             sv1 = self.slider1.value()
-            if force or (self.eventslidermoved[0] and sv1 != self.eventslidervalues[0]) or abs(
-                    sv1 - self.eventslidervalues[0]) > 3:
-                self.eventslidermoved[0] = 0
-                sv1 = self.applySliderStepSize(0, sv1)
-                self.eventslidervalues[0] = sv1
-                if updateLCD or (self.eventslidercoarse[0] and sv1 != self.slider1.value()):
-                    self.moveslider(0, sv1, forceLCDupdate=True)  # move slider if need and update slider LCD
-                self.recordsliderevent(n)
+            if abs(sv1 - self.eventslidervalues[0]) < 1e-3:
+                return False
+
+         # 创建 SliderWorker，执行后台任务
+            worker = SliderWorker(n, sv1, self.eventslidervalues, self.eventslidermoved,self.eventslidercoarse,self.moveslider, self.recordsliderevent)
+            worker.update_slider_signal.connect(self.update_slider_lcd)  # 连接信号
+            self.worker_pool.setMaxThreadCount(10)
+            self.worker_pool.start(worker)  # 启动工作线程
+           # if force or (self.eventslidermoved[0] and sv1 != self.eventslidervalues[0]) or abs(
+            #         sv1 - self.eventslidervalues[0]) > 3:
+            #     self.eventslidermoved[0] = 0
+            #     sv1 = self.applySliderStepSize(0, sv1)
+            #     self.eventslidervalues[0] = sv1
+            #     if updateLCD or (self.eventslidercoarse[0] and sv1 != self.slider1.value()):
+            #         self.moveslider(0, sv1, forceLCDupdate=True)
+            #     self.recordsliderevent(n)
         elif n == 1:
             sv2 = self.slider2.value()
-            if force or (self.eventslidermoved[1] and sv2 != self.eventslidervalues[1]) or abs(
-                    sv2 - self.eventslidervalues[1]) > 3:
-                self.eventslidermoved[1] = 0
-                sv2 = self.applySliderStepSize(1, sv2)
-                self.eventslidervalues[1] = sv2
-                if updateLCD or (self.eventslidercoarse[1] and sv2 != self.slider2.value()):
-                    self.moveslider(1, sv2, forceLCDupdate=True)  # move slider if need and update slider LCD
-                self.recordsliderevent(n)
+            if abs(sv2 - self.eventslidervalues[0]) < 1e-3:
+                return False
+
+            # 创建 SliderWorker，执行后台任务
+            worker = SliderWorker(n, sv2, self.eventslidervalues, self.eventslidermoved, self.eventslidercoarse,
+                                  self.moveslider, self.recordsliderevent)
+            worker.update_slider_signal.connect(self.update_slider_lcd)  # 连接信号
+            self.worker_pool.setMaxThreadCount(10)
+            self.worker_pool.start(worker)  # 启动工作线程
+            # if force or (self.eventslidermoved[1] and sv2 != self.eventslidervalues[1]) or abs(
+            #         sv2 - self.eventslidervalues[1]) > 3:
+            #     self.eventslidermoved[1] = 0
+            #     sv2 = self.applySliderStepSize(1, sv2)
+            #     self.eventslidervalues[1] = sv2
+            #     if updateLCD or (self.eventslidercoarse[1] and sv2 != self.slider2.value()):
+            #         self.moveslider(1, sv2, forceLCDupdate=True)
+            #     self.recordsliderevent(n)
         elif n == 2:
             sv3 = self.slider3.value()
-            if force or (self.eventslidermoved[2] and sv3 != self.eventslidervalues[2]) or abs(
-                    sv3 - self.eventslidervalues[2]) > 3:
-                self.eventslidermoved[2] = 0
-                sv3 = self.applySliderStepSize(2, sv3)
-                self.eventslidervalues[2] = sv3
-                if updateLCD or (self.eventslidercoarse[2] and sv3 != self.slider3.value()):
-                    self.moveslider(2, sv3, forceLCDupdate=True)  # move slider if need and update slider LCD
-                self.recordsliderevent(n)
+            if abs(sv3 - self.eventslidervalues[0]) < 1e-3:
+                return False
+
+            # 创建 SliderWorker，执行后台任务
+            worker = SliderWorker(n, sv3, self.eventslidervalues, self.eventslidermoved, self.eventslidercoarse,
+                                  self.moveslider, self.recordsliderevent)
+            worker.update_slider_signal.connect(self.update_slider_lcd)  # 连接信号
+            self.worker_pool.setMaxThreadCount(10)
+            self.worker_pool.start(worker)  # 启动工作线程
+            # if force or (self.eventslidermoved[2] and sv3 != self.eventslidervalues[2]) or abs(
+            #         sv3 - self.eventslidervalues[2]) > 3:
+            #     self.eventslidermoved[2] = 0
+            #     sv3 = self.applySliderStepSize(2, sv3)
+            #     self.eventslidervalues[2] = sv3
+            #     if updateLCD or (self.eventslidercoarse[2] and sv3 != self.slider3.value()):
+            #         self.moveslider(2, sv3, forceLCDupdate=True)
+            #     self.recordsliderevent(n)
         elif n == 3:
             sv4 = self.slider4.value()
-            if force or (self.eventslidermoved[3] and sv4 != self.eventslidervalues[3]) or abs(
-                    sv4 - self.eventslidervalues[3]) > 3:
-                self.eventslidermoved[3] = 0
-                sv4 = self.applySliderStepSize(3, sv4)
-                self.eventslidervalues[3] = sv4
-                if updateLCD or (self.eventslidercoarse[3] and sv4 != self.slider4.value()):
-                    self.moveslider(3, sv4, forceLCDupdate=True)  # move slider if need and update slider LCD
-                self.recordsliderevent(n)
-        return False
+            if abs(sv4 - self.eventslidervalues[0]) < 1e-3:
+                return False
+
+            # 创建 SliderWorker，执行后台任务
+            worker = SliderWorker(n, sv4, self.eventslidervalues, self.eventslidermoved, self.eventslidercoarse,
+                                  self.moveslider, self.recordsliderevent)
+            worker.update_slider_signal.connect(self.update_slider_lcd)  # 连接信号
+            self.worker_pool.setMaxThreadCount(10)
+            self.worker_pool.start(worker)  # 启动工作线程
+            # if force or (self.eventslidermoved[3] and sv4 != self.eventslidervalues[3]) or abs(
+            #         sv4 - self.eventslidervalues[3]) > 3:
+            #     self.eventslidermoved[3] = 0
+            #     sv4 = self.applySliderStepSize(3, sv4)
+            #     self.eventslidervalues[3] = sv4
+            #     if updateLCD or (self.eventslidercoarse[3] and sv4 != self.slider4.value()):
+            #         self.moveslider(3, sv4, forceLCDupdate=True)
+            #     self.recordsliderevent(n)
+
+        return  False
+
+    def update_slider_lcd(self, n, v):
+        # 在主线程中更新LCD
+        if n == 0:
+            self.slider1.setValue(v)
+        elif n == 1:
+            self.slider2.setValue(v)
+        elif n == 2:
+            self.slider3.setValue(v)
+        elif n == 3:
+            self.slider4.setValue(v)
+
 
     # n=0 : slider1; n=1 : slider2; n=2 : slider3; n=3 : slider4
     @pyqtSlot(int)

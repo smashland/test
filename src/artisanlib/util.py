@@ -356,28 +356,28 @@ def replace_duplicates(data:List[float]) -> List[float]:
 # otherwise the path is computed on first call and then memorized
 # if the computed path does not exists it is created
 # if creation or access of the path fails None is returned and memorized
-# def getDataDirectory() -> Optional[str]:
-#     app = QCoreApplication.instance()
-#     return _getAppDataDirectory(app)
+def getDataDirectory() -> Optional[str]:
+    app = QCoreApplication.instance()
+    return _getAppDataDirectory(app)
 
 # internal function to return
 @functools.lru_cache(maxsize=None)  #for Python >= 3.9 can use @functools.cache
 def _getAppDataDirectory(app:'Artisan') -> Optional[str]:
     # temporarily switch app name to Artisan (as it might be ArtisanViewer)
-    appName = "目前没有连接设备"
-    # if app is not None:
-    #     app.setApplicationName(application_name)
-    # data_dir = QStandardPaths.standardLocations(
-    #     QStandardPaths.StandardLocation.AppLocalDataLocation
-    # )[0]
-    # if app is not None:
-    #     app.setApplicationName(appName)
-    # try:
-    #     if not os.path.exists(data_dir):
-    #         os.makedirs(data_dir)
-    #     return data_dir
-    # except Exception:  # pylint: disable=broad-except
-    #     return None
+    appName = app.applicationName()
+    if app is not None:
+        app.setApplicationName(application_name)
+        data_dir = QStandardPaths.standardLocations(
+        QStandardPaths.StandardLocation.AppLocalDataLocation
+    )[0]
+    if app is not None:
+        app.setApplicationName(appName)
+    try:
+        if not os.path.exists(data_dir):
+            os.makedirs(data_dir)
+        return data_dir
+    except Exception:  # pylint: disable=broad-except
+        return None
 
 @functools.lru_cache(maxsize=None)  #for Python >= 3.9 can use @functools.cache
 def getAppPath() -> str:
