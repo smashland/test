@@ -3123,10 +3123,10 @@ class tgraphcanvas(FigureCanvas):
 #PLUS
                 # only on first setting the DROP event (not set yet and no previous DROP undone), we upload to PLUS
                 if firstDROP and self.autoDROPenabled and self.aw.plus_account is not None:
-                    try:
-                        self.aw.updatePlusStatus()
-                    except Exception: # pylint: disable=broad-except
-                        pass
+                    # try:
+                    #     self.aw.updatePlusStatus()
+                    # except Exception: # pylint: disable=broad-except
+                    #     pass
                         # add to out-queue
                     try:
                         addRoast()
@@ -6735,8 +6735,8 @@ class tgraphcanvas(FigureCanvas):
             if self.crossmarker:
                 self.togglecrosslines()
 
-            if self.aw is not None:
-                self.aw.updatePlusStatus()
+            # if self.aw is not None:
+            #     self.aw.updatePlusStatus()
 
         except Exception as ex: # pylint: disable=broad-except
             _log.exception(ex)
@@ -12157,10 +12157,10 @@ class tgraphcanvas(FigureCanvas):
             self.aw.cacheCurveVisibilities()
 
             # disable "green flag" menu:
-            try:
-                self.aw.ntb.disable_edit_curve_parameters()
-            except Exception as e: # pylint: disable=broad-except
-                _log.exception(e)
+            # try:
+            #     self.aw.ntb.disable_edit_curve_parameters()
+            # except Exception as e: # pylint: disable=broad-except
+            #     _log.exception(e)
 
             # reset LCD timer color that might have been reset by the RS PID in monitoring mode:
             self.aw.setTimerColor('timer')
@@ -13227,10 +13227,10 @@ class tgraphcanvas(FigureCanvas):
     #PLUS
                         # only on first setting the DROP event (not set yet and no previous DROP undone) and if not in simulator modus, we upload to PLUS
                         if firstDROP and self.autoDROPenabled and self.aw.plus_account is not None and not bool(self.aw.simulator):
-                            try:
-                                self.aw.updatePlusStatus()
-                            except Exception as e: # pylint: disable=broad-except
-                                _log.exception(e)
+                            # try:
+                            #     self.aw.updatePlusStatus()
+                            # except Exception as e: # pylint: disable=broad-except
+                            #     _log.exception(e)
                                 # add to out-queue
                             try:
                                 addRoast()

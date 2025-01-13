@@ -15929,8 +15929,12 @@ class ApplicationWindow(
                 # if reply == QMessageBox.StandardButton.Yes and hasattr(action, 'data') and hasattr(action, 'text'):
 
                 try:
+                    _log.info('text2')
                     config = configparser.ConfigParser()
+                    _log.info('file_path:',file_path)
                     config.read(file_path, encoding='utf-8')  # 读取文件
+                    _log.info('OtherSettings:',('OtherSettings' in config))
+                    _log.info('sethost:',('sethost' in config['OtherSettings']))
                     # 提取 `sethost` 值
                     if 'OtherSettings' in config and 'sethost' in config['OtherSettings']:
                         self.modbus.host = config['OtherSettings'].get('sethost', self.modbus.host)
@@ -15939,6 +15943,7 @@ class ApplicationWindow(
                         self.modbus.type = config['Modbus'].get('type', self.modbus.type)
                         self.s7.host = config['OtherSettings'].get('sethost', self.s7.host)
                         # # self.s7.host = '192.168.2.180'
+                        _log.info('self.modbus.type:' self.modbus.type)
                 except Exception as e:
                     print(f"Error reading INI file for 'sethost': {e}")
 
