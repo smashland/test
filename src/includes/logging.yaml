@@ -13,7 +13,7 @@ handlers:
     stream: ext://sys.stdout
   file:
     class: logging.handlers.RotatingFileHandler
-    level: INFO
+    level: DEBUG
     delay: true
     maxBytes: 800000
     backupCount: 2
@@ -21,7 +21,7 @@ handlers:
     formatter: advanced
 loggers:
   artisanlib:
-    level: INFO
+    level: DEBUG
     handlers: [file]
     propagate: no
   plus:
@@ -29,7 +29,7 @@ loggers:
     handlers: [file]
     propagate: no
   pymodbus.logging:
-    level: ERROR
+    level: DEBUG
     handlers: [file]
     propagate: no
 root:
