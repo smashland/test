@@ -15927,21 +15927,25 @@ class ApplicationWindow(
                 #     return
                 # if reply == QMessageBox.StandardButton.Yes and hasattr(action, 'data') and hasattr(action, 'text'):
 
-                # try:
-                #     config = configparser.ConfigParser()
-                #     config.read(file_path, encoding='utf-8')  # 读取文件
-                #     # 提取 `sethost` 值
-                #     if 'OtherSettings' in config and 'sethost' in config['OtherSettings']:
-                #         self.modbus.host = config['OtherSettings'].get('sethost', self.modbus.host)
-                #         orgResi = config['OtherSettings'].get('setheatingtype', '2')
-                #         self.qmc.device = config['Device'].get('id', self.qmc.device)
-                #         self.s7.host = config['OtherSettings'].get('sethost', self.s7.host)
-                #         self.modbus.type = config['Modbus'].get('type', self.modbus.type)
-                #         # # self.s7.host = '192.168.2.180'
-                # except Exception as e:
-                #     print(f"Error reading INI file for 'sethost': {e}")
+                try:
+                    config = configparser.ConfigParser()
+                    config.read(file_path, encoding='utf-8')  # 读取文件
+                    # 提取 `sethost` 值
+                    if 'OtherSettings' in config and 'sethost' in config['OtherSettings']:
+                        self.modbus.host = config['OtherSettings'].get('sethost', self.modbus.host)
+                        orgResi = config['OtherSettings'].get('setheatingtype', '2')
+                        self.qmc.device = config['Device'].get('id', self.qmc.device)
+                        self.s7.host = config['OtherSettings'].get('sethost', self.s7.host)
+                        self.modbus.type = config['Modbus'].get('type', self.modbus.type)
+                        # keep original information to Cancel
+                        self.qmc.machinesetup = config['OtherSettings'].get('setjx', self.qmc.machinesetup)
+                        self.ws.host =  config['OtherSettings'].get('sethost', self.ws.host)
+                        self.modbus.comport = config['Modbus'].get('comport', self.modbus.comport)
+                        self.qmc.roastersize_setup = config['General'].get('roastersize_setup_default', self.qmc.roastersize_setup)
 
-                orgResi = 1
+                except Exception as e:
+                    print(f"Error reading INI file for 'sethost': {e}")
+
                 _log.info('lj 15945: %s,%s,%s,%s',self.modbus.host, self.qmc.roasterheating, self.qmc.roastersize,self.modbus.type)
                 if hasattr(action, 'text'):
                     self.qmc.etypes = self.qmc.etypesdefault[:]
@@ -15967,8 +15971,6 @@ class ApplicationWindow(
                     self.qmc.roastersize_setup = 0
                     self.qmc.roasterheating_setup = 0
 
-
-                    # self.loadSettings(fn=action.data()[0], remember=False, machine=True, reload=False)
                     res: bool = False
                     res2: Optional[bool] = None
                     if action.data()[1] == 'Phidget':
@@ -28085,6 +28087,7 @@ class ApplicationWindow(
             self.modbus.PID_ON_action = s2a(toString(settings.value('PID_ON_action', self.modbus.PID_ON_action)))
             # restore MODBUS TCP/UDP settings
             self.modbus.type = toInt(settings.value('type', self.modbus.type))
+            _log.info('lj 28088 : %s',self.modbus.type)
             self.modbus.host = toString(settings.value('host', self.modbus.host))
             self.modbus.port = toInt(settings.value('port', self.modbus.port))
             self.modbus.reset_socket = bool(toBool(settings.value('reset_socket', self.modbus.reset_socket)))
