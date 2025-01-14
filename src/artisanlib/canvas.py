@@ -34,6 +34,7 @@ import numpy
 import logging
 import re
 import functools
+import random
 from bisect import bisect_right
 import psutil
 from psutil._common import bytes2human
@@ -4270,10 +4271,10 @@ class tgraphcanvas(FigureCanvas):
             self.aw.lcd3.display(btstr)
             self.aw.processInfoLabel.setText(btstr)
             print('processInfoLabel=',btstr)
+            # random_temp = random.uniform(0, 300)  # 生成随机温度
+            # self.aw.processInfoLabel.setText(str(random_temp))
             if self.changeBool == True:
                 self.aw.sswd.setText(btstr)
-                if len(self.aw.getTPMark) > 0:
-                    self.aw.jieduanInfo(self.aw.getTPMark)
             else:
                 self.aw.sswd.setText(etstr)
 

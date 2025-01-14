@@ -1453,29 +1453,29 @@ class MyQDoubleValidator(
 #################### MAIN APPLICATION WINDOW ###########################################
 ########################################################################################
 
-class SliderWorker(QRunnable):
-    update_slider_signal = pyqtSignal(int, float)
+# class SliderWorker(QRunnable):
+#     update_slider_signal = pyqtSignal(int, float)
 
-    def __init__(self, slider_index, slider_value, eventslidervalues, eventslidermoved, eventslidercoarse,
-                 moveslider_func, recordsliderevent_func):
-        super().__init__()
-        self.slider_index = slider_index
-        self.slider_value = slider_value
-        self.eventslidervalues = eventslidervalues
-        self.eventslidermoved = eventslidermoved
-        self.eventslidercoarse = eventslidercoarse
-        self.moveslider_func = moveslider_func
-        self.recordsliderevent_func = recordsliderevent_func
+#     def __init__(self, slider_index, slider_value, eventslidervalues, eventslidermoved, eventslidercoarse,
+#                  moveslider_func, recordsliderevent_func):
+#         super().__init__()
+#         self.slider_index = slider_index
+#         self.slider_value = slider_value
+#         self.eventslidervalues = eventslidervalues
+#         self.eventslidermoved = eventslidermoved
+#         self.eventslidercoarse = eventslidercoarse
+#         self.moveslider_func = moveslider_func
+#         self.recordsliderevent_func = recordsliderevent_func
 
-    def run(self):
-        print(f"Worker started for slider {self.slider_index}")
-        if abs(self.slider_value - self.eventslidervalues[self.slider_index]) > 3:
-            self.eventslidermoved[self.slider_index] = 0
-            self.eventslidervalues[self.slider_index] = self.slider_value
-            self.recordsliderevent_func(self.slider_index)
-            self.moveslider_func(self.slider_index, self.slider_value, forceLCDupdate=True)
-            self.update_slider_signal.emit(self.slider_index, self.slider_value)  # 发送信号
-        print(f"Worker finished for slider {self.slider_index}")
+#     def run(self):
+#         print(f"Worker started for slider {self.slider_index}")
+#         if abs(self.slider_value - self.eventslidervalues[self.slider_index]) > 3:
+#             self.eventslidermoved[self.slider_index] = 0
+#             self.eventslidervalues[self.slider_index] = self.slider_value
+#             self.recordsliderevent_func(self.slider_index)
+#             self.moveslider_func(self.slider_index, self.slider_value, forceLCDupdate=True)
+#             self.update_slider_signal.emit(self.slider_index, self.slider_value)  # 发送信号
+#         print(f"Worker finished for slider {self.slider_index}")
 
 
 class ScrollingLabel(QLabel):
@@ -3347,6 +3347,8 @@ class ApplicationWindow(
         # self.processInfo1Img = QPixmap(self.normalized_path + '/includes/Icons/yrzb/bottomBack.png')
         # self.processInfo1.setPixmap(QIcon(self.normalized_path + '/includes/Icons/yrzb/bottomBack.png').pixmap(224*self.width_scale, 185*self.height_scale))
 
+        self.current_phase = 1
+        self.previous_text = ""
         self.processInfoLabel = QLabel(self.processInfo1)
         self.processInfoLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.processInfoLabel.setText('105.5')
@@ -3354,6 +3356,9 @@ class ApplicationWindow(
         self.processInfoLabel.setStyleSheet("color: #252525;font-weight: 400;background-color: transparent;")
         processInfofont = QFont(self.font_family5, 28*self.width_scale)
         self.processInfoLabel.setFont(processInfofont)
+        self.processInfotimer = QTimer()
+        self.processInfotimer.timeout.connect(self.checkTextChanged)
+        self.processInfotimer.start(100)
 
         self.ssdLabel = QLabel(self.processInfo1)
         self.ssdLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
@@ -9176,7 +9181,7 @@ class ApplicationWindow(
         self.buttonSVm5.clicked.connect(self.adjustPIDsv5m)
 
         # NavigationToolbar VMToolbar
-        self.ntb: VMToolbar = VMToolbar(self.qmc, self.main_widget)
+        # self.ntb: VMToolbar = VMToolbar(self.qmc, self.main_widget)
         # self.ntb.setMinimumHeight(50)
 
         # create LCD displays
@@ -10657,7 +10662,7 @@ class ApplicationWindow(
 
     def orderMoreClicked(self):
         self.ordersRect_More.setVisible(True)
-        
+
     def orderShouqiClicked(self):
         self.ordersRect_More.setVisible(False)
 
@@ -10673,146 +10678,106 @@ class ApplicationWindow(
         else:
             self.jdtTimer.start(100, self)
 
+    def resetPhase(self):
+        """重置所有显示和设置到第一阶段"""
+        # 将阶段重置为初始值 1
+        self.current_phase = 1
+
+        # 更新显示的阶段和目标温度
+        self.jieduanNum.setText('1')
+        self.mbwdNum.setText(str(self.getTPMark[5][0]))  # 设置第一阶段的目标温度
+        self.ckzNumR.setText('0')  # 重置相关控件
+        self.hlNumR.setText(str(self.getTPMark[5][1]))
+        self.fmNumR.setText(str(self.getTPMark[5][2]))
+        self.zsNumR.setText(str(self.getTPMark[5][3]))
+
+        # 重置滑块和设置值到第一阶段
+        self.setHl.setText(str(self.getTPMark[5][1]))
+        self.slider4.setValue(self.getTPMark[5][1])
+        self.slider4released()
+        self.setFm.setText(str(self.getTPMark[5][2]))
+        self.slider1.setValue(self.getTPMark[5][2])
+        self.slider1released()
+        self.setZs.setText(str(self.getTPMark[5][3]))
+        self.slider2.setValue(self.getTPMark[5][3])
+        self.slider2released()
+
+        print("阶段已重置为初始阶段（第一阶段）")
+
+    def checkTextChanged(self):
+        """定时检测 QLabel 的文本变化"""
+        current_text = self.processInfoLabel.text()
+        if current_text != self.previous_text:  # 检测到文本改变
+            self.previous_text = current_text
+            self.onProcessInfoLabelChanged()
+
+    def onProcessInfoLabelChanged(self):
+        self.jieduanInfo(self.getTPMark)  # 调用阶段信息更新函数
+
     def jieduanInfo(self, first_Value):
-        # self.processInfoLabel.setText('171.3')
-        print(self.qmc.tpChangeBool)
-        if self.qmc.tpChangeBool == False:
-            self.jieduanNum.setText('1')
-            self.mbwdNum.setText(str(first_Value[5][0]))
-            self.ckzNumR.setText('0')
-            self.hlNumR.setText(str(first_Value[5][1]))
-            self.fmNumR.setText(str(first_Value[5][2]))
-            self.zsNumR.setText(str(first_Value[5][3]))
-            print('0')  # self.setmuwdNum
-            self.setHl.setText(str(first_Value[5][1]))
-            self.slider4.setValue(first_Value[5][1])
-            self.slider4released()
-            self.setFm.setText(str(first_Value[5][2]))
-            self.slider1.setValue(first_Value[5][2])
-            self.slider1released()
-            self.setZs.setText(str(first_Value[5][3]))
-            self.slider2.setValue(first_Value[5][3])
-            self.slider2released()
+        """阶段信息处理函数"""
+        if len(first_Value) < 11:
+            print("Error: first_Value 长度不足 11，无法访问所需索引")
+            return
+
+        for i in range(5, 11):
+            if not isinstance(first_Value[i], list) or len(first_Value[i]) < 4:
+                print(f"Error: first_Value[{i}] 不是长度为 4 的列表，无法访问所需数据")
+                return
+
+        # 获取当前的温度值
+        try:
+            current_temp = float(self.processInfoLabel.text())
+        except ValueError:
+            print(f"Error: 无效的温度值：{self.processInfoLabel.text()}")
+            return
+
+        if self.qmc.tpChangeBool:
+            for i in range(5, 11):
+                if i == 10 or (current_temp >= first_Value[i][0] and current_temp < first_Value[i + 1][0]):
+                    new_phase = i - 4
+                    if new_phase > self.current_phase:  # 只有当新阶段大于当前阶段时才更新
+                        self.current_phase = new_phase
+                        self.jieduanNum.setText(str(self.current_phase))
+                        self.mbwdNum.setText(str(first_Value[i][0]))
+                        self.ckzNumR.setText(str(new_phase - 1))
+                        self.hlNumR.setText(str(first_Value[i][1]))
+                        self.fmNumR.setText(str(first_Value[i][2]))
+                        self.zsNumR.setText(str(first_Value[i][3]))
+                        print(f"阶段 {self.current_phase}")
+                        self.updateSliders(first_Value[i])
+                    break
         else:
-            if float(self.processInfoLabel.text()) < first_Value[5][0]:
+            # 如果 tpChangeBool 为 False，保持在第一阶段
+            if self.current_phase != 1:
+                self.current_phase = 1
                 self.jieduanNum.setText('1')
                 self.mbwdNum.setText(str(first_Value[5][0]))
                 self.ckzNumR.setText('0')
                 self.hlNumR.setText(str(first_Value[5][1]))
                 self.fmNumR.setText(str(first_Value[5][2]))
                 self.zsNumR.setText(str(first_Value[5][3]))
-                print('1')  # self.setmuwdNum
-                self.setHl.setText(str(first_Value[5][1]))
-                self.slider4.setValue(first_Value[5][1])
-                self.slider4released()
-                self.setFm.setText(str(first_Value[5][2]))
-                self.slider1.setValue(first_Value[5][2])
-                self.slider1released()
-                self.setZs.setText(str(first_Value[5][3]))
-                self.slider2.setValue(first_Value[5][3])
-                self.slider2released()
+                print("tpChangeBool 为 False，保持在第一阶段")
+                self.updateSliders(first_Value[5])
 
-            elif float(self.processInfoLabel.text()) >= first_Value[5][0] and float(self.processInfoLabel.text()) < \
-                    first_Value[6][0]:
-                self.jieduanNum.setText('2')
-                self.mbwdNum.setText(str(first_Value[6][0]))
-                self.ckzNumR.setText('0')
-                self.hlNumR.setText(str(first_Value[6][1]))
-                self.fmNumR.setText(str(first_Value[6][2]))
-                self.zsNumR.setText(str(first_Value[6][3]))
-                print('2')
-                self.setHl.setText(str(first_Value[6][1]))
-                self.slider4.setValue(first_Value[6][1])
-                self.slider4released()
-                self.setFm.setText(str(first_Value[6][2]))
-                self.slider1.setValue(first_Value[6][2])
-                self.slider1released()
-                self.setZs.setText(str(first_Value[6][3]))
-                self.slider2.setValue(first_Value[6][3])
-                self.slider2released()
-
-            elif float(self.processInfoLabel.text()) >= first_Value[6][0] and float(self.processInfoLabel.text()) < \
-                    first_Value[7][0]:
-                self.jieduanNum.setText('3')
-                self.mbwdNum.setText(str(first_Value[7][0]))
-                self.ckzNumR.setText('2')
-                self.hlNumR.setText(str(first_Value[7][1]))
-                self.fmNumR.setText(str(first_Value[7][2]))
-                self.zsNumR.setText(str(first_Value[7][3]))
-                print('3')
-                self.setHl.setText(str(first_Value[7][1]))
-                self.slider4.setValue(first_Value[7][1])
-                self.slider4released()
-                self.setFm.setText(str(first_Value[7][2]))
-                self.slider1.setValue(first_Value[7][2])
-                self.slider1released()
-                self.setZs.setText(str(first_Value[7][3]))
-                self.slider2.setValue(first_Value[7][3])
-                self.slider2released()
-
-            elif float(self.processInfoLabel.text()) >= first_Value[7][0] and float(self.processInfoLabel.text()) < \
-                    first_Value[8][0]:
-                self.jieduanNum.setText('4')
-                self.mbwdNum.setText(str(first_Value[8][0]))
-                self.ckzNumR.setText('3')
-                self.hlNumR.setText(str(first_Value[8][1]))
-                self.fmNumR.setText(str(first_Value[8][2]))
-                self.zsNumR.setText(str(first_Value[8][3]))
-                print('4')
-                self.setHl.setText(str(first_Value[8][1]))
-                self.slider4.setValue(first_Value[8][1])
-                self.slider4released()
-                self.setFm.setText(str(first_Value[8][2]))
-                self.slider1.setValue(first_Value[8][2])
-                self.slider1released()
-                self.setZs.setText(str(first_Value[8][3]))
-                self.slider2.setValue(first_Value[8][3])
-                self.slider2released()
-
-            elif float(self.processInfoLabel.text()) >= first_Value[8][0] and float(self.processInfoLabel.text()) < \
-                    first_Value[9][0]:
-                self.jieduanNum.setText('5')
-                self.mbwdNum.setText(str(first_Value[9][0]))
-                self.ckzNumR.setText('4')
-                self.hlNumR.setText(str(first_Value[9][1]))
-                self.fmNumR.setText(str(first_Value[9][2]))
-                self.zsNumR.setText(str(first_Value[9][3]))
-                print('5')
-                self.setHl.setText(str(first_Value[9][1]))
-                self.slider4.setValue(first_Value[9][1])
-                self.slider4released()
-                self.setFm.setText(str(first_Value[9][2]))
-                self.slider1.setValue(first_Value[9][2])
-                self.slider1released()
-                self.setZs.setText(str(first_Value[9][3]))
-                self.slider2.setValue(first_Value[9][3])
-                self.slider2released()
-
-            elif float(self.processInfoLabel.text()) >= first_Value[9][0] and float(self.processInfoLabel.text()) < \
-                    first_Value[10][0]:
-                self.jieduanNum.setText('6')
-                self.mbwdNum.setText(str(first_Value[10][0]))
-                self.ckzNumR.setText('5')
-                self.hlNumR.setText(str(first_Value[10][1]))
-                self.fmNumR.setText(str(first_Value[10][2]))
-                self.zsNumR.setText(str(first_Value[10][3]))
-                print('6')
-                self.setHl.setText(str(first_Value[10][1]))
-                self.slider4.setValue(first_Value[10][1])
-                self.slider4released()
-                self.setFm.setText(str(first_Value[10][2]))
-                self.slider1.setValue(first_Value[10][2])
-                self.slider1released()
-                self.setZs.setText(str(first_Value[10][3]))
-                self.slider2.setValue(first_Value[10][3])
-                self.slider2released()
-
+    def updateSliders(self, phase_data):
+        """更新滑块和相关控件"""
+        self.setHl.setText(str(phase_data[1]))
+        self.slider4.setValue(phase_data[1])
+        self.slider4released()
+        self.setFm.setText(str(phase_data[2]))
+        self.slider1.setValue(phase_data[2])
+        self.slider1released()
+        self.setZs.setText(str(phase_data[3]))
+        self.slider2.setValue(phase_data[3])
+        self.slider2released()
 
     def huoli_jia_clicked(self):
+        self.setHuoli = int(self.setHl.text())
         if self.setHuoli < 100:
             self.setHuoli += 5
         else:
-            self.setHuoli = 100  # 设置最大值为 100，防止超出
+            self.setHuoli = 100  # 设置最大值为 100
 
         print(self.setHuoli)
 
@@ -10823,56 +10788,97 @@ class ApplicationWindow(
 
         # 更新滑块的值
         self.slider4.setValue(self.setHuoli)
-
-        # 调用 released 方法（假设这个方法做其他处理）
         self.slider4released()
 
     def huoli_jian_clicked(self):
-        self.setHuoli -= 5
+        self.setHuoli = int(self.setHl.text())
+        if self.setHuoli > 0:
+            self.setHuoli -= 5
+        else:
+            self.setHuoli = 0  # 设置最小值为 0
+
         print(self.setHuoli)
+
+        # 更新界面元素
         self.setHl.setText(str(self.setHuoli))
         self.setHl.setStyleSheet(
-            f"QLabel{{color: #FFFFFF;background-color: #393939;border-radius: {7*self.height_scale}px;border: 1px solid #222222;}}")
+            f"QLabel{{color: #FFFFFF;background-color: #393939;border-radius: {7 * self.height_scale}px;border: 1px solid #222222;}}")
+
+        # 更新滑块的值
         self.slider4.setValue(self.setHuoli)
         self.slider4released()
 
     def fengmen_jia_clicked(self):
-        self.setFengmen += 1
+        self.setFengmen = int(self.setFm.text())
+        if self.setFengmen < 70:
+            self.setFengmen += 1
+        else:
+            self.setFengmen = 70  # 设置最大值为 70
+
         print(self.setFengmen)
+
+        # 更新界面元素
         self.setFm.setText(str(self.setFengmen))
         self.setFm.setStyleSheet(
-            f"QLabel{{color: #FFFFFF;background-color: #393939;border-radius: {7*self.height_scale}px;border: 1px solid #222222;}}")
+            f"QLabel{{color: #FFFFFF;background-color: #393939;border-radius: {7 * self.height_scale}px;border: 1px solid #222222;}}")
+
+        # 更新滑块的值
         self.slider1.setValue(self.setFengmen)
         self.slider1released()
 
     def fengmen_jian_clicked(self):
-        self.setFengmen -= 1
+        self.setFengmen = int(self.setFm.text())
+        if self.setFengmen > 0:
+            self.setFengmen -= 1
+        else:
+            self.setFengmen = 0  # 设置最小值为 0
+
         print(self.setFengmen)
+
+        # 更新界面元素
         self.setFm.setText(str(self.setFengmen))
         self.setFm.setStyleSheet(
-            f"QLabel{{color: #FFFFFF;background-color: #393939;border-radius: {7*self.height_scale}px;border: 1px solid #222222;}}")
+            f"QLabel{{color: #FFFFFF;background-color: #393939;border-radius: {7 * self.height_scale}px;border: 1px solid #222222;}}")
+
+        # 更新滑块的值
         self.slider1.setValue(self.setFengmen)
         self.slider1released()
 
     def zhuansu_jia_clicked(self):
-        self.setZhuansu += 1
+        self.setZhuansu = int(self.setZs.text())
+        if self.setZhuansu < 70:
+            self.setZhuansu += 1
+        else:
+            self.setZhuansu = 70  # 设置最大值为 70
+
         print(self.setZhuansu)
+
+        # 更新界面元素
         self.setZs.setText(str(self.setZhuansu))
         self.setZs.setStyleSheet(
-            f"QLabel{{color: #FFFFFF;background-color: #393939;border-radius: {7*self.height_scale}px;border: 1px solid #222222;}}")
+            f"QLabel{{color: #FFFFFF;background-color: #393939;border-radius: {7 * self.height_scale}px;border: 1px solid #222222;}}")
+
+        # 更新滑块的值
         self.slider2.setValue(self.setZhuansu)
         self.slider2released()
 
     def zhuansu_jian_clicked(self):
-        self.setZhuansu -= 1
+        self.setZhuansu = int(self.setZs.text())
+        if self.setZhuansu > 0:
+            self.setZhuansu -= 1
+        else:
+            self.setZhuansu = 0  # 设置最小值为 0
+
         print(self.setZhuansu)
+
+        # 更新界面元素
         self.setZs.setText(str(self.setZhuansu))
         self.setZs.setStyleSheet(
-            f"QLabel{{color: #FFFFFF;background-color: #393939;border-radius: {7*self.height_scale}px;border: 1px solid #222222;}}")
+            f"QLabel{{color: #FFFFFF;background-color: #393939;border-radius: {7 * self.height_scale}px;border: 1px solid #222222;}}")
+
+        # 更新滑块的值
         self.slider2.setValue(self.setZhuansu)
         self.slider2released()
-
-
 
     def timerEvent(self, event):
         # 判断触发事件的是哪个计时器
@@ -11094,6 +11100,7 @@ class ApplicationWindow(
     def start_countdown(self):
         # 设置定时器间隔为1000毫秒（1秒）
         self.jieduanTimer.start(1000)
+
 
     def update_countdown(self):
         # 更新倒计时时间
@@ -18600,70 +18607,113 @@ class ApplicationWindow(
             self.eventslidermoved[m] = 1
 
     # if updateLCD=True, call moveslider() which in turn updates the LCD
+        # def sliderReleased(self, n: int, force: bool = False, updateLCD: bool = False) -> bool:
+    #     """
+    #     处理滑块释放事件，根据传入的滑块编号 (`n`)，进行相应的更新操作。
+    #     该方法会启动一个 `SliderWorker`，用线程池异步执行任务，避免阻塞主线程。
+    #     """
+    #     # 处理 slider1
+    #     if n == 0:
+    #         sv1 = self.slider1.value()  # 获取 slider1 的当前值
+    #         # 如果滑块值没有变化（小于一定阈值），跳过
+    #         if abs(sv1 - self.eventslidervalues[0]) < 1e-3:
+    #             return False
+    # 
+    #         # 创建 SliderWorker，执行后台任务
+    #         worker = SliderWorker(n, sv1, self.eventslidervalues, self.eventslidermoved, self.eventslidercoarse,
+    #                               self.moveslider, self.recordsliderevent)
+    #         worker.update_slider_signal.connect(self.update_slider_lcd)  # 连接信号
+    #         self.worker_pool.setMaxThreadCount(10)
+    #         self.worker_pool.start(worker)  # 启动工作线程
+    # 
+    #     # 处理 slider2
+    #     elif n == 1:
+    #         sv2 = self.slider2.value()  # 获取 slider2 的当前值
+    #         if abs(sv2 - self.eventslidervalues[1]) < 1e-3:
+    #             return False
+    #         worker = SliderWorker(n, sv2, self.eventslidervalues, self.eventslidermoved, self.eventslidercoarse,
+    #                               self.moveslider, self.recordsliderevent)
+    #         worker.update_slider_signal.connect(self.update_slider_lcd)  # 连接信号
+    #         self.worker_pool.setMaxThreadCount(10)
+    #         self.worker_pool.start(worker)  # 启动工作线程
+    # 
+    #     # 处理 slider3
+    #     elif n == 2:
+    #         sv3 = self.slider3.value()  # 获取 slider3 的当前值
+    #         if abs(sv3 - self.eventslidervalues[2]) < 1e-3:
+    #             return False
+    #         worker = SliderWorker(n, sv3, self.eventslidervalues, self.eventslidermoved, self.eventslidercoarse,
+    #                               self.moveslider, self.recordsliderevent)
+    #         worker.update_slider_signal.connect(self.update_slider_lcd)  # 连接信号
+    #         self.worker_pool.setMaxThreadCount(10)
+    #         self.worker_pool.start(worker)  # 启动工作线程
+    # 
+    #     # 处理 slider4
+    #     elif n == 3:
+    #         sv4 = self.slider4.value()  # 获取 slider4 的当前值
+    #         if abs(sv4 - self.eventslidervalues[3]) < 1e-3:
+    #             return False
+    #         worker = SliderWorker(n, sv4, self.eventslidervalues, self.eventslidermoved, self.eventslidercoarse,
+    #                               self.moveslider, self.recordsliderevent)
+    #         worker.update_slider_signal.connect(self.update_slider_lcd)  # 连接信号
+    #         self.worker_pool.setMaxThreadCount(10)
+    #         self.worker_pool.start(worker)  # 启动工作线程
+    # 
+    #     return False
+    # 
+    # def update_slider_lcd(self, n, v):
+    #     # 在主线程中更新LCD
+    #     if n == 0:
+    #         self.slider1.setValue(v)
+    #     elif n == 1:
+    #         self.slider2.setValue(v)
+    #     elif n == 2:
+    #         self.slider3.setValue(v)
+    #     elif n == 3:
+    #         self.slider4.setValue(v)
+
     def sliderReleased(self, n: int, force: bool = False, updateLCD: bool = False) -> bool:
-        """
-        处理滑块释放事件，根据传入的滑块编号 (`n`)，进行相应的更新操作。
-        该方法会启动一个 `SliderWorker`，用线程池异步执行任务，避免阻塞主线程。
-        """
-        # 处理 slider1
         if n == 0:
-            sv1 = self.slider1.value()  # 获取 slider1 的当前值
-            # 如果滑块值没有变化（小于一定阈值），跳过
-            if abs(sv1 - self.eventslidervalues[0]) < 1e-3:
-                return False
-
-            # 创建 SliderWorker，执行后台任务
-            worker = SliderWorker(n, sv1, self.eventslidervalues, self.eventslidermoved, self.eventslidercoarse,
-                                  self.moveslider, self.recordsliderevent)
-            worker.update_slider_signal.connect(self.update_slider_lcd)  # 连接信号
-            self.worker_pool.setMaxThreadCount(10)
-            self.worker_pool.start(worker)  # 启动工作线程
-
-        # 处理 slider2
+            sv1 = self.slider1.value()
+            if force or (self.eventslidermoved[0] and sv1 != self.eventslidervalues[0]) or abs(
+                    sv1 - self.eventslidervalues[0]) > 3:
+                self.eventslidermoved[0] = 0
+                sv1 = self.applySliderStepSize(0, sv1)
+                self.eventslidervalues[0] = sv1
+                if updateLCD or (self.eventslidercoarse[0] and sv1 != self.slider1.value()):
+                    self.moveslider(0, sv1, forceLCDupdate=True)  # move slider if need and update slider LCD
+                self.recordsliderevent(n)
         elif n == 1:
-            sv2 = self.slider2.value()  # 获取 slider2 的当前值
-            if abs(sv2 - self.eventslidervalues[1]) < 1e-3:
-                return False
-            worker = SliderWorker(n, sv2, self.eventslidervalues, self.eventslidermoved, self.eventslidercoarse,
-                                  self.moveslider, self.recordsliderevent)
-            worker.update_slider_signal.connect(self.update_slider_lcd)  # 连接信号
-            self.worker_pool.setMaxThreadCount(10)
-            self.worker_pool.start(worker)  # 启动工作线程
-
-        # 处理 slider3
+            sv2 = self.slider2.value()
+            if force or (self.eventslidermoved[1] and sv2 != self.eventslidervalues[1]) or abs(
+                    sv2 - self.eventslidervalues[1]) > 3:
+                self.eventslidermoved[1] = 0
+                sv2 = self.applySliderStepSize(1, sv2)
+                self.eventslidervalues[1] = sv2
+                if updateLCD or (self.eventslidercoarse[1] and sv2 != self.slider2.value()):
+                    self.moveslider(1, sv2, forceLCDupdate=True)  # move slider if need and update slider LCD
+                self.recordsliderevent(n)
         elif n == 2:
-            sv3 = self.slider3.value()  # 获取 slider3 的当前值
-            if abs(sv3 - self.eventslidervalues[2]) < 1e-3:
-                return False
-            worker = SliderWorker(n, sv3, self.eventslidervalues, self.eventslidermoved, self.eventslidercoarse,
-                                  self.moveslider, self.recordsliderevent)
-            worker.update_slider_signal.connect(self.update_slider_lcd)  # 连接信号
-            self.worker_pool.setMaxThreadCount(10)
-            self.worker_pool.start(worker)  # 启动工作线程
-
-        # 处理 slider4
+            sv3 = self.slider3.value()
+            if force or (self.eventslidermoved[2] and sv3 != self.eventslidervalues[2]) or abs(
+                    sv3 - self.eventslidervalues[2]) > 3:
+                self.eventslidermoved[2] = 0
+                sv3 = self.applySliderStepSize(2, sv3)
+                self.eventslidervalues[2] = sv3
+                if updateLCD or (self.eventslidercoarse[2] and sv3 != self.slider3.value()):
+                    self.moveslider(2, sv3, forceLCDupdate=True)  # move slider if need and update slider LCD
+                self.recordsliderevent(n)
         elif n == 3:
-            sv4 = self.slider4.value()  # 获取 slider4 的当前值
-            if abs(sv4 - self.eventslidervalues[3]) < 1e-3:
-                return False
-            worker = SliderWorker(n, sv4, self.eventslidervalues, self.eventslidermoved, self.eventslidercoarse,
-                                  self.moveslider, self.recordsliderevent)
-            worker.update_slider_signal.connect(self.update_slider_lcd)  # 连接信号
-            self.worker_pool.setMaxThreadCount(10)
-            self.worker_pool.start(worker)  # 启动工作线程
-
+            sv4 = self.slider4.value()
+            if force or (self.eventslidermoved[3] and sv4 != self.eventslidervalues[3]) or abs(
+                    sv4 - self.eventslidervalues[3]) > 3:
+                self.eventslidermoved[3] = 0
+                sv4 = self.applySliderStepSize(3, sv4)
+                self.eventslidervalues[3] = sv4
+                if updateLCD or (self.eventslidercoarse[3] and sv4 != self.slider4.value()):
+                    self.moveslider(3, sv4, forceLCDupdate=True)  # move slider if need and update slider LCD
+                self.recordsliderevent(n)
         return False
-
-    def update_slider_lcd(self, n, v):
-        # 在主线程中更新LCD
-        if n == 0:
-            self.slider1.setValue(v)
-        elif n == 1:
-            self.slider2.setValue(v)
-        elif n == 2:
-            self.slider3.setValue(v)
-        elif n == 3:
-            self.slider4.setValue(v)
 
 
     # n=0 : slider1; n=1 : slider2; n=2 : slider3; n=3 : slider4
