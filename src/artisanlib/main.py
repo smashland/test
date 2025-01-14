@@ -15941,7 +15941,7 @@ class ApplicationWindow(
                 # except Exception as e:
                 #     print(f"Error reading INI file for 'sethost': {e}")
 
-                # orgResi = 1
+                orgResi = 1
 
                 if hasattr(action, 'text'):
                     print(self.modbus.host, self.qmc.roasterheating, self.qmc.roastersize)
@@ -37678,7 +37678,7 @@ def main() -> None:
     # fill self.defaultSettings with default app QSettings values before loading app settings from system via settingsLoad()
     appWindow.saveAllSettings(QSettings(), appWindow.defaultSettings,
                               read_defaults=True)  # don't save any settings, but just read in the defaults
-    appWindow.settingsLoad(redraw=False)  # redraw is triggered later in the startup process again
+    appWindow.settingsLoad(fn=ytycwdpath+"/localJson/Machines/Coffee-Tech/Ghibli_Touch.aset",redraw=False)  # redraw is triggered later in the startup process again
     appWindow.restoreExtraDeviceSettingsBackup()  # load settings backup if it exists (like on RESET)
     _log.info('loaded %s settings in %.2fs', len(QSettings().allKeys()), libtime.process_time() - start_time)
 
