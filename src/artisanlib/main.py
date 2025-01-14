@@ -15911,7 +15911,7 @@ class ApplicationWindow(
         # print(action.data())
         try:
             if action and hasattr(action, 'text'):
-                print("text")
+                _log.info('lj 15914: text')
                 label = (action.text())
                 # label = label.replace('&&',
                 #                       '&')  # we reduce those && again to & that were introduced to have the & rendered in the menu entry
@@ -15942,9 +15942,8 @@ class ApplicationWindow(
                 #     print(f"Error reading INI file for 'sethost': {e}")
 
                 orgResi = 1
-
+                _log.info('lj 15945: %s,%s,%s,%s',self.modbus.host, self.qmc.roasterheating, self.qmc.roastersize,self.modbus.type)
                 if hasattr(action, 'text'):
-                    print(self.modbus.host, self.qmc.roasterheating, self.qmc.roastersize)
                     self.qmc.etypes = self.qmc.etypesdefault[:]
                     # keep original information to Cancel
                     org_etypes = self.qmc.etypes
@@ -15994,6 +15993,7 @@ class ApplicationWindow(
                     else:
                         self.qmc.machinesetup = action.text()
                         res = True
+                    _log.info('lj 15996: %s,%s,%s', self.qmc.device, (29 in self.qmc.extradevices), self.modbus.type)
                     if (self.qmc.device == 29 or 29 in self.qmc.extradevices) and self.modbus.type in {3,
                                                                                                        4}:  # MODBUS TCP or UDP
                         # as default we offer the current settings MODBUS host, or if this is set to its default as after a factory reset (self.modbus.default_host) we take the one from the machine setup
@@ -37678,7 +37678,7 @@ def main() -> None:
     # fill self.defaultSettings with default app QSettings values before loading app settings from system via settingsLoad()
     appWindow.saveAllSettings(QSettings(), appWindow.defaultSettings,
                               read_defaults=True)  # don't save any settings, but just read in the defaults
-    appWindow.settingsLoad(fn=ytycwdpath+"/localJson/Machines/Coffee-Tech/Ghibli_Touch.aset",redraw=False)  # redraw is triggered later in the startup process again
+    appWindow.settingsLoad(redraw=False)  # redraw is triggered later in the startup process again
     appWindow.restoreExtraDeviceSettingsBackup()  # load settings backup if it exists (like on RESET)
     _log.info('loaded %s settings in %.2fs', len(QSettings().allKeys()), libtime.process_time() - start_time)
 
