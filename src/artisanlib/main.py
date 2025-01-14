@@ -15934,18 +15934,18 @@ class ApplicationWindow(
                     if 'OtherSettings' in config and 'sethost' in config['OtherSettings']:
                         self.modbus.host = config['OtherSettings'].get('sethost', self.modbus.host)
                         orgResi = config['OtherSettings'].get('setheatingtype', '2')
-                        self.qmc.device = config['Device'].get('id', self.qmc.device)
+                        self.qmc.device = toInt(config['Device'].get('id', self.qmc.device))
                         self.s7.host = config['OtherSettings'].get('sethost', self.s7.host)
-                        self.modbus.type = config['Modbus'].get('type', self.modbus.type)
+                        self.modbus.type = toInt(config['Modbus'].get('type', self.modbus.type))
                         # keep original information to Cancel
                         self.qmc.machinesetup = config['OtherSettings'].get('setjx', self.qmc.machinesetup)
                         self.ws.host =  config['OtherSettings'].get('sethost', self.ws.host)
                         self.modbus.comport = config['Modbus'].get('comport', self.modbus.comport)
-                        self.qmc.roastersize_setup = config['General'].get('roastersize_setup_default', self.qmc.roastersize_setup)
+                        self.qmc.roastersize_setup = toFloat(config['General'].get('roastersize_setup_default', self.qmc.roastersize_setup))
 
                 except Exception as e:
                     print(f"Error reading INI file for 'sethost': {e}")
-
+                # orgResi = 1
                 _log.info('lj 15945: %s,%s,%s,%s',self.modbus.host, self.qmc.roasterheating, self.qmc.roastersize,self.modbus.type)
                 if hasattr(action, 'text'):
                     self.qmc.etypes = self.qmc.etypesdefault[:]
@@ -16092,7 +16092,7 @@ class ApplicationWindow(
                             # if res2 is not None and res2:
                             #     res = res2
                             # self.qmc.roastersize_setup = self.qmc.roastersize = batchsize
-                            self.qmc.roastersize_setup = 15.0
+                            self.qmc.roastersize_setup = self.qmc.roastersize
                         else:
                             res = self.qmc.roastersize_setup != 0  # roastersize_setup was loaded from machine setup
                     if res:
