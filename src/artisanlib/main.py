@@ -15971,6 +15971,7 @@ class ApplicationWindow(
                     self.qmc.roastersize_setup = 0
                     self.qmc.roasterheating_setup = 0
 
+                    self.loadSettings(fn=action.data(), remember=False, reset=False, theme=True)
                     res: bool = False
                     res2: Optional[bool] = None
                     if action.data()[1] == 'Phidget':
@@ -27580,23 +27581,23 @@ class ApplicationWindow(
             # if screen setup changed (main screen size or pixel ratio or number of screens) we remove the
             # window geometry and splitter settings on load to prevent dialog open issues on different multiple screen setups
             # we use saved window positions only if we are sure that the screen setup did not change
-            if (settings.contains('screens') and settings.contains('mainScreenPixelRatio') and
-                    settings.contains('mainScreenWidth') and settings.contains('mainScreenHeight')):
-                screens: int = toInt(settings.value('screens', 0))
-                mainScreenPixelRatio: float = toFloat(settings.value('mainScreenPixelRatio', 0))
-                mainScreenWidth: int = toInt(settings.value('mainScreenWidth', 0))
-                mainScreenHeight: int = toInt(settings.value('mainScreenHeight', 0))
-                mainScreen: Optional[QScreen] = self.app.primaryScreen()
-                if mainScreen is not None and not ((screens == len(self.app.screens())) and
-                                                   (mainScreenPixelRatio == mainScreen.devicePixelRatio()) and
-                                                   (mainScreenWidth == mainScreen.size().width()) and
-                                                   (mainScreenHeight == mainScreen.size().height())):
-                    self.clearWindowGeometry(settings)
-            elif filename is not None and not theme and not machine:
-                # load a (old) settings file without proper screen setup information (not a theme or machine setup) we clear saved window positions
-                # as well to be on the save side
-                # NOTE: only the main window Geometry is exported to a settings file
-                self.clearWindowGeometry(settings)
+            # if (settings.contains('screens') and settings.contains('mainScreenPixelRatio') and
+            #         settings.contains('mainScreenWidth') and settings.contains('mainScreenHeight')):
+            #     screens: int = toInt(settings.value('screens', 0))
+            #     mainScreenPixelRatio: float = toFloat(settings.value('mainScreenPixelRatio', 0))
+            #     mainScreenWidth: int = toInt(settings.value('mainScreenWidth', 0))
+            #     mainScreenHeight: int = toInt(settings.value('mainScreenHeight', 0))
+            #     mainScreen: Optional[QScreen] = self.app.primaryScreen()
+            #     if mainScreen is not None and not ((screens == len(self.app.screens())) and
+            #                                        (mainScreenPixelRatio == mainScreen.devicePixelRatio()) and
+            #                                        (mainScreenWidth == mainScreen.size().width()) and
+            #                                        (mainScreenHeight == mainScreen.size().height())):
+            #         self.clearWindowGeometry(settings)
+            # elif filename is not None and not theme and not machine:
+            #     # load a (old) settings file without proper screen setup information (not a theme or machine setup) we clear saved window positions
+            #     # as well to be on the save side
+            #     # NOTE: only the main window Geometry is exported to a settings file
+            #     self.clearWindowGeometry(settings)
 
             # restore device
 
@@ -29136,10 +29137,10 @@ class ApplicationWindow(
             # self.update_minieventline_visibility()
             # self.updateReadingsLCDsVisibility() # update visibility of reading LCD based on the users preference
 
-            if filename is None and self.full_screen_mode_active:
-                self.showFullScreen()
-                if not (platform.system() == 'Darwin' and self.qmc.locale_str == 'en'):
-                    self.fullscreenAction.setChecked(True)
+            # if filename is None and self.full_screen_mode_active:
+            self.showFullScreen()
+                # if not (platform.system() == 'Darwin' and self.qmc.locale_str == 'en'):
+                #     self.fullscreenAction.setChecked(True)
 
             if filename is None and self.plus_account is not None:
                 try:
