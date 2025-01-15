@@ -4275,6 +4275,16 @@ class tgraphcanvas(FigureCanvas):
             # self.aw.processInfoLabel.setText(str(random_temp))
             if self.changeBool == True:
                 self.aw.sswd.setText(btstr)
+                # if len(self.aw.getTPMark) > 0:
+                #     self.aw.jieduanInfo(self.aw.getTPMark)
+                    # self.aw.jieduanInfo(self.aw.getTPMark)
+                    # current_temp = float(self.aw.processInfoLabel.text())
+                    #
+                    # # 遍历阶段，找到匹配的范围并调用 jieduanInfo
+                    # for i in range(5, len(self.aw.getTPMark)):
+                    #     if current_temp >= self.aw.getTPMark[i - 1][0] and current_temp < self.aw.getTPMark[i][0]:
+                    #         self.aw.jieduanInfo(self.aw.getTPMark)
+                    #         break  # 找到匹配阶段后立即退出循环
             else:
                 self.aw.sswd.setText(etstr)
 
@@ -6338,22 +6348,22 @@ class tgraphcanvas(FigureCanvas):
         flag = self.safesaveflag
         self.safesaveflag = False
         if flag and len(self.timex) > 3:
-            if allow_discard:
-                string = QApplication.translate('Message','Save profile?')
-                buttons = QMessageBox.StandardButton.Discard|QMessageBox.StandardButton.Save|QMessageBox.StandardButton.Cancel
-            else:
-                string = QApplication.translate('Message','Save profile?')
-                buttons = QMessageBox.StandardButton.Save|QMessageBox.StandardButton.Cancel
-            reply = QMessageBox.warning(self.aw, QApplication.translate('Message','Profile unsaved'), string, buttons)
-            self.safesaveflag = flag
-            if reply == QMessageBox.StandardButton.Save:
-                return bool(self.aw.fileSave(self.aw.curFile))  #if accepted, calls fileClean() and thus turns safesaveflag = False
-            if reply == QMessageBox.StandardButton.Discard:
-                self.fileCleanSignal.emit()
-                return True
-            if reply == QMessageBox.StandardButton.Cancel:
-                self.aw.sendmessage(QApplication.translate('Message','Action canceled'))
-            return False
+            # if allow_discard:
+            #     string = QApplication.translate('Message','Save profile?')
+            #     buttons = QMessageBox.StandardButton.Discard|QMessageBox.StandardButton.Save|QMessageBox.StandardButton.Cancel
+            # else:
+            #     string = QApplication.translate('Message','Save profile?')
+            #     buttons = QMessageBox.StandardButton.Save|QMessageBox.StandardButton.Cancel
+            # reply = QMessageBox.warning(self.aw, QApplication.translate('Message','Profile unsaved'), string, buttons)
+            # self.safesaveflag = flag
+            # if reply == QMessageBox.StandardButton.Save:
+            return bool(self.aw.fileSave(self.aw.curFile))  #if accepted, calls fileClean() and thus turns safesaveflag = False
+            # if reply == QMessageBox.StandardButton.Discard:
+            #     self.fileCleanSignal.emit()
+            #     return True
+            # if reply == QMessageBox.StandardButton.Cancel:
+            #     self.aw.sendmessage(QApplication.translate('Message','Action canceled'))
+            # return False
         # nothing to be saved
         return True
 
@@ -11729,8 +11739,8 @@ class tgraphcanvas(FigureCanvas):
                 self.aw.updateCanvasColors(checkColors=False)
             #enable RESET button:
             self.aw.buttonRESET.setStyleSheet(self.aw.pushbuttonstyles['RESET'])
-            self.aw.buttonRESET.setEnabled(True)
-            self.aw.buttonRESET.setVisible(True)
+            self.aw.buttonRESET.setEnabled(False)
+            self.aw.buttonRESET.setVisible(False)
 
             # reset a stopped simulator
             self.aw.sample_loop_running = True
@@ -12268,7 +12278,7 @@ class tgraphcanvas(FigureCanvas):
                 self.aw.buttonSTARTSTOP.setGraphicsEffect(self.aw.makeShadow())
             #enable RESET button:
             self.aw.buttonRESET.setStyleSheet(self.aw.pushbuttonstyles['RESET'])
-            self.aw.buttonRESET.setEnabled(True)
+            self.aw.buttonRESET.setEnabled(False)
             self.updateLCDtime()
             #prevents accidentally deleting a modified profile:
             if len(self.timex) > 2:
@@ -12362,6 +12372,8 @@ class tgraphcanvas(FigureCanvas):
         self.changeBool = True
         self.aw.diologRect.setVisible(False)
         self.aw.markChargeClick()
+        if len(self.aw.getTPMark) > 0:
+            self.aw.jieduanInfo(self.aw.getTPMark)
         try:
             self.profileDataSemaphore.acquire(1)
             if self.flagstart:

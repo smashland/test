@@ -161,31 +161,31 @@ QtWebEngineSupport:bool = False # set to True if the QtWebEngine was successfull
 
 try:
     from PyQt6.QtWidgets import (QApplication, QWidget, QMessageBox, QLabel, QMainWindow, QFileDialog,
-                             QGraphicsDropShadowEffect,  # @Reimport @UnresolvedImport @UnusedImport # pylint: disable=import-error
-                             QInputDialog, QGroupBox, QLineEdit,  # @Reimport @UnresolvedImport @UnusedImport
-                             QSizePolicy, QVBoxLayout, QHBoxLayout,
-                             QPushButton,  # @Reimport @UnresolvedImport @UnusedImport
-                             QLCDNumber, QSpinBox, QComboBox,  # @Reimport @UnresolvedImport @UnusedImport
-                             QSlider,  # @Reimport @UnresolvedImport @UnusedImport
-                             QColorDialog, QFrame, QSplitter, QScrollArea,
-                             QProgressDialog, QProgressBar,  # @Reimport @UnresolvedImport @UnusedImport
-                             QStyleFactory, QMenu, QLayout, QCheckBox,QListWidget, QListWidgetItem,
-                             QDateEdit, QSpacerItem, QGridLayout, QDialog, QCalendarWidget, QTimeEdit, QTextEdit, QSizePolicy,QDateTimeEdit) # @Reimport @UnresolvedImport @UnusedImport
+                                 QGraphicsDropShadowEffect,  # @Reimport @UnresolvedImport @UnusedImport # pylint: disable=import-error
+                                 QInputDialog, QGroupBox, QLineEdit,  # @Reimport @UnresolvedImport @UnusedImport
+                                 QSizePolicy, QVBoxLayout, QHBoxLayout,
+                                 QPushButton,  # @Reimport @UnresolvedImport @UnusedImport
+                                 QLCDNumber, QSpinBox, QComboBox,  # @Reimport @UnresolvedImport @UnusedImport
+                                 QSlider,  # @Reimport @UnresolvedImport @UnusedImport
+                                 QColorDialog, QFrame, QSplitter, QScrollArea,
+                                 QProgressDialog, QProgressBar,  # @Reimport @UnresolvedImport @UnusedImport
+                                 QStyleFactory, QMenu, QLayout, QCheckBox,QListWidget, QListWidgetItem,
+                                 QDateEdit, QSpacerItem, QGridLayout, QDialog, QCalendarWidget, QTimeEdit, QTextEdit, QSizePolicy,QDateTimeEdit) # @Reimport @UnresolvedImport @UnusedImport
     from PyQt6.QtGui import (QScreen, QPageLayout, QAction, QImageReader,
-                         QWindow,  # @Reimport @UnresolvedImport @UnusedImport
-                         QKeySequence, QShortcut,  # @Reimport @UnresolvedImport @UnusedImport
-                         QPixmap, QColor, QDesktopServices, QIcon, QFontDatabase,
-                         QFont,  # @Reimport @UnresolvedImport @UnusedImport
-                         QRegularExpressionValidator, QDoubleValidator, QPainter,
-                         QCursor, QMovie, QPen, QFontMetrics, QBrush,QGuiApplication) # @Reimport @UnresolvedImport @UnusedImport
+                             QWindow,  # @Reimport @UnresolvedImport @UnusedImport
+                             QKeySequence, QShortcut,  # @Reimport @UnresolvedImport @UnusedImport
+                             QPixmap, QColor, QDesktopServices, QIcon, QFontDatabase,
+                             QFont,  # @Reimport @UnresolvedImport @UnusedImport
+                             QRegularExpressionValidator, QDoubleValidator, QPainter,
+                             QCursor, QMovie, QPen, QFontMetrics, QBrush,QGuiApplication) # @Reimport @UnresolvedImport @UnusedImport
     from PyQt6.QtPrintSupport import (QPrinter,QPrintDialog) # @Reimport @UnresolvedImport @UnusedImport
     from PyQt6.QtCore import (QLibraryInfo, QTranslator, QLocale, QFileInfo, PYQT_VERSION_STR, pyqtSignal, pyqtSlot,
-                          QtMsgType, QSize, # @Reimport @UnresolvedImport @UnusedImport
-    #                              QSize, pyqtProperty, # type: ignore # @Reimport @UnresolvedImport @UnusedImport
-                          qVersion, QVersionNumber, QTime, QTimer, QFile, QIODevice, QTextStream,
-                          QSettings,  # @Reimport @UnresolvedImport @UnusedImport
-                          QRegularExpression, QDate, QUrl, QUrlQuery, QDir, Qt, QPoint, QEvent, QDateTime, QThread,
-                          qInstallMessageHandler, QBasicTimer, QDate, QRectF, QRunnable) # @Reimport @UnresolvedImport @UnusedImport
+                              QtMsgType, QSize, # @Reimport @UnresolvedImport @UnusedImport
+        #                              QSize, pyqtProperty, # type: ignore # @Reimport @UnresolvedImport @UnusedImport
+                              qVersion, QVersionNumber, QTime, QTimer, QFile, QIODevice, QTextStream,
+                              QSettings,  # @Reimport @UnresolvedImport @UnusedImport
+                              QRegularExpression, QDate, QUrl, QUrlQuery, QDir, Qt, QPoint, QEvent, QDateTime, QThread,
+                              qInstallMessageHandler, QBasicTimer, QDate, QRectF, QRunnable) # @Reimport @UnresolvedImport @UnusedImport
     from PyQt6.QtNetwork import QLocalSocket, QNetworkAccessManager, QNetworkRequest, QNetworkReply # @Reimport @UnresolvedImport @UnusedImport
     #QtWebEngineWidgets must be imported before a QCoreApplication instance is created
     try:
@@ -197,16 +197,16 @@ try:
     from PyQt6 import sip # @Reimport @UnresolvedImport @UnusedImport
 except ImportError:
     from PyQt5.QtWidgets import (QAction, QApplication, QWidget, QMessageBox, QLabel, QMainWindow, QFileDialog, QGraphicsDropShadowEffect,  # type: ignore  # @Reimport @UnresolvedImport @UnusedImport
-                             QInputDialog, QGroupBox, QLineEdit, # @Reimport @UnresolvedImport @UnusedImport
-                             QSizePolicy, QVBoxLayout, QHBoxLayout, QPushButton, # @Reimport @UnresolvedImport @UnusedImport
-                             QLCDNumber, QSpinBox, QComboBox, # @Reimport @UnresolvedImport @UnusedImport
-                             QSlider, # @Reimport @UnresolvedImport @UnusedImport
-                             QColorDialog, QFrame, QSplitter, QScrollArea, QProgressDialog, # @Reimport @UnresolvedImport @UnusedImport
-                             QStyleFactory, QMenu, QLayout, QShortcut) # @Reimport @UnresolvedImport @UnusedImport
+                                 QInputDialog, QGroupBox, QLineEdit, # @Reimport @UnresolvedImport @UnusedImport
+                                 QSizePolicy, QVBoxLayout, QHBoxLayout, QPushButton, # @Reimport @UnresolvedImport @UnusedImport
+                                 QLCDNumber, QSpinBox, QComboBox, # @Reimport @UnresolvedImport @UnusedImport
+                                 QSlider, # @Reimport @UnresolvedImport @UnusedImport
+                                 QColorDialog, QFrame, QSplitter, QScrollArea, QProgressDialog, # @Reimport @UnresolvedImport @UnusedImport
+                                 QStyleFactory, QMenu, QLayout, QShortcut) # @Reimport @UnresolvedImport @UnusedImport
     from PyQt5.QtGui import (QScreen, QPageLayout, QImageReader, QWindow,  # type: ignore # @Reimport @UnresolvedImport @UnusedImport
-                                QKeySequence, # @Reimport @UnresolvedImport @UnusedImport
-                                QPixmap,QColor,QDesktopServices,QIcon, # @Reimport @UnresolvedImport @UnusedImport
-                                QRegularExpressionValidator, QDoubleValidator, QPainter, QCursor) # @Reimport @UnresolvedImport @UnusedImport
+                             QKeySequence, # @Reimport @UnresolvedImport @UnusedImport
+                             QPixmap,QColor,QDesktopServices,QIcon, # @Reimport @UnresolvedImport @UnusedImport
+                             QRegularExpressionValidator, QDoubleValidator, QPainter, QCursor) # @Reimport @UnresolvedImport @UnusedImport
     from PyQt5.QtPrintSupport import (QPrinter,QPrintDialog) # type: ignore # @Reimport @UnresolvedImport @UnusedImport
     from PyQt5.QtCore import (QLibraryInfo, QTranslator, QLocale, QFileInfo, PYQT_VERSION_STR, pyqtSignal, pyqtSlot, QtMsgType, # type: ignore # @Reimport @UnresolvedImport @UnusedImport
                               qVersion, QVersionNumber, QTime, QTimer, QFile, QIODevice, QTextStream, QSettings, # @Reimport @UnresolvedImport @UnusedImport
@@ -1455,7 +1455,7 @@ class MyQDoubleValidator(
 
 # class SliderWorker(QRunnable):
 #     update_slider_signal = pyqtSignal(int, float)
-
+# 
 #     def __init__(self, slider_index, slider_value, eventslidervalues, eventslidermoved, eventslidercoarse,
 #                  moveslider_func, recordsliderevent_func):
 #         super().__init__()
@@ -1466,7 +1466,7 @@ class MyQDoubleValidator(
 #         self.eventslidercoarse = eventslidercoarse
 #         self.moveslider_func = moveslider_func
 #         self.recordsliderevent_func = recordsliderevent_func
-
+# 
 #     def run(self):
 #         print(f"Worker started for slider {self.slider_index}")
 #         if abs(self.slider_value - self.eventslidervalues[self.slider_index]) > 3:
@@ -3347,7 +3347,7 @@ class ApplicationWindow(
         # self.processInfo1Img = QPixmap(self.normalized_path + '/includes/Icons/yrzb/bottomBack.png')
         # self.processInfo1.setPixmap(QIcon(self.normalized_path + '/includes/Icons/yrzb/bottomBack.png').pixmap(224*self.width_scale, 185*self.height_scale))
 
-        self.current_phase = 1
+        self.current_phase = 0
         self.previous_text = ""
         self.processInfoLabel = QLabel(self.processInfo1)
         self.processInfoLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
@@ -4579,7 +4579,7 @@ class ApplicationWindow(
         self.stage_combo_box.addItem("stage6")
 
         self.stage_combo_box.setGeometry(27 * self.width_scale, 295 * self.height_scale, 84 * self.width_scale,
-                                   32 * self.height_scale)
+                                         32 * self.height_scale)
         self.stage_data = {
             "stage1": [0, 0, 0, 0],
             "stage2": [0, 0, 0, 0],
@@ -4605,7 +4605,7 @@ class ApplicationWindow(
                                                                         """)
         self.stage_one_bContent.setFont(addTaskContentfont)
         self.stage_one_bContent.setGeometry(133 * self.width_scale, 295 * self.height_scale, 50 * self.width_scale,
-                                    32 * self.height_scale)
+                                            32 * self.height_scale)
 
         self.stage_two_bContent = QLineEdit(self.addOrderWidget)
         self.stage_two_bContent.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
@@ -4633,7 +4633,7 @@ class ApplicationWindow(
                                                                                         """)
         self.stage_three_bContent.setFont(addTaskContentfont)
         self.stage_three_bContent.setGeometry(253 * self.width_scale, 295 * self.height_scale, 50 * self.width_scale,
-                                            32 * self.height_scale)
+                                              32 * self.height_scale)
 
         self.stage_four_bContent = QLineEdit(self.addOrderWidget)
         self.stage_four_bContent.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
@@ -4647,7 +4647,7 @@ class ApplicationWindow(
                                                                                                 """)
         self.stage_four_bContent.setFont(addTaskContentfont)
         self.stage_four_bContent.setGeometry(313 * self.width_scale, 295 * self.height_scale, 50 * self.width_scale,
-                                              32 * self.height_scale)
+                                             32 * self.height_scale)
 
 
         self.addOrderBtn = QPushButton(self.addOrderWidget)
@@ -4913,7 +4913,7 @@ class ApplicationWindow(
         self.deviceDZ = QLabel(self.deviceDetail)
         self.deviceDZ.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.deviceDZ.setGeometry(820 * self.width_scale, 515 * self.height_scale, 150 * self.width_scale,
-                                   32 * self.height_scale)
+                                  32 * self.height_scale)
         self.deviceDZ.setStyleSheet(
             f"QLabel{{background-color: transparent; border-radius: {16 * self.height_scale}px; border: none;}}"
         )
@@ -4934,7 +4934,7 @@ class ApplicationWindow(
                                                                 """)
         self.deviceDZEdit.setFont(deviceNameEditfont)
         self.deviceDZEdit.setGeometry(820 * self.width_scale, 557 * self.height_scale, 374 * self.width_scale,
-                                       60 * self.height_scale)  # 设置控件的固定大小为56x24px
+                                      60 * self.height_scale)  # 设置控件的固定大小为56x24px
 
         self.deviceBtn = QPushButton(self.deviceDetail)
         self.deviceBtn.setText('确定')
@@ -10681,7 +10681,7 @@ class ApplicationWindow(
     def resetPhase(self):
         """重置所有显示和设置到第一阶段"""
         # 将阶段重置为初始值 1
-        self.current_phase = 1
+        self.current_phase = 0
 
         # 更新显示的阶段和目标温度
         self.jieduanNum.setText('1')
@@ -10734,7 +10734,7 @@ class ApplicationWindow(
 
         if self.qmc.tpChangeBool:
             for i in range(5, 11):
-                if i == 10 or (current_temp >= first_Value[i][0] and current_temp < first_Value[i + 1][0]):
+                if i == 10 and current_temp>first_Value[i-1][0]:
                     new_phase = i - 4
                     if new_phase > self.current_phase:  # 只有当新阶段大于当前阶段时才更新
                         self.current_phase = new_phase
@@ -10746,11 +10746,24 @@ class ApplicationWindow(
                         self.zsNumR.setText(str(first_Value[i][3]))
                         print(f"阶段 {self.current_phase}")
                         self.updateSliders(first_Value[i])
-                    break
+                        break
+                elif (current_temp >= first_Value[i][0] and current_temp < first_Value[i + 1][0]):
+                    new_phase = i - 4
+                    if new_phase > self.current_phase:  # 只有当新阶段大于当前阶段时才更新
+                        self.current_phase = new_phase
+                        self.jieduanNum.setText(str(self.current_phase+1))
+                        self.mbwdNum.setText(str(first_Value[i+1][0]))
+                        self.ckzNumR.setText(str(new_phase - 1))
+                        self.hlNumR.setText(str(first_Value[i+1][1]))
+                        self.fmNumR.setText(str(first_Value[i+1][2]))
+                        self.zsNumR.setText(str(first_Value[i+1][3]))
+                        print(f"阶段 {self.current_phase}")
+                        self.updateSliders(first_Value[i+1])
+                        break
         else:
             # 如果 tpChangeBool 为 False，保持在第一阶段
-            if self.current_phase != 1:
-                self.current_phase = 1
+            if self.current_phase != 0:
+                self.current_phase = 0
                 self.jieduanNum.setText('1')
                 self.mbwdNum.setText(str(first_Value[5][0]))
                 self.ckzNumR.setText('0')
@@ -10904,52 +10917,38 @@ class ApplicationWindow(
             # 更新第三个进度条
             if self.jdtGJXYStep >= 100:
                 self.jdtGJXYTimer.stop()
+                self.qmc.markCharge()
                 return
-
-            self.jdtGJXYStep += 0.0075
+            self.jdtGJXYStep += 0.1667
             self.jdtGJXY.setValue(self.jdtGJXYStep)
-
-    def updateRudouBar(self):
-        # 更新第一个进度条
-        if self.rudouStep >= 100:
-            self.rudouTimer.stop()
-            return
-
-        self.rudouStep += 0.03
-        self.rudouBar.setValue(self.rudouStep)
-
-    def updateJdtBar(self):
-        # 更新第二个进度条
-        if self.jdtStep >= 100:
-            self.jdtTimer.stop()
-            return
-
-        self.jdtStep += 0.0075
-        self.jdt.setValue(self.jdtStep)
-
-    def updategjxyBar(self):
-        # 检查进度条是否达到 100%
-        if self.jdtGJXYStep >= 100:
-            # 停止计时器
-            self.jdtGJXYTimer.stop()
-            # 重置进度条的值
-            self.jdtGJXYStep = 0
-            self.jdtGJXY.setValue(self.jdtGJXYStep)
-            # 重新启动计时器
-            # self.jdtGJXYTimer.start(self.jdtGJXYInterval)
-            self.gjxy.setVisible(False)
-            self.jdqk.setVisible(True)
-            return
-
-        # 增加步骤并更新进度条
-        self.jdtGJXYStep += 0.01042
-        self.jdtGJXY.setValue(self.jdtGJXYStep)
 
     def closeAiWidget(self):
         self.ai_widget.setVisible(False)
 
     def openAiWidget(self):
         self.ai_widget.setVisible(True)
+
+    def resetProgressBar(self):
+        self.rudouStep = 0  # 重置步数
+        self.rudouBar.setValue(0)  # 将进度条值重置为 0
+        self.rudouImg.setPixmap(self.rudouPixmap)
+        self.zhdImg.setStyleSheet(f"""
+                                    QPushButton {{
+                                        border-image: url('{self.normalized_path}/includes/Icons/yrzb/zhd.png');
+                                    }}
+                                """)
+        self.yibaoImg.setStyleSheet(f"""
+                                            QPushButton {{
+                                                border-image: url('{self.normalized_path}/includes/Icons/yrzb/yb.png');
+                                            }}
+                                        """)
+        self.chukuImg.setStyleSheet(f"""
+                                                    QPushButton {{
+                                                        border-image: url('{self.normalized_path}/includes/Icons/yrzb/ck.png');
+                                                    }}
+                                                """)
+        if self.rudouTimer.isActive():
+            self.rudouTimer.stop()  # 停止计时器
 
 
     # def markChargeClick(self):
@@ -11112,7 +11111,7 @@ class ApplicationWindow(
             # self.jieduanTimer.stop()
             # self.label1111.setText('Time is up!')
             print('Time is up!')
-            # self.jieduanInfo()
+            # self.jieduanInfo(self.getTPMark)
 
     def todayClick(self):
         today = QDate.currentDate()
@@ -13636,6 +13635,8 @@ class ApplicationWindow(
 
         first_Value = self.hbList[0]
         self.getTPMark = first_Value
+
+        _log.info('first_Value= %s ',first_Value)
         self.task_name_label2.setText(first_Value[1])
         new_text = f"任务订单: {first_Value[2]}"
         self.task_no_label2.original_text = new_text  # 更新原始文本
@@ -13680,6 +13681,7 @@ class ApplicationWindow(
         self.yrqk.setVisible(False)
         self.jdqk.setVisible(False)
         self.gjxy.setVisible(True)
+        self.resetPhase()
         self.status_label2.setText('已完成')
         self.statusLabel.setText("锅间协议")
         self.chukuImg.setStyleSheet(f"""
@@ -13690,6 +13692,8 @@ class ApplicationWindow(
         # self.qmc.markDrop()
 
         self.user_interacted = True  # 用户进行了交互
+
+        self.resetProgressBar()
 
         self.gjxytimer.start(1000)  # 每隔 1 秒触发一次
 
@@ -13724,13 +13728,39 @@ class ApplicationWindow(
                     # 创建以 bakingBatch 为文件名的 JSON 文件
                     file_name = f"{order['bakingBatch']}.json"
                     file_path = os.path.join(history_path, file_name)
-
+                    
+                    try:
+                        self.soundpopSignal.emit()
+                    except Exception:  # pylint: disable=broad-except
+                        pass
+                    self.curFile = history_path+f"/{order['bakingBatch']}.alog"
+                    self.qmc.OnMonitor()
+                    self.qmc.reset()
+                    
                     current_time = datetime.datetime.now()
                     create_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
 
 
                     # 添加额外的字段到数据中
                     enriched_order = order.copy()
+                    _log.info("self.computedData['computed']:::%s",self.computedData['computed'])
+                    # 获取 computed 数据并提供默认值
+                    computed = self.computedData.get('computed', {})
+                    totaltime = computed.get('totaltime', 0)
+                    CHARGE_BT = computed.get('CHARGE_BT', 0)
+                    TP_BT = computed.get('TP_BT', 0)
+                    TP_time = computed.get('TP_time', 0)
+                    DRY_BT = computed.get('DRY_BT', 0)
+                    DRY_time = computed.get('DRY_time', 0)
+                    FCs_BT = computed.get('FCs_BT', 0)
+                    FCs_time = computed.get('FCs_time', 0)
+                    SCs_BT = computed.get('SCs_BT', 0)
+                    SCs_time = computed.get('SCs_time', 0)
+                    DROP_BT = computed.get('DROP_BT', 0)
+                    finishphasetime = computed.get('finishphasetime', 0)
+                    DTR = computed.get('DTR', 0)
+
+                    # 更新 enriched_order
                     enriched_order.update({
                         "dehydrationRate": self.tslContent.text(),
                         "defectRate": self.xclContent.text(),
@@ -13738,27 +13768,27 @@ class ApplicationWindow(
                         "bakingFinishTime": create_time,
                         "description": self.qkfhContent.toPlainText(),
                         "agtronValue": self.agtronNum.text(),
-                        "taskTime": self.computedData['computed']['totaltime'],
-                        "jsonMessage": {"totaltime": self.computedData['computed']['totaltime'],
-                                        "CHARGE_BT": self.computedData['computed']['CHARGE_BT'],
-                                        "TP_BT": self.computedData['computed']['TP_BT'],
-                                        "TP_time": self.computedData['computed']['TP_time'],
-                                        "Maillard": self.computedData['computed']['DRY_BT'],
-                                        "Maillard_time": self.computedData['computed']['DRY_time'],
-                                        "FCs_BT": self.computedData['computed']['FCs_BT'],
-                                        "FCs_time": self.computedData['computed']['FCs_time'],
-                                        "SCs_BT": self.computedData['computed']['SCs_BT'],
-                                        "SCs_time": self.computedData['computed']['SCs_time'],
-                                        "DROP_BT": self.computedData['computed']['DROP_BT'],
-                                        "finishphasetime": self.computedData['computed']['finishphasetime'],
-                                        # self.computedData['AUCbegin'],
-                                        "DTR": self.computedData['computed']['DTR'],
-                                        "target_temperature": [135, 165, 182, 192, 198, 205],
-                                        "target_values": [30, 35, 40, 90, 80, 65],
-                                        "actual_temperature": [135, 166, 182, 195, 200, 205],
-                                        "actual_values": [35, 40, 40, 90, 50, 65],
-                                        "alogJson": self.getProfile()
-                                        },
+                        "taskTime": totaltime,
+                        "jsonMessage": {
+                            "totaltime": totaltime,
+                            "CHARGE_BT": CHARGE_BT,
+                            "TP_BT": TP_BT,
+                            "TP_time": TP_time,
+                            "Maillard": DRY_BT,
+                            "Maillard_time": DRY_time,
+                            "FCs_BT": FCs_BT,
+                            "FCs_time": FCs_time,
+                            "SCs_BT": SCs_BT,
+                            "SCs_time": SCs_time,
+                            "DROP_BT": DROP_BT,
+                            "finishphasetime": finishphasetime,
+                            "DTR": DTR,
+                            "target_temperature": [135, 165, 182, 192, 198, 205],  # 示例值
+                            "target_values": [30, 35, 40, 90, 80, 65],  # 示例值
+                            "actual_temperature": [135, 166, 182, 195, 200, 205],  # 示例值
+                            "actual_values": [35, 40, 40, 90, 50, 65],  # 示例值
+                            "alogJson": self.getProfile()
+                        },
                     })
 
                     # 将 enriched_order 写入 JSON 文件
@@ -15933,7 +15963,20 @@ class ApplicationWindow(
                 # if reply == QMessageBox.StandardButton.Cancel:
                 #     return
                 # if reply == QMessageBox.StandardButton.Yes and hasattr(action, 'data') and hasattr(action, 'text'):
+                # try:
+                #     config = configparser.ConfigParser()
+                #     config.read(file_path, encoding='utf-8')  # 读取文件
+                #     # 提取 `sethost` 值
+                #     if 'OtherSettings' in config and 'sethost' in config['OtherSettings']:
+                #         self.modbus.host = config['OtherSettings'].get('sethost', self.modbus.host)
+                #         orgResi = config['OtherSettings'].get('setheatingtype', '2')
+                #         self.qmc.device = config['Device'].get('id', self.qmc.device)
+                #         self.s7.host = config['OtherSettings'].get('sethost', self.s7.host)
+                #         # # self.s7.host = '192.168.2.180'
+                # except Exception as e:
+                #     print(f"Error reading INI file for 'sethost': {e}")
 
+                # orgResi = 1
                 try:
                     config = configparser.ConfigParser()
                     config.read(file_path, encoding='utf-8')  # 读取文件
@@ -15954,7 +15997,9 @@ class ApplicationWindow(
                     print(f"Error reading INI file for 'sethost': {e}")
                 # orgResi = 1
                 _log.info('lj 15945: %s,%s,%s,%s',self.modbus.host, self.qmc.roasterheating, self.qmc.roastersize,self.modbus.type)
+
                 if hasattr(action, 'text'):
+                    print(self.modbus.host, self.qmc.roasterheating, self.qmc.roastersize)
                     self.qmc.etypes = self.qmc.etypesdefault[:]
                     # keep original information to Cancel
                     org_etypes = self.qmc.etypes
@@ -18607,7 +18652,7 @@ class ApplicationWindow(
             self.eventslidermoved[m] = 1
 
     # if updateLCD=True, call moveslider() which in turn updates the LCD
-        # def sliderReleased(self, n: int, force: bool = False, updateLCD: bool = False) -> bool:
+    # def sliderReleased(self, n: int, force: bool = False, updateLCD: bool = False) -> bool:
     #     """
     #     处理滑块释放事件，根据传入的滑块编号 (`n`)，进行相应的更新操作。
     #     该方法会启动一个 `SliderWorker`，用线程池异步执行任务，避免阻塞主线程。
@@ -18714,7 +18759,6 @@ class ApplicationWindow(
                     self.moveslider(3, sv4, forceLCDupdate=True)  # move slider if need and update slider LCD
                 self.recordsliderevent(n)
         return False
-
 
     # n=0 : slider1; n=1 : slider2; n=2 : slider3; n=3 : slider4
     @pyqtSlot(int)
