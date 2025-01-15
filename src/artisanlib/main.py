@@ -2017,6 +2017,12 @@ class ApplicationWindow(
 
         self.resize(self.screen_size.width(), self.screen_size.height())
 
+        self.central_widget = QLabel(self)
+        self.central_widget.setGeometry(0, 0, 1920 * self.width_scale, 1080 * self.height_scale)
+        self.pixmap = QPixmap(self.normalized_path + '/includes/Icons/general/2(1).jpg')  # 背景图
+        self.central_widget.setPixmap(self.pixmap)
+        self.central_widget.setScaledContents(True)
+
 
         self.central_widget = QLabel(self)
         self.central_widget.setGeometry(0, 0, 1920*self.width_scale, 1080*self.height_scale)
@@ -3339,7 +3345,8 @@ class ApplicationWindow(
         ddxq_zl1font = QFont(self.font_family3, 10*self.width_scale)
         self.ddxq_zl1.setFont(ddxq_zl1font)
 
-
+        self.lookBtstr = 0
+        self.lookEtstr = 0
 
         self.processInfo1 = QLabel(self)  # 豆温|风温
         self.processInfo1.setStyleSheet(f"border-radius: {25*self.height_scale}px;background-color: #f5f2ee;")
@@ -3351,7 +3358,7 @@ class ApplicationWindow(
         self.previous_text = ""
         self.processInfoLabel = QLabel(self.processInfo1)
         self.processInfoLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
-        self.processInfoLabel.setText('105.5')
+        self.processInfoLabel.setText('135.5')
         self.processInfoLabel.setGeometry(24*self.width_scale, 29*self.height_scale, 200*self.width_scale, 58*self.height_scale)
         self.processInfoLabel.setStyleSheet("color: #252525;font-weight: 400;background-color: transparent;")
         processInfofont = QFont(self.font_family5, 28*self.width_scale)
@@ -3374,7 +3381,7 @@ class ApplicationWindow(
 
         self.processInfo1WD = QLabel(self.processInfo1)
         self.processInfo1WD.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
-        self.processInfo1WD.setText('192.5')
+        self.processInfo1WD.setText('112.5')
         self.processInfo1WD.setGeometry(141*self.width_scale, 68*self.height_scale, 46*self.width_scale, 18*self.height_scale)
         self.processInfo1WD.setStyleSheet("color: #616265;")
         ssdfont = QFont(self.font_family4, 12*self.width_scale)
@@ -3396,7 +3403,7 @@ class ApplicationWindow(
 
         self.processInfoLabel2 = QLabel(self.processInfo1)
         self.processInfoLabel2.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
-        self.processInfoLabel2.setText('豆温|风温')
+        self.processInfoLabel2.setText('风温|豆温')
         self.processInfoLabel2.setGeometry(140*self.width_scale, 127*self.height_scale, 80*self.width_scale, 24*self.height_scale)
         self.processInfoLabel2.setStyleSheet("color: #616265;font-weight: 400;")
         processInfofont2 = QFont(self.font_family3, 10*self.width_scale)
@@ -10673,6 +10680,44 @@ class ApplicationWindow(
         self.qmc.ToggleRecorder()
         self.ksyrBtn.setEnabled(False)
 
+        self.oneStage = []
+        try:
+            with open(ytycwdpath + "/localJson/order.json", "r", encoding="utf-8") as file:
+                data = json.load(file)
+                self.orderList_data = data
+
+                # 遍历订单数据并生成控件
+                for order in self.orderList_data:
+                    if order.get("bakingDeviceId") == 2 and order.get("bakingStatue") == 1:
+                        # 使用 .get() 取值，若不存在某字段则提供默认值 [0, 0, 0, 0]
+                        stage1 = order.get("stage1", [0, 0, 0, 0])
+
+                        # 将数据追加到 oneStage
+                        self.oneStage.append([
+                            stage1
+                        ])
+
+        except FileNotFoundError:
+            QMessageBox.warning(self, "警告", "JSON 文件不存在")
+
+        first_Value = self.oneStage[0]
+        self.jieduanNum.setText('1')
+        self.mbwdNum.setText(str(first_Value[0][0]))
+        self.ckzNumR.setText('1')
+        self.hlNumR.setText(str(first_Value[0][1]))
+        self.fmNumR.setText(str(first_Value[0][2]))
+        self.zsNumR.setText(str(first_Value[0][3]))
+
+        self.setHl.setText(str(first_Value[0][1]))
+        self.slider4.setValue(first_Value[0][1])
+        self.slider4released()
+        self.setFm.setText(str(first_Value[0][2]))
+        self.slider1.setValue(first_Value[0][2])
+        self.slider1released()
+        self.setZs.setText(str(first_Value[0][3]))
+        self.slider2.setValue(first_Value[0][3])
+        self.slider2released()
+
         if self.jdtTimer.isActive():
             self.jdtTimer.stop()
         else:
@@ -10775,15 +10820,23 @@ class ApplicationWindow(
 
     def updateSliders(self, phase_data):
         """更新滑块和相关控件"""
+        # 更新 slider4 和相关控件
         self.setHl.setText(str(phase_data[1]))
         self.slider4.setValue(phase_data[1])
-        self.slider4released()
+        if phase_data[1] != 0:  # 仅当值不为 0 时执行
+            self.slider4released()
+
+        # 更新 slider1 和相关控件
         self.setFm.setText(str(phase_data[2]))
         self.slider1.setValue(phase_data[2])
-        self.slider1released()
+        if phase_data[2] != 0:  # 仅当值不为 0 时执行
+            self.slider1released()
+
+        # 更新 slider2 和相关控件
         self.setZs.setText(str(phase_data[3]))
         self.slider2.setValue(phase_data[3])
-        self.slider2released()
+        if phase_data[3] != 0:  # 仅当值不为 0 时执行
+            self.slider2released()
 
     def huoli_jia_clicked(self):
         self.setHuoli = int(self.setHl.text())
@@ -13710,13 +13763,8 @@ class ApplicationWindow(
                     except Exception:  # pylint: disable=broad-except
                         pass
                     self.curFile = os.path.join(history_path, f"{order['bakingBatch']}.alog")
-                    self.qmc.OffMonitor()
-                    self.qmc.reset()
-                    try:
-                        self.soundpopSignal.emit()
-                    except Exception:  # pylint: disable=broad-except
-                        pass
                     self.qmc.OnMonitor()
+                    self.qmc.reset()
                     break
         except Exception:  # pylint: disable=broad-except
             pass

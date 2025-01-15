@@ -4254,9 +4254,6 @@ class tgraphcanvas(FigureCanvas):
             except Exception as e: # pylint: disable=broad-except
                 _log.exception(e)
             self.aw.lcd2.display(etstr)
-            self.aw.processInfo1WD.setText(etstr)
-            if len(self.aw.getTPMark) == 0 and float(self.aw.processInfo1WD.text()) > 175:
-                self.aw.diologRect.setVisible(True)
 
             ## BT LCD:
             btstr = resLCD
@@ -4269,25 +4266,20 @@ class tgraphcanvas(FigureCanvas):
             except Exception as e: # pylint: disable=broad-except
                 _log.exception(e)
             self.aw.lcd3.display(btstr)
-            self.aw.processInfoLabel.setText(btstr)
-            print('processInfoLabel=',btstr)
             # random_temp = random.uniform(0, 300)  # 生成随机温度
             # self.aw.processInfoLabel.setText(str(random_temp))
             if self.changeBool == True:
                 self.aw.sswd.setText(btstr)
-                # if len(self.aw.getTPMark) > 0:
-                #     self.aw.jieduanInfo(self.aw.getTPMark)
-                    # self.aw.jieduanInfo(self.aw.getTPMark)
-                    # current_temp = float(self.aw.processInfoLabel.text())
-                    #
-                    # # 遍历阶段，找到匹配的范围并调用 jieduanInfo
-                    # for i in range(5, len(self.aw.getTPMark)):
-                    #     if current_temp >= self.aw.getTPMark[i - 1][0] and current_temp < self.aw.getTPMark[i][0]:
-                    #         self.aw.jieduanInfo(self.aw.getTPMark)
-                    #         break  # 找到匹配阶段后立即退出循环
+                self.aw.processInfoLabel.setText(btstr)
+                self.aw.processInfo1WD.setText(etstr)
+                self.processInfoLabel2.setText('豆温|风温')
             else:
                 self.aw.sswd.setText(etstr)
-
+                self.aw.processInfoLabel.setText(etstr)
+                self.aw.processInfo1WD.setText(btstr)
+                self.processInfoLabel2.setText('风温|豆温')
+            if len(self.aw.getTPMark) == 0 and float(self.aw.processInfo1WD.text()) > 175:
+                self.aw.diologRect.setVisible(True)
             ## Delta LCDs:
             deltaetstr = resLCD
             deltabtstr = resLCD
