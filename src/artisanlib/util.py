@@ -39,10 +39,10 @@ if TYPE_CHECKING:
 
 _log: Final[logging.Logger] = logging.getLogger(__name__)
 
-application_name: Final[str] = 'Artisan'
-application_viewer_name: Final[str] = 'ArtisanViewer'
-application_organization_name: Final[str] = 'artisan-scope'
-application_organization_domain: Final[str] = 'artisan-scope.org'
+application_name: Final[str] = 'FWKX'
+application_viewer_name: Final[str] = 'FWKXViewer'
+application_organization_name: Final[str] = 'FWKX-scope'
+application_organization_domain: Final[str] = 'FWKX-scope.org'
 
 
 try:

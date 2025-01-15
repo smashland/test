@@ -1,53 +1,5 @@
 [
     {
-        "id": 5,
-        "taskName": "1",
-        "bakingBatch": "task-2-20241221110804",
-        "createTime": "2024-12-21 11:08:04",
-        "finishTime": "2024-12-21 23:59",
-        "number": "11",
-        "numberOfBeans": "11",
-        "bakingStatue": 1,
-        "bakingDeviceId": 2,
-        "taskId": "586658395769860836",
-        "stage1": [
-            100,
-            60,
-            43,
-            62
-        ],
-        "stage2": [
-            152,
-            70,
-            43,
-            63
-        ],
-        "stage3": [
-            175,
-            50,
-            43,
-            63
-        ],
-        "stage4": [
-            185,
-            40,
-            43,
-            62
-        ],
-        "stage5": [
-            195,
-            30,
-            43,
-            62
-        ],
-        "stage6": [
-            186,
-            30,
-            42,
-            62
-        ]
-    },
-    {
         "id": 6,
         "taskName": "鹅鹅鹅",
         "bakingBatch": "task-2-20241221112045",

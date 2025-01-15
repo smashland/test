@@ -4768,7 +4768,7 @@ class ApplicationWindow(
         self.deviceNameEdit.setFont(deviceNameEditfont)
         self.deviceNameEdit.setGeometry(407 * self.width_scale, 301 * self.height_scale, 374 * self.width_scale,
                                         60 * self.height_scale)  # 设置控件的固定大小为56x24px
-        self.load_files(ytycwdpath +"/Machines")
+        self.load_files(os.path.join(ytycwdpath,"Machines"))
 
         self.deviceModel = QLabel(self.deviceDetail)
         self.deviceModel.setAlignment(Qt.AlignmentFlag.AlignLeft)
@@ -10512,7 +10512,7 @@ class ApplicationWindow(
         self.sblb.show()
 
         # 获取 localJson/Machines 目录路径
-        machines_path = ytycwdpath+"/localJson/Machines"
+        machines_path = os.path.join(ytycwdpath,"localJson","Machines")
 
         # 确保目录存在
         if not os.path.exists(machines_path):
@@ -10898,7 +10898,10 @@ class ApplicationWindow(
         if event.timerId() == self.rudouTimer.timerId():
             # 更新第一个进度条
             if self.rudouStep >= 100:
-                self.rudouTimer.stop()
+                self.rudouStep = 0  # 重置进度条
+                self.rudouBar.setValue(self.rudouStep)
+                # 如果不需要停，注释掉以下一行
+                # self.rudouTimer.stop()
                 return
 
             self.rudouStep += 0.03
@@ -10907,7 +10910,10 @@ class ApplicationWindow(
         elif event.timerId() == self.jdtTimer.timerId():
             # 更新第二个进度条
             if self.jdtStep >= 100:
-                self.jdtTimer.stop()
+                self.jdtStep = 0  # 重置进度条
+                self.jdt.setValue(self.jdtStep)
+                # 如果不需要停，注释掉以下一行
+                # self.jdtTimer.stop()
                 return
 
             self.jdtStep += 0.0075
@@ -10916,11 +10922,21 @@ class ApplicationWindow(
         elif event.timerId() == self.jdtGJXYTimer.timerId():
             # 更新第三个进度条
             if self.jdtGJXYStep >= 100:
-                self.jdtGJXYTimer.stop()
+                self.jdtGJXYStep = 0  # 重置进度条
+                self.jdtGJXY.setValue(self.jdtGJXYStep)  # 更新进度条的显示
+
+                # 重置时间显示为 00:00
+                self.gjxyTimeTxt.setText("00:00")  # 设置为默认时间 00:00
+
+                # 重新启动定时器，从头开始计时
+                self.jdtGJXYTimer.start(100, self)  # 定时器间隔为 100 毫秒，事件由当前对象处理
+
+                # 触发其他逻辑（如果需要）
                 self.qmc.markCharge()
                 return
-            self.jdtGJXYStep += 0.1667
-            self.jdtGJXY.setValue(self.jdtGJXYStep)
+
+            self.jdtGJXYStep += 0.9  # 每次增加进度
+            self.jdtGJXY.setValue(self.jdtGJXYStep)  # 更新进度条显示
 
     def closeAiWidget(self):
         self.ai_widget.setVisible(False)
@@ -12663,7 +12679,7 @@ class ApplicationWindow(
             if child.widget():
                 child.widget().deleteLater()
         # 本地文件夹路径
-        local_folder = ytycwdpath+"/localJson/Machines"
+        local_folder = os.path.join(ytycwdpath,"localJson","Machines")
         if not os.path.exists(local_folder):
             print(f"文件夹4 {local_folder} 不存在")
             return
@@ -12992,7 +13008,7 @@ class ApplicationWindow(
         self.deviceNameLineEdit.setVisible(False)
         self.deviceModelLineEdit.setVisible(False)
 
-        folder_path = ytycwdpath+"/localJson/Machines"  # 假设这个是你需要查看的路径
+        folder_path = os.path.join(ytycwdpath,"localJson","Machines")  # 假设这个是你需要查看的路径
 
         # 获取文件夹中的文件数量
         # if os.path.exists(folder_path):
@@ -13116,7 +13132,7 @@ class ApplicationWindow(
     def updateProfilePicture(self, file_path):
         """ 更新头像显示并将图片路径保存到设备配置中 """
         # 将图片复制到 localJson\MachinesImg 路径下
-        target_dir = ytycwdpath+"/localJson/MachinesImg"
+        target_dir = os.path.join(ytycwdpath,"localJson","MachinesImg")
         if not os.path.exists(target_dir):
             os.makedirs(target_dir)
 
@@ -13149,7 +13165,7 @@ class ApplicationWindow(
             return
 
         # 拼接目标文件夹路径和 .aset 文件路径
-        target_folder_path = os.path.join(ytycwdpath+"/localJson/Machines", folder_name)
+        target_folder_path =  os.path.join(ytycwdpath,"localJson","Machines", folder_name)
         aset_file_path = os.path.join(target_folder_path, f"{file_name}.aset")
 
         # 配置读取对象
@@ -13401,11 +13417,11 @@ class ApplicationWindow(
             self.on_stage_combobox_changed(self.stage_combo_box.currentText())
 
             # 确保目录存在
-            os.makedirs(ytycwdpath+"/localJson", exist_ok=True)
+            os.makedirs(os.path.join(ytycwdpath,"localJson"), exist_ok=True)
 
             # 读取现有 JSON 文件
             try:
-                with open(ytycwdpath+"/localJson/order.json", "r", encoding="utf-8") as file:
+                with open(os.path.join(ytycwdpath,"localJson","order.json"), "r", encoding="utf-8") as file:
                     existing_data = json.load(file)
             except (FileNotFoundError, json.JSONDecodeError):
                 existing_data = []
@@ -13442,7 +13458,7 @@ class ApplicationWindow(
 
             # 添加新记录并写入文件
             existing_data.append(data)
-            with open(ytycwdpath+"/localJson/order.json", "w", encoding="utf-8") as file:
+            with open(os.path.join(ytycwdpath,"localJson","order.json"), "w", encoding="utf-8") as file:
                 json.dump(existing_data, file, ensure_ascii=False, indent=4)
 
             print("Data saved successfully:", data)
@@ -13471,7 +13487,7 @@ class ApplicationWindow(
     def load_order_json(self):
         """从 JSON 文件加载数据到表单"""
         try:
-            with open(ytycwdpath+"/localJson/order.json", "r", encoding="utf-8") as file:
+            with open(os.path.join(ytycwdpath,"localJson","order.json"), "r", encoding="utf-8") as file:
                 data = json.load(file)
                 self.orderList_data = data
 
@@ -13584,7 +13600,7 @@ class ApplicationWindow(
         # self.qmc.markCharge()
         self.statusLabel.setText("烘焙中...")
         self.start_countdown()
-
+        self.status_label2.setText('进行中')
 
         self.ordering.setVisible(True)
 
@@ -13600,7 +13616,7 @@ class ApplicationWindow(
 
         self.hbList = []
         try:
-            with open(ytycwdpath+"/localJson/order.json", "r", encoding="utf-8") as file:
+            with open(os.path.join(ytycwdpath,"localJson","order.json"), "r", encoding="utf-8") as file:
                 data = json.load(file)
                 self.orderList_data = data
 
@@ -13654,7 +13670,7 @@ class ApplicationWindow(
                     break  # 修改第一条数据后退出循环
 
             # 将修改后的数据写回 JSON 文件
-            with open(ytycwdpath+"/localJson/order.json", "w", encoding="utf-8") as file:
+            with open(os.path.join(ytycwdpath,"localJson","order.json"), "w", encoding="utf-8") as file:
                 json.dump(self.orderList_data, file, ensure_ascii=False, indent=4)
 
         except Exception as e:
@@ -13678,6 +13694,14 @@ class ApplicationWindow(
     def markDropClick(self):
         self.zhezhaoWidget.setVisible(True)
         self.ccjlWidget.setVisible(True)
+        
+    
+
+    def submitCCJL(self):
+        self.zhezhaoWidget.setVisible(False)
+        self.ccjlWidget.setVisible(False)
+        self.computedData = self.getProfile()
+
         self.yrqk.setVisible(False)
         self.jdqk.setVisible(False)
         self.gjxy.setVisible(True)
@@ -13685,10 +13709,10 @@ class ApplicationWindow(
         self.status_label2.setText('已完成')
         self.statusLabel.setText("锅间协议")
         self.chukuImg.setStyleSheet(f"""
-                                                            QPushButton {{
-                                                                border-image: url('{self.normalized_path}/includes/Icons/yrzb/rd-hover.png');
-                                                            }}
-                                                        """)
+                                                                    QPushButton {{
+                                                                        border-image: url('{self.normalized_path}/includes/Icons/yrzb/rd-hover.png');
+                                                                    }}
+                                                                """)
         # self.qmc.markDrop()
 
         self.user_interacted = True  # 用户进行了交互
@@ -13702,13 +13726,8 @@ class ApplicationWindow(
         else:
             self.jdtGJXYTimer.start(100, self)
 
-    def submitCCJL(self):
-        self.zhezhaoWidget.setVisible(False)
-        self.ccjlWidget.setVisible(False)
-        self.computedData = self.getProfile()
-
         try:
-            with open(ytycwdpath+"/localJson/order.json", "r", encoding="utf-8") as file:
+            with open(os.path.join(ytycwdpath,"localJson","order.json"), "r", encoding="utf-8") as file:
                 data = json.load(file)
                 self.orderList_data = data
 
@@ -13720,7 +13739,7 @@ class ApplicationWindow(
 
                     # 获取当天的日期，用作文件夹名称
                     today_str = datetime.datetime.now().strftime("%Y%m%d")
-                    history_path = ytycwdpath+f"/localJson/History/{today_str}"
+                    history_path = os.path.join(ytycwdpath,"localJson","History",f"{today_str}")
 
                     # 创建当天日期的文件夹（如果不存在）
                     os.makedirs(history_path, exist_ok=True)
@@ -13733,7 +13752,7 @@ class ApplicationWindow(
                         self.soundpopSignal.emit()
                     except Exception:  # pylint: disable=broad-except
                         pass
-                    self.curFile = history_path+f"/{order['bakingBatch']}.alog"
+                    self.curFile = os.path.join(history_path, f"{order['bakingBatch']}.alog")
                     self.qmc.OnMonitor()
                     self.qmc.reset()
                     
@@ -13799,7 +13818,7 @@ class ApplicationWindow(
                     self.orderList_data.pop(i)
 
                     # 将修改后的 orderList_data 写回 order.json
-                    with open(ytycwdpath+"/localJson/order.json", "w", encoding="utf-8") as file:
+                    with open(os.path.join(ytycwdpath,"localJson","order.json"), "w", encoding="utf-8") as file:
                         json.dump(self.orderList_data, file, ensure_ascii=False, indent=4)
 
                     print(f"订单已成功移至 {file_path}")
@@ -13822,7 +13841,7 @@ class ApplicationWindow(
         today_str = datetime.datetime.now().strftime("%Y%m%d")
 
         # 获取文件夹路径
-        date_folder = ytycwdpath+f"/localJson/History/{today_str}"
+        date_folder = os.path.join(ytycwdpath,"localJson","History",today_str)
 
         # 如果文件夹存在，则列出其中的所有文件
         if os.path.exists(date_folder):
@@ -13951,7 +13970,7 @@ class ApplicationWindow(
         today_str = date.toString("yyyyMMdd")
 
         # 获取文件夹路径
-        date_folder = ytycwdpath+f"/localJson/History/{today_str}"
+        date_folder = os.path.join(ytycwdpath,"localJson","History",today_str)
 
         # 如果文件夹存在，则列出其中的所有文件
         if os.path.exists(date_folder):
@@ -14077,7 +14096,7 @@ class ApplicationWindow(
         dateStr = item.data(23)
 
         # 根据 item_id 构建文件路径
-        file_path = ytycwdpath+f"/localJson/History/{dateStr}/{item_id}.json"  # 假设 ID 对应的文件名
+        file_path = os.path.join(ytycwdpath,"localJson","History",dateStr,f"{item_id}.json")  # 假设 ID 对应的文件名
         self.scroll_area.setVisible(True)
         self.historyInfo.setVisible(True)
 
@@ -15608,7 +15627,7 @@ class ApplicationWindow(
             self.ConfMenu.addMenu(menu)
 
     def populateMachineMenu(self) -> None:
-        self.populateListMenu(ytycwdpath+"/localJson/Machines", '.aset', self.openMachineSettings, self.machineMenu)
+        self.populateListMenu(os.path.join(ytycwdpath,"localJson","Machines"), '.aset', self.openMachineSettings, self.machineMenu)
 
 
     # def openMachineSettings(self, file_path: str, _checked: bool = False) -> None:
