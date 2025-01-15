@@ -4254,6 +4254,10 @@ class tgraphcanvas(FigureCanvas):
             except Exception as e: # pylint: disable=broad-except
                 _log.exception(e)
             self.aw.lcd2.display(etstr)
+            self.aw.processInfo1WD.setText(etstr)
+
+            if len(self.aw.getTPMark) == 0 and float(self.aw.processInfo1WD.text()) > 175:
+                self.aw.diologRect.setVisible(True)
 
             ## BT LCD:
             btstr = resLCD
@@ -4266,20 +4270,20 @@ class tgraphcanvas(FigureCanvas):
             except Exception as e: # pylint: disable=broad-except
                 _log.exception(e)
             self.aw.lcd3.display(btstr)
+            self.aw.processInfoLabel.setText(btstr)
             # random_temp = random.uniform(0, 300)  # 生成随机温度
             # self.aw.processInfoLabel.setText(str(random_temp))
             if self.changeBool == True:
                 self.aw.sswd.setText(btstr)
-                self.aw.processInfoLabel.setText(btstr)
-                self.aw.processInfo1WD.setText(etstr)
-                self.processInfoLabel2.setText('豆温|风温')
+                # self.aw.processInfoLabel.setText(btstr)
+                #
+                # self.processInfoLabel2.setText('豆温|风温')
             else:
                 self.aw.sswd.setText(etstr)
-                self.aw.processInfoLabel.setText(etstr)
-                self.aw.processInfo1WD.setText(btstr)
-                self.processInfoLabel2.setText('风温|豆温')
-            if len(self.aw.getTPMark) == 0 and float(self.aw.processInfo1WD.text()) > 175:
-                self.aw.diologRect.setVisible(True)
+                # self.aw.processInfoLabel.setText(etstr)
+                # self.aw.processInfo1WD.setText(btstr)
+                # self.processInfoLabel2.setText('风温|豆温')
+
             ## Delta LCDs:
             deltaetstr = resLCD
             deltabtstr = resLCD

@@ -13762,8 +13762,9 @@ class ApplicationWindow(
                         self.soundpopSignal.emit()
                     except Exception:  # pylint: disable=broad-except
                         pass
-                    self.curFile = os.path.join(history_path, f"{order['bakingBatch']}.alog")
                     self.qmc.OnMonitor()
+
+                    self.curFile = os.path.join(history_path, f"{order['bakingBatch']}.alog")
                     self.qmc.reset()
                     break
         except Exception:  # pylint: disable=broad-except
