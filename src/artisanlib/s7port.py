@@ -24,7 +24,7 @@ if TYPE_CHECKING:
     from snap7.client import Client as S7Client
     from artisanlib.main import ApplicationWindow # noqa: F401 # pylint: disable=unused-import
 
-from snap7.types import Areas
+from snap7.type import Areas
 from snap7.util import get_bool, set_bool, get_int, set_int, get_real, set_real
 
 import artisanlib.util

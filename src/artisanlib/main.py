@@ -13692,6 +13692,32 @@ class ApplicationWindow(
         self.fourTimer.start(self.fourInterval)
 
     def markDropClick(self):
+        try:
+            with open(os.path.join(ytycwdpath,"localJson","order.json"), "r", encoding="utf-8") as file:
+                data = json.load(file)
+                self.orderList_data = data
+
+            # 遍历订单数据并生成控件
+            for i, order in enumerate(self.orderList_data):
+                if order.get("bakingDeviceId") == 2 and order.get("bakingStatue") == 2:
+                    # 获取当天的日期，用作文件夹名称
+                    today_str = datetime.datetime.now().strftime("%Y%m%d")
+                    history_path = os.path.join(ytycwdpath,"localJson","History",f"{today_str}")
+                    # 创建当天日期的文件夹（如果不存在）
+                    os.makedirs(history_path, exist_ok=True)
+                    try:
+                        self.soundpopSignal.emit()
+                    except Exception:  # pylint: disable=broad-except
+                        pass
+                    self.curFile = os.path.join(history_path, f"{order['bakingBatch']}.alog")
+                    self.qmc.OffMonitor()
+                    self.qmc.reset()
+                    try:
+                        self.soundpopSignal.emit()
+                    except Exception:  # pylint: disable=broad-except
+                        pass
+                    self.qmc.OnMonitor()
+                    break
         self.zhezhaoWidget.setVisible(True)
         self.ccjlWidget.setVisible(True)
         
@@ -13748,14 +13774,7 @@ class ApplicationWindow(
                     file_name = f"{order['bakingBatch']}.json"
                     file_path = os.path.join(history_path, file_name)
                     
-                    try:
-                        self.soundpopSignal.emit()
-                    except Exception:  # pylint: disable=broad-except
-                        pass
-                    self.curFile = os.path.join(history_path, f"{order['bakingBatch']}.alog")
-                    self.qmc.OnMonitor()
-                    self.qmc.reset()
-                    
+
                     current_time = datetime.datetime.now()
                     create_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
 
