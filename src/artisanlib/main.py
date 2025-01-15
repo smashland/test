@@ -13758,12 +13758,6 @@ class ApplicationWindow(
                     history_path = os.path.join(ytycwdpath,"localJson","History",f"{today_str}")
                     # 创建当天日期的文件夹（如果不存在）
                     os.makedirs(history_path, exist_ok=True)
-                    try:
-                        self.soundpopSignal.emit()
-                    except Exception:  # pylint: disable=broad-except
-                        pass
-                    self.qmc.OnMonitor()
-
                     self.curFile = os.path.join(history_path, f"{order['bakingBatch']}.alog")
                     self.qmc.reset()
                     break
