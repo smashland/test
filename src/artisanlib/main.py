@@ -13718,6 +13718,8 @@ class ApplicationWindow(
                         pass
                     self.qmc.OnMonitor()
                     break
+        except Exception:  # pylint: disable=broad-except
+            pass
         self.zhezhaoWidget.setVisible(True)
         self.ccjlWidget.setVisible(True)
         
