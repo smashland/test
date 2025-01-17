@@ -22,7 +22,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='风味科学',
+    name='roasthead',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
