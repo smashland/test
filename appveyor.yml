@@ -87,10 +87,10 @@ for:
 
   artifacts:
     #    - path: 'generated-win.zip'
-    - path: 'src\*%artifact_prefix%-win*.exe'
+    - path: 'src\Setup-roasthead-2.10.4.0.exe'
 
   deploy_script:
-    - cmd: bash ../.ci/upload.sh roasthead-win*setup.exe
+    - cmd: bash ../.ci/upload.sh Setup-roasthead-2.10.4.0.exe
 -
   matrix:
     only:
