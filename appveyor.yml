@@ -20,7 +20,7 @@ init:
   - ps: |
       $env:artifact_prefix = 'disable_artifact'
       if ([bool]$env:APPVEYOR_PULL_REQUEST_NUMBER -eq $true) {
-        $env:artifact_prefix = 'artisan'
+        $env:artifact_prefix = 'roasthead'
       }
       
 branches:
@@ -82,8 +82,15 @@ for:
     - ps: move -force newfile artisanlib/__init__.py
 
     - cmd: build-win3-pi.bat
+    #  test_script:
+    #    - cmd: python -m unittest discover
 
+  artifacts:
+    #    - path: 'generated-win.zip'
+    - path: 'src\%artifact_prefix%-win*setup.exe'
 
+  deploy_script:
+    - cmd: bash ../.ci/upload.sh roasthead-win*setup.exe
 -
   matrix:
     only:
@@ -133,7 +140,7 @@ for:
     # on running curl for later upload (libunistring.2.dylib not found)
     # this is done here after generating the build to prevent SSL issues
     - brew upgrade libidn2 # 2.3.4 -> 2.3.4_1
-    - ../.ci/upload.sh artisan-*.dmg
+    - ../.ci/upload.sh roasthead-*.dmg
 
 #  # uncomment this section for vnc or ssh connection to the build image
 #  on_finish:
