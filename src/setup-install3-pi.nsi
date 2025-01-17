@@ -123,7 +123,7 @@ RequestExecutionLevel admin
 
 
 ; HM NIS Edit Wizard helper defines
-!define pyinstallerOutputDir 'dist/roasthead'
+!define pyinstallerOutputDir 'dist/artisan'
 !define PRODUCT_NAME "roasthead"
 !define PRODUCT_PUBLISHER "The Roasthead Team"
 !define PRODUCT_WEB_SITE "https://github.com/artisan-roaster-scope/artisan/blob/master/README.md"
