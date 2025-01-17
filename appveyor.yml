@@ -18,7 +18,7 @@ init:
   - ps: Update-AppveyorBuild -Version "$($env:APPVEYOR_REPO_COMMIT.substring(0,7)) ($env:APPVEYOR_BUILD_NUMBER)"
   # Env used to enable artifact upload for PR builds by providing a valid file name, invalid for REPO builds
   - ps: |
-      $env:artifact_prefix = 'disable_artifact'
+      $env:artifact_prefix = 'roasthead'
       if ([bool]$env:APPVEYOR_PULL_REQUEST_NUMBER -eq $true) {
         $env:artifact_prefix = 'roasthead'
       }
