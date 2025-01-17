@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="be7d269b-c177-4622-9e75-0f3b6a1662e4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/appveyor.yml" beforeDir="false" afterPath="$PROJECT_DIR$/appveyor.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/src/Info.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/artisan-AppImage.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/artisan-AppImage.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/artisan-mac.spec" beforeDir="false" afterPath="$PROJECT_DIR$/src/artisan-mac.spec" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/setup-install3-pi.nsi" beforeDir="false" afterPath="$PROJECT_DIR$/src/setup-install3-pi.nsi" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/version-metadata.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/version-metadata.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +57,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1737079447587</updated>
-      <workItem from="1737079448716" duration="4616000" />
+      <workItem from="1737079448716" duration="5897000" />
     </task>
     <servers />
   </component>

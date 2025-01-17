@@ -123,9 +123,9 @@ RequestExecutionLevel admin
 
 
 ; HM NIS Edit Wizard helper defines
-!define pyinstallerOutputDir 'dist/artisan'
-!define PRODUCT_NAME "artisan"
-!define PRODUCT_PUBLISHER "The Artisan Team"
+!define pyinstallerOutputDir 'dist/roasthead'
+!define PRODUCT_NAME "roasthead"
+!define PRODUCT_PUBLISHER "The Roasthead Team"
 !define PRODUCT_WEB_SITE "https://github.com/artisan-roaster-scope/artisan/blob/master/README.md"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\artisan.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
@@ -142,7 +142,7 @@ RequestExecutionLevel admin
 Caption "${PRODUCT_NAME} Installer"
 VIProductVersion ${PRODUCT_VERSION}
 VIAddVersionKey ProductName "${PRODUCT_NAME}"
-VIAddVersionKey Comments "Installer for Artisan"
+VIAddVersionKey Comments "Installer for Roasthead"
 VIAddVersionKey CompanyName ""
 VIAddVersionKey LegalCopyright "Copyright 2010-${CUR_YEAR}, Artisan developers. GNU General Public License"
 VIAddVersionKey FileVersion "${PRODUCT_VERSION}"
