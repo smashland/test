@@ -1619,9 +1619,9 @@ class tgraphcanvas(FigureCanvas):
 
         self.linestyle_default: Final[str] = '-'
         self.drawstyle_default: Final[str] = 'default'
-        self.linewidth_default: Final[float] = 1.5
+        self.linewidth_default: Final[float] = 3
         self.back_linewidth_default: Final[float] = 2
-        self.delta_linewidth_default: Final[float] = 1
+        self.delta_linewidth_default: Final[float] = 3
         self.back_delta_linewidth_default: Final[float] = 1.5
         self.extra_linewidth_default: Final[float] = 1
         self.marker_default: Final[str] = 'None'
@@ -4255,7 +4255,6 @@ class tgraphcanvas(FigureCanvas):
                 _log.exception(e)
             self.aw.lcd2.display(etstr)
             self.aw.processInfo1WD.setText(etstr)
-
             if len(self.aw.getTPMark) == 0 and float(self.aw.processInfo1WD.text()) > 175:
                 self.aw.diologRect.setVisible(True)
 
@@ -4270,19 +4269,22 @@ class tgraphcanvas(FigureCanvas):
             except Exception as e: # pylint: disable=broad-except
                 _log.exception(e)
             self.aw.lcd3.display(btstr)
-            self.aw.processInfoLabel.setText(btstr)
+            int_part, decimal_part = btstr.split('.')
+            self.aw.processInfoLabel.setText(int_part)
+            self.aw.processInfoLabel_point.setText('.'+decimal_part)
+            self.aw.processInfoLabel_point.setGeometry(
+                (26 + self.calculate_text_width(self.processInfoLabel)) * self.width_scale, 37 * self.height_scale,
+                50 * self.width_scale,
+                58 * self.height_scale)
             # random_temp = random.uniform(0, 300)  # 生成随机温度
-            # self.aw.processInfoLabel.setText(str(random_temp))
+            # self.aw.sswd.setText(str(random_temp))
             if self.changeBool == True:
                 self.aw.sswd.setText(btstr)
-                # self.aw.processInfoLabel.setText(btstr)
-                #
-                # self.processInfoLabel2.setText('豆温|风温')
             else:
                 self.aw.sswd.setText(etstr)
-                # self.aw.processInfoLabel.setText(etstr)
-                # self.aw.processInfo1WD.setText(btstr)
-                # self.processInfoLabel2.setText('风温|豆温')
+
+            # self.aw.lookBtstr = btstr
+            # self.aw.lookEtstr = etstr
 
             ## Delta LCDs:
             deltaetstr = resLCD
