@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>roasthead</string>
+	<string>Artisan</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -106,7 +106,7 @@
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
-	<string>roasthead</string>
+	<string>Artisan</string>
 	<key>CFBundleGetInfoString</key>
 	<string>Artisan, Roast Logger</string>
 	<key>CFBundleIconFile</key>
@@ -116,22 +116,22 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>roasthead</string>
+	<string>Artisan</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.0</string>
+	<string>2.10.4</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>roasthead</string>
+				<string>artisan</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>roasthead 1.0.0</string>
+	<string>Artisan 2.10.4</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.productivity</string>
 	<key>LSArchitecturePriority</key>

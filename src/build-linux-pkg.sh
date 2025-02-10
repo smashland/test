@@ -19,7 +19,7 @@
 set -e  # reduced logging
 
 VERSION=$(python -c 'import artisanlib; print(artisanlib.__version__)')
-NAME=roasthead-linux-${VERSION}
+NAME=artisan-linux-${VERSION}
 
 # fix debian/DEBIAN/control _VERSION_
 sed -i "s/_VERSION_/${VERSION}/g" debian/DEBIAN/control

@@ -55,7 +55,7 @@ create-version-file version-metadata.yml --outfile version_info-win.txt --versio
 :: run pyinstaller
 :: Choose log-level from 'TRACE', 'DEBUG', 'INFO', 'WARN', 'DEPRECATION', 'ERROR', 'FATAL'
 echo **** Running pyinstaller
-pyinstaller --noconfirm --log-level=DEBUG artisan-win.spec
+pyinstaller --noconfirm --log-level=WARN artisan-win.spec
 if ERRORLEVEL 1 (echo ** Failed in pyinstaller & exit /b 1) else (echo ** Success)
 
 ::
@@ -79,19 +79,19 @@ if ERRORLEVEL 1 (echo ** Failed in NSIS & exit /b 1) else (echo ** Success)
 ::
 if /i "%APPVEYOR%" == "True" (
     copy "..\LICENSE" "LICENSE.txt"
-    7z a roasthead-%ARTISAN_SPEC%-%ARTISAN_VERSION%.zip Setup*.exe LICENSE.txt README.txt
+    7z a artisan-%ARTISAN_SPEC%-%ARTISAN_VERSION%.zip Setup*.exe LICENSE.txt README.txt
     if ERRORLEVEL 1 (echo ** Failed in 7z zipping the setup files & exit /b 1)
 )
 
 ::
 :: check that the packaged files are above an expected size
 ::
-set file=roasthead-%ARTISAN_SPEC%-%ARTISAN_VERSION%.zip
+set file=artisan-%ARTISAN_SPEC%-%ARTISAN_VERSION%.zip
 set min_size=170000000
 for %%A in (%file%) do set size=%%~zA
-::if %size% LSS %min_size% (
-::   echo *** Zip file is smaller than expected
-::   exit /b 1
-:: ) else (
+if %size% LSS %min_size% (
+    echo *** Zip file is smaller than expected
+    exit /b 1
+) else (
     echo **** Success: %file% is larger than minimum %min_size% bytes
-::)
+)

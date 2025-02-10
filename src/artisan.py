@@ -127,7 +127,6 @@ if system() == 'Windows' and hasattr(sys, 'frozen'): # tools/freeze
 #    set_executable(executable)
 #    del executable
 
-
 if __name__ == '__main__':
 
     # Manage commands that does not need to start the whole application
