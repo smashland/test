@@ -2036,7 +2036,6 @@ class ApplicationWindow(
 
         self.resize(self.screen_size.width(), self.screen_size.height())
 
-
         self.central_widget = QLabel(self)
         self.central_widget.setGeometry(0, 0, 1920*self.width_scale, 1080*self.height_scale)
         self.pixmap = QPixmap(self.normalized_path + '/includes/Icons/general/background.jpg')  # 背景图
@@ -4237,6 +4236,7 @@ class ApplicationWindow(
         self.toumingZheZhao.setGeometry(0, 0, 1920 * self.width_scale,
                                             1080 * self.width_scale)
         self.toumingZheZhao.installEventFilter(self)
+        self.toumingZheZhao.setVisible(False)
         self.toumingZheZhao.clicked.connect(self.sblb_closeDiolog)
 
 
@@ -5172,54 +5172,58 @@ class ApplicationWindow(
 
         self.monitorImgBack = QLabel(self.jiankongTabel)
         self.monitorImgBack.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.monitorImgBack.setGeometry(83 * self.width_scale, 42 * self.height_scale, 216 * self.width_scale,
-                                        72 * self.width_scale)
+        self.monitorImgBack.setGeometry(83 * self.width_scale, 42 * self.height_scale, 216 * self.height_scale,
+                                        72 * self.height_scale)
 
         # Make sure the path is correct and concatenate properly
         monitorImgBack_path = f"{self.normalized_path}/includes/Icons/monitor/5.png"
 
-        # Apply the background image
+        # Apply the background image with 'contain' to prevent distortion
         self.monitorImgBack.setStyleSheet(
-            f"QLabel{{background-color: transparent; border: none; background-image: url({monitorImgBack_path});}}"
+            f"QLabel{{background-color: transparent; border: none; background-image: url({monitorImgBack_path}); "
+            f"background-size: contain; background-repeat: no-repeat;}}"
         )
 
         self.monitorImgBack_1 = QLabel(self.monitorImgBack)
         self.monitorImgBack_1.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.monitorImgBack_1.setGeometry(16 * self.width_scale, 6 * self.width_scale, 60 * self.width_scale,
-                                        60 * self.width_scale)
+        self.monitorImgBack_1.setGeometry(16 * self.height_scale, 6 * self.height_scale, 60 * self.height_scale,
+                                          60 * self.height_scale)
 
         # Make sure the path is correct and concatenate properly
         monitorImgBack_path1 = f"{self.normalized_path}/includes/Icons/monitor/1.png"
 
-        # Apply the background image
+        # Apply the background image with 'contain' to prevent distortion
         self.monitorImgBack_1.setStyleSheet(
-            f"QLabel{{background-color: transparent; border: none; background-image: url({monitorImgBack_path1});}}"
+            f"QLabel{{background-color: transparent; border: none; background-image: url({monitorImgBack_path1}); "
+            f"background-size: contain; background-repeat: no-repeat;}}"
         )
 
         self.monitorImgBack_2 = QLabel(self.monitorImgBack)
         self.monitorImgBack_2.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.monitorImgBack_2.setGeometry(79 * self.width_scale, 6 * self.width_scale, 60 * self.width_scale,
-                                          60 * self.width_scale)
+        self.monitorImgBack_2.setGeometry(79 * self.height_scale, 6 * self.height_scale, 60 * self.height_scale,
+                                          60 * self.height_scale)
 
         # Make sure the path is correct and concatenate properly
         monitorImgBack_path2 = f"{self.normalized_path}/includes/Icons/monitor/2.png"
 
-        # Apply the background image
+        # Apply the background image with 'contain' to prevent distortion
         self.monitorImgBack_2.setStyleSheet(
-            f"QLabel{{background-color: transparent; border: none; background-image: url({monitorImgBack_path2});}}"
+            f"QLabel{{background-color: transparent; border: none; background-image: url({monitorImgBack_path2}); "
+            f"background-size: contain; background-repeat: no-repeat;}}"
         )
 
         self.monitorImgBack_3 = QLabel(self.monitorImgBack)
         self.monitorImgBack_3.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.monitorImgBack_3.setGeometry(141 * self.width_scale, 6 * self.width_scale, 60 * self.width_scale,
-                                          60 * self.width_scale)
+        self.monitorImgBack_3.setGeometry(141 * self.height_scale, 6 * self.height_scale, 60 * self.height_scale,
+                                          60 * self.height_scale)
 
         # Make sure the path is correct and concatenate properly
         monitorImgBack_path3 = f"{self.normalized_path}/includes/Icons/monitor/3.png"
 
-        # Apply the background image
+        # Apply the background image with 'contain' to prevent distortion
         self.monitorImgBack_3.setStyleSheet(
-            f"QLabel{{background-color: transparent; border: none; background-image: url({monitorImgBack_path3});}}"
+            f"QLabel{{background-color: transparent; border: none; background-image: url({monitorImgBack_path3}); "
+            f"background-size: contain; background-repeat: no-repeat;}}"
         )
 
         # self.fullScreenLabel = QPushButton(self.jiankongTabel)

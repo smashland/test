@@ -13143,6 +13143,8 @@ class tgraphcanvas(FigureCanvas):
     # if noaction is True, the button event action is not triggered
     @pyqtSlot(bool)
     def markDrop(self, noaction:bool = False) -> None:
+        if not self.changeBool:
+            return
         self.aw.markDropClick()
         self.tpChangeBool = False
         self.changeBool = False
