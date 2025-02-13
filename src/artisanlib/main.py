@@ -2709,8 +2709,7 @@ class ApplicationWindow(
         self.orderLayout = QVBoxLayout(self.orderWidget)
         self.orderLayout.setContentsMargins(0, 0, 0, 56 * self.height_scale)
 
-        # 加载订单列表的 JSON 数据
-        self.load_order_json()
+
 
         # # 添加按钮
         # self.addButton = QPushButton(self.orderWidget)
@@ -3422,13 +3421,13 @@ class ApplicationWindow(
         processInfoLabel_pointFont = QFont(self.font_family7, 26 * self.width_scale)
         self.processInfoLabel_point.setFont(processInfoLabel_pointFont)
 
-        self.ssdLabel = QLabel(self.processInfo1)
-        self.ssdLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
-        self.ssdLabel.setText('℃')
-        self.ssdLabel.setGeometry((26+self.calculate_text_width(self.processInfoLabel)+self.calculate_text_width(self.processInfoLabel_point))*self.width_scale, 26*self.height_scale, 16*self.width_scale, 18*self.height_scale)
-        self.ssdLabel.setStyleSheet("color: #C8C8C8;")
+        self.ssdLabel1 = QLabel(self.processInfo1)
+        self.ssdLabel1.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
+        self.ssdLabel1.setText('℃')
+        self.ssdLabel1.setGeometry((26+self.calculate_text_width(self.processInfoLabel)+self.calculate_text_width(self.processInfoLabel_point))*self.width_scale, 26*self.height_scale, 16*self.width_scale, 18*self.height_scale)
+        self.ssdLabel1.setStyleSheet("color: #C8C8C8;")
         ssdfont = QFont(self.font_family4, 12*self.width_scale)
-        self.ssdLabel.setFont(ssdfont)
+        self.ssdLabel1.setFont(ssdfont)
 
         self.lineLabel = QWidget(self.processInfo1)
         self.lineLabel.setStyleSheet('background-color: #C8C8C8;')
@@ -3442,13 +3441,13 @@ class ApplicationWindow(
         ssdfont = QFont(self.font_family4, 12*self.width_scale)
         self.processInfo1WD.setFont(ssdfont)
 
-        self.ssdLabel = QLabel(self.processInfo1)
-        self.ssdLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
-        self.ssdLabel.setText('℃')
-        self.ssdLabel.setGeometry((141+self.calculate_text_width(self.processInfo1WD))*self.width_scale, 66*self.height_scale, 16*self.width_scale, 18*self.height_scale)
-        self.ssdLabel.setStyleSheet("color: #C8C8C8;")
+        self.ssdLabel2 = QLabel(self.processInfo1)
+        self.ssdLabel2.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
+        self.ssdLabel2.setText('℃')
+        self.ssdLabel2.setGeometry((141+self.calculate_text_width(self.processInfo1WD))*self.width_scale, 66*self.height_scale, 16*self.width_scale, 18*self.height_scale)
+        self.ssdLabel2.setStyleSheet("color: #C8C8C8;")
         ssdfont = QFont(self.font_family4, 8*self.width_scale)
-        self.ssdLabel.setFont(ssdfont)
+        self.ssdLabel2.setFont(ssdfont)
 
         self.processInfoImg = QLabel(self.processInfo1)
         self.processInfoImg.setGeometry(28*self.width_scale, 109*self.height_scale, 50*self.width_scale, 50*self.width_scale)  # Position and size of the label
@@ -3763,7 +3762,7 @@ class ApplicationWindow(
 
         self.setHl = QLabel(self.rightCenter)
         self.setHl.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.setHl.setText('1')
+        self.setHl.setText('30')
         self.setHl.setGeometry(37*self.width_scale, 25*self.height_scale, 35*self.width_scale, 16*self.height_scale)
         self.setHl.setStyleSheet(
             f"color: #222222;background-color: #F0F3F7;border-radius: {7*self.height_scale}px;border: 1px solid #222222;")
@@ -3825,7 +3824,7 @@ class ApplicationWindow(
 
         self.setFm = QLabel(self.rightCenter)
         self.setFm.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.setFm.setText('30')
+        self.setFm.setText('60')
         self.setFm.setGeometry(37*self.width_scale, 109*self.height_scale, 35*self.width_scale, 16*self.height_scale)
         self.setFm.setStyleSheet(
             f"color: #222222;background-color: #F0F3F7;border-radius: {7*self.height_scale}px;border: 1px solid #222222;")
@@ -3880,7 +3879,7 @@ class ApplicationWindow(
 
         self.setZs = QLabel(self.rightCenter)
         self.setZs.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.setZs.setText('30')
+        self.setZs.setText('42')
         self.setZs.setGeometry(37*self.width_scale, 192*self.height_scale, 35*self.width_scale, 16*self.height_scale)
         self.setZs.setStyleSheet(
             f"color: #222222;background-color: #F0F3F7;border-radius: {7*self.height_scale}px;border: 1px solid #222222;")
@@ -4219,7 +4218,7 @@ class ApplicationWindow(
         )
         lqfont = QFont(self.font_family2, 12*self.width_scale)
         self.lqBtn.setFont(lqfont)
-        # self.lqBtn.clicked.connect(self.submitInfo)
+        self.lqBtn.setEnabled(False)
 
         self.jbBtn = QLabel(self.rightBottom)
         self.jbBtn.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
@@ -4231,13 +4230,25 @@ class ApplicationWindow(
         )
         jbfont = QFont(self.font_family2, 12*self.width_scale)
         self.jbBtn.setFont(jbfont)
+        self.jbBtn.setEnabled(False)
 
-        self.sblb = QLabel(self)
+        self.toumingZheZhao = QPushButton(self)  # 出仓报错弹窗
+        self.toumingZheZhao.setStyleSheet('border: none;background-color: rgba(0, 0, 0, 0);')
+        self.toumingZheZhao.setGeometry(0, 0, 1920 * self.width_scale,
+                                            1080 * self.width_scale)
+        self.toumingZheZhao.installEventFilter(self)
+        self.toumingZheZhao.clicked.connect(self.sblb_closeDiolog)
+
+
+        self.sblb = QLabel(self.toumingZheZhao)
         self.sblb.setStyleSheet('background-color: #eeebe7;border-radius: 0px;')
         self.sblb.setGeometry(231*self.width_scale, 109*self.height_scale, 240*self.width_scale, 160*self.height_scale)
         # self.sblb.setAttribute(Qt.WA_TransparentForMouseEvents, False)
         self.sblb.installEventFilter(self)
         self.sblb.hide()  # 初始隐藏
+
+        # 加载订单列表的 JSON 数据
+        self.load_order_json()
 
 
         self.sheibeiId = "0"
@@ -11411,6 +11422,7 @@ class ApplicationWindow(
     # def workbenchUI(self):
     def getShebeiList(self):
         self.sblb.show()
+        self.toumingZheZhao.setVisible(True)
 
         # 获取 localJson/Machines 目录路径
         machines_path = os.path.join(ytycwdpath,"localJson","Machines")
@@ -11458,6 +11470,7 @@ class ApplicationWindow(
 
     def on_item_clicked(self, item):
         # 隐藏 QListWidget
+        self.toumingZheZhao.setVisible(False)
         self.sblb.hide()
 
         # 将点击的项目内容显示到 QLabel
@@ -11478,6 +11491,8 @@ class ApplicationWindow(
 
         # 模拟触发动作（这里可以传递 action 给 openMachineSettings）
         action.trigger()  # 触发 action，这样就会进入 openMachineSettings 函数
+        
+        self.qmc.ToggleRecorder()
 
     # def startProgress(self):
     #     # 重置状态并启动定时器
@@ -11571,7 +11586,7 @@ class ApplicationWindow(
         self.ksyrBtn.setText("00:00:00")
         self.ksyrtimer.start(1000)  # 每隔 1 秒触发一次
         # self.statusLabel.setText("烘焙中...")
-        self.qmc.ToggleRecorder()
+        # self.qmc.ToggleRecorder()
         self.ksyrBtn.setEnabled(False)
 
         self.oneStage = []
@@ -11590,27 +11605,26 @@ class ApplicationWindow(
                         self.oneStage.append([
                             stage1
                         ])
+                        first_Value = self.oneStage[0]
+                        self.jieduanNum.setText('1')
+                        self.mbwdNum.setText(str(first_Value[0][0]))
+                        self.ckzNumR.setText('1')
+                        self.hlNumR.setText(str(first_Value[0][1]))
+                        self.fmNumR.setText(str(first_Value[0][2]))
+                        self.zsNumR.setText(str(first_Value[0][3]))
+
+                        self.setHl.setText(str(first_Value[0][1]))
+                        self.slider4.setValue(first_Value[0][1])
+                        self.slider4released()
+                        self.setFm.setText(str(first_Value[0][2]))
+                        self.slider1.setValue(first_Value[0][2])
+                        self.slider1released()
+                        self.setZs.setText(str(first_Value[0][3]))
+                        self.slider2.setValue(first_Value[0][3])
+                        self.slider2released()
 
         except FileNotFoundError:
             QMessageBox.warning(self, "警告", "JSON 文件不存在")
-
-        first_Value = self.oneStage[0]
-        self.jieduanNum.setText('1')
-        self.mbwdNum.setText(str(first_Value[0][0]))
-        self.ckzNumR.setText('1')
-        self.hlNumR.setText(str(first_Value[0][1]))
-        self.fmNumR.setText(str(first_Value[0][2]))
-        self.zsNumR.setText(str(first_Value[0][3]))
-
-        self.setHl.setText(str(first_Value[0][1]))
-        self.slider4.setValue(first_Value[0][1])
-        self.slider4released()
-        self.setFm.setText(str(first_Value[0][2]))
-        self.slider1.setValue(first_Value[0][2])
-        self.slider1released()
-        self.setZs.setText(str(first_Value[0][3]))
-        self.slider2.setValue(first_Value[0][3])
-        self.slider2released()
 
         if self.jdtTimer.isActive():
             self.jdtTimer.stop()
@@ -11649,7 +11663,11 @@ class ApplicationWindow(
         #
         # # 设置 QLabel 显示生成的随机温度
         # self.sswd.setText(f"{random_temp:.2f}")
-        sswd_value = float(self.sswd.text())
+        try:
+            sswd_value = float(self.sswd.text())
+        except ValueError:
+            print("输入的文本无法转换为浮动数")
+            sswd_value = 0.0  # 或者设为其他默认值，取决于你的需求
 
         # 根据 sswd 的值选择不同的图片
         if sswd_value == 0:
@@ -11865,18 +11883,18 @@ class ApplicationWindow(
             if self.rudouStep >= 100:
                 self.rudouStep = 0  # 重置进度条
                 self.rudouBar.setValue(self.rudouStep)
-
+                # self.qmc.markDrop()
                 # 调用 markCharge 方法
-                self.qmc.markCharge()  # 在进度条完成时调用
+                # self.qmc.markCharge()  # 在进度条完成时调用
 
                 # 如果需要停，可以停止定时器
                 # self.rudouTimer.stop()
 
                 # 重新启动定时器（可以根据需要调整间隔）
-                self.rudouTimer.start(100)  # 启动定时器，间隔为 100 毫秒
+                self.rudouTimer.start(100, Qt.TimerType.CoarseTimer, self)  # 启动定时器，间隔为 100 毫秒
                 return
 
-            self.rudouStep += 0.03  # 每次增加的步长
+            self.rudouStep += 0.3  # 每次增加的步长
             self.rudouBar.setValue(self.rudouStep)
 
         elif event.timerId() == self.jdtTimer.timerId():
@@ -11886,7 +11904,7 @@ class ApplicationWindow(
                 self.jdt.setValue(self.jdtStep)
 
                 # 调用 markCharge 方法
-                self.qmc.markCharge()  # 在进度条完成时调用
+                # self.qmc.markCharge()  # 在进度条完成时调用
 
                 # 如果需要停，可以停止定时器
                 # self.jdtTimer.stop()
@@ -11914,7 +11932,7 @@ class ApplicationWindow(
                 self.jdtGJXYTimer.start(100)  # 定时器间隔为 100 毫秒，事件由当前对象处理
                 return
 
-            self.jdtGJXYStep += 0.9  # 每次增加进度
+            self.jdtGJXYStep += 0.020833  # 每次增加进度
             self.jdtGJXY.setValue(self.jdtGJXYStep)
 
     def closeAiWidget(self):
@@ -14297,7 +14315,7 @@ class ApplicationWindow(
     def closeHistoryClick(self):
         self.historyInfo.setVisible(False)
         self.scroll_area.setVisible(False)
-        # self.qmc.deleteLater()
+        self.qmc.deleteLater()
 
     def closeAnalyseClick(self):
         self.historyAnalyse.setVisible(False)
@@ -14436,6 +14454,19 @@ class ApplicationWindow(
 
     def closeDiolog(self):
         self.diologRect2Zhezhao.setVisible(False)
+
+    def sblb_closeDiolog(self):
+        self.toumingZheZhao.setVisible(False)
+        self.sblb.hide()
+
+    # 定义事件过滤器
+    def eventFilter(self, obj, event):
+        if obj == self.toumingZheZhao and event.type() == QEvent.Type.MouseButtonPress:
+            # 这里手动触发按钮的点击事件
+            self.sblb_closeDiolog()  # 手动执行槽函数
+            return True  # 返回 True 表示事件已处理，不再传递给下层控件
+        return super().eventFilter(obj, event)  # 默认事件处理
+
 
 
 
@@ -14643,7 +14674,15 @@ class ApplicationWindow(
                         # 为 ordersRect2 添加双击事件
                         ordersRect2.mouseDoubleClickEvent = lambda event, order=order: self.on_item_double_click(event,
                                                                                                                  order)
-
+                        self.rdBtn.setEnabled(True)
+                        self.ccBtn.setEnabled(True)
+                        self.zhdImg.setEnabled(True)
+                        self.yibaoImg.setEnabled(True)
+                    else:
+                        self.rdBtn.setEnabled(False)
+                        self.ccBtn.setEnabled(False)
+                        self.zhdImg.setEnabled(False)
+                        self.yibaoImg.setEnabled(False)
                 # 添加按钮
                 self.addButton = QPushButton(self.orderWidget)
                 self.addButton.setStyleSheet(f'''
@@ -15791,6 +15830,7 @@ class ApplicationWindow(
         text_width = fm.horizontalAdvance(label.text())
         return text_width
 
+
     def read_rtsp_from_ini(self, ini_file_path):
         # 读取 INI 文件中的 RTSP 地址
         config = configparser.ConfigParser()
@@ -16313,22 +16353,22 @@ class ApplicationWindow(
                 _log.exception(e)
         return s
 
-    def eventFilter(self, obj: Optional['QObject'], event: Optional[QEvent]) -> bool:
-        # pylint: disable=c-extension-no-member
-        try:
-            if event is not None and event.type() == QEvent.Type.ApplicationPaletteChange and self.app is not None and sys.platform.startswith(
-                    'darwin') and QVersionNumber.fromString(qVersion())[0] < QVersionNumber(6, 5,
-                                                                                            0) and darkdetect.isDark() != self.app.darkmode:  # pyright:ignore[reportAttributeAccessIssue,reportPossiblyUnboundVariable] # "isDark" is not a known member of module "darkdetect"
-                # called if the palette changed (switch between dark and light mode on macOS Legacy builds)
-                self.app.darkmode = not self.app.darkmode
-                self.updateCanvasColors()
-            # 如果是鼠标离开事件
-            elif obj == self.sblb and event.type() == event.MouseButtonPress:
-                self.sblb.hide()  # 隐藏 sblb
-            return super().eventFilter(obj, event)
-        except Exception:  # pylint: disable=broad-except
-            pass
-        return super().eventFilter(obj, event)
+    # def eventFilter(self, obj: Optional['QObject'], event: Optional[QEvent]) -> bool:
+    #     # pylint: disable=c-extension-no-member
+    #     try:
+    #         if event is not None and event.type() == QEvent.Type.ApplicationPaletteChange and self.app is not None and sys.platform.startswith(
+    #                 'darwin') and QVersionNumber.fromString(qVersion())[0] < QVersionNumber(6, 5,
+    #                                                                                         0) and darkdetect.isDark() != self.app.darkmode:  # pyright:ignore[reportAttributeAccessIssue,reportPossiblyUnboundVariable] # "isDark" is not a known member of module "darkdetect"
+    #             # called if the palette changed (switch between dark and light mode on macOS Legacy builds)
+    #             self.app.darkmode = not self.app.darkmode
+    #             self.updateCanvasColors()
+    #         # 如果是鼠标离开事件
+    #         elif obj == self.sblb and event.type() == event.MouseButtonPress:
+    #             self.sblb.hide()  # 隐藏 sblb
+    #         return super().eventFilter(obj, event)
+    #     except Exception:  # pylint: disable=broad-except
+    #         pass
+    #     return super().eventFilter(obj, event)
 
     # search the given QTable table for a row with the given widget as cellWidget or item in column col or as a sub-widget contained in the layout of a widget in place
     # returns the row number if the widget was found or None
@@ -38995,7 +39035,7 @@ def excepthook(excType: type, excValue: BaseException, tracebackobj: Optional['T
         _log.exception(e)
 
 
-sys.excepthook = excepthook
+# sys.excepthook = excepthook
 
 # the following avoids the "No document could be created" dialog and the Console message
 # "The Artisan Profile type doesn't map to any NSDocumentClass." on startup (since pyobjc-core 3.1.1)

@@ -4255,8 +4255,6 @@ class tgraphcanvas(FigureCanvas):
                 _log.exception(e)
             self.aw.lcd2.display(etstr)
             self.aw.processInfo1WD.setText(etstr)
-            if len(self.aw.getTPMark) == 0 and float(self.aw.processInfo1WD.text()) > 175:
-                self.aw.diologRect.setVisible(True)
 
             ## BT LCD:
             btstr = resLCD
@@ -4271,17 +4269,26 @@ class tgraphcanvas(FigureCanvas):
             self.aw.lcd3.display(btstr)
             int_part, decimal_part = btstr.split('.')
             self.aw.processInfoLabel.setText(int_part)
-            self.aw.processInfoLabel_point.setText('.'+decimal_part)
-            self.aw.processInfoLabel_point.setGeometry(
-                (26 + self.calculate_text_width(self.processInfoLabel)) * self.width_scale, 37 * self.height_scale,
-                50 * self.width_scale,
-                58 * self.height_scale)
+            self.aw.processInfoLabel_point.setText('.' + decimal_part)
             # random_temp = random.uniform(0, 300)  # 生成随机温度
             # self.aw.sswd.setText(str(random_temp))
             if self.changeBool == True:
                 self.aw.sswd.setText(btstr)
             else:
                 self.aw.sswd.setText(etstr)
+
+            self.aw.processInfoLabel_point.setGeometry(
+                (26 + self.aw.calculate_text_width(self.aw.processInfoLabel)) * self.aw.width_scale, 37 * self.aw.height_scale,
+                50 * self.aw.width_scale,
+                58 * self.aw.height_scale)
+
+            self.aw.ssdLabel1.setGeometry((26 + self.aw.calculate_text_width(
+                self.aw.processInfoLabel) + self.aw.calculate_text_width(self.aw.processInfoLabel_point)) * self.aw.width_scale,
+                                      26 * self.aw.height_scale, 16 * self.aw.width_scale, 18 * self.aw.height_scale)
+
+            self.aw.ssdLabel2.setGeometry((141 + self.aw.calculate_text_width(self.aw.processInfo1WD)) * self.aw.width_scale,
+                                      66 * self.aw.height_scale, 16 * self.aw.width_scale, 18 * self.aw.height_scale)
+
 
             # self.aw.lookBtstr = btstr
             # self.aw.lookEtstr = etstr
@@ -4312,6 +4319,9 @@ class tgraphcanvas(FigureCanvas):
                 _log.exception(e)
 
             self.aw.processInfo2ROR.setText(deltabtstr)
+
+            if len(self.aw.getTPMark) == 0 and float(self.aw.processInfo1WD.text()) > int(self.aw.temperatureEdit.text()):
+                self.aw.diologRect.setVisible(True)
 
             # Fuji/Delta LCDs
             try:
