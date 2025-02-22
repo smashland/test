@@ -50,7 +50,7 @@ if TYPE_CHECKING:
     from matplotlib.collections import PolyCollection # pylint: disable=unused-import
     from matplotlib.axes import Axes # pylint: disable=unused-import
     from matplotlib.axes._base import _AxesBase # pylint: disable=unused-import
-    from matplotlib.image import AxesImage # pylint: disable=unused-import
+    from matplotlib.image import AxesImage, mpimg # pylint: disable=unused-import
     from matplotlib.legend import Legend # pylint: disable=unused-import
     from matplotlib.backend_bases import PickEvent, MouseEvent, Event # pylint: disable=unused-import
     from matplotlib.font_manager import FontProperties # pylint: disable=unused-import
@@ -111,8 +111,8 @@ from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas 
 from matplotlib.projections.polar import PolarAxes
 from matplotlib.text import Annotation, Text
 from matplotlib.lines import Line2D
-from matplotlib.offsetbox import DraggableAnnotation
-from matplotlib.colors import to_hex, to_rgba
+from matplotlib.offsetbox import DraggableAnnotation, OffsetImage, AnnotationBbox
+from matplotlib.colors import to_hex, to_rgba, LinearSegmentedColormap
 
 
 from artisanlib.phidgets import PhidgetManager
@@ -331,9 +331,9 @@ class tgraphcanvas(FigureCanvas):
                                         'rect5': '#d3d3d3',
                                         'et': '#AC3230', 'bt': '#D18F65', 'xt': '#404040', 'yt': '#404040',
                                         'deltaet': '#cc0f50',
-                                        'deltabt': '#7864AA', 'markers': '#000000', 'text': '#000000',
-                                        'watermarks': '#ffff00', 'timeguide': '#0a5c90',
-                                        'canvas': '#00000000', 'legendbg': '#ffffff', 'legendborder': '#a9a9a9',
+                                        'deltabt': '#7864AA', 'markers': '#000000', 'text': 'red',
+                                        'watermarks': '#B1836A', 'timeguide': '#0a5c90',
+                                        'canvas': '#00000000', 'legendbg': '#00000000', 'legendborder': '#a9a9a9',
                                         'specialeventbox': '#ff5871', 'specialeventtext': '#ffffff',
                                         'bgeventmarker': '#7f7f7f', 'bgeventtext': '#000000',
                                         'mettext': '#ffffff', 'metbox': '#cc0f50',
@@ -4226,7 +4226,7 @@ class tgraphcanvas(FigureCanvas):
         try:
             if self.LCDdecimalplaces:
                 lcdformat = '%.1f'
-                resLCD = '-.-' if idx is None else 'u.u'
+                resLCD = '-.-' if idx is None else '0.0'
             else:
                 lcdformat = '%.0f'
                 resLCD = '--' if idx is None else 'uu'
@@ -4254,7 +4254,9 @@ class tgraphcanvas(FigureCanvas):
             except Exception as e: # pylint: disable=broad-except
                 _log.exception(e)
             self.aw.lcd2.display(etstr)
-            self.aw.processInfo1WD.setText(etstr)
+            # random_temp = random.uniform(0, 300)
+            # random_temp_str = f"{random_temp:.2f}"
+            # self.aw.processInfo1WD.setText(etstr)
 
             ## BT LCD:
             btstr = resLCD
@@ -4267,15 +4269,27 @@ class tgraphcanvas(FigureCanvas):
             except Exception as e: # pylint: disable=broad-except
                 _log.exception(e)
             self.aw.lcd3.display(btstr)
-            int_part, decimal_part = btstr.split('.')
-            self.aw.processInfoLabel.setText(int_part)
-            self.aw.processInfoLabel_point.setText('.' + decimal_part)
-            # random_temp = random.uniform(0, 300)  # 生成随机温度
-            # self.aw.sswd.setText(str(random_temp))
+            random_number = random.uniform(1, 300)
+            random_number_str = f"{random_number:.2f}"
+
+            # int_part, decimal_part = btstr.split('.')
+            # self.aw.processInfoLabel.setText(int_part)
+            # self.aw.processInfoLabel_point.setText('.' + decimal_part)
+
             if self.changeBool == True:
                 self.aw.sswd.setText(btstr)
+                int_part, decimal_part = btstr.split('.')
+                self.aw.processInfoLabel.setText(int_part)
+                self.aw.processInfoLabel_point.setText('.' + decimal_part)
+                self.aw.processInfo1WD.setText(etstr)
+                self.aw.processInfoLabel_wd.setText('豆温|风温')
             else:
                 self.aw.sswd.setText(etstr)
+                int_part2, decimal_part2 = etstr.split('.')
+                self.aw.processInfoLabel.setText(int_part2)
+                self.aw.processInfoLabel_point.setText('.' + decimal_part2)
+                self.aw.processInfo1WD.setText(btstr)
+                self.aw.processInfoLabel_wd.setText('风温|豆温')
 
             self.aw.processInfoLabel_point.setGeometry(
                 (26 + self.aw.calculate_text_width(self.aw.processInfoLabel)) * self.aw.width_scale, 37 * self.aw.height_scale,
@@ -4286,8 +4300,8 @@ class tgraphcanvas(FigureCanvas):
                 self.aw.processInfoLabel) + self.aw.calculate_text_width(self.aw.processInfoLabel_point)) * self.aw.width_scale,
                                       26 * self.aw.height_scale, 16 * self.aw.width_scale, 18 * self.aw.height_scale)
 
-            self.aw.ssdLabel2.setGeometry((141 + self.aw.calculate_text_width(self.aw.processInfo1WD)) * self.aw.width_scale,
-                                      66 * self.aw.height_scale, 16 * self.aw.width_scale, 18 * self.aw.height_scale)
+            self.aw.ssdLabel2.setGeometry((135 + self.aw.calculate_text_width(self.aw.processInfo1WD)) * self.aw.width_scale,
+                                      72 * self.aw.height_scale, 16 * self.aw.width_scale, 18 * self.aw.height_scale)
 
 
             # self.aw.lookBtstr = btstr
@@ -7085,6 +7099,7 @@ class tgraphcanvas(FigureCanvas):
         else:
             xytext = (x+e,y + yup)
         temp_str = ('' if temp == -1 else fmtstr%(temp))
+        # 时间标注
         temp_anno = self.ax.annotate(temp_str, xy=(x,y),
                             xytext=xytext,
                             color=self.palette['text'],
@@ -7108,6 +7123,7 @@ class tgraphcanvas(FigureCanvas):
             xytext = self.l_annotations_dict[draggable_anno_key][1].xyann
         else:
             xytext = (x+e,y - ydown)
+        # 状态标注
         time_anno = self.ax.annotate(time_str,
                         xy=(x,y),
                         xytext=xytext,
@@ -7126,6 +7142,58 @@ class tgraphcanvas(FigureCanvas):
         if draggable and draggable_anno_key is not None:
             self.l_annotations_dict[draggable_anno_key] = [temp_anno, time_anno]
         return [temp_anno, time_anno]
+    # def annotate(self, temp: float, time_str: str, x: float, y: float, yup: int, ydown: int, e: int = 0, a: float = 1.,
+    #              draggable: bool = True, draggable_anno_key: Optional[int] = None) -> Optional[List['Annotation']]:
+    #     if self.ax is None:
+    #         return None
+    #
+    #     fontprop_small = self.aw.mpl_fontproperties.copy()
+    #     fontsize = 'x-small'
+    #     fontprop_small.set_size(fontsize)
+    #     path_effects = self.line_path_effects(False, self.patheffects, self.aw.light_background_p,
+    #                                           self.patheffects)  # don't glow annotations!
+    #
+    #     # Annotate temp
+    #     fmtstr = '%.1f' if self.LCDdecimalplaces else '%.0f'
+    #     xytext: Optional[Tuple[float, float]]
+    #     if draggable and draggable_anno_key is not None and draggable_anno_key in self.l_annotations_pos_dict:
+    #         # First look into the position dictionary loaded from file, those are removed after first rendering
+    #         xytext = self.l_annotations_pos_dict[draggable_anno_key][0]
+    #     elif draggable and draggable_anno_key is not None and draggable_anno_key in self.l_annotations_dict:
+    #         # Check the "live" dictionary
+    #         xytext = self.l_annotations_dict[draggable_anno_key][0].xyann
+    #     else:
+    #         xytext = (x + e, y + yup)
+    #
+    #     temp_str = ('' if temp == -1 else fmtstr % (temp))
+    #
+    #     # Create the point (dot) at the given position (x, y)
+    #     self.ax.plot(x, y, 'o', color='green', markersize=120, alpha=1, zorder=100)  # zorder 确保点显示在最上层
+    #
+    #
+    #     # Combine time_str and temp_str for the label
+    #     label = f"{time_str} {temp_str}"
+    #
+    #     # Annotate text above the point with black background
+    #     temp_anno = self.ax.annotate(label, xy=(x, y),
+    #                                  xytext=(x, y + yup),  # Position the text above the point
+    #                                  color=self.palette['text'],
+    #                                  fontsize=fontsize,
+    #                                  alpha=a,
+    #                                  fontproperties=fontprop_small,
+    #                                  path_effects=path_effects,
+    #                                  bbox=dict(facecolor='black', alpha=0.7, edgecolor='none',
+    #                                            boxstyle='round,pad=0.3'))
+    #
+    #     try:
+    #         temp_anno.set_in_layout(False)  # Remove text annotations from tight_layout calculation
+    #         if draggable:
+    #             temp_anno.draggable(use_blit=True)
+    #             temp_anno.set_picker(self.aw.draggable_text_box_picker)
+    #     except Exception:  # Pylint disable: broad-except; mpl before v3.0 do not have this set_in_layout() function
+    #         pass
+    #
+    #     return [temp_anno]
 
     def place_annotations(self, TP_index:Optional[int], d:float, timex:List[float], timeindex:List[int], temp:List[float], stemp:Union[List[float],'npt.NDArray[numpy.double]'],
             startB:Optional[float] = None, timeindex2:Optional[List[int]] = None, TP_time_loaded:Optional[float] = None,
@@ -7306,12 +7374,25 @@ class tgraphcanvas(FigureCanvas):
                         if fake_anno is not None:
                             anno_artists += fake_anno
                     #do water mark if FCs, but no FCe nor SCs nor SCe
+                    # 创建自定义渐变色：从 #E5F2FE 到 #B1836A（垂直渐变）
+                    cmap = LinearSegmentedColormap.from_list(
+                        'custom_gradient',
+                        [(229 / 255, 242 / 255, 254 / 255), '#B1836A']  # 从 #E5F2FE 到 #B1836A
+                    )
+                    # # 生成渐变色背景
+                    # gradient = npt.linspace(0, 1, 256)  # 创建一个从0到1的渐变
+                    # gradient = npt.vstack((gradient, gradient))  # 形成二维渐变矩阵
+
+                    # 使用imshow绘制渐变背景
+                    # self.ax.imshow(gradient, aspect='auto', cmap=cmap,
+                    #           extent=[timex[timeindex[2]], timex[tidx], 0, 1], alpha=0.5)
+
                     if timeindex[2] and not timeindex[3] and not timeindex[4] and not timeindex[5] and not timeindex2 and self.watermarksflag:
                         fc_artist = self.ax.axvspan(
                             timex[timeindex[2]],
                             timex[tidx],
-                            facecolor=self.palette['watermarks'],
-                            alpha=0.2,
+                            facecolor=cmap(0.5),
+                            alpha=0.5,
                             path_effects=[])
                         try:
                             fc_artist.set_in_layout(False) # remove title from tight_layout calculation
@@ -8664,7 +8745,7 @@ class tgraphcanvas(FigureCanvas):
                                                 temp = self.E1backgroundvalues[-1]
                                                 anno = self.ax.annotate(E1b_annotation, xy=(hoffset + self.timeB[int(event_idx)], voffset + temp),
                                                             alpha=min(self.backgroundalpha + 0.1, 1.0),
-                                                            color=self.palette['text'],
+                                                            color='transparent',
                                                             va='bottom', ha='left',
                                                             fontsize='x-small',
                                                             path_effects=[PathEffects.withStroke(linewidth=self.patheffects,foreground=self.palette['background'])],
@@ -8706,7 +8787,7 @@ class tgraphcanvas(FigureCanvas):
                                                 temp = self.E2backgroundvalues[-1]
                                                 anno = self.ax.annotate(E2b_annotation, xy=(hoffset + self.timeB[int(event_idx)], voffset + temp),
                                                             alpha=min(self.backgroundalpha + 0.1, 1.0),
-                                                            color=self.palette['text'],
+                                                            color='transparent',
                                                             va='bottom', ha='left',
                                                             fontproperties=eventannotationprop,
                                                             path_effects=[PathEffects.withStroke(linewidth=self.patheffects,foreground=self.palette['background'])],
@@ -8748,7 +8829,7 @@ class tgraphcanvas(FigureCanvas):
                                                 temp = self.E3backgroundvalues[-1]
                                                 anno = self.ax.annotate(E3b_annotation, xy=(hoffset + self.timeB[int(event_idx)], voffset + temp),
                                                             alpha=min(self.backgroundalpha + 0.1, 1.0),
-                                                            color=self.palette['text'],
+                                                            color='transparent',
                                                             va='bottom', ha='left',
                                                             fontproperties=eventannotationprop,
                                                             path_effects=[PathEffects.withStroke(linewidth=self.patheffects,foreground=self.palette['background'])],
@@ -8790,7 +8871,7 @@ class tgraphcanvas(FigureCanvas):
                                                 temp = self.E4backgroundvalues[-1]
                                                 anno = self.ax.annotate(E4b_annotation, xy=(hoffset + self.timeB[int(event_idx)], voffset + temp),
                                                             alpha=min(self.backgroundalpha + 0.1, 1.0),
-                                                            color=self.palette['text'],
+                                                            color='transparent',
                                                             va='bottom', ha='left',
                                                             fontproperties=eventannotationprop,
                                                             path_effects=[PathEffects.withStroke(linewidth=self.patheffects,foreground=self.palette['background'])],
@@ -9102,7 +9183,7 @@ class tgraphcanvas(FigureCanvas):
                                     _log.debug(e)
 
                             letters = ''.join((char1,char2,char3,char4))   #"NPDF" first letter for each type (None, Power, Damper, Fan)
-                            rotating_colors = [self.palette['rect2'],self.palette['rect3']] #rotating rotating_colors
+                            rotating_colors = [self.palette['rect2'],'transparent'] #rotating rotating_colors
                             for p,ltr in enumerate(letters):
                                 if len(netypes[p]) > 1:
                                     for i in range(len(netypes[p])-1):
@@ -9227,7 +9308,7 @@ class tgraphcanvas(FigureCanvas):
                                                 temp = self.E1values[-1]
                                                 anno = self.ax.annotate(E1_annotation, xy=(hoffset + self.timex[int(self.specialevents[i])], voffset + temp),
                                                             alpha=.9,
-                                                            color=self.palette['text'],
+                                                            color='transparent',
                                                             va='bottom', ha='left',
                                                             fontproperties=eventannotationprop,
                                                             path_effects=[PathEffects.withStroke(linewidth=self.patheffects,foreground=self.palette['background'])],
@@ -9269,7 +9350,7 @@ class tgraphcanvas(FigureCanvas):
                                                 temp = self.E2values[-1]
                                                 anno = self.ax.annotate(E2_annotation, xy=(hoffset + self.timex[int(self.specialevents[i])], voffset + temp),
                                                             alpha=.9,
-                                                            color=self.palette['text'],
+                                                            color='transparent',
                                                             va='bottom', ha='left',
                                                             fontproperties=eventannotationprop,
                                                             path_effects=[PathEffects.withStroke(linewidth=self.patheffects,foreground=self.palette['background'])],
@@ -9312,7 +9393,7 @@ class tgraphcanvas(FigureCanvas):
                                                 temp = self.E3values[-1]
                                                 anno = self.ax.annotate(E3_annotation, xy=(hoffset + self.timex[int(self.specialevents[i])], voffset + temp),
                                                             alpha=.9,
-                                                            color=self.palette['text'],
+                                                            color='transparent',
                                                             va='bottom', ha='left',
                                                             fontproperties=eventannotationprop,
                                                             path_effects=[PathEffects.withStroke(linewidth=self.patheffects,foreground=self.palette['background'])],
@@ -9354,7 +9435,7 @@ class tgraphcanvas(FigureCanvas):
                                                 temp = self.E4values[-1]
                                                 anno = self.ax.annotate(E4_annotation, xy=(hoffset + self.timex[int(self.specialevents[i])], voffset + temp),
                                                             alpha=.9,
-                                                            color=self.palette['text'],
+                                                            color='transparent',
                                                             va='bottom', ha='left',
                                                             fontproperties=eventannotationprop,
                                                             path_effects=[PathEffects.withStroke(linewidth=self.patheffects,foreground=self.palette['background'])],
@@ -9906,58 +9987,58 @@ class tgraphcanvas(FigureCanvas):
                             label.set_color(self.palette['ylabel'])
 
                     #write legend
-                    if self.legendloc and not self.flagon and len(self.timex) > 2:
-                        prop = self.aw.mpl_fontproperties.copy()
-                        prop.set_size('x-small')
-                        if len(self.handles) > 7:
-                            ncol = int(math.ceil(len(self.handles)/4.))
-                        elif len(self.handles) > 3:
-                            ncol = int(math.ceil(len(self.handles)/2.))
-                        else:
-                            ncol = int(math.ceil(len(self.handles)))
-                        self.labels = [self.__dijstra_to_ascii(l) for l in self.labels]
-                        loc:Union[int, Tuple[float,float]]
-                        if self.legend is None:
-                            if self.legendloc_pos is None:
-                                loc = self.legendloc # a position selected in the axis dialog
-                            else:
-                                loc = self.legendloc_pos # a user define legend position set by drag-and-drop
-                        else:
-                            loc = self.legend._loc # type: ignore # "Legend" has no attribute "_loc" # pylint: disable=protected-access
-                        try:
-                            try:
-                                leg = self.ax.legend(self.handles,self.labels, loc=loc,
-                                    ncols=ncol,fancybox=True,prop=prop,shadow=False,frameon=True)
-                            except Exception: # pylint: disable=broad-except
-                                # ncol keyword argument to legend renamed to ncols in MPL 3.6, thus for older MPL versions we need to still use ncol
-                                leg = self.ax.legend(self.handles,self.labels,loc=loc,ncol=ncol,fancybox=True,prop=prop,shadow=False,frameon=True)
-                            try:
-                                leg.set_in_layout(False) # remove legend from tight_layout calculation
-                            except Exception: # pylint: disable=broad-except # set_in_layout not available in mpl<3.x
-                                pass
-                            self.legend = leg
-                            self.legend_lines = leg.get_lines()
-                            for h in leg.legendHandles:
-                                if h is not None:
-                                    h.set_picker(False) # we disable the click to hide on the handles feature
-                                #h.set_picker(self.aw.draggable_text_box_picker) # as setting this picker results in non-termination
-                            for ll in leg.texts:
-                                #l.set_picker(5)
-                                ll.set_picker(self.aw.draggable_text_box_picker)
-                            try:
-                                leg.set_draggable(state=True,use_blit=True)  #,update='bbox')
-                                leg.set_picker(self.aw.draggable_text_box_picker)
-                            except Exception: # pylint: disable=broad-except # not available in mpl<3.x
-                                leg.draggable(state=True) # type: ignore # for mpl 2.x
-                            frame = leg.get_frame()
-                            frame.set_facecolor(self.palette['legendbg'])
-                            frame.set_alpha(self.alpha['legendbg'])
-                            frame.set_edgecolor(self.palette['legendborder'])
-                            frame.set_linewidth(0.5)
-                            for line,text in zip(leg.get_lines(), leg.get_texts()):
-                                text.set_color(line.get_color())
-                        except Exception: # pylint: disable=broad-except
-                            pass
+                    # if self.legendloc and not self.flagon and len(self.timex) > 2:
+                    #     prop = self.aw.mpl_fontproperties.copy()
+                    #     prop.set_size('x-small')
+                    #     if len(self.handles) > 7:
+                    #         ncol = int(math.ceil(len(self.handles)/4.))
+                    #     elif len(self.handles) > 3:
+                    #         ncol = int(math.ceil(len(self.handles)/2.))
+                    #     else:
+                    #         ncol = int(math.ceil(len(self.handles)))
+                    #     self.labels = [self.__dijstra_to_ascii(l) for l in self.labels]
+                    #     loc:Union[int, Tuple[float,float]]
+                        # if self.legend is None:
+                        #     if self.legendloc_pos is None:
+                        #         loc = self.legendloc # a position selected in the axis dialog
+                        #     else:
+                        #         loc = self.legendloc_pos # a user define legend position set by drag-and-drop
+                        # else:
+                        #     loc = self.legend._loc # type: ignore # "Legend" has no attribute "_loc" # pylint: disable=protected-access
+                        # try:
+                        #     try:
+                        #         leg = self.ax.legend(self.handles,self.labels, loc=loc,
+                        #             ncols=ncol,fancybox=True,prop=prop,shadow=False,frameon=True)
+                        #     except Exception: # pylint: disable=broad-except
+                        #         # ncol keyword argument to legend renamed to ncols in MPL 3.6, thus for older MPL versions we need to still use ncol
+                        #         leg = self.ax.legend(self.handles,self.labels,loc=loc,ncol=ncol,fancybox=True,prop=prop,shadow=False,frameon=True)
+                        #     try:
+                        #         leg.set_in_layout(False) # remove legend from tight_layout calculation
+                        #     except Exception: # pylint: disable=broad-except # set_in_layout not available in mpl<3.x
+                        #         pass
+                        #     self.legend = leg
+                        #     self.legend_lines = leg.get_lines()
+                        #     for h in leg.legendHandles:
+                        #         if h is not None:
+                        #             h.set_picker(False) # we disable the click to hide on the handles feature
+                        #         #h.set_picker(self.aw.draggable_text_box_picker) # as setting this picker results in non-termination
+                        #     for ll in leg.texts:
+                        #         #l.set_picker(5)
+                        #         ll.set_picker(self.aw.draggable_text_box_picker)
+                        #     try:
+                        #         leg.set_draggable(state=True,use_blit=True)  #,update='bbox')
+                        #         leg.set_picker(self.aw.draggable_text_box_picker)
+                        #     except Exception: # pylint: disable=broad-except # not available in mpl<3.x
+                        #         leg.draggable(state=True) # type: ignore # for mpl 2.x
+                        #     frame = leg.get_frame()
+                        #     frame.set_facecolor(self.palette['legendbg'])
+                        #     frame.set_alpha(self.alpha['legendbg'])
+                        #     frame.set_edgecolor(self.palette['legendborder'])
+                        #     frame.set_linewidth(0)
+                        #     for line,text in zip(leg.get_lines(), leg.get_texts()):
+                        #         text.set_color(line.get_color())
+                        # except Exception: # pylint: disable=broad-except
+                        #     pass
 
                     else:
                         self.legend = None
@@ -14256,7 +14337,7 @@ class tgraphcanvas(FigureCanvas):
                                 (self.timex[self.timeindex[2]], statisticsheight),
                                 width = self.statisticstimes[3],
                                 height = statisticsbarheight,
-                                color = self.palette['rect3'],
+                                color = 'transparent',
                                 alpha=0.5,
                                 path_effects=[])
                         self.ax.add_patch(rect)
@@ -14305,7 +14386,7 @@ class tgraphcanvas(FigureCanvas):
                         # only if CHARGE is set
                         text = self.ax.text(starttime + self.statisticstimes[1]/2.,statisticsupper,
                                 f'{st1}  {dryphaseP}%',
-                                color=self.palette['text'],ha='center',
+                                color='transparent',ha='center',
                             fontsize='medium'
                             )
                         try:
@@ -14316,7 +14397,7 @@ class tgraphcanvas(FigureCanvas):
                         if self.statisticstimes[2]*100./self.statisticstimes[0]>1: # annotate only if mid phase is at least 1% of the total
                             text = self.ax.text(starttime + self.statisticstimes[1]+self.statisticstimes[2]/2.,statisticsupper,
                                     (f'{st2}  {midphaseP}%' if self.timeindex[0] > -1 else st2),
-                                    color=self.palette['text'],ha='center',
+                                    color='transparent',ha='center',
                                 fontsize='medium'
                                 )
                             try:
@@ -14325,7 +14406,7 @@ class tgraphcanvas(FigureCanvas):
                                 pass
                         text = self.ax.text(starttime + self.statisticstimes[1]+self.statisticstimes[2]+self.statisticstimes[3]/2.,statisticsupper,
                                     (f'{st3}  {finishphaseP}%' if self.timeindex[0] > -1 else st3),
-                                    color=self.palette['text'],ha='center',
+                                    color='transparent',ha='center',
                             fontsize='medium'
                             )
                         try:
@@ -14333,7 +14414,7 @@ class tgraphcanvas(FigureCanvas):
                         except Exception:  # pylint: disable=broad-except
                             pass
                     if self.timeindex[7]: # only if COOL exists
-                        text = self.ax.text(starttime + self.statisticstimes[1]+self.statisticstimes[2]+self.statisticstimes[3]+self.statisticstimes[4]/2.,statisticsupper,st4,color=self.palette['text'],ha='center',
+                        text = self.ax.text(starttime + self.statisticstimes[1]+self.statisticstimes[2]+self.statisticstimes[3]+self.statisticstimes[4]/2.,statisticsupper,st4,color='transparent',ha='center',
                             fontsize='medium'
                             )
                         try:
@@ -14364,7 +14445,7 @@ class tgraphcanvas(FigureCanvas):
 
                     if self.timeindex[0] > -1:
                         text = self.ax.text(starttime + self.statisticstimes[1]/2.,statisticslower,st1,
-                            color=self.palette['text'],
+                            color='transparent',
                             ha='center',
                             fontsize='medium')
                         try:
@@ -14373,7 +14454,7 @@ class tgraphcanvas(FigureCanvas):
                             pass
                     if self.timeindex[2]: # only if FCs exists
                         if self.statisticstimes[2]*100./self.statisticstimes[0]>1: # annotate only if mid phase is at least 1% of the total
-                            text = self.ax.text(starttime + self.statisticstimes[1]+self.statisticstimes[2]/2.,statisticslower,st2,color=self.palette['text'],ha='center',
+                            text = self.ax.text(starttime + self.statisticstimes[1]+self.statisticstimes[2]/2.,statisticslower,st2,color='transparent',ha='center',
                                 #fontproperties=statsprop # fails be rendered in PDF exports on MPL v3.4.x
                                 fontsize='medium'
                                 )
@@ -14381,7 +14462,7 @@ class tgraphcanvas(FigureCanvas):
                                 text.set_in_layout(False)
                             except Exception: # pylint: disable=broad-except
                                 pass
-                        text = self.ax.text(starttime + self.statisticstimes[1]+self.statisticstimes[2]+self.statisticstimes[3]/2.,statisticslower,st3,color=self.palette['text'],ha='center',
+                        text = self.ax.text(starttime + self.statisticstimes[1]+self.statisticstimes[2]+self.statisticstimes[3]/2.,statisticslower,st3,color='transparent',ha='center',
                             #fontproperties=statsprop # fails be rendered in PDF exports on MPL v3.4.x
                             fontsize='medium'
                             )
@@ -14390,7 +14471,7 @@ class tgraphcanvas(FigureCanvas):
                         except Exception: # pylint: disable=broad-except
                             pass
                     if self.timeindex[7]: # only if COOL exists
-                        text = self.ax.text(starttime + self.statisticstimes[1]+self.statisticstimes[2]+self.statisticstimes[3]+max(self.statisticstimes[4]/2.,self.statisticstimes[4]/3.),statisticslower,st4,color=self.palette['text'],ha='center',
+                        text = self.ax.text(starttime + self.statisticstimes[1]+self.statisticstimes[2]+self.statisticstimes[3]+max(self.statisticstimes[4]/2.,self.statisticstimes[4]/3.),statisticslower,st4,color='transparent',ha='center',
                             #fontproperties=statsprop # fails be rendered in PDF exports on MPL v3.4.x
                             fontsize='medium'
                             )
@@ -16934,11 +17015,11 @@ class tgraphcanvas(FigureCanvas):
                         self.base_messagevisible = False
                     if x is not None and y is not None:
                         if self.l_horizontalcrossline is None:
-                            self.l_horizontalcrossline = self.ax.axhline(y,color = self.palette['text'], linestyle = '-', linewidth= .5, alpha = 1.0,sketch_params=None,path_effects=[])
+                            self.l_horizontalcrossline = self.ax.axhline(y,color = 'transparent', linestyle = '-', linewidth= .5, alpha = 1.0,sketch_params=None,path_effects=[])
                         else:
                             self.l_horizontalcrossline.set_ydata(y)
                         if self.l_verticalcrossline is None:
-                            self.l_verticalcrossline = self.ax.axvline(x,color = self.palette['text'], linestyle = '-', linewidth= .5, alpha = 1.0,sketch_params=None,path_effects=[])
+                            self.l_verticalcrossline = self.ax.axvline(x,color = 'transparent', linestyle = '-', linewidth= .5, alpha = 1.0,sketch_params=None,path_effects=[])
                         else:
                             self.l_verticalcrossline.set_xdata(x)
                         if self.ax_background:

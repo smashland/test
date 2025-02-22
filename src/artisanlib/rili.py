@@ -61,10 +61,10 @@ class Calendar(QDialog):
         date_frame.setFixedHeight(35)  # 固定高度
         date_layout = QHBoxLayout(date_frame)
         date_layout.setContentsMargins(0, 0, 0, 0)
-
+        xialaIMG = f"{self.normalized_path}/includes/Icons/general/xiala2.png"
         # 定义统一的样式
-        combo_style = """
-            QComboBox {
+        combo_style = f"""
+            QComboBox {{
                 border: 1px solid #CCCCCC;
                 border-radius: 5px;
                 background: white;
@@ -72,8 +72,8 @@ class Calendar(QDialog):
                 text-align: center;  /* 设置文本居中 */
                 text-align-last: center;
                 text-align-vertical: center;
-            }
-            QComboBox::drop-down {
+            }}
+            QComboBox::drop-down {{
                 border-left: 1px solid #CCCCCC;
 
                 border-top-right-radius: 5px;
@@ -81,29 +81,29 @@ class Calendar(QDialog):
                 background: white;
                 width: 20px;
                 color: black;
-            }
-            QComboBox::down-arrow {
-                width: 1;
-                height: 1;
-                background-Image: url("C:\py\pythonProject\.venv\down-arrow.png);    
-            }
-            QComboBox QAbstractItemView {
+            }}
+            QComboBox::down-arrow {{
+                width: 14;
+                height: 14;
+                background-Image: url({xialaIMG});
+            }}
+            QComboBox QAbstractItemView {{
                 border-radius: 5px;
                 background: #808080;
                 selection-background-color: #D3D3D3;
                 border: 1px solid #CCCCCC;
                 color: black;
-            }
-            QComboBox QAbstractItemView::item {
+            }}
+            QComboBox QAbstractItemView::item {{
                 height: 25px;
                 padding-left: 5px;
                 background-color: #FFFFFF;  /* 浅灰色背景 */
                 color: black;
-            }
-            QComboBox QAbstractItemView::item:hover {
+            }}
+            QComboBox QAbstractItemView::item:hover {{
                 background-color: #CCCCCC;  /* Hover color */
                 color: #808080;  /* Text color when hovered */
-            }
+            }}
 
         """
 
