@@ -2859,7 +2859,7 @@ class ApplicationWindow(
         self.task_no_label2.setGeometry(24 * self.width_scale, 68 * self.height_scale, 250 * self.width_scale,
                                         45 * self.height_scale)
         self.task_no_label2.setStyleSheet("color: #222222;border:none;")
-        yrqkfont = QFont(self.font_family4, 10 * self.width_scale)
+        yrqkfont = QFont(self.font_family4, 12 * self.width_scale)
         self.task_no_label2.setFont(yrqkfont)
 
         self.deadline_label2 = QLabel(self.ordering)
@@ -2885,7 +2885,8 @@ class ApplicationWindow(
                                        22 * self.height_scale)
         self.status_label2.setStyleSheet(
             f"color: #ffffff;border:none;background-color: #222222; border-radius: {10 * self.height_scale}px")
-        self.status_label2.setFont(yrqkfont)
+        yrqkfont2 = QFont(self.font_family4, 10 * self.width_scale)
+        self.status_label2.setFont(yrqkfont2)
 
         self.ordersRect_More = QWidget(self)  # 咖啡订单卡片
         self.ordersRect_More.setStyleSheet(f'border-radius: {25*self.height_scale}px;background-color: #f5f8fb; border: 1px solid #70D0A3;')
@@ -15670,6 +15671,7 @@ class ApplicationWindow(
             self.zhezhaoWidget_addOrder.setVisible(False)
             self.addOrderWidget.setVisible(False)
             self.load_order_json()
+            self.orderWidget.update()
 
         except Exception as e:
             import traceback
@@ -15677,10 +15679,18 @@ class ApplicationWindow(
             print("Error saving data:", error_message)
             QMessageBox.critical(self, "错误", f"保存失败: {error_message}")
 
+    def clear_layout(self,layout):
+        """ 清除布局内的所有子组件 """
+        while layout.count():
+            item = layout.takeAt(0)
+            if item.widget():
+                item.widget().deleteLater()
+
     def load_order_json(self):
         """从 JSON 文件加载数据到表单"""
         try:
             with open(os.path.join(ytycwdpath, "localJson", "order.json"), "r", encoding="utf-8") as file:
+                self.clear_layout(self.orderLayout)
                 data = json.load(file)
                 self.orderList_data = data
                 self.orders_list = []  # 初始化空列表
@@ -15760,8 +15770,11 @@ class ApplicationWindow(
                         self.orderLayout.addWidget(spacer_widget)
 
                         # 为 ordersRect2 添加双击事件
-                        ordersRect2.mouseDoubleClickEvent = lambda event, order=order: self.on_item_double_click(event,
-                                                                                                                 order)
+                        ordersRect2.mouseDoubleClickEvent = lambda event, order=order: self.on_item_double_click(event,order)
+
+                        # 绑定鼠标事件
+                        ordersRect2.mousePressEvent = lambda event, order=order: self.on_item_press(event, order)
+                        ordersRect2.mouseReleaseEvent = lambda event: self.cancel_long_press()
                         self.rdBtn.setEnabled(True)
                         self.ccBtn.setEnabled(True)
                         self.zhdImg.setEnabled(True)
@@ -15772,6 +15785,7 @@ class ApplicationWindow(
                         self.zhdImg.setEnabled(False)
                         self.yibaoImg.setEnabled(False)
                 # 添加按钮
+
                 self.addButton = QPushButton(self.orderWidget)
                 self.addButton.setStyleSheet(f'''
                     QPushButton {{
@@ -15855,6 +15869,18 @@ class ApplicationWindow(
                     taskTxt_label.setFont(font2)
                     taskTxt_label.setText(f"任务订单:")
 
+                    taskMoreSet = QPushButton(ordersRect2)
+                    taskMoreSet.setGeometry(260 * self.width_scale, 25 * self.height_scale, 9 * self.width_scale,
+                                            23 * self.height_scale)
+                    taskMoreSet.setStyleSheet(f"""
+                                                        QPushButton {{
+                                                            border-image: url('{self.normalized_path}/includes/Icons/yrzb/more.png');
+                                                            border: none;
+                                                        }}
+                                                    """)
+                    # taskMoreSet.clicked.connect(lambda checked, order=order: self.delectTaskClicked(order)) # taskMoreSetClicked
+                    taskMoreSet.clicked.connect(lambda checked, order=order: self.taskMoreSetClicked(order))
+
                     # 创建批次号标签
                     self.task_no_label = ScrollingLabel(f"{order['bakingBatch']}", ordersRect2)
                     self.task_no_label.setGeometry(99 * self.width_scale, 68 * self.height_scale,
@@ -15891,6 +15917,9 @@ class ApplicationWindow(
                     # 为订单控件添加双击事件
                     ordersRect2.mouseDoubleClickEvent = lambda event, order=order: self.on_item_double_click(event,
                                                                                                              order)
+                    # 绑定鼠标事件
+                    ordersRect2.mousePressEvent = lambda event, order=order: self.on_item_press(event, order)
+                    ordersRect2.mouseReleaseEvent = lambda event: self.cancel_long_press()
             # 添加按钮
             self.addButton = QPushButton(self.orderWidget)
             self.addButton.setStyleSheet(f'''
@@ -15929,6 +15958,41 @@ class ApplicationWindow(
 
         except Exception as e:
             print(self, "错误", f"双击处理失败: {e}")
+
+    def on_item_press(self, event, order):
+        """ 按下鼠标左键时，启动定时器，3 秒后触发删除 """
+        print(f"订单 {order} 开始长按检测...")
+        self.long_press_timer = QTimer()
+        self.long_press_timer.setSingleShot(True)
+        self.long_press_timer.timeout.connect(lambda: self.on_item_long_press(order))
+        self.long_press_timer.start(3000)  # 3秒后触发
+
+    def cancel_long_press(self):
+        """ 松开鼠标时，取消定时器，避免误触 """
+        if hasattr(self, 'long_press_timer') and self.long_press_timer.isActive():
+            self.long_press_timer.stop()
+            print("长按取消")
+
+    def on_item_long_press(self, order):
+        """ 长按触发删除订单 """
+        print(f"订单 {order} 长按 3 秒，已删除")
+        self.delete_order(order)  # 调用删除方法
+
+    def delete_order(self, order):
+        """ 删除订单的方法 """
+        order_id_to_remove = order.get('bakingBatch')  # 确保字段存在
+        if not order_id_to_remove:
+            print("订单无效，无法删除")
+            return
+
+        # 从订单列表中删除
+        self.orderList_data = [o for o in self.orderList_data if o.get('bakingBatch') != order_id_to_remove]
+        print(f"订单 {order_id_to_remove} 已删除")
+
+        # 更新 JSON 文件
+        self.updateOrderJsonFile(order_id_to_remove)
+        self.load_order_json()
+        self.orderWidget.update()
 
     def markChargeClick(self):
         # print(self.time_left)
@@ -16298,6 +16362,7 @@ class ApplicationWindow(
 
                     print(f"订单已成功移至 {file_path}")
                     self.load_order_json()
+                    self.orderWidget.update()
                     self.tslContent.clear()
                     self.xclContent.clear()
                     self.slContent.clear()
