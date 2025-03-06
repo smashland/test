@@ -4278,10 +4278,10 @@ class tgraphcanvas(FigureCanvas):
 
             if self.changeBool == True:
                 self.aw.sswd.setText(btstr)
-                int_part, decimal_part = random_number_str.split('.')
+                int_part, decimal_part = btstr.split('.')
                 self.aw.processInfoLabel.setText(int_part)
                 self.aw.processInfoLabel_point.setText('.' + decimal_part)
-                self.aw.processInfo1WD.setText(random_number_str)
+                self.aw.processInfo1WD.setText(etstr)
                 self.aw.processInfoLabel_wd.setText('豆温|风温')
                 # if int(int_part) >= 100:
                 #     self.aw.processInfoLabel_point.setGeometry(120 * self.aw.width_scale, 37 * self.aw.height_scale,
@@ -4297,10 +4297,10 @@ class tgraphcanvas(FigureCanvas):
                 #                                18 * self.height_scale)
             else:
                 self.aw.sswd.setText(etstr)
-                int_part2, decimal_part2 = random_number_str.split('.')
+                int_part2, decimal_part2 = etstr.split('.')
                 self.aw.processInfoLabel.setText(int_part2)
                 self.aw.processInfoLabel_point.setText('.' + decimal_part2)
-                self.aw.processInfo1WD.setText(random_number_str)
+                self.aw.processInfo1WD.setText(btstr)
                 self.aw.processInfoLabel_wd.setText('风温|豆温')
                 # if int(int_part2) >= 100:
                 #     self.aw.processInfoLabel_point.setGeometry(120 * self.aw.width_scale, 37 * self.aw.height_scale,
