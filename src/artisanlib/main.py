@@ -77,7 +77,7 @@ from pathlib import Path
 from bidi.algorithm import get_display  # type:ignore
 from artisanlib.rili import Calendar, global_calendar
 import datetime
-import pickle
+# import pickle
 
 # links CTR-C signals to the system default (ignore)
 import signal
@@ -6762,16 +6762,16 @@ class ApplicationWindow(
         # resultText = self.get_prediction_from_pickle(pickle_file, 85.2, 180.5, coffee_recipe)
         # print(f"预测结果: {resultText}")
 
-        with open("pkl/regressor_BuhlerRM20_0.pkl", "rb") as f:
-            data = pickle.load(f)
-        # 查看数据类型
-        print(type(data))
-
-        # 打印部分内容，看看数据结构
-        print(data)
-
-        print("模型系数:", data.coef_)  # 线性回归的斜率 (权重)
-        print("模型截距:", data.intercept_)  # 线性回归的截距
+        # with open("pkl/regressor_BuhlerRM20_0.pkl", "rb") as f:
+        #     data = pickle.load(f)
+        # # 查看数据类型
+        # print(type(data))
+        #
+        # # 打印部分内容，看看数据结构
+        # print(data)
+        #
+        # print("模型系数:", data.coef_)  # 线性回归的斜率 (权重)
+        # print("模型截距:", data.intercept_)  # 线性回归的截距
 
         # X_test = np.array([[1.5], [3.2], [5.1]])  # 示例测试数据
         # y_pred = data.predict(X_test)  # 使用加载的模型进行预测
@@ -13156,48 +13156,48 @@ class ApplicationWindow(
     #     else:
     #         print('连接失败')
 
-    def load_model_from_pickle(self,pickle_file):
-        """ 从 pickle 文件加载回归模型 """
-        try:
-            with open(pickle_file, 'rb') as file:
-                model = pickle.load(file)
-            return model
-        except Exception as e:
-            print(f"❌ 读取模型文件失败: {e}")
-            return None
-
-    def get_prediction_from_pickle(self, pickle_file, Bean_temp, Air_temp, Coffee_recipe):
-        """
-        读取 pickle 文件中的回归模型，并使用输入特征进行预测。
-
-        :param pickle_file: pickle 文件路径
-        :param Bean_temp: 豆温 (double 类型的数字)
-        :param Air_temp: 风温 (double 类型的数字)
-        :param Coffee_recipe: 咖啡豆配方 (数组)
-        :return: 预测结果（四舍五入到1位小数的数组）
-        """
-        model = self.load_model_from_pickle(pickle_file)
-        if model is None:
-            return None  # 读取失败时返回 None
-
-        try:
-            # 构造输入特征，每个 Coffee_recipe 对应相同的 Bean_temp 和 Air_temp
-            num_samples = len(Coffee_recipe)
-            Bean_temp_array = np.full((num_samples, 1), Bean_temp)  # 生成相同值的列
-            Air_temp_array = np.full((num_samples, 1), Air_temp)  # 生成相同值的列
-            Coffee_recipe_array = np.array(Coffee_recipe).reshape(-1, 1)  # 转换为列向量
-
-            # 组合成 (n_samples, n_features) 形状的特征矩阵
-            X = np.hstack((Bean_temp_array, Air_temp_array, Coffee_recipe_array))
-
-            # 进行预测
-            y_pred = model.predict(X)
-
-            # 返回四舍五入后的结果（NumPy 数组）
-            return np.round(y_pred, 1).tolist()
-        except Exception as e:
-            print(f"❌ 预测时出错: {e}")
-            return None
+    # def load_model_from_pickle(self,pickle_file):
+    #     """ 从 pickle 文件加载回归模型 """
+    #     try:
+    #         with open(pickle_file, 'rb') as file:
+    #             model = pickle.load(file)
+    #         return model
+    #     except Exception as e:
+    #         print(f"❌ 读取模型文件失败: {e}")
+    #         return None
+    #
+    # def get_prediction_from_pickle(self, pickle_file, Bean_temp, Air_temp, Coffee_recipe):
+    #     """
+    #     读取 pickle 文件中的回归模型，并使用输入特征进行预测。
+    #
+    #     :param pickle_file: pickle 文件路径
+    #     :param Bean_temp: 豆温 (double 类型的数字)
+    #     :param Air_temp: 风温 (double 类型的数字)
+    #     :param Coffee_recipe: 咖啡豆配方 (数组)
+    #     :return: 预测结果（四舍五入到1位小数的数组）
+    #     """
+    #     model = self.load_model_from_pickle(pickle_file)
+    #     if model is None:
+    #         return None  # 读取失败时返回 None
+    #
+    #     try:
+    #         # 构造输入特征，每个 Coffee_recipe 对应相同的 Bean_temp 和 Air_temp
+    #         num_samples = len(Coffee_recipe)
+    #         Bean_temp_array = np.full((num_samples, 1), Bean_temp)  # 生成相同值的列
+    #         Air_temp_array = np.full((num_samples, 1), Air_temp)  # 生成相同值的列
+    #         Coffee_recipe_array = np.array(Coffee_recipe).reshape(-1, 1)  # 转换为列向量
+    #
+    #         # 组合成 (n_samples, n_features) 形状的特征矩阵
+    #         X = np.hstack((Bean_temp_array, Air_temp_array, Coffee_recipe_array))
+    #
+    #         # 进行预测
+    #         y_pred = model.predict(X)
+    #
+    #         # 返回四舍五入后的结果（NumPy 数组）
+    #         return np.round(y_pred, 1).tolist()
+    #     except Exception as e:
+    #         print(f"❌ 预测时出错: {e}")
+    #         return None
 
     def toggle_BTline_visibility(self):
         """切换曲线的可见性（隐藏/显示）"""
