@@ -4278,18 +4278,43 @@ class tgraphcanvas(FigureCanvas):
 
             if self.changeBool == True:
                 self.aw.sswd.setText(btstr)
-                int_part, decimal_part = btstr.split('.')
+                int_part, decimal_part = random_number_str.split('.')
                 self.aw.processInfoLabel.setText(int_part)
                 self.aw.processInfoLabel_point.setText('.' + decimal_part)
-                self.aw.processInfo1WD.setText(etstr)
+                self.aw.processInfo1WD.setText(random_number_str)
                 self.aw.processInfoLabel_wd.setText('豆温|风温')
+                # if int(int_part) >= 100:
+                #     self.aw.processInfoLabel_point.setGeometry(120 * self.aw.width_scale, 37 * self.aw.height_scale,
+                #                                             100 * self.aw.width_scale,
+                #                                             58 * self.aw.height_scale)
+                #     self.aw.ssdLabel1.setGeometry(170 * self.aw.width_scale, 26 * self.aw.height_scale, 16 * self.aw.width_scale,
+                #                                18 * self.aw.height_scale)
+                # else:
+                #     self.aw.processInfoLabel_point.setGeometry(90 * self.width_scale, 37 * self.height_scale,
+                #                                             100 * self.width_scale,
+                #                                             58 * self.height_scale)
+                #     self.aw.ssdLabel1.setGeometry(140 * self.width_scale, 26 * self.height_scale, 16 * self.width_scale,
+                #                                18 * self.height_scale)
             else:
                 self.aw.sswd.setText(etstr)
-                int_part2, decimal_part2 = etstr.split('.')
+                int_part2, decimal_part2 = random_number_str.split('.')
                 self.aw.processInfoLabel.setText(int_part2)
                 self.aw.processInfoLabel_point.setText('.' + decimal_part2)
-                self.aw.processInfo1WD.setText(btstr)
+                self.aw.processInfo1WD.setText(random_number_str)
                 self.aw.processInfoLabel_wd.setText('风温|豆温')
+                # if int(int_part2) >= 100:
+                #     self.aw.processInfoLabel_point.setGeometry(120 * self.aw.width_scale, 37 * self.aw.height_scale,
+                #                                             100 * self.aw.width_scale,
+                #                                             58 * self.aw.height_scale)
+                #     self.aw.ssdLabel1.setGeometry(170 * self.aw.width_scale, 26 * self.aw.height_scale, 16 * self.aw.width_scale,
+                #                                18 * self.aw.height_scale)
+                #
+                # else:
+                #     self.aw.processInfoLabel_point.setGeometry(90 * self.aw.width_scale, 37 * self.aw.height_scale,
+                #                                             100 * self.aw.width_scale,
+                #                                             58 * self.aw.height_scale)
+                #     self.aw.ssdLabel1.setGeometry(140 * self.aw.width_scale, 26 * self.aw.height_scale, 16 * self.aw.width_scale,
+                #                                18 * self.aw.height_scale)
 
             self.aw.processInfoLabel_point.setGeometry(
                 (26 + self.aw.calculate_text_width(self.aw.processInfoLabel)) * self.aw.width_scale, 37 * self.aw.height_scale,
@@ -4300,8 +4325,10 @@ class tgraphcanvas(FigureCanvas):
                 self.aw.processInfoLabel) + self.aw.calculate_text_width(self.aw.processInfoLabel_point)) * self.aw.width_scale,
                                       26 * self.aw.height_scale, 16 * self.aw.width_scale, 18 * self.aw.height_scale)
 
-            self.aw.ssdLabel2.setGeometry((135 + self.aw.calculate_text_width(self.aw.processInfo1WD)) * self.aw.width_scale,
-                                      72 * self.aw.height_scale, 16 * self.aw.width_scale, 18 * self.aw.height_scale)
+
+
+
+
 
 
             # self.aw.lookBtstr = btstr
@@ -6273,11 +6300,11 @@ class tgraphcanvas(FigureCanvas):
 
                 #adjust the length of the minor ticks
                 for i in self.ax.xaxis.get_minorticklines() + self.ax.yaxis.get_minorticklines():
-                    i.set_markersize(1)
+                    i.set_markersize(0)
 
                 #adjust the length of the major ticks
                 for i in self.ax.get_xticklines() + self.ax.get_yticklines():
-                    i.set_markersize(1)
+                    i.set_markersize(0)
                     #i.set_markeredgewidth(2)   #adjust the width
 
 #                # check x labels rotation
@@ -8214,9 +8241,9 @@ class tgraphcanvas(FigureCanvas):
                         self.delta_ax.yaxis.set_major_locator(ticker.MultipleLocator(self.zgrid))
                         self.delta_ax.yaxis.set_minor_locator(ticker.AutoMinorLocator())
                         for ii in self.delta_ax.get_yticklines():
-                            ii.set_markersize(10)
+                            ii.set_markersize(0)
                         for iiii in self.delta_ax.yaxis.get_minorticklines():
-                            iiii.set_markersize(5)
+                            iiii.set_markersize(0)
                         for label in self.delta_ax.get_yticklabels() :
                             label.set_fontsize('small')
                         if not self.LCDdecimalplaces:
@@ -8235,7 +8262,7 @@ class tgraphcanvas(FigureCanvas):
                             bottom=False,       # ticks along the bottom edge are off
                             top=False,          # ticks along the top edge are off
                             direction='inout',  # tick_dir # this does not work as ticks are not drawn at all in ON mode with this!?
-                            labelright=True,
+                            labelright=False,   # y轴右侧文字
                             labelleft=False,
                             labelbottom=False)   # labels along the bottom edge are off
 
@@ -8263,6 +8290,8 @@ class tgraphcanvas(FigureCanvas):
                     self.ax.spines['bottom'].set_color(xlabel_alpha_color)
                     self.ax.spines['left'].set_color("#00000000")
                     self.ax.spines['right'].set_color(ylabel_alpha_color)
+                    self.ax.spines['right'].set_visible(False)
+                    self.ax.spines['top'].set_visible(False)
 
                     # self.ax.spines.top.set_visible(self.xgrid != 0 and self.ygrid != 0 and self.zgrid != 0)
                     # self.ax.spines.bottom.set_visible(self.xgrid != 0)
@@ -8282,9 +8311,9 @@ class tgraphcanvas(FigureCanvas):
                         self.ax.yaxis.set_major_locator(ticker.MultipleLocator(self.ygrid))
                         self.ax.yaxis.set_minor_locator(ticker.AutoMinorLocator())
                         for j in self.ax.get_yticklines():
-                            j.set_markersize(10)
+                            j.set_markersize(0)
                         for m in self.ax.yaxis.get_minorticklines():
-                            m.set_markersize(5)
+                            m.set_markersize(0)
 
 
                     try:
@@ -8336,89 +8365,89 @@ class tgraphcanvas(FigureCanvas):
                     trans:Transform = transforms.blended_transform_factory(self.ax.transAxes,self.ax.transData)
 
                     #draw water marks for dry phase region, mid phase region, and finish phase region
-                    if self.watermarksflag:
-                        rect1 = patches.Rectangle((0,self.phases[0]), width=1, height=(self.phases[1]-self.phases[0]),
-                                                  transform=trans, color=self.palette['rect1'],alpha=0.15,
-                                                  path_effects=[])
-                        rect2 = patches.Rectangle((0,self.phases[1]), width=1, height=(self.phases[2]-self.phases[1]),
-                                                  transform=trans, color=self.palette['rect2'],alpha=0.15,
-                                                  path_effects=[])
-                        rect3 = patches.Rectangle((0,self.phases[2]), width=1, height=(self.phases[3] - self.phases[2]),
-                                                  transform=trans, color=self.palette['rect3'],alpha=0.15,
-                                                  path_effects=[])
-                        self.ax.add_patch(rect1)
-                        self.ax.add_patch(rect2)
-                        self.ax.add_patch(rect3)
+                    # if self.watermarksflag:
+                    #     rect1 = patches.Rectangle((0,self.phases[0]), width=1, height=(self.phases[1]-self.phases[0]),
+                    #                               transform=trans, color=self.palette['rect1'],alpha=0.15,
+                    #                               path_effects=[])
+                    #     rect2 = patches.Rectangle((0,self.phases[1]), width=1, height=(self.phases[2]-self.phases[1]),
+                    #                               transform=trans, color=self.palette['rect2'],alpha=0.15,
+                    #                               path_effects=[])
+                    #     rect3 = patches.Rectangle((0,self.phases[2]), width=1, height=(self.phases[3] - self.phases[2]),
+                    #                               transform=trans, color=self.palette['rect3'],alpha=0.15,
+                    #                               path_effects=[])
+                    #     self.ax.add_patch(rect1)
+                    #     self.ax.add_patch(rect2)
+                    #     self.ax.add_patch(rect3)
 
                     #if self.eventsGraphflag == 0 then that means don't plot event bars
 
-                    step:float
-                    if self.eventsGraphflag == 1: #plot event bars by type
-                        # make blended transformations to help identify EVENT types
-                        if self.mode == 'C':
-                            step = 5
-                            start = 20
-                        else:
-                            step = 10
-                            start = 60
-                        jump = 20.
-                        for i in range(4):
-                            if self.showEtypes[3-i]:
-                                rectEvent = patches.Rectangle(
-                                    (0,self.phases[0]-start-jump),
-                                    width=1,
-                                    height = step,
-                                    transform=trans,
-                                    color=self.palette['rect5'],
-                                    alpha=.15,
-                                    path_effects=[])
-                                self.ax.add_patch(rectEvent)
-                            if self.mode == 'C':
-                                jump -= 10.
-                            else:
-                                jump -= 20.
-
-                    #plot events bars by value
-                    elif self.eventsGraphflag in {2, 3, 4}: # 2: step lines, 3: step+, 4: combo
-                        # make blended transformations to help identify EVENT types
-                        if self.clampEvents:
-                            top = 100
-                            bot = 0
-                        else:
-                            if self.step100temp is None:
-                                top = self.phases[0]
-                            else:
-                                top = self.step100temp
-                            bot = self.ylimit_min
-                        step = (top-bot)/10
-                        start = top - bot
-                        small_step = step/10 # as we have 100 items
-                        jump = 0.
-
-                        for jj in range(110):
-                            i = int(jj/10)
-                            barposition = top - start - jump
-                            if i == jj/10.:
-                                c1 = 'rect5'
-                                c2 = 'background'
-                                if i == 0:
-                                    color = self.palette[c1] #self.palette["rect3"] # brown
-                                elif i%2:
-                                    color = self.palette[c2] #self.palette["rect2"] # orange # the uneven ones
-                                else:
-                                    color = self.palette[c1] #self.palette["rect1"] # green # the even ones
-                                if i != 10: # don't draw the first and the last bar in clamp mode
-                                    rectEvent = patches.Rectangle(
-                                        (0,barposition),
-                                        width=1,
-                                        height = step,
-                                        transform=trans,
-                                        color=color,
-                                        alpha=.15,
-                                        path_effects=[])
-                                    self.ax.add_patch(rectEvent)
-                            self.eventpositionbars[jj] = barposition
-                            jump -= small_step
+                    # step:float
+                    # if self.eventsGraphflag == 1: #plot event bars by type
+                    #     # make blended transformations to help identify EVENT types
+                    #     if self.mode == 'C':
+                    #         step = 5
+                    #         start = 20
+                    #     else:
+                    #         step = 10
+                    #         start = 60
+                    #     jump = 20.
+                    #     for i in range(4):
+                    #         if self.showEtypes[3-i]:
+                    #             rectEvent = patches.Rectangle(
+                    #                 (0,self.phases[0]-start-jump),
+                    #                 width=1,
+                    #                 height = step,
+                    #                 transform=trans,
+                    #                 color='transparent',
+                    #                 alpha=.15,
+                    #                 path_effects=[])
+                    #             self.ax.add_patch(rectEvent)
+                    #         if self.mode == 'C':
+                    #             jump -= 10.
+                    #         else:
+                    #             jump -= 20.
+                    #
+                    # #plot events bars by value
+                    # elif self.eventsGraphflag in {2, 3, 4}: # 2: step lines, 3: step+, 4: combo
+                    #     # make blended transformations to help identify EVENT types
+                    #     if self.clampEvents:
+                    #         top = 100
+                    #         bot = 0
+                    #     else:
+                    #         if self.step100temp is None:
+                    #             top = self.phases[0]
+                    #         else:
+                    #             top = self.step100temp
+                    #         bot = self.ylimit_min
+                    #     step = (top-bot)/10
+                    #     start = top - bot
+                    #     small_step = step/10 # as we have 100 items
+                    #     jump = 0.
+                    #
+                    #     for jj in range(110):
+                    #         i = int(jj/10)
+                    #         barposition = top - start - jump
+                    #         if i == jj/10.:
+                    #             c1 = 'rect5'
+                    #             c2 = 'background'
+                    #             if i == 0:
+                    #                 color = self.palette[c1] #self.palette["rect3"] # brown
+                    #             elif i%2:
+                    #                 color = self.palette[c2] #self.palette["rect2"] # orange # the uneven ones
+                    #             else:
+                    #                 color = self.palette[c1] #self.palette["rect1"] # green # the even ones
+                    #             if i != 10: # don't draw the first and the last bar in clamp mode
+                    #                 rectEvent = patches.Rectangle(
+                    #                     (0,barposition),
+                    #                     width=1,
+                    #                     height = step,
+                    #                     transform=trans,
+                    #                     color=color,
+                    #                     alpha=.15,
+                    #                     path_effects=[])
+                    #                 self.ax.add_patch(rectEvent)
+                    #         self.eventpositionbars[jj] = barposition
+                    #         jump -= small_step
 
                     rcParams['path.sketch'] = (scale, length, randomness)
 
@@ -9730,10 +9759,10 @@ class tgraphcanvas(FigureCanvas):
                             self.delta_ax.yaxis.set_minor_locator(ticker.AutoMinorLocator())
                             delta_major_tick_lines:List['Line2D'] = self.delta_ax.get_yticklines()
                             for ytl in delta_major_tick_lines:
-                                ytl.set_markersize(10)
+                                ytl.set_markersize(0)
                             delta_minor_tick_lines:List['Line2D'] = self.delta_ax.yaxis.get_minorticklines()
                             for mtl in delta_minor_tick_lines:
-                                mtl.set_markersize(5)
+                                mtl.set_markersize(0)
                             for label in self.delta_ax.get_yticklabels() :
                                 label.set_fontsize('small')
                             if not self.LCDdecimalplaces:
@@ -15388,32 +15417,32 @@ class tgraphcanvas(FigureCanvas):
 
     #adds errors (can be called also outside the GUI thread, eg. from the sampling thread as actual message is written by updategraphics in the GUI thread)
     def adderror(self, error:str, line:Optional[Any]=None) -> None:
-        try:
+        # try:
             #### lock shared resources #####
-            self.errorsemaphore.acquire(1)
-            _log.error(error)
-            timez = str(QDateTime.currentDateTime().toString('hh:mm:ss.zzz'))    #zzz = milliseconds
-            #keep a max of 500 errors
-            if len(self.errorlog) > 499:
-                self.errorlog = self.errorlog[1:]
-            if line:
-                error = error + '@line ' + str(line)
-            self.errorlog.append(timez + ' ' + error)
-            # truncate to first line for window message line
-            try:
-                # only show first line in
-                error = error.splitlines()[0]
-            except Exception as e: # pylint: disable=broad-except
-                _log.exception(e)
-            # update the error dlg
-            if hasattr(self.aw, 'error_dlg') and self.aw.error_dlg:
-                self.aw.updateErrorLogSignal.emit()
-            self.aw.sendmessageSignal.emit(error,True,None)
-        except Exception as e: # pylint: disable=broad-except
-            _log.exception(e)
-        finally:
-            if self.errorsemaphore.available() < 1:
-                self.errorsemaphore.release(1)
+            # self.errorsemaphore.acquire(1)
+        _log.error(error)
+        #     timez = str(QDateTime.currentDateTime().toString('hh:mm:ss.zzz'))    #zzz = milliseconds
+        #     #keep a max of 500 errors
+        #     if len(self.errorlog) > 499:
+        #         self.errorlog = self.errorlog[1:]
+        #     if line:
+        #         error = error + '@line ' + str(line)
+        #     self.errorlog.append(timez + ' ' + error)
+        #     # truncate to first line for window message line
+        #     try:
+        #         # only show first line in
+        #         error = error.splitlines()[0]
+        #     except Exception as e: # pylint: disable=broad-except
+        #         _log.exception(e)
+        #     # update the error dlg
+        #     if hasattr(self.aw, 'error_dlg') and self.aw.error_dlg:
+        #         self.aw.updateErrorLogSignal.emit()
+        #     self.aw.sendmessageSignal.emit(error,True,None)
+        # except Exception as e: # pylint: disable=broad-except
+        #     _log.exception(e)
+        # finally:
+        #     if self.errorsemaphore.available() < 1:
+        #         self.errorsemaphore.release(1)
 
     ####################  PROFILE DESIGNER   ###################################################################################
     #launches designer
@@ -15700,9 +15729,9 @@ class tgraphcanvas(FigureCanvas):
                             self.delta_ax.yaxis.set_major_locator(ticker.MultipleLocator(self.zgrid))
                             self.delta_ax.yaxis.set_minor_locator(ticker.AutoMinorLocator())
                             for i in self.delta_ax.get_yticklines():
-                                i.set_markersize(10)
+                                i.set_markersize(0)
                             for i in self.delta_ax.yaxis.get_minorticklines():
-                                i.set_markersize(5)
+                                i.set_markersize(0)
                             for label in self.delta_ax.get_yticklabels() :
                                 label.set_fontsize('small')
                             if not self.LCDdecimalplaces:
