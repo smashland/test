@@ -191,7 +191,7 @@ try:
                               qVersion, QVersionNumber, QTime, QTimer, QFile, QIODevice, QTextStream,
                               QSettings,  # @Reimport @UnresolvedImport @UnusedImport
                               QRegularExpression, QDate, QUrl, QUrlQuery, QDir, Qt, QPoint, QEvent, QDateTime, QThread,
-                              qInstallMessageHandler, QBasicTimer, QDate, QRectF, QRunnable) # @Reimport @UnresolvedImport @UnusedImport
+                              qInstallMessageHandler, QBasicTimer, QDate, QRectF, QRunnable, QLocale) # @Reimport @UnresolvedImport @UnusedImport
     from PyQt6.QtNetwork import QLocalSocket, QNetworkAccessManager, QNetworkRequest, QNetworkReply # @Reimport @UnresolvedImport @UnusedImport
     #QtWebEngineWidgets must be imported before a QCoreApplication instance is created
     try:
@@ -4571,6 +4571,7 @@ class ApplicationWindow(
         # 加载订单列表的 JSON 数据
         self.load_order_json()
 
+        self.ksyrBtn.setEnabled(False)
         self.rdBtn.setEnabled(False)
         self.ccBtn.setEnabled(False)
         self.zhdImg.setEnabled(False)
@@ -6765,18 +6766,44 @@ class ApplicationWindow(
         # with open("pkl/regressor_BuhlerRM20_0.pkl", "rb") as f:
         #     data = pickle.load(f)
         # # 查看数据类型
-        # print(type(data))
+        # print(type(data))  # 确保它是 sklearn 的 LinearRegression
         #
-        # # 打印部分内容，看看数据结构
-        # print(data)
+        # bean_temp = 80.0  # 豆温
+        # wind_temp = 25.0  # 风温
+        # formula = 2  # 配方名称（假设是一个数值表示）
+        # bean_name = 1  # 豆子名称（假设是一个数值表示）
         #
-        # print("模型系数:", data.coef_)  # 线性回归的斜率 (权重)
-        # print("模型截距:", data.intercept_)  # 线性回归的截距
-
-        # X_test = np.array([[1.5], [3.2], [5.1]])  # 示例测试数据
-        # y_pred = data.predict(X_test)  # 使用加载的模型进行预测
-        # print("预测结果:", y_pred)
-
+        # # 将输入数据转换成一个包含这些特征的 NumPy 数组
+        # input_features = np.array([[bean_temp, wind_temp, formula, bean_name]])
+        #
+        # # 使用模型进行预测
+        # predicted_value = data.predict(input_features)
+        #
+        # # 输出预测结果
+        # print(f"预测的色值是: {predicted_value[0]}")
+        #
+        # # 解析模型参数
+        # if hasattr(data, "coef_"):
+        #     print("系数 (Coefficients):", data.coef_)  # 线性回归系数 (斜率)
+        # if hasattr(data, "intercept_"):
+        #     print("截距 (Intercept):", data.intercept_)  # 线性回归截距 (偏置)
+        # if hasattr(data, "n_features_in_"):
+        #     print("输入特征数量:", data.n_features_in_)
+        # if hasattr(data, "feature_names_in_"):
+        #     print("特征名称:", data.feature_names_in_)  # 需要 scikit-learn 1.0+
+        # if hasattr(data, "rank_"):
+        #     print("矩阵秩:", data.rank_)
+        # if hasattr(data, "singular_"):
+        #     print("奇异值:", data.singular_)
+        #
+        # # 检查训练时是否存储数据 (某些版本的 sklearn 可能没有)
+        # if hasattr(data, "X_train_"):
+        #     print("训练数据 (X_train):", data.X_train_)
+        # if hasattr(data, "y_train_"):
+        #     print("训练标签 (y_train):", data.y_train_)
+        #
+        # # 获取超参数
+        # print("超参数:", data.get_params())
 
         self.timeTitle = QLabel(self.tabelTitle)
         self.timeTitle.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
@@ -11978,7 +12005,10 @@ class ApplicationWindow(
         # 获取当前时间
         current_time = QDateTime.currentDateTime()
         # 格式化时间为 'yyyy年M月d日 dddd HH:mm:ss'
-        formatted_time = current_time.toString("yyyy年M月d日 dddd HH:mm:ss")
+        locale = QLocale(QLocale.Language.Chinese)
+
+        # 格式化时间并显示中文星期
+        formatted_time = current_time.toString("yyyy年M月d日 ") + locale.dayName(current_time.date().dayOfWeek()) + current_time.toString(" HH:mm:ss")
         # 更新标签显示
         self.todayTime.setText(formatted_time)
 
@@ -12250,6 +12280,7 @@ class ApplicationWindow(
 
         # 模拟触发动作（这里可以传递 action 给 openMachineSettings）
         action.trigger()  # 触发 action，这样就会进入 openMachineSettings 函数
+        self.ksyrBtn.setEnabled(True)
         self.rdBtn.setEnabled(True)
         self.ccBtn.setEnabled(True)
         self.zhdImg.setEnabled(True)
@@ -16292,6 +16323,11 @@ class ApplicationWindow(
                 data = json.load(file)
                 self.orderList_data = data
 
+                if not self.orderList_data:  # 如果数据为空
+                    self.diologRect2Zhezhao.setVisible(True)
+                    self.jbCentent2.setText("请先添加订单！")
+                    return
+
                 # 遍历订单数据并生成控件
                 for order in self.orderList_data:
                     if order.get("bakingDeviceId") == 2 and order.get("bakingStatue") == 1:
@@ -16376,10 +16412,11 @@ class ApplicationWindow(
             with open(os.path.join(ytycwdpath,"localJson","order.json"), "r", encoding="utf-8") as file:
                 data = json.load(file)
                 self.orderList_data = data
-
+            found_order = False
             # 遍历订单数据并生成控件
             for i, order in enumerate(self.orderList_data):
                 if order.get("bakingDeviceId") == 2 and order.get("bakingStatue") == 2:
+                    found_order = True
                     # 获取当天的日期，用作文件夹名称
                     today_str = datetime.datetime.now().strftime("%Y%m%d")
                     history_path = os.path.join(ytycwdpath,"localJson","History",f"{today_str}")
@@ -16388,6 +16425,11 @@ class ApplicationWindow(
                     self.curFile = os.path.join(history_path, f"{order['bakingBatch']}.alog")
                     self.qmc.reset()
                     break
+            if not found_order:
+                # 没找到符合条件的订单，弹出提示框
+                self.diologRect2Zhezhao.setVisible(True)
+                self.jbCentent2.setText("没有找到可以出仓的订单！")
+                return  # 直接返回，不执行后续代码
         except Exception:  # pylint: disable=broad-except
             pass
         self.zhezhaoWidget.setVisible(True)
@@ -17098,13 +17140,42 @@ class ApplicationWindow(
 
             obj = json_message.get("alogJson", "0")
 
-            time_data3 = obj.get("timex", "未知任务")  # 0到600秒，每10秒一个点
-            data11 = obj.get("temp2", "未知任务")  # 生成波动的测试数据
+            time_data3 = obj.get("timex", "未知任务") # 时间
+            data11 = obj.get("temp2", "未知任务") # 豆温
             data22 = obj.get("temp1", "未知任务")
-            data33 = obj.get("temp1", "未知任务")  # 随机数据
+            data33 = obj.get("timeindex", "未知任务")
 
             obj2 = obj.get("computed", "0")
-            self.matplotlib_info.refresh_chart(time_data3, data11, data22, data33, obj2)
+
+            # charge_idx = 0
+            # if data33[0] > -1:
+            #     charge_idx = data33[0]
+            # drop_idx = len(time_data3) - 1
+            # if data33[6] > 0:
+            #     drop_idx = data33[6]
+            # skip = max(2, min(20, int(round(5000 / self.qmc.delay))))
+            # skip2 = max(2, int(round(skip / 2)))
+            # delta2 = numpy.array(self.qmc.delta2[charge_idx + skip:drop_idx - skip2])
+
+            # 转换为 NumPy 数组
+            time_data3 = np.array(time_data3, dtype=np.float64)
+            data11 = np.array(data11, dtype=np.float64)
+
+            # 计算时间差（避免除以零）
+            time_diff = np.diff(time_data3)
+            time_diff[time_diff == 0] = np.nan  # 避免除零错误
+
+            # 计算温度变化
+            temp_diff = np.diff(data11)
+
+            # 计算 ROR（单位：°C/分钟）
+            delta2 = (temp_diff / time_diff) * 60  # 乘以 60 变成每分钟温升率
+
+            # 补 NaN 使 delta2 长度与 time_data3 相同
+            delta2 = np.append(delta2, np.nan)
+
+
+            self.matplotlib_info.refresh_chart(time_data3, data11, data22, delta2, obj2)
 
 
 
