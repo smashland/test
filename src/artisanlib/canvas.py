@@ -8371,7 +8371,7 @@ class tgraphcanvas(FigureCanvas):
                     #                               path_effects=[])
                     #     rect2 = patches.Rectangle((0,self.phases[1]), width=1, height=(self.phases[2]-self.phases[1]),
                     #                               transform=trans, color=self.palette['rect2'],alpha=0.15,
-                    #                               path_effects=[])
+                    #                                path_effects=[])
                     #     rect3 = patches.Rectangle((0,self.phases[2]), width=1, height=(self.phases[3] - self.phases[2]),
                     #                               transform=trans, color=self.palette['rect3'],alpha=0.15,
                     #                               path_effects=[])
@@ -8381,73 +8381,73 @@ class tgraphcanvas(FigureCanvas):
 
                     #if self.eventsGraphflag == 0 then that means don't plot event bars
 
-                    # step:float
-                    # if self.eventsGraphflag == 1: #plot event bars by type
-                    #     # make blended transformations to help identify EVENT types
-                    #     if self.mode == 'C':
-                    #         step = 5
-                    #         start = 20
-                    #     else:
-                    #         step = 10
-                    #         start = 60
-                    #     jump = 20.
-                    #     for i in range(4):
-                    #         if self.showEtypes[3-i]:
-                    #             rectEvent = patches.Rectangle(
-                    #                 (0,self.phases[0]-start-jump),
-                    #                 width=1,
-                    #                 height = step,
-                    #                 transform=trans,
-                    #                 color='transparent',
-                    #                 alpha=.15,
-                    #                 path_effects=[])
-                    #             self.ax.add_patch(rectEvent)
-                    #         if self.mode == 'C':
-                    #             jump -= 10.
-                    #         else:
-                    #             jump -= 20.
-                    #
-                    # #plot events bars by value
-                    # elif self.eventsGraphflag in {2, 3, 4}: # 2: step lines, 3: step+, 4: combo
-                    #     # make blended transformations to help identify EVENT types
-                    #     if self.clampEvents:
-                    #         top = 100
-                    #         bot = 0
-                    #     else:
-                    #         if self.step100temp is None:
-                    #             top = self.phases[0]
-                    #         else:
-                    #             top = self.step100temp
-                    #         bot = self.ylimit_min
-                    #     step = (top-bot)/10
-                    #     start = top - bot
-                    #     small_step = step/10 # as we have 100 items
-                    #     jump = 0.
-                    #
-                    #     for jj in range(110):
-                    #         i = int(jj/10)
-                    #         barposition = top - start - jump
-                    #         if i == jj/10.:
-                    #             c1 = 'rect5'
-                    #             c2 = 'background'
-                    #             if i == 0:
-                    #                 color = self.palette[c1] #self.palette["rect3"] # brown
-                    #             elif i%2:
-                    #                 color = self.palette[c2] #self.palette["rect2"] # orange # the uneven ones
-                    #             else:
-                    #                 color = self.palette[c1] #self.palette["rect1"] # green # the even ones
-                    #             if i != 10: # don't draw the first and the last bar in clamp mode
-                    #                 rectEvent = patches.Rectangle(
-                    #                     (0,barposition),
-                    #                     width=1,
-                    #                     height = step,
-                    #                     transform=trans,
-                    #                     color=color,
-                    #                     alpha=.15,
-                    #                     path_effects=[])
-                    #                 self.ax.add_patch(rectEvent)
-                    #         self.eventpositionbars[jj] = barposition
-                    #         jump -= small_step
+                    step:float
+                    if self.eventsGraphflag == 1: #plot event bars by type
+                        # make blended transformations to help identify EVENT types
+                        if self.mode == 'C':
+                            step = 5
+                            start = 20
+                        else:
+                            step = 10
+                            start = 60
+                        jump = 20.
+                        for i in range(4):
+                            if self.showEtypes[3-i]:
+                                rectEvent = patches.Rectangle(
+                                    (0,self.phases[0]-start-jump),
+                                    width=1,
+                                    height = step,
+                                    transform=trans,
+                                    color='transparent',
+                                    alpha=.15,
+                                    path_effects=[])
+                                self.ax.add_patch(rectEvent)
+                            if self.mode == 'C':
+                                jump -= 10.
+                            else:
+                                jump -= 20.
+
+                    #plot events bars by value
+                    elif self.eventsGraphflag in {2, 3, 4}: # 2: step lines, 3: step+, 4: combo
+                        # make blended transformations to help identify EVENT types
+                        if self.clampEvents:
+                            top = 100
+                            bot = 0
+                        else:
+                            if self.step100temp is None:
+                                top = self.phases[0]
+                            else:
+                                top = self.step100temp
+                            bot = self.ylimit_min
+                        step = (top-bot)/10
+                        start = top - bot
+                        small_step = step/10 # as we have 100 items
+                        jump = 0.
+
+                        for jj in range(110):
+                            i = int(jj/10)
+                            barposition = top - start - jump
+                            if i == jj/10.:
+                                c1 = 'rect5'
+                                c2 = 'background'
+                                if i == 0:
+                                    color = '#f1ebe7' #self.palette["rect3"] # brown
+                                elif i%2:
+                                    color = '#f1ebe7' #self.palette["rect2"] # orange # the uneven ones
+                                else:
+                                    color = '#f1ebe7' #self.palette["rect1"] # green # the even ones
+                                if i != 10: # don't draw the first and the last bar in clamp mode
+                                    rectEvent = patches.Rectangle(
+                                        (0,barposition),
+                                        width=1,
+                                        height = step,
+                                        transform=trans,
+                                        color=color,
+                                        alpha=.15,
+                                        path_effects=[])
+                                    self.ax.add_patch(rectEvent)
+                            self.eventpositionbars[jj] = barposition
+                            jump -= small_step
 
                     rcParams['path.sketch'] = (scale, length, randomness)
 
@@ -15417,32 +15417,32 @@ class tgraphcanvas(FigureCanvas):
 
     #adds errors (can be called also outside the GUI thread, eg. from the sampling thread as actual message is written by updategraphics in the GUI thread)
     def adderror(self, error:str, line:Optional[Any]=None) -> None:
-        # try:
+        try:
             #### lock shared resources #####
-            # self.errorsemaphore.acquire(1)
-        _log.error(error)
-        #     timez = str(QDateTime.currentDateTime().toString('hh:mm:ss.zzz'))    #zzz = milliseconds
-        #     #keep a max of 500 errors
-        #     if len(self.errorlog) > 499:
-        #         self.errorlog = self.errorlog[1:]
-        #     if line:
-        #         error = error + '@line ' + str(line)
-        #     self.errorlog.append(timez + ' ' + error)
-        #     # truncate to first line for window message line
-        #     try:
-        #         # only show first line in
-        #         error = error.splitlines()[0]
-        #     except Exception as e: # pylint: disable=broad-except
-        #         _log.exception(e)
-        #     # update the error dlg
-        #     if hasattr(self.aw, 'error_dlg') and self.aw.error_dlg:
-        #         self.aw.updateErrorLogSignal.emit()
-        #     self.aw.sendmessageSignal.emit(error,True,None)
-        # except Exception as e: # pylint: disable=broad-except
-        #     _log.exception(e)
-        # finally:
-        #     if self.errorsemaphore.available() < 1:
-        #         self.errorsemaphore.release(1)
+            self.errorsemaphore.acquire(1)
+            _log.error(error)
+            timez = str(QDateTime.currentDateTime().toString('hh:mm:ss.zzz'))  # zzz = milliseconds
+            # keep a max of 500 errors
+            if len(self.errorlog) > 499:
+                self.errorlog = self.errorlog[1:]
+            if line:
+                error = error + '@line ' + str(line)
+            self.errorlog.append(timez + ' ' + error)
+            # truncate to first line for window message line
+            try:
+                # only show first line in
+                error = error.splitlines()[0]
+            except Exception as e: # pylint: disable=broad-except
+                _log.exception(e)
+            # update the error dlg
+            if hasattr(self.aw, 'error_dlg') and self.aw.error_dlg:
+                self.aw.updateErrorLogSignal.emit()
+            self.aw.sendmessageSignal.emit(error,True,None)
+        except Exception as e: # pylint: disable=broad-except
+            _log.exception(e)
+        finally:
+            if self.errorsemaphore.available() < 1:
+                self.errorsemaphore.release(1)
 
     ####################  PROFILE DESIGNER   ###################################################################################
     #launches designer

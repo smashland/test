@@ -78,6 +78,7 @@ from bidi.algorithm import get_display  # type:ignore
 from artisanlib.rili import Calendar, global_calendar
 import datetime
 # import pickle
+import serial.tools.list_ports
 
 # links CTR-C signals to the system default (ignore)
 import signal
@@ -6167,17 +6168,23 @@ class ApplicationWindow(
         # self.deviceTabel.setVisible(False)
         self.deviceTabel = QLabel(self)
         self.deviceTabel.setGeometry(231*self.width_scale, 200*self.height_scale, 1600*self.width_scale, 796*self.height_scale)
+        self.deviceTabel.setStyleSheet(
+            f'border-radius: {25 * self.height_scale}px;background-color: transparent; border: none; ')
         self.deviceTabelpixmap = QPixmap(self.normalized_path + '/includes/Icons/general/back.png')  # 背景图
         self.deviceTabel.setPixmap(self.deviceTabelpixmap)
+        scaled_pixmap2 = self.deviceTabelpixmap.scaled(self.deviceTabel.size(),
+                                                          Qt.AspectRatioMode.IgnoreAspectRatio)
+
+        self.deviceTabel.setPixmap(scaled_pixmap2)
         self.deviceTabel.setScaledContents(True)
         self.deviceTabel.setVisible(False)
 
         self.deviceGridLayout = QGridLayout(self.deviceTabel)
-        self.deviceGridLayout.setContentsMargins(0, 50*self.height_scale, 21*self.width_scale, 21*self.width_scale)
+        self.deviceGridLayout.setContentsMargins(0, 50*self.height_scale, 0*self.width_scale, 0*self.width_scale)
 
         # 设置每个组件之间的水平和垂直间距
-        self.deviceGridLayout.setHorizontalSpacing(21*self.width_scale)
-        self.deviceGridLayout.setVerticalSpacing(21*self.width_scale)
+        self.deviceGridLayout.setHorizontalSpacing(0*self.width_scale)
+        self.deviceGridLayout.setVerticalSpacing(0*self.width_scale)
 
         # 设置布局
         self.deviceTabel.setLayout(self.deviceGridLayout)
@@ -6360,7 +6367,7 @@ class ApplicationWindow(
 
         self.deviceAddressEdit = QLineEdit(self.deviceDetail)
         self.deviceAddressEdit.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignLeft)
-        # self.deviceNameEdit.setText('185°')
+        # self.deviceAddressEdit.setText('185°')
         self.deviceAddressEdit.setStyleSheet(f"""
                                                                     QLineEdit {{
                                                                         background-color: #FFFFFF;  /* 设置背景颜色 */
@@ -6373,6 +6380,32 @@ class ApplicationWindow(
         self.deviceAddressEdit.setFont(deviceNameEditfont)
         self.deviceAddressEdit.setGeometry(820 * self.width_scale, 429 * self.height_scale, 374 * self.width_scale,
                                            60 * self.height_scale)  # 设置控件的固定大小为56x24px
+        self.deviceAddressEdit.setVisible(True)
+
+        self.deviceAddressCom = QComboBox(self.deviceDetail)
+        self.deviceAddressCom.setStyleSheet(f"""
+                                    QComboBox {{
+                                        background-color: #FFFFFF;
+                                        color: #393939;
+                                        border: 1px solid #DEE0E3;
+                                        border-radius: {12 * self.height_scale}px;
+                                        padding-left: {24 * self.height_scale}px;
+                                    }}
+                                    QComboBox::drop-down {{  /* 隐藏默认下拉按钮 */
+                                        border: 0px;
+                                    }}
+                                    QComboBox::down-arrow {{ /* 替换为自定义小三角 */
+                                        image: url('{self.normalized_path}/includes/Icons/general/xiala.png'); /* 替换为你的小三角图片路径 */
+                                        width: {12 * self.height_scale}px;
+                                        height: {12 * self.height_scale}px;
+                                        margin-right: {12 * self.height_scale}px; /* 调整三角形与边界的间距 */
+                                    }}
+                                """)
+        self.deviceAddressCom.setFont(QFont(self.font_family4, 14 * self.width_scale))
+        self.deviceAddressCom.setGeometry(820 * self.width_scale, 429 * self.height_scale, 374 * self.width_scale,
+                                       60 * self.height_scale)
+        self.deviceAddressCom.addItems(self.get_serial_ports())
+        self.deviceAddressCom.setVisible(False)
 
         self.devicejrfs = QLabel(self.deviceDetail)
         self.devicejrfs.setAlignment(Qt.AlignmentFlag.AlignLeft)
@@ -14467,7 +14500,10 @@ class ApplicationWindow(
     #             else:
     #                 print("连接失败")
 
-
+    def get_serial_ports(self):
+        """获取本机所有可用的串口号"""
+        ports = serial.tools.list_ports.comports()
+        return [port.device for port in ports]
 
     def zuoyeClicked(self):
         # 工作台显示
@@ -14951,259 +14987,8 @@ class ApplicationWindow(
         else:
             self.shebeiLabel.setText("请选择设备")
 
+    
 
-
-
-    def setMachinesList(self):
-        """读取 localJson/Machines 下所有文件夹中的 .aset 文件，并显示到界面上"""
-        # 清空网格布局
-        while self.deviceGridLayout.count():
-            child = self.deviceGridLayout.takeAt(0)
-            if child.widget():
-                child.widget().deleteLater()
-        # 本地文件夹路径
-        local_folder = os.path.join(ytycwdpath,"localJson","Machines")
-        if not os.path.exists(local_folder):
-            print(f"文件夹4 {local_folder} 不存在")
-            return
-
-        # 获取所有文件夹
-        subfolders = [f.path for f in os.scandir(local_folder) if f.is_dir()]
-
-        # 初始化文件列表
-        aset_files = []
-
-        # 遍历每个文件夹，收集其中的 .aset 文件
-        for folder in subfolders:
-            files = [os.path.join(folder, f) for f in os.listdir(folder) if f.endswith('.aset')]
-            aset_files.extend(files)
-
-        num_columns = 5  # 每行最多 4 个元素
-        spacing = 21 * self.height_scale  # 左右间距
-
-        # 遍历 .aset 文件并添加到网格布局中
-        for index, filepath in enumerate(aset_files):
-            # 去掉路径和 .aset 后缀
-            file_title = os.path.splitext(os.path.basename(filepath))[0]
-
-            # 计算行列
-            row = index // num_columns
-            col = index % num_columns
-
-            # 创建设备按钮
-            backlabel = QPushButton()
-            backlabel.setStyleSheet(
-                f'border: 1px solid #70D0A3; border-radius: {25*self.height_scale}px; background-color: #f5f8fc;'
-            )
-            backlabel.setFixedSize(300* self.width_scale, 316* self.height_scale)
-
-            # 解析配置文件
-            config = configparser.ConfigParser()
-            config.read(filepath, encoding="utf-8")
-
-            # 提取所需参数
-            roastertype_setup = config.get("General", "roastertype_setup", fallback="N/A")
-            roastersize_setup_default = config.get("General", "roastersize_setup_default", fallback="N/A")
-            host = config.get("Modbus", "host", fallback="N/A")
-            set_host = config.get("OtherSettings", "setHost", fallback=host)  # 优先显示 setHost
-            setJX = config.get("OtherSettings", "setJX", fallback=None)  # 获取机型信息
-            img_path = config.get("OtherSettings", "setImg",
-                                  fallback=self.normalized_path + '/includes/Icons/general/sbtx.png')# 获取图片路径
-
-            # backlabel.setText(file_title)
-            backlabel.clicked.connect(lambda _, fname=filepath, jx=setJX: self.showMachinesDetails(fname, jx))
-
-            # 设备图片 QLabel
-            shebeiImg = QLabel(backlabel)
-            shebeiImg.setGeometry(75 * self.width_scale, 23 * self.height_scale,
-                                  155 * self.width_scale, 155 * self.height_scale)
-            shebeiImg.setStyleSheet(
-                "border: none; background-color: transparent;border-radius: 20px"  # Explicitly remove the border
-            )
-            shebeiImg.setScaledContents(True)
-            if img_path and os.path.exists(img_path):  # If the image path is valid
-                original_pixmap = QPixmap(img_path)
-                rounded_radius = 15 * self.width_scale  # Rounded corner radius
-                rounded_pixmap = self.setRoundedPixmap(original_pixmap, rounded_radius)
-                shebeiImg.setPixmap(rounded_pixmap)
-            else:  # If the image is invalid, show default text
-                shebeiImg.setText("Image not found")
-                shebeiImg.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-            # 设备名称
-            self.rwmcTitle = QLabel(backlabel)
-            self.rwmcTitle.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
-            self.rwmcTitle.setText(file_title)
-            self.rwmcTitle.setGeometry(32 * self.width_scale, 194 * self.height_scale,
-                                       260 * self.width_scale, 34 * self.height_scale)
-            self.rwmcTitle.setStyleSheet(
-                "color: #222222;background-color: transparent; border: none; font-size: 16px"
-            )
-            rwmcTitlefont = QFont(self.font_family3, 18 * self.width_scale)
-            self.rwmcTitle.setFont(rwmcTitlefont)
-
-            # 设备机型
-            self.yxjTitle = QLabel(backlabel)
-            self.yxjTitle.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
-            self.yxjTitle.setText(
-                f"<span style='color: #B2B1B1;'>机型: </span>{setJX}")
-            self.yxjTitle.setGeometry(32 * self.width_scale, 239 * self.height_scale,
-                                      260 * self.width_scale, 34 * self.height_scale)
-            self.yxjTitle.setStyleSheet(
-                "color: #222222;background-color: transparent; border: none; font-size: 16px"
-            )
-            cgjzTitlefont = QFont(self.font_family4, 14 * self.width_scale)
-            self.yxjTitle.setFont(cgjzTitlefont)
-
-            # 设备地址
-            self.yxjTitle = QLabel(backlabel)
-            self.yxjTitle.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
-            self.yxjTitle.setText(
-                f"<span style='color: #B2B1B1;'>设备地址: </span>{set_host}")
-            self.yxjTitle.setGeometry(32 * self.width_scale, 276 * self.height_scale,
-                                      260 * self.width_scale, 34 * self.height_scale)
-            self.yxjTitle.setStyleSheet(
-                "color: #222222;background-color: transparent; border: none; font-size: 16px"
-            )
-            self.yxjTitle.setFont(cgjzTitlefont)
-
-            # 添加到布局并设置间距
-            self.deviceGridLayout.addWidget(backlabel, row, col,alignment=Qt.AlignmentFlag.AlignTop)
-
-        # 计算 "添加" 按钮位置
-        add_index = len(aset_files)
-        add_row = add_index // num_columns
-        add_col = add_index % num_columns
-
-        # 创建 "添加" 按钮
-        add_button = QPushButton()
-        add_button.setFixedSize(300* self.width_scale, 316* self.height_scale)
-        add_button.setStyleSheet(f'''
-            QPushButton {{
-                border: 1px solid #DEEEFE; 
-                border-radius: {25 * self.height_scale}px; 
-                background-color: #f5f8fc;
-            }}
-        ''')
-
-        # 设置图标和图标大小
-        icon = QIcon(f"{self.normalized_path}/includes/Icons/general/addProject.png")
-        add_button.setIcon(icon)
-        add_button.setIconSize(QSize(100 * self.height_scale, 100 * self.height_scale))
-
-        # 连接点击事件
-        add_button.clicked.connect(self.addNewMachines)
-        # add_button.setIcon(QIcon(self.normalized_path + '/includes/Icons/general/addProject.png'))  # 设置图标
-
-        # 添加 "添加" 按钮到布局
-        self.deviceGridLayout.addWidget(add_button, add_row, add_col,
-                                        alignment=Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignTop)
-
-        # 设置布局的水平和垂直间距
-        self.deviceGridLayout.setHorizontalSpacing(21)
-        self.deviceGridLayout.setVerticalSpacing(10)
-
-        self.deviceTabel.setVisible(True)
-
-        # global token
-        # url = 'http://inner4.mjytech.com:22104/admin/device/selectBakingDeviceList'  # 获取设备列表
-        # headers = {
-        #     'token': f'{token}',
-        #     'Content-Type': 'application/json'
-        # }
-        # if token:
-        #     response = requests.get(url, headers=headers)
-        #     if response.status_code == 200:
-        #         data2 = response.json()  # 解析返回的 JSON 数据
-        #         dataJson = data2['deviceList']
-        #         textCode = data2['code']
-        #         if textCode == 0 or textCode == 200:
-        #             # 确定行数：每行最多显示 4 个任务，向上取整计算需要多少行
-        #             num_items = len(dataJson)
-        #             num_columns = 4  # 每行 4 列
-        #             num_rows = (num_items + num_columns - 1) // num_columns  # 向上取整计算行数
-        #
-        #             # 遍历 dataJson 中的任务并添加到网格布局中
-        #             for index, task in enumerate(dataJson):
-        #                 # 计算当前项的行和列
-        #                 row = index // num_columns  # 当前项所在的行数
-        #                 col = index % num_columns  # 当前项所在的列数
-        #
-        #                 backlabel = QPushButton()
-        #                 # backlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)  # 文字居中
-        #                 backlabel.setStyleSheet(
-        #                     'border: 1px solid #70D0A3; border-radius: 25px; background-color: #DEEEFE; ')
-        #
-        #                 # 设置 QLabel 的固定大小为 373x380
-        #                 backlabel.setFixedSize(373, 380)
-        #
-        #                 # 创建任务名称 QLabel
-        #                 self.shebeiImg = QLabel(backlabel)
-        #                 self.shebeiImg.setGeometry(142 * self.width_scale, 59 * self.height_scale,
-        #                                            90 * self.width_scale, 90 * self.height_scale)
-        #                 # self.shebeiImgPixmap = QPixmap(task.get('deviceImg'))
-        #                 # self.shebeiImg.setPixmap(self.shebeiImgPixmap)
-        #                 self.shebeiImg.setScaledContents(True)
-        #                 device_img_url = task.get('deviceImg')
-        #                 if device_img_url:
-        #                     # Make the network request
-        #                     request = QNetworkRequest(QUrl(device_img_url))
-        #                     reply = self.network_manager.get(request)
-        #                     reply.finished.connect(
-        #                         lambda r=reply, img_label=self.shebeiImg: self.process_reply(r, img_label))
-        #                 else:
-        #                     self.shebeiImg.setText("Image URL not found")
-        #
-        #                 self.rwmcTitle = QLabel(backlabel)
-        #                 self.rwmcTitle.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
-        #                 self.rwmcTitle.setText(task.get('deviceTypeName'))
-        #                 self.rwmcTitle.setGeometry(32 * self.width_scale, 214 * self.height_scale,
-        #                                            300 * self.width_scale, 34 * self.height_scale)
-        #                 self.rwmcTitle.setStyleSheet(
-        #                     "color: #222222;background-color: transparent; border: none; font-size: 16px"
-        #                 )
-        #                 rwmcTitlefont = QFont(self.font_family3, 16 * self.width_scale)
-        #                 self.rwmcTitle.setFont(rwmcTitlefont)
-        #
-        #                 self.cgjzTitle = QLabel(backlabel)
-        #                 self.cgjzTitle.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
-        #                 self.cgjzTitle.setText(
-        #                     f"<span style='color: #B2B1B1;'>设备序列号</span>: {task.get('deviceModel', '未知')}")
-        #                 self.cgjzTitle.setGeometry(32 * self.width_scale, 259 * self.height_scale,
-        #                                            300 * self.width_scale, 34 * self.height_scale)
-        #                 self.cgjzTitle.setStyleSheet(
-        #                     "color: #222222;background-color: transparent; border: none; font-size: 16px"
-        #                 )
-        #                 cgjzTitlefont = QFont(self.font_family4, 14 * self.width_scale)
-        #                 self.cgjzTitle.setFont(cgjzTitlefont)
-        #
-        #                 self.yxjTitle = QLabel(backlabel)
-        #                 self.yxjTitle.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
-        #                 self.yxjTitle.setText(
-        #                     f"<span style='color: #B2B1B1;'>机型</span>: {task.get('gasType', '未知')}")
-        #                 self.yxjTitle.setGeometry(32 * self.width_scale, 296 * self.height_scale,
-        #                                           300 * self.width_scale, 34 * self.height_scale)
-        #                 self.yxjTitle.setStyleSheet(
-        #                     "color: #222222;background-color: transparent; border: none; font-size: 16px"
-        #                 )
-        #                 self.yxjTitle.setFont(cgjzTitlefont)
-        #
-        #                 self.yxjTitle = QLabel(backlabel)
-        #                 self.yxjTitle.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
-        #                 self.yxjTitle.setText(
-        #                     f"<span style='color: #B2B1B1;'>设备地址</span>: {task.get('usePosition', '未知')}")
-        #                 self.yxjTitle.setGeometry(32 * self.width_scale, 331 * self.height_scale,
-        #                                           300 * self.width_scale, 34 * self.height_scale)
-        #                 self.yxjTitle.setStyleSheet(
-        #                     "color: #222222;background-color: transparent; border: none; font-size: 16px"
-        #                 )
-        #                 self.yxjTitle.setFont(cgjzTitlefont)
-        #
-        #                 # 将任务 backlabel 添加到布局中
-        #                 self.deviceGridLayout.addWidget(backlabel, row, col)
-        #                 self.deviceGridLayout.setAlignment(backlabel, Qt.AlignmentFlag.AlignTop)
-        #         else:
-        #             print("连接失败")
 
     def setRoundedPixmap(self, pixmap: QPixmap, radius: int) -> QPixmap:
         """为 QPixmap 添加圆角效果"""
@@ -15261,7 +15046,7 @@ class ApplicationWindow(
         folder_path = self.deviceNameEdit.currentText()
 
         if selected_file and folder_path:
-            file_path = os.path.join("Machines", folder_path, selected_file+'.aset')
+            file_path = os.path.join("Machines", folder_path, selected_file + '.aset')
 
             # 检查文件是否存在
             if not os.path.exists(file_path):
@@ -15269,15 +15054,42 @@ class ApplicationWindow(
                 self.deviceAddressEdit.setText("未找到文件")
                 return
 
-            # 读取文件内容并提取 Modbus 配置中的 host 字段
+            # 读取文件内容并提取 Modbus 配置
             with open(file_path, "r") as file:
                 content = file.read()
 
-            # 使用正则表达式提取 host 字段
-            match = re.search(r"host\s*=\s*([\d\.]+)", content)
-            if match:
-                host = match.group(1)  # 获取 host 地址
-                self.deviceAddressEdit.setText(host)  # 更新 deviceAddressEdit
+            # 提取 host、deviceID、comport 信息
+            host_match = re.search(r"host\s*=\s*([\d\.]+)", content)
+            deviceID_match = re.search(r"id\s*=\s*([\d\.]+)", content)
+            com_match = re.search(r"comport\s*=\s*([\w\d]+)", content)  # comport 可能是 COM3 之类的
+
+            host = host_match.group(1) if host_match else None
+            deviceID2 = deviceID_match.group(1) if deviceID_match else None
+            com = com_match.group(1) if com_match else None
+
+            # 确保 deviceID2 是整数
+            try:
+                deviceID2_int = int(deviceID2) if deviceID2 is not None else None
+            except ValueError:
+                deviceID2_int = None
+
+            # 需要显示 IP 地址的设备 ID
+            ip_devices = {29, 79, 111, 138, 142}
+            # 需要显示串口通信的设备 ID
+            com_devices = {0, 9, 19, 53, 101, 115, 126}
+
+            if deviceID2_int in ip_devices:
+                self.deviceAddress.setText("设备IP：")
+                self.deviceAddressEdit.setText(host if host else "未知IP")
+                self.deviceAddressEdit.setVisible(True)
+                self.deviceAddressCom.setVisible(False)
+
+            elif deviceID2_int in com_devices:
+                self.deviceAddress.setText("设备串口：")
+                self.deviceAddressCom.setCurrentText(com if com else "未知串口")
+                self.deviceAddressCom.setVisible(True)
+                self.deviceAddressEdit.setVisible(False)
+
             else:
                 self.deviceAddressEdit.setText("未找到 host 配置")
 
@@ -15365,6 +15177,7 @@ class ApplicationWindow(
         host = config.get("Modbus", "host", fallback="N/A")
         set_host = config.get("OtherSettings", "setHost", fallback=host)  # 优先显示 setHost
         heating = config.get("OtherSettings", "setHeating", fallback=None)
+        comText = config.get("OtherSettings", "setcom", fallback=None)
         img_path = config.get("OtherSettings", "setImg",
                               fallback=self.normalized_path + '/includes/Icons/general/sbtx.png')
         sbxl = config.get("OtherSettings", "setSBXL", fallback=None)
@@ -15379,11 +15192,29 @@ class ApplicationWindow(
         self.deviceModelEdit.setVisible(False)
         self.deviceModelLineEdit.setText(file_name)
         self.deviceHeating.setCurrentText(heating)
+        self.deviceAddressCom.setCurrentText(comText)
+
+        # 需要显示 IP 地址的设备 ID
+        ip_devices = {29, 79, 111, 138, 142}
+        # 需要显示串口通信的设备 ID
+        com_devices = {0, 9, 19, 53, 101, 115, 126}
+
+        if int(idNum) in ip_devices:
+            self.deviceAddress.setText("设备IP：")
+            self.deviceAddressEdit.setText(set_host)
+            self.deviceAddressEdit.setVisible(True)
+            self.deviceAddressCom.setVisible(False)
+
+        elif int(idNum) in com_devices:
+            self.deviceAddress.setText("设备串口：")
+            self.deviceAddressCom.setCurrentText(comText)
+            self.deviceAddressCom.setVisible(True)
+            self.deviceAddressEdit.setVisible(False)
 
         self.deviceXLHEdit.setText(sbxl)
         self.deviceDZEdit.setText(sbdz)
         # self.deviceXLHEdit.setReadOnly(True)
-        self.deviceAddressEdit.setText(set_host)
+        # self.deviceAddressEdit.setText(set_host)
 
         # 设置图片
         if img_path and os.path.exists(img_path):  # 检查图片路径是否有效
@@ -15492,6 +15323,9 @@ class ApplicationWindow(
         # 更新 setHost 字段（假设设备地址来自 deviceAddressEdit）
         host = self.deviceAddressEdit.text()  # 获取设备地址
         config.set('OtherSettings', 'setHost', host)
+
+        config.set('OtherSettings', 'setCom', self.deviceAddressCom.currentText())
+        config.set('OtherSettings', 'setComText', str(self.deviceAddressCom.currentIndex()))
 
         # 更新 setjx 字段（设为文件夹名称）
         config.set('OtherSettings', 'setjx', folder_name)
@@ -15663,6 +15497,179 @@ class ApplicationWindow(
                 }}
             """
             checkbox.setStyleSheet(new_style)
+
+    def setMachinesList(self):
+        """读取 localJson/Machines 下所有文件夹中的 .aset 文件，并显示到界面上"""
+        if not hasattr(self, 'deviceGridLayout'):
+            print("错误: deviceGridLayout 不存在")
+            return
+
+        # 清空网格布局
+        while self.deviceGridLayout.count():
+            child = self.deviceGridLayout.takeAt(0)
+            if child.widget():
+                child.widget().deleteLater()
+
+        # 本地文件夹路径
+        local_folder = os.path.join(ytycwdpath, "localJson", "Machines")
+        if not os.path.exists(local_folder):
+            print(f"文件夹 {local_folder} 不存在")
+            # 创建文件夹
+            os.makedirs(local_folder, exist_ok=True)
+
+        # 获取所有文件夹
+        try:
+            subfolders = [f.path for f in os.scandir(local_folder) if f.is_dir()]
+        except Exception as e:
+            print(f"扫描文件夹错误: {str(e)}")
+            subfolders = []
+
+        # 初始化文件列表
+        aset_files = []
+
+        # 遍历每个文件夹，收集其中的 .aset 文件
+        for folder in subfolders:
+            try:
+                files = [os.path.join(folder, f) for f in os.listdir(folder) if f.endswith('.aset')]
+                aset_files.extend(files)
+            except Exception as e:
+                print(f"读取文件夹 {folder} 错误: {str(e)}")
+
+        num_columns = 5  # 每行最多 5 个元素
+        spacing = 21 * self.height_scale  # 左右间距
+
+        # 遍历 .aset 文件并添加到网格布局中
+        for index, filepath in enumerate(aset_files):
+            # 去掉路径和 .aset 后缀
+            file_title = os.path.splitext(os.path.basename(filepath))[0]
+
+            # 计算行列
+            row = index // num_columns
+            col = index % num_columns
+
+            # 创建设备按钮
+            backlabel = QPushButton()
+            backlabel.setStyleSheet(
+                f'border: 1px solid #70D0A3; border-radius: {25 * self.height_scale}px; background-color: #f5f8fc;'
+            )
+            backlabel.setFixedSize(300 * self.width_scale, 316 * self.height_scale)
+
+            # 解析配置文件
+            config = configparser.ConfigParser()
+            try:
+                config.read(filepath, encoding="utf-8")
+            except Exception as e:
+                print(f"读取配置文件 {filepath} 错误: {str(e)}")
+                continue
+
+            # 提取所需参数
+            try:
+                roastertype_setup = config.get("General", "roastertype_setup", fallback="N/A")
+                roastersize_setup_default = config.get("General", "roastersize_setup_default", fallback="N/A")
+                host = config.get("Modbus", "host", fallback="N/A")
+                set_host = config.get("OtherSettings", "setHost", fallback=host)  # 优先显示 setHost
+                setJX = config.get("OtherSettings", "setJX", fallback="未知")  # 获取机型信息
+                img_path = config.get("OtherSettings", "setImg",
+                                      fallback=self.normalized_path + '/includes/Icons/general/sbtx.png')  # 获取图片路径
+            except Exception as e:
+                print(f"获取配置参数错误: {str(e)}")
+                continue
+
+            # backlabel.setText(file_title)
+            backlabel.clicked.connect(lambda _, fname=filepath, jx=setJX: self.showMachinesDetails(fname, jx))
+
+            # 设备图片 QLabel
+            shebeiImg = QLabel(backlabel)
+            shebeiImg.setGeometry(75 * self.width_scale, 23 * self.height_scale,
+                                  155 * self.width_scale, 155 * self.height_scale)
+            shebeiImg.setStyleSheet(
+                "border: none; background-color: transparent;border-radius: 20px"  # Explicitly remove the border
+            )
+            shebeiImg.setScaledContents(True)
+            if img_path and os.path.exists(img_path):  # If the image path is valid
+                original_pixmap = QPixmap(img_path)
+                rounded_radius = 15 * self.width_scale  # Rounded corner radius
+                rounded_pixmap = self.setRoundedPixmap(original_pixmap, rounded_radius)
+                shebeiImg.setPixmap(rounded_pixmap)
+            else:  # If the image is invalid, show default text
+                shebeiImg.setText("Image not found")
+                shebeiImg.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+            # 设备名称
+            self.rwmcTitle = QLabel(backlabel)
+            self.rwmcTitle.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
+            self.rwmcTitle.setText(file_title)
+            self.rwmcTitle.setGeometry(32 * self.width_scale, 194 * self.height_scale,
+                                       260 * self.width_scale, 34 * self.height_scale)
+            self.rwmcTitle.setStyleSheet(
+                "color: #222222;background-color: transparent; border: none; font-size: 16px"
+            )
+            rwmcTitlefont = QFont(self.font_family3, 18 * self.width_scale)
+            self.rwmcTitle.setFont(rwmcTitlefont)
+
+            # 设备机型
+            self.yxjTitle = QLabel(backlabel)
+            self.yxjTitle.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
+            self.yxjTitle.setText(
+                f"<span style='color: #B2B1B1;'>机型: </span>{setJX}")
+            self.yxjTitle.setGeometry(32 * self.width_scale, 239 * self.height_scale,
+                                      260 * self.width_scale, 34 * self.height_scale)
+            self.yxjTitle.setStyleSheet(
+                "color: #222222;background-color: transparent; border: none; font-size: 16px"
+            )
+            cgjzTitlefont = QFont(self.font_family4, 14 * self.width_scale)
+            self.yxjTitle.setFont(cgjzTitlefont)
+
+            # 设备地址
+            self.yxjTitle = QLabel(backlabel)
+            self.yxjTitle.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
+            self.yxjTitle.setText(
+                f"<span style='color: #B2B1B1;'>设备地址: </span>{set_host}")
+            self.yxjTitle.setGeometry(32 * self.width_scale, 276 * self.height_scale,
+                                      260 * self.width_scale, 34 * self.height_scale)
+            self.yxjTitle.setStyleSheet(
+                "color: #222222;background-color: transparent; border: none; font-size: 16px"
+            )
+            self.yxjTitle.setFont(cgjzTitlefont)
+
+            # 添加到布局并设置间距
+            self.deviceGridLayout.addWidget(backlabel, row, col, alignment=Qt.AlignmentFlag.AlignTop)
+
+        # 计算 "添加" 按钮位置
+        add_index = len(aset_files)
+        add_row = add_index // num_columns
+        add_col = add_index % num_columns
+
+        # 创建 "添加" 按钮
+        add_button = QPushButton()
+        add_button.setFixedSize(300 * self.width_scale, 316 * self.height_scale)
+        add_button.setStyleSheet(f'''
+            QPushButton {{
+                border: 1px solid #DEEEFE; 
+                border-radius: {25 * self.height_scale}px; 
+                background-color: #f5f8fc;
+            }}
+        ''')
+
+        # 设置图标和图标大小
+        icon = QIcon(f"{self.normalized_path}/includes/Icons/general/addProject.png")
+        add_button.setIcon(icon)
+        add_button.setIconSize(QSize(100 * self.height_scale, 100 * self.height_scale))
+
+        # 连接点击事件
+        add_button.clicked.connect(self.addNewMachines)
+        # add_button.setIcon(QIcon(self.normalized_path + '/includes/Icons/general/addProject.png'))  # 设置图标
+
+        # 添加 "添加" 按钮到布局
+        self.deviceGridLayout.addWidget(add_button, add_row, add_col,
+                                        alignment=Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignTop)
+
+        # 设置布局的水平和垂直间距
+        self.deviceGridLayout.setHorizontalSpacing(20)
+        self.deviceGridLayout.setVerticalSpacing(20)
+
+        self.deviceTabel.setVisible(True)
+
 
     def closeEXE(self):
         # self.cap.release()
@@ -19159,12 +19166,14 @@ class ApplicationWindow(
                     config = configparser.ConfigParser()
                     config.read(file_path, encoding='utf-8')  # 读取文件
                     # 提取 `sethost` 值
-                    if 'OtherSettings' in config and 'sethost' in config['OtherSettings']:
+                    if 'OtherSettings' in config:
                         sbxl = config['OtherSettings'].get('setsbxl', ' ')
                         self.xinghaoLabel.setText(str(sbxl))
                         shebeiType_setup = config['General'].get('roastertype_setup', ' ')
                         self.shebeiLabel.setText(shebeiType_setup)
                         self.modbus.host = config['OtherSettings'].get('sethost', self.modbus.host)
+                        self.modbus.comport = config['OtherSettings'].get('setcom', self.modbus.comport)
+                        self.ser.comport = config['OtherSettings'].get('setcom', self.ser.comport)
                         orgResi = config['OtherSettings'].get('setheatingtype', '2')
                         self.qmc.device = toInt(config['Device'].get('id', self.qmc.device))
                         self.s7.host = config['OtherSettings'].get('sethost', self.s7.host)
@@ -19172,15 +19181,13 @@ class ApplicationWindow(
                         # keep original information to Cancel
                         self.qmc.machinesetup = config['OtherSettings'].get('setjx', self.qmc.machinesetup)
                         self.ws.host =  config['OtherSettings'].get('sethost', self.ws.host)
-                        self.modbus.comport = config['Modbus'].get('comport', self.modbus.comport)
+                        # self.modbus.comport = config['Modbus'].get('comport', self.modbus.comport)
                         self.qmc.roastersize_setup = toFloat(config['General'].get('roastersize_setup_default', self.qmc.roastersize_setup))
 
                 except Exception as e:
                     print(f"Error reading INI file for 'sethost': {e}")
                 # orgResi = 1
                 _log.info('lj 15945: %s,%s,%s,%s',self.modbus.host, self.qmc.roasterheating, self.qmc.roastersize,self.modbus.type)
-
-
 
                 if hasattr(action, 'text'):
                     print(self.modbus.host, self.qmc.roasterheating, self.qmc.roastersize)
@@ -19282,12 +19289,10 @@ class ApplicationWindow(
                     elif (self.qmc.device in {0, 9, 19, 53, 101, 115, 126} or (
                             (self.qmc.device == 29 or 29 in self.qmc.extradevices) and self.modbus.type in {0, 1, 2}) or
                           (self.qmc.device == 134 and self.santokerSerial) or
-                          (
-                                  self.qmc.device == 138 and self.kaleidoSerial)):  # Fuji, Center301, TC4, Hottop, Behmor or MODBUS serial, HB/ARC
+                          (self.qmc.device == 138 and self.kaleidoSerial)):  # Fuji, Center301, TC4, Hottop, Behmor or MODBUS serial, HB/ARC
                         select_device_name = None
                         # as default we offer the current settings serial/modbus port, or if this is set to its default as after a factory reset (self.ser.default_comport or self.modbus.default_comport) we take the one from the machine setup
-                        defaultComPort: str = ((
-                                                   self.modbus.comport if org_modbus_comport == self.modbus.default_comport else org_modbus_comport) if self.qmc.device == 29 else (
+                        defaultComPort: str = ((self.modbus.comport if org_modbus_comport == self.modbus.default_comport else org_modbus_comport) if self.qmc.device == 29 else (
                             self.ser.comport if org_comport == self.ser.default_comport else org_comport))
                         select_modbus_serial_port: bool = self.qmc.device == 29 or (
                                 29 in self.qmc.extradevices and self.qmc.device not in {0, 9, 19, 53, 101, 115, 126,
@@ -19301,14 +19306,16 @@ class ApplicationWindow(
                         #                                                       title=serial_port_dialog_title,
                         #                                                       selection=defaultComPort,
                         #                                                       select_device_name=select_device_name)
-                        res = bool(commPort_dlg.exec())
-                        if res:
-                            new_port = commPort_dlg.getSelection()
-                            if new_port is not None:
-                                if select_modbus_serial_port:  # MODBUS serial
-                                    self.modbus.comport = new_port
-                                else:  # Fuji or HOTTOP
-                                    self.ser.comport = new_port
+                        # res = bool(commPort_dlg.exec())
+                        # if res:
+                        #     new_port = commPort_dlg.getSelection()
+                        #     if new_port is not None:
+                        #         if select_modbus_serial_port:  # MODBUS serial
+                        #             self.modbus.comport = new_port
+                        #         else:  # Fuji or HOTTOP
+                        #             self.ser.comport = new_port
+                        self.ser.comport = org_comport
+                        self.modbus.comport = org_modbus_comport
                     elif self.qmc.device == 142:  # IKAWA
                         # we request Bluetooth permission
                         permission_status: Optional[bool] = self.app.getBluetoothPermission(request=True)
