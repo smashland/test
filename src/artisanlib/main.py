@@ -13383,7 +13383,17 @@ class ApplicationWindow(
 
         # 格式化今天的日期
         formatted_date = today.toString("yyyy年M月d日")
+        weekday_map = {
+            "Monday": "星期一",
+            "Tuesday": "星期二",
+            "Wednesday": "星期三",
+            "Thursday": "星期四",
+            "Friday": "星期五",
+            "Saturday": "星期六",
+            "Sunday": "星期天"
+        }
         weekday = today.toString("dddd")
+        weekday = weekday_map.get(weekday, weekday)
         full_text = f"{formatted_date}  {weekday}"
 
         # 更新 QLineEdit 的文本为今天的日期
@@ -19172,8 +19182,8 @@ class ApplicationWindow(
                         shebeiType_setup = config['General'].get('roastertype_setup', ' ')
                         self.shebeiLabel.setText(shebeiType_setup)
                         self.modbus.host = config['OtherSettings'].get('sethost', self.modbus.host)
-                        self.modbus.comport = config['OtherSettings'].get('setcom', self.modbus.comport)
-                        self.ser.comport = config['OtherSettings'].get('setcom', self.ser.comport)
+                        # self.modbus.comport = config['OtherSettings'].get('setcom', self.modbus.comport)
+                        # self.ser.comport = config['OtherSettings'].get('setcom', self.ser.comport)
                         orgResi = config['OtherSettings'].get('setheatingtype', '2')
                         self.qmc.device = toInt(config['Device'].get('id', self.qmc.device))
                         self.s7.host = config['OtherSettings'].get('sethost', self.s7.host)
@@ -19315,8 +19325,8 @@ class ApplicationWindow(
                         #         else:  # Fuji or HOTTOP
                         #             self.ser.comport = new_port
                         self.ser.comport = org_comport
-                        self.modbus.comport = org_modbus_comport
-                    elif self.qmc.device == 142:  # IKAWA
+                        # self.modbus.comport = org_modbus_comport
+                    elif self.qmc.device == 142:  # I KAWA
                         # we request Bluetooth permission
                         permission_status: Optional[bool] = self.app.getBluetoothPermission(request=True)
                         if permission_status is False:
