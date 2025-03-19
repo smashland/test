@@ -21,6 +21,7 @@
 # updateLargeLCDsReadings
 # largeLCDs_dialog
 import time as libtime
+
 startup_time = libtime.process_time()
 
 from artisanlib import __version__
@@ -77,17 +78,14 @@ from pathlib import Path
 from bidi.algorithm import get_display  # type:ignore
 from artisanlib.rili import Calendar, global_calendar
 import datetime
-# import pickle
-import serial.tools.list_ports
 
 # links CTR-C signals to the system default (ignore)
 import signal
 
 print('当前 Python 解释器路径：')
 print(sys.executable)
-ytycwdpath=os.getcwd()
+ytycwdpath = os.getcwd()
 print("当前工作目录:", ytycwdpath)
-
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
@@ -137,33 +135,37 @@ except Exception:  # pylint: disable=broad-except
 
 QtWebEngineSupport: bool = False  # set to True if the QtWebEngine was successfully imported
 try:
-    import importlib.metadata as importlib_metadata # @UnresolvedImport
-    def md_version(distribution_name:str) -> str:
+    import importlib.metadata as importlib_metadata  # @UnresolvedImport
+
+
+    def md_version(distribution_name: str) -> str:
         if distribution_name == 'python-snap7':
             return '2.0.2'
         return importlib_metadata.version(distribution_name)
+
+
     importlib_metadata.version = md_version
-except Exception: # pylint: disable=broad-except
+except Exception:  # pylint: disable=broad-except
     pass
 ## MONKEY PATCH END:
 
-try: # activate support for hiDPI screens on Windows
+try:  # activate support for hiDPI screens on Windows
     if str(platform.system()).startswith('Windows'):
         os.environ['QT_AUTO_SCREEN_SCALE_FACTOR'] = '1'
         os.environ['QT_ENABLE_HIGHDPI_SCALING'] = '1'
-except Exception: # pylint: disable=broad-except
+except Exception:  # pylint: disable=broad-except
     pass
 
 # write logtrace to Console on OS X:
-#try:
-#..
-#except Exception as e: # pylint: disable=broad-except
+# try:
+# ..
+# except Exception as e: # pylint: disable=broad-except
 #    import syslog
 #    syslog.openlog("artisan")
 #    syslog.syslog(syslog.LOG_ALERT, str(e))
 #    syslog.syslog(syslog.LOG_ALERT, str(traceback.format_exc()))
 
-QtWebEngineSupport:bool = False # set to True if the QtWebEngine was successfully imported
+QtWebEngineSupport: bool = False  # set to True if the QtWebEngine was successfully imported
 
 try:
     from PyQt6.QtWidgets import (QApplication, QWidget, QMessageBox, QLabel, QMainWindow, QFileDialog,
@@ -175,63 +177,82 @@ try:
                                  QSlider,  # @Reimport @UnresolvedImport @UnusedImport
                                  QColorDialog, QFrame, QSplitter, QScrollArea,
                                  QProgressDialog, QProgressBar,  # @Reimport @UnresolvedImport @UnusedImport
-                                 QStyleFactory, QMenu, QLayout, QCheckBox,QListWidget, QListWidgetItem,
-                                 QDateEdit, QSpacerItem, QGridLayout, QDialog, QCalendarWidget, QTimeEdit, QTextEdit, QSizePolicy,QDateTimeEdit,QGraphicsOpacityEffect) # @Reimport @UnresolvedImport @UnusedImport
+                                 QStyleFactory, QMenu, QLayout, QCheckBox, QListWidget, QListWidgetItem,
+                                 QDateEdit, QSpacerItem, QGridLayout, QDialog, QCalendarWidget, QTimeEdit, QTextEdit,
+                                 QSizePolicy, QDateTimeEdit,
+                                 QGraphicsOpacityEffect)  # @Reimport @UnresolvedImport @UnusedImport
     from PyQt6.QtGui import (QScreen, QPageLayout, QAction, QImageReader,
                              QWindow,  # @Reimport @UnresolvedImport @UnusedImport
                              QKeySequence, QShortcut,  # @Reimport @UnresolvedImport @UnusedImport
                              QPixmap, QColor, QDesktopServices, QIcon, QFontDatabase,
                              QFont,  # @Reimport @UnresolvedImport @UnusedImport
                              QRegularExpressionValidator, QDoubleValidator, QPainter,
-                             QCursor, QMovie, QPen, QFontMetrics, QBrush,QGuiApplication, QPalette, QImage, QPainterPath, QIntValidator,QDoubleValidator, QLinearGradient, QRegion) # @Reimport @UnresolvedImport @UnusedImport
-    from PyQt6.QtPrintSupport import (QPrinter,QPrintDialog) # @Reimport @UnresolvedImport @UnusedImport
+                             QCursor, QMovie, QPen, QFontMetrics, QBrush, QGuiApplication, QPalette, QImage,
+                             QPainterPath, QIntValidator, QDoubleValidator,
+                             QRegion)  # @Reimport @UnresolvedImport @UnusedImport
+    from PyQt6.QtPrintSupport import (QPrinter, QPrintDialog)  # @Reimport @UnresolvedImport @UnusedImport
     # from PyQt6.QtMultimedia import (QMediaPlayer, QMediaContent, QVideoWidget)
     from PyQt6.QtCore import (QLibraryInfo, QTranslator, QLocale, QFileInfo, PYQT_VERSION_STR, pyqtSignal, pyqtSlot,
-                              QtMsgType, QSize, # @Reimport @UnresolvedImport @UnusedImport
+                              QtMsgType, QSize,  # @Reimport @UnresolvedImport @UnusedImport
         #                              QSize, pyqtProperty, # type: ignore # @Reimport @UnresolvedImport @UnusedImport
                               qVersion, QVersionNumber, QTime, QTimer, QFile, QIODevice, QTextStream,
                               QSettings,  # @Reimport @UnresolvedImport @UnusedImport
                               QRegularExpression, QDate, QUrl, QUrlQuery, QDir, Qt, QPoint, QEvent, QDateTime, QThread,
-                              qInstallMessageHandler, QBasicTimer, QDate, QRectF, QRunnable, QLocale) # @Reimport @UnresolvedImport @UnusedImport
-    from PyQt6.QtNetwork import QLocalSocket, QNetworkAccessManager, QNetworkRequest, QNetworkReply # @Reimport @UnresolvedImport @UnusedImport
-    #QtWebEngineWidgets must be imported before a QCoreApplication instance is created
+                              qInstallMessageHandler, QBasicTimer, QDate, QRectF,
+                              QRunnable)  # @Reimport @UnresolvedImport @UnusedImport
+    from PyQt6.QtNetwork import QLocalSocket, QNetworkAccessManager, QNetworkRequest, \
+        QNetworkReply  # @Reimport @UnresolvedImport @UnusedImport
+
+    # QtWebEngineWidgets must be imported before a QCoreApplication instance is created
     try:
-        from PyQt6.QtWebEngineWidgets import QWebEngineView # @Reimport @UnresolvedImport @UnusedImport  # pylint: disable=import-error,no-name-in-module
+        from PyQt6.QtWebEngineWidgets import \
+            QWebEngineView  # @Reimport @UnresolvedImport @UnusedImport  # pylint: disable=import-error,no-name-in-module
+
         QtWebEngineSupport = True
     except ImportError:
         # on the RPi platform there is no native package PyQt-WebEngine nor PyQt6-WebEngine for Raspebarry 32bit
         pass
-    from PyQt6 import sip # @Reimport @UnresolvedImport @UnusedImport
+    from PyQt6 import sip  # @Reimport @UnresolvedImport @UnusedImport
 except ImportError:
-    from PyQt5.QtWidgets import (QAction, QApplication, QWidget, QMessageBox, QLabel, QMainWindow, QFileDialog, QGraphicsDropShadowEffect,  # type: ignore  # @Reimport @UnresolvedImport @UnusedImport
-                                 QInputDialog, QGroupBox, QLineEdit, # @Reimport @UnresolvedImport @UnusedImport
-                                 QSizePolicy, QVBoxLayout, QHBoxLayout, QPushButton, # @Reimport @UnresolvedImport @UnusedImport
-                                 QLCDNumber, QSpinBox, QComboBox, # @Reimport @UnresolvedImport @UnusedImport
-                                 QSlider, # @Reimport @UnresolvedImport @UnusedImport
-                                 QColorDialog, QFrame, QSplitter, QScrollArea, QProgressDialog, # @Reimport @UnresolvedImport @UnusedImport
-                                 QStyleFactory, QMenu, QLayout, QShortcut) # @Reimport @UnresolvedImport @UnusedImport
-    from PyQt5.QtGui import (QScreen, QPageLayout, QImageReader, QWindow,  # type: ignore # @Reimport @UnresolvedImport @UnusedImport
-                             QKeySequence, # @Reimport @UnresolvedImport @UnusedImport
-                             QPixmap,QColor,QDesktopServices,QIcon, # @Reimport @UnresolvedImport @UnusedImport
-                             QRegularExpressionValidator, QDoubleValidator, QPainter, QCursor) # @Reimport @UnresolvedImport @UnusedImport
-    from PyQt5.QtPrintSupport import (QPrinter,QPrintDialog) # type: ignore # @Reimport @UnresolvedImport @UnusedImport
-    from PyQt5.QtCore import (QLibraryInfo, QTranslator, QLocale, QFileInfo, PYQT_VERSION_STR, pyqtSignal, pyqtSlot, QtMsgType, # type: ignore # @Reimport @UnresolvedImport @UnusedImport
-                              qVersion, QVersionNumber, QTime, QTimer, QFile, QIODevice, QTextStream, QSettings, # @Reimport @UnresolvedImport @UnusedImport
-                              QRegularExpression, QDate, QUrl, QUrlQuery, QDir, Qt, QPoint, QEvent, QDateTime, QThread, qInstallMessageHandler) # @Reimport @UnresolvedImport @UnusedImport
-    from PyQt5.QtNetwork import QLocalSocket # type: ignore # @Reimport @UnresolvedImport @UnusedImport
-    #QtWebEngineWidgets must be imported before a QCoreApplication instance is created
+    from PyQt5.QtWidgets import (QAction, QApplication, QWidget, QMessageBox, QLabel, QMainWindow, QFileDialog,
+                                 QGraphicsDropShadowEffect,  # type: ignore  # @Reimport @UnresolvedImport @UnusedImport
+                                 QInputDialog, QGroupBox, QLineEdit,  # @Reimport @UnresolvedImport @UnusedImport
+                                 QSizePolicy, QVBoxLayout, QHBoxLayout,
+                                 QPushButton,  # @Reimport @UnresolvedImport @UnusedImport
+                                 QLCDNumber, QSpinBox, QComboBox,  # @Reimport @UnresolvedImport @UnusedImport
+                                 QSlider,  # @Reimport @UnresolvedImport @UnusedImport
+                                 QColorDialog, QFrame, QSplitter, QScrollArea,
+                                 QProgressDialog,  # @Reimport @UnresolvedImport @UnusedImport
+                                 QStyleFactory, QMenu, QLayout, QShortcut)  # @Reimport @UnresolvedImport @UnusedImport
+    from PyQt5.QtGui import (QScreen, QPageLayout, QImageReader,
+                             QWindow,  # type: ignore # @Reimport @UnresolvedImport @UnusedImport
+                             QKeySequence,  # @Reimport @UnresolvedImport @UnusedImport
+                             QPixmap, QColor, QDesktopServices, QIcon,  # @Reimport @UnresolvedImport @UnusedImport
+                             QRegularExpressionValidator, QDoubleValidator, QPainter,
+                             QCursor)  # @Reimport @UnresolvedImport @UnusedImport
+    from PyQt5.QtPrintSupport import (QPrinter,
+                                      QPrintDialog)  # type: ignore # @Reimport @UnresolvedImport @UnusedImport
+    from PyQt5.QtCore import (QLibraryInfo, QTranslator, QLocale, QFileInfo, PYQT_VERSION_STR, pyqtSignal, pyqtSlot,
+                              QtMsgType,  # type: ignore # @Reimport @UnresolvedImport @UnusedImport
+                              qVersion, QVersionNumber, QTime, QTimer, QFile, QIODevice, QTextStream,
+                              QSettings,  # @Reimport @UnresolvedImport @UnusedImport
+                              QRegularExpression, QDate, QUrl, QUrlQuery, QDir, Qt, QPoint, QEvent, QDateTime, QThread,
+                              qInstallMessageHandler)  # @Reimport @UnresolvedImport @UnusedImport
+    from PyQt5.QtNetwork import QLocalSocket  # type: ignore # @Reimport @UnresolvedImport @UnusedImport
+
+    # QtWebEngineWidgets must be imported before a QCoreApplication instance is created
     try:
-        from PyQt5.QtWebEngineWidgets import QWebEngineView # type: ignore # @Reimport @UnresolvedImport @UnusedImport # pylint: disable=import-error,no-name-in-module
+        from PyQt5.QtWebEngineWidgets import \
+            QWebEngineView  # type: ignore # @Reimport @UnresolvedImport @UnusedImport # pylint: disable=import-error,no-name-in-module
+
         QtWebEngineSupport = True
     except ImportError:
         # on the RPi platform there is no native package PyQt-WebEngine nor PyQt6-WebEngine for Raspebarry 32bit
         pass
     try:
-        from PyQt5 import sip # type: ignore # @Reimport @UnresolvedImport @UnusedImport
+        from PyQt5 import sip  # type: ignore # @Reimport @UnresolvedImport @UnusedImport
     except ImportError:
-        import sip # type: ignore # @Reimport @UnresolvedImport @UnusedImport
-
-
+        import sip  # type: ignore # @Reimport @UnresolvedImport @UnusedImport
 
 from artisanlib.suppress_errors import suppress_stdout_stderr
 
@@ -269,7 +290,6 @@ from matplotlib.transforms import Bbox, offset_copy
 from matplotlib.colors import LinearSegmentedColormap
 import matplotlib.font_manager as font_manager  # 如果你需要访问 font_manager 可以使用这个
 
-
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas  # @Reimport
 from matplotlib.backends.backend_qt import NavigationToolbar2QT as NavigationToolbar  # @Reimport
 from matplotlib.backend_bases import LocationEvent as mplLocationevent
@@ -292,7 +312,7 @@ if TYPE_CHECKING:
     from matplotlib.text import Annotation  # pylint: disable=unused-import
     from openpyxl.worksheet.worksheet import Worksheet  # pylint: disable=unused-import
     import numpy.typing as npt  # pylint: disable=unused-import
-    from PyQt6.QtWidgets import QTableWidgetItem, QTableWidget, QScrollBar,QFileDialog  # pylint: disable=unused-import
+    from PyQt6.QtWidgets import QTableWidgetItem, QTableWidget, QScrollBar, QFileDialog  # pylint: disable=unused-import
     from PyQt6.QtGui import QStyleHints, QClipboard, QKeyEvent, QMouseEvent, QDropEvent, QDragEnterEvent, QCloseEvent, \
         QResizeEvent, QValidator  # pylint: disable=unused-import
     from PyQt6.QtCore import QObject, QPermission, QMessageLogContext  # noqa: F401 # pylint: disable=unused-import
@@ -348,6 +368,8 @@ appGuid: Final[str] = '9068bd2fa8e54945a6be1f1a0a589e92'
 viewerAppGuid: Final[str] = '9068bd2fa8e54945a6be1f1a0a589e93'
 
 token = None
+
+
 class Artisan(QtSingleApplication):
     sendmessage2ArtisanInstanceSignal = pyqtSignal(str, str)
     sendmessage2ArtisanViewerSignal = pyqtSignal(str)
@@ -1522,7 +1544,8 @@ class ScrollingLabel(QLabel):
                 self.scroll_position = 0
 
             # 更新显示的文本
-            visible_text = display_text[self.scroll_position:self.scroll_position + self.label_width // self.font_metrics.height()]
+            visible_text = display_text[
+                           self.scroll_position:self.scroll_position + self.label_width // self.font_metrics.height()]
             self.setText(visible_text)
 
     def enterEvent(self, event: QEvent):
@@ -1545,6 +1568,7 @@ class ScrollingLabel(QLabel):
         self.text_width = self.font_metrics.horizontalAdvance(self.original_text)  # 更新文本宽度
         if self.text_width <= self.label_width:
             self.timer.stop()  # 如果文本宽度小于等于标签宽度，停止滚动
+
 
 class MatplotlibWidget(QWidget):
     def __init__(self, parent=None):
@@ -1651,7 +1675,6 @@ class MatplotlibWidget(QWidget):
         # self.canvas.draw()
 
 
-
 class CustomPlotWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -1667,7 +1690,6 @@ class CustomPlotWidget(QWidget):
         font_path = "src/includes/Fonts/OPPOSANS-M.TTF"  # 替换为你的中文字体文件路径
         self.font_prop = font_manager.FontProperties(fname=font_path)
 
-    
     def refresh_chart(self, time_data, data1, data2, data3, obj2):
         """更新图表内容，并在 data1 线上标注 obj2 提供的时间点"""
 
@@ -2206,7 +2228,7 @@ class ApplicationWindow(
 
             # 计算缩放比例
             scale_factor = self.logical_dpi / self.physical_dpi
-            scale_factor2 = (scale_factor-0.61)
+            scale_factor2 = (scale_factor - 0.61)
 
             # 根据屏幕的分辨率计算缩放比例，假设1920x1080是你的参考分辨率
             self.width_scale = self.screen_size.width() / 1920
@@ -2223,21 +2245,22 @@ class ApplicationWindow(
         self.resize(self.screen_size.width(), self.screen_size.height())
 
         self.central_widget = QLabel(self)
-        self.central_widget.setGeometry(0, 0, 1920*self.width_scale, 1080*self.height_scale)
+        self.central_widget.setGeometry(0, 0, 1920 * self.width_scale, 1080 * self.height_scale)
         self.pixmap = QPixmap(self.normalized_path + '/includes/Icons/general/background.jpg')  # 背景图
         self.central_widget.setPixmap(self.pixmap)
         self.central_widget.setScaledContents(True)
-
-
+        # self.central_widget.lower()
 
         self.logoLabel = QLabel(self)
-        self.logoLabel.setGeometry(33*self.width_scale, 45*self.height_scale, 88*self.width_scale, 88*self.width_scale)  # Position and size of the label
+        self.logoLabel.setGeometry(33 * self.width_scale, 45 * self.height_scale, 88 * self.width_scale,
+                                   88 * self.width_scale)  # Position and size of the label
         logoPixmap = QPixmap(self.normalized_path + '/includes/Icons/general/logo.png')  # Path to your icon image
         self.logoLabel.setPixmap(logoPixmap)
         self.logoLabel.setScaledContents(True)  # Scale pixmap to fit QLabel
 
         self.zuoyeLabel = QPushButton(self)
-        self.zuoyeLabel.setGeometry(54*self.width_scale, 368*self.height_scale, 50*self.width_scale, 50*self.height_scale)
+        self.zuoyeLabel.setGeometry(54 * self.width_scale, 368 * self.height_scale, 50 * self.width_scale,
+                                    50 * self.height_scale)
         self.zuoyeLabel.setStyleSheet("""
                                                   QPushButton {
                                                       background-color: transparent;
@@ -2246,7 +2269,7 @@ class ApplicationWindow(
                                               """)
         self.zuoyePixmap = QIcon(self.normalized_path + '/includes/Icons/general/zuoyeHover.png')
         self.zuoyeLabel.setIcon(self.zuoyePixmap)
-        self.zuoyeLabel.setIconSize(QSize(32*self.width_scale, 32*self.width_scale))
+        self.zuoyeLabel.setIconSize(QSize(32 * self.width_scale, 32 * self.width_scale))
         self.zuoyeLabel.clicked.connect(self.zuoyeClicked)
 
         # self.lzLabel = QPushButton(self)
@@ -2263,7 +2286,8 @@ class ApplicationWindow(
         # self.lzLabel.clicked.connect(self.lzDetailClick)
 
         self.historyLabel = QPushButton(self)
-        self.historyLabel.setGeometry(54*self.width_scale, 468*self.height_scale, 50*self.width_scale, 50*self.height_scale)
+        self.historyLabel.setGeometry(54 * self.width_scale, 468 * self.height_scale, 50 * self.width_scale,
+                                      50 * self.height_scale)
         self.historyLabel.setStyleSheet("""
                                                           QPushButton {
                                                               background-color: transparent;
@@ -2272,24 +2296,27 @@ class ApplicationWindow(
                                                       """)
         self.historyLabelPixmap = QIcon(self.normalized_path + '/includes/Icons/general/history.png')
         self.historyLabel.setIcon(self.historyLabelPixmap)
-        self.historyLabel.setIconSize(QSize(32*self.width_scale, 32*self.width_scale))
+        self.historyLabel.setIconSize(QSize(32 * self.width_scale, 32 * self.width_scale))
         self.historyLabel.clicked.connect(self.historyClicked)
 
         self.monitorLabel = QPushButton(self)
-        self.monitorLabel.setGeometry(54*self.width_scale, 569*self.height_scale, 50*self.width_scale, 50*self.height_scale)  # Position and size of the label
+        self.monitorLabel.setGeometry(54 * self.width_scale, 569 * self.height_scale, 50 * self.width_scale,
+                                      50 * self.height_scale)  # Position and size of the label
         self.monitorLabel.setStyleSheet("""
                                                                   QPushButton {
                                                                       background-color: transparent;
                                                                       border: none;
                                                                   }
                                                               """)
-        self.monitorPixmap = QIcon(self.normalized_path + '/includes/Icons/general/monitor.png')  # Path to your icon image
+        self.monitorPixmap = QIcon(
+            self.normalized_path + '/includes/Icons/general/monitor.png')  # Path to your icon image
         self.monitorLabel.setIcon(self.monitorPixmap)
-        self.monitorLabel.setIconSize(QSize(32*self.width_scale, 32*self.width_scale))
+        self.monitorLabel.setIconSize(QSize(32 * self.width_scale, 32 * self.width_scale))
         self.monitorLabel.clicked.connect(self.monitorClicked)
 
         self.setLabel = QPushButton(self)
-        self.setLabel.setGeometry(54*self.width_scale, 679*self.height_scale, 50*self.width_scale, 50*self.height_scale)  # Position and size of the label
+        self.setLabel.setGeometry(54 * self.width_scale, 679 * self.height_scale, 50 * self.width_scale,
+                                  50 * self.height_scale)  # Position and size of the label
         self.setLabel.setStyleSheet("""
                                                                           QPushButton {
                                                                               background-color: transparent;
@@ -2298,37 +2325,37 @@ class ApplicationWindow(
                                                                       """)
         self.setLabelPixmap = QIcon(self.normalized_path + '/includes/Icons/general/set.png')  # Path to your icon image
         self.setLabel.setIcon(self.setLabelPixmap)
-        self.setLabel.setIconSize(QSize(32*self.width_scale, 32*self.width_scale))
+        self.setLabel.setIconSize(QSize(32 * self.width_scale, 32 * self.width_scale))
         self.setLabel.clicked.connect(self.setLabelClicked)
-
-
 
         self.shuxian = QLabel(self)
         self.shuxian.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
-        self.shuxian.setGeometry(2*self.width_scale, 361*self.height_scale, 3*self.width_scale, 60*self.height_scale)
+        self.shuxian.setGeometry(2 * self.width_scale, 361 * self.height_scale, 3 * self.width_scale,
+                                 60 * self.height_scale)
         self.shuxian.setStyleSheet("""
                                     color: #ffffff;
                                     border: none;  /* 去掉按钮的边框 */
                                     background-color: #ffffff;  /* 设置背景为透明 */
                                 """)
 
-
-
         self.closeLabel = QPushButton(self)
-        self.closeLabel.setGeometry(54*self.width_scale, 963*self.height_scale, 50*self.width_scale, 50*self.width_scale)
+        self.closeLabel.setGeometry(54 * self.width_scale, 963 * self.height_scale, 50 * self.width_scale,
+                                    50 * self.width_scale)
         self.closeLabel.setStyleSheet(f"""
             QPushButton {{
                 border: none;
             }}
         """)
-        self.closeLabelPixmap = QIcon(self.normalized_path + '/includes/Icons/general/close.png')  # Path to your icon image
+        self.closeLabelPixmap = QIcon(
+            self.normalized_path + '/includes/Icons/general/close.png')  # Path to your icon image
         self.closeLabel.setIcon(self.closeLabelPixmap)
         self.closeLabel.setIconSize(QSize(32 * self.width_scale, 32 * self.width_scale))
         self.closeLabel.clicked.connect(self.closeClicked)
 
         self.shebeiLabel = QLabel(self)  # 第一行设备名称
         self.shebeiLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
-        self.shebeiLabel.setGeometry(231*self.width_scale, 74*self.height_scale, 390*self.width_scale, 38*self.height_scale)
+        self.shebeiLabel.setGeometry(231 * self.width_scale, 74 * self.height_scale, 390 * self.width_scale,
+                                     40 * self.height_scale)
         self.shebeiLabel.setStyleSheet("""
                     color: #222222;
                     border: none;  /* 去掉按钮的边框 */
@@ -2336,47 +2363,47 @@ class ApplicationWindow(
                 """)
 
         self.shebeiLabel.setText("请选择机器")
-        shebeifont = QFont(self.font_family4, 24*self.width_scale)
+        shebeifont = QFont(self.font_family4, 24 * self.width_scale)
         shebeifont.setBold(True)
         self.shebeiLabel.setFont(shebeifont)
         self.shebeiLabel.setVisible(True)
 
-        self.showMachinesTitle()
 
         self.sheibeiButton = QPushButton(self.shebeiLabel)
-        self.sheibeiButton.setGeometry(0, 0, 390*self.width_scale, 30*self.height_scale)
+        self.sheibeiButton.setGeometry(0, 0, 390 * self.width_scale, 30 * self.height_scale)
         self.sheibeiButton.setStyleSheet("""
                                             border: none;  /* 去掉按钮的边框 */
                                             background-color: transparent;  /* 设置背景为透明 */
                                         """)
         self.sheibeiButton.setCursor(Qt.CursorShape.PointingHandCursor)
         self.sheibeiButton.clicked.connect(self.getShebeiList)
-        
 
         self.shebeiLabel2 = QLabel(self)  # 第一行设备名称
         self.shebeiLabel2.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
-        self.shebeiLabel2.setGeometry(231*self.width_scale, 74*self.height_scale, 390*self.width_scale, 38*self.height_scale)
+        self.shebeiLabel2.setGeometry(231 * self.width_scale, 74 * self.height_scale, 390 * self.width_scale,
+                                      38 * self.height_scale)
         self.shebeiLabel2.setStyleSheet("""
                             color: #222222;
                             border: none;  /* 去掉按钮的边框 */
                             background-color: transparent;  /* 设置背景为透明 */
                         """)
         self.shebeiLabel2.setText("Giesen")
-        shebeifont = QFont(self.font_family2, 24*self.width_scale)
+        shebeifont = QFont(self.font_family2, 24 * self.width_scale)
         # shebeifont.setBold(True)
         self.shebeiLabel2.setFont(shebeifont)
         self.shebeiLabel2.setVisible(False)
 
         self.todayTime = QLabel(self)  # 切换页面显示当前时间
         self.todayTime.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
-        self.todayTime.setGeometry(231*self.width_scale, 138*self.height_scale, 390*self.width_scale, 45*self.height_scale)
+        self.todayTime.setGeometry(231 * self.width_scale, 138 * self.height_scale, 390 * self.width_scale,
+                                   45 * self.height_scale)
         self.todayTime.setStyleSheet("""
                                     color: #222222;
                                     border: none;  /* 去掉按钮的边框 */
                                     background-color: transparent;  /* 设置背景为透明 */
                                 """)
         self.todayTime.setText("Giesen")
-        shebeifont = QFont(self.font_family3, 14*self.width_scale)
+        shebeifont = QFont(self.font_family3, 14 * self.width_scale)
         # shebeifont.setBold(True)
         self.todayTime.setFont(shebeifont)
         self.todayTime.setVisible(False)
@@ -2387,9 +2414,6 @@ class ApplicationWindow(
         # self.todayTimer.start(1000)  # 每1000毫秒（1秒）触发一次
         # # 初始化显示时间
         # self.updatetodayTime()
-
-
-
 
         self.blink_timer = QTimer(self)
         self.blink_timer.timeout.connect(self.blink_text)  # 当定时器超时时，调用 blink_text 方法
@@ -2406,86 +2430,99 @@ class ApplicationWindow(
 
         border1 = int(15 * self.height_scale)
         self.kpa = QWidget(self)  # kpa显示
-        self.kpa.setStyleSheet(f'border: 1px solid #BBA0FD;border-radius: {15*self.height_scale}px;')
-        self.kpa.setGeometry(647*self.width_scale, 68*self.height_scale, 134*self.width_scale, 41*self.height_scale)
+        self.kpa.setStyleSheet(f'border: 1px solid #BBA0FD;border-radius: {15 * self.height_scale}px;')
+        self.kpa.setGeometry(647 * self.width_scale, 68 * self.height_scale, 134 * self.width_scale,
+                             41 * self.height_scale)
 
         self.kpaNum: QLabel = QLabel(self.kpa)
         self.kpaNum.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.kpaNum.setGeometry(15*self.width_scale, 12*self.height_scale, 72*self.width_scale, 20*self.height_scale)
+        self.kpaNum.setGeometry(15 * self.width_scale, 12 * self.height_scale, 72 * self.width_scale,
+                                20 * self.height_scale)
         self.kpaNum.setStyleSheet("color: #6A00FF;border: none;")
         self.kpaNum.setText("101.325")
-        kpaNumfont = QFont(self.font_family5, 12*self.width_scale)
+        kpaNumfont = QFont(self.font_family5, 12 * self.width_scale)
         self.kpaNum.setFont(kpaNumfont)
 
         self.kpaText: QLabel = QLabel(self.kpa)
         self.kpaText.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.kpaText.setGeometry(87*self.width_scale, 10*self.height_scale, 25*self.width_scale, 20*self.height_scale)
+        self.kpaText.setGeometry(87 * self.width_scale, 10 * self.height_scale, 25 * self.width_scale,
+                                 20 * self.height_scale)
         self.kpaText.setStyleSheet("color: #BEA5FB;border: none;")
         self.kpaText.setText("kpa")
-        kpaTextfont = QFont(self.font_family5, 8*self.width_scale)
+        kpaTextfont = QFont(self.font_family5, 8 * self.width_scale)
         self.kpaText.setFont(kpaTextfont)
 
         self.kpaUpLabel = QLabel(self.kpa)
-        self.kpaUpLabel.setGeometry(115*self.width_scale, 17*self.height_scale, 6*self.width_scale, 9*self.height_scale)  # Position and size of the label
+        self.kpaUpLabel.setGeometry(115 * self.width_scale, 17 * self.height_scale, 6 * self.width_scale,
+                                    9 * self.height_scale)  # Position and size of the label
         self.kpaUpLabel.setStyleSheet("border: none;")  # Path to your icon image
         self.kpaUpLabel.setPixmap(upPixmap)
         self.kpaUpLabel.setScaledContents(True)
 
         self.wd = QWidget(self)  # 温度显示
-        self.wd.setStyleSheet(f'border: 1px solid #F9B79B;border-radius: {15*self.height_scale}px;')
-        self.wd.setGeometry(792*self.width_scale, 68*self.height_scale, 134*self.width_scale, 41*self.height_scale)
+        self.wd.setStyleSheet(f'border: 1px solid #F9B79B;border-radius: {15 * self.height_scale}px;')
+        self.wd.setGeometry(792 * self.width_scale, 68 * self.height_scale, 134 * self.width_scale,
+                            41 * self.height_scale)
 
         self.wdNum: QLabel = QLabel(self.wd)
         self.wdNum.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignRight)
-        self.wdNum.setGeometry(15*self.width_scale, 12*self.height_scale, 52*self.width_scale, 20*self.height_scale)
+        self.wdNum.setGeometry(15 * self.width_scale, 12 * self.height_scale, 52 * self.width_scale,
+                               20 * self.height_scale)
         self.wdNum.setStyleSheet("color: #FC6C03;border: none;")
         self.wdNum.setText("25")
-        wdNumfont = QFont(self.font_family5, 12*self.width_scale)
+        wdNumfont = QFont(self.font_family5, 12 * self.width_scale)
         self.wdNum.setFont(wdNumfont)
 
         self.wdNum: QLabel = QLabel(self.wd)
         self.wdNum.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.wdNum.setGeometry(87*self.width_scale, 10*self.height_scale, 25*self.width_scale, 20*self.height_scale)
+        self.wdNum.setGeometry(87 * self.width_scale, 10 * self.height_scale, 25 * self.width_scale,
+                               20 * self.height_scale)
         self.wdNum.setStyleSheet("color: #F9B79B;border: none;")
         self.wdNum.setText("℃")
-        wdNumfont = QFont(self.font_family5, 8*self.width_scale)
+        wdNumfont = QFont(self.font_family5, 8 * self.width_scale)
         self.wdNum.setFont(wdNumfont)
 
         self.wdupLabel = QLabel(self.wd)
-        self.wdupLabel.setGeometry(115*self.width_scale, 17*self.height_scale, 6*self.width_scale, 9*self.height_scale)  # Position and size of the label
+        self.wdupLabel.setGeometry(115 * self.width_scale, 17 * self.height_scale, 6 * self.width_scale,
+                                   9 * self.height_scale)  # Position and size of the label
         self.wdupLabel.setStyleSheet("border: none;")
         self.wdupLabel.setPixmap(downPixmap)
         self.wdupLabel.setScaledContents(True)
 
         self.rh = QWidget(self)  # rh
-        self.rh.setStyleSheet(f'border: 1px solid #A3C7F8;border-radius: {15*self.height_scale}px;')
-        self.rh.setGeometry(938*self.width_scale, 68*self.height_scale, 134*self.width_scale, 41*self.height_scale)
+        self.rh.setStyleSheet(f'border: 1px solid #A3C7F8;border-radius: {15 * self.height_scale}px;')
+        self.rh.setGeometry(938 * self.width_scale, 68 * self.height_scale, 134 * self.width_scale,
+                            41 * self.height_scale)
 
         self.rhNum: QLabel = QLabel(self.rh)
         self.rhNum.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignRight)
-        self.rhNum.setGeometry(15*self.width_scale, 12*self.height_scale, 42*self.width_scale, 20*self.height_scale)
+        self.rhNum.setGeometry(15 * self.width_scale, 12 * self.height_scale, 42 * self.width_scale,
+                               20 * self.height_scale)
         self.rhNum.setStyleSheet("color: #0488F9;border: none;")
         self.rhNum.setText("40")
-        rhNumfont = QFont(self.font_family5, 12*self.width_scale)
+        rhNumfont = QFont(self.font_family5, 12 * self.width_scale)
         self.rhNum.setFont(rhNumfont)
 
         self.rhNum: QLabel = QLabel(self.rh)
         self.rhNum.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.rhNum.setGeometry(80*self.width_scale, 10*self.height_scale, 30*self.width_scale, 20*self.height_scale)
+        self.rhNum.setGeometry(80 * self.width_scale, 10 * self.height_scale, 30 * self.width_scale,
+                               20 * self.height_scale)
         self.rhNum.setStyleSheet("color: #97C1FB;border: none;")
         self.rhNum.setText("RH%")
-        rhNumfont = QFont(self.font_family5, 8*self.width_scale)
+        rhNumfont = QFont(self.font_family5, 8 * self.width_scale)
         self.rhNum.setFont(rhNumfont)
 
         self.upLabel = QLabel(self.rh)
-        self.upLabel.setGeometry(115*self.width_scale, 17*self.height_scale, 6*self.width_scale, 9*self.height_scale)  # Position and size of the label
+        self.upLabel.setGeometry(115 * self.width_scale, 17 * self.height_scale, 6 * self.width_scale,
+                                 9 * self.height_scale)  # Position and size of the label
         self.upLabel.setStyleSheet("border: none;")
         self.upLabel.setPixmap(upPixmap)
         self.upLabel.setScaledContents(True)
 
         # 个人
         self.aiLabel = QPushButton(self)
-        self.aiLabel.setGeometry(1656*self.width_scale, 60*self.height_scale, 58*self.width_scale, 58*self.height_scale)
+        self.aiLabel.setGeometry(1656 * self.width_scale, 60 * self.height_scale, 58 * self.width_scale,
+                                 58 * self.height_scale)
         self.aiLabel.setStyleSheet("""
                                                                           QPushButton {
                                                                               background-color: transparent;
@@ -2499,7 +2536,8 @@ class ApplicationWindow(
         self.aiLabel.setVisible(False)
 
         self.sfxxLabel = QLabel(self)
-        self.sfxxLabel.setGeometry(1742*self.width_scale, 60*self.height_scale, 58*self.width_scale, 58*self.width_scale)  # Position and size of the label
+        self.sfxxLabel.setGeometry(1742 * self.width_scale, 60 * self.height_scale, 58 * self.width_scale,
+                                   58 * self.width_scale)  # Position and size of the label
         sfxxPixmap = QPixmap(self.normalized_path + '/includes/Icons/general/info.png')  # Path to your icon image
         self.sfxxLabel.setPixmap(sfxxPixmap)
         self.sfxxLabel.setScaledContents(True)  # Scale pixmap to fit QLabel
@@ -2527,23 +2565,26 @@ class ApplicationWindow(
 
         self.xinghaoLabel: QLabel = QLabel(self)  # 第二行设备型号
         self.xinghaoLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
-        self.xinghaoLabel.setGeometry(232*self.width_scale, 109*self.height_scale, 390*self.width_scale, 23*self.height_scale)
+        self.xinghaoLabel.setGeometry(232 * self.width_scale, 109 * self.height_scale, 390 * self.width_scale,
+                                      23 * self.height_scale)
         self.xinghaoLabel.setStyleSheet("color: #B2B1B1;")
         self.xinghaoLabel.setText(" ")
-        xinghaofont = QFont(self.font_family, 14*self.width_scale)
+        xinghaofont = QFont(self.font_family, 14 * self.width_scale)
         self.xinghaoLabel.setFont(xinghaofont)
 
         self.statusLabel: QLabel = QLabel(self)  # 第二行设备状态
         self.statusLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
-        self.statusLabel.setGeometry(235*self.width_scale, 142*self.height_scale, 390*self.width_scale, 45*self.height_scale)
+        self.statusLabel.setGeometry(235 * self.width_scale, 142 * self.height_scale, 390 * self.width_scale,
+                                     45 * self.height_scale)
         self.statusLabel.setStyleSheet("color: #000000;")
         self.statusLabel.setText("预热准备")
-        statusfont = QFont(self.font_family2, 22*self.width_scale)
+        statusfont = QFont(self.font_family2, 22 * self.width_scale)
         # statusfont.setBold(True)
         self.statusLabel.setFont(statusfont)
 
         self.statusCard = QLabel(self)  # 开始预热
-        self.statusCard.setGeometry(231*self.width_scale, 201*self.height_scale, 290*self.width_scale, 200*self.height_scale)
+        self.statusCard.setGeometry(231 * self.width_scale, 201 * self.height_scale, 290 * self.width_scale,
+                                    200 * self.height_scale)
         statusCardPixmap = QPixmap(self.normalized_path + '/includes/Icons/yrzb/back.png')
         self.statusCard.setPixmap(statusCardPixmap)
         self.statusCard.setScaledContents(True)
@@ -2552,20 +2593,19 @@ class ApplicationWindow(
         self.sswd = QLabel(self.statusCard)
         self.sswd.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.sswd.setText('0')
-        self.sswd.setGeometry(18*self.width_scale, 24*self.height_scale, 90*self.width_scale, 40*self.height_scale)
+        self.sswd.setGeometry(18 * self.width_scale, 24 * self.height_scale, 90 * self.width_scale,
+                              40 * self.height_scale)
         self.sswd.setStyleSheet("color: #222222;")
-        sswdfont = QFont(self.font_family7, 26*self.width_scale)
+        sswdfont = QFont(self.font_family7, 26 * self.width_scale)
         self.sswd.setFont(sswdfont)
-
-
-
 
         self.sswdText = QLabel(self.statusCard)
         self.sswdText.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.sswdText.setText('实 时 温 度')
-        self.sswdText.setGeometry(18*self.width_scale, 57*self.height_scale, 90*self.width_scale, 40*self.height_scale)
+        self.sswdText.setGeometry(18 * self.width_scale, 57 * self.height_scale, 90 * self.width_scale,
+                                  40 * self.height_scale)
         self.sswdText.setStyleSheet("color: #222222;")
-        sswdTextfont = QFont(self.font_family4, 12*self.width_scale)
+        sswdTextfont = QFont(self.font_family4, 12 * self.width_scale)
         self.sswdText.setFont(sswdTextfont)
 
         self.temperaturePixmap = QPixmap(self.normalized_path + '/includes/Icons/yrzb/temperatureXS.png')
@@ -2574,7 +2614,8 @@ class ApplicationWindow(
         self.temperaturePixmap4 = QPixmap(self.normalized_path + '/includes/Icons/yrzb/temperatureL.png')
 
         self.temperatureImg = QLabel(self.statusCard)
-        self.temperatureImg.setGeometry(209*self.width_scale, 23*self.height_scale, 56*self.width_scale, 56*self.width_scale)
+        self.temperatureImg.setGeometry(209 * self.width_scale, 23 * self.height_scale, 56 * self.width_scale,
+                                        56 * self.width_scale)
         # self.temperatureImg.setPixmap(temperaturePixmap)
         self.temperatureImg.setScaledContents(True)
 
@@ -2584,15 +2625,6 @@ class ApplicationWindow(
 
         # 更新图片根据 sswd 的值
         self.update_image_based_on_value()
-
-        # if float(self.sswd.text()) == 0:
-        #     self.temperatureImg.setPixmap(self.temperaturePixmap)
-        # elif float(self.sswd.text()) > 0 and float(self.sswd.text()) < 80:
-        #     self.temperatureImg.setPixmap(self.temperaturePixmap2)
-        # elif float(self.sswd.text()) >= 80 and float(self.sswd.text()) < 120:
-        #     self.temperatureImg.setPixmap(self.temperaturePixmap3)
-        # else:
-        #     self.temperatureImg.setPixmap(self.temperaturePixmap4)
 
         self.temperatureEdit = QLineEdit(self.statusCard)
         self.temperatureEdit.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
@@ -2607,6 +2639,7 @@ class ApplicationWindow(
         # 创建整数验证器，限制输入范围为 0 到 300
         validator = QIntValidator(0, 300, self.temperatureEdit)
         self.temperatureEdit.setValidator(validator)
+
         def on_text_changed():
             text = self.temperatureEdit.text()
             try:
@@ -2615,28 +2648,27 @@ class ApplicationWindow(
                     self.temperatureEdit.setText('300')  # 设置为最大值 300
             except ValueError:
                 pass  # 如果输入的内容不是有效的整数，可以忽略
+
         self.temperatureEdit.textChanged.connect(on_text_changed)
 
         self.temperatureEdit_ssd = QLabel(self.temperatureEdit)
         self.temperatureEdit_ssd.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.temperatureEdit_ssd.setText('℃')
         self.temperatureEdit_ssd.setGeometry(25 * self.width_scale, 0 * self.height_scale, 56 * self.width_scale,
-                                         30 * self.height_scale)
+                                             30 * self.height_scale)
         self.temperatureEdit_ssd.setStyleSheet(
             f"color: #222222;background-color: transparent;border: none;border-radius: none;"
         )
         self.temperatureEdit_ssd.setFont(temperatureTextfont)
 
-        # 设置字体
-        # temperatureTextfont = QFont(self.font_family2, 9 * self.height_scale)
-        # self.temperatureEdit.setFont(temperatureTextfont)
-
         self.ksyrBtn = QPushButton(self.statusCard)
         # self.ksyrBtn.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.ksyrBtn.setText('开始预热')
-        self.ksyrBtn.setGeometry(25*self.width_scale, 137*self.height_scale, 110*self.width_scale, 40*self.height_scale)
-        self.ksyrBtn.setStyleSheet(f"QPushButton{{color: #ffffff;background-color: #393939;border-radius: {19*self.height_scale}px;}}")
-        ksyrBtnfont = QFont(self.font_family2, 12*self.width_scale)
+        self.ksyrBtn.setGeometry(25 * self.width_scale, 137 * self.height_scale, 110 * self.width_scale,
+                                 40 * self.height_scale)
+        self.ksyrBtn.setStyleSheet(
+            f"QPushButton{{color: #ffffff;background-color: #393939;border-radius: {19 * self.height_scale}px;}}")
+        ksyrBtnfont = QFont(self.font_family2, 12 * self.width_scale)
         self.ksyrBtn.setFont(ksyrBtnfont)
         self.ksyrBtn.clicked.connect(self.ksyrBtnState)
 
@@ -2653,29 +2685,33 @@ class ApplicationWindow(
         self.ksyrtimer.timeout.connect(self.update_time)  # 定时器超时时更新时间
 
         self.yrqk = QWidget(self)  # 预热情况
-        self.yrqk.setStyleSheet(f'border-radius: {25*self.height_scale}px;background-color: #EEF3F7;')
-        self.yrqk.setGeometry(231*self.width_scale, 436*self.height_scale, 290*self.width_scale, 120*self.height_scale)
+        self.yrqk.setStyleSheet(f'border-radius: {25 * self.height_scale}px;background-color: #EEF3F7;')
+        self.yrqk.setGeometry(231 * self.width_scale, 436 * self.height_scale, 290 * self.width_scale,
+                              120 * self.height_scale)
 
         self.yrqkLabel = QLabel(self.yrqk)
         self.yrqkLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.yrqkLabel.setText('预热情况')
-        self.yrqkLabel.setGeometry(25*self.width_scale, 20*self.height_scale, 290*self.width_scale, 45*self.height_scale)
+        self.yrqkLabel.setGeometry(25 * self.width_scale, 20 * self.height_scale, 290 * self.width_scale,
+                                   45 * self.height_scale)
         self.yrqkLabel.setStyleSheet("color: #222222;")
-        yrqkfont = QFont(self.font_family3, 14*self.width_scale)
+        yrqkfont = QFont(self.font_family3, 14 * self.width_scale)
         self.yrqkLabel.setFont(yrqkfont)
 
         self.yrqkLabelTime = QLabel(self.yrqk)
         self.yrqkLabelTime.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.yrqkLabelTime.setText('00：00')
-        self.yrqkLabelTime.setGeometry(25*self.width_scale, 55*self.height_scale, 39*self.width_scale, 19*self.height_scale)
+        self.yrqkLabelTime.setGeometry(25 * self.width_scale, 55 * self.height_scale, 39 * self.width_scale,
+                                       19 * self.height_scale)
         self.yrqkLabelTime.setStyleSheet("color: #222222;")
-        yrqkfont2 = QFont(self.font_family3, 8*self.width_scale)
+        yrqkfont2 = QFont(self.font_family3, 8 * self.width_scale)
         self.yrqkLabelTime.setFont(yrqkfont2)
 
         self.yrqkLabel = QLabel(self.yrqk)
         self.yrqkLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.yrqkLabel.setText('30：00')
-        self.yrqkLabel.setGeometry(226*self.width_scale, 55*self.height_scale, 39*self.width_scale, 19*self.height_scale)
+        self.yrqkLabel.setGeometry(226 * self.width_scale, 55 * self.height_scale, 39 * self.width_scale,
+                                   19 * self.height_scale)
         self.yrqkLabel.setStyleSheet("color: #8A929C;")
         self.yrqkLabel.setFont(yrqkfont2)
 
@@ -2684,12 +2720,12 @@ class ApplicationWindow(
                                20 * self.height_scale)
         self.jdtbk.setStyleSheet(f'border-radius: {9 * self.height_scale}px;border: 1px solid #CAD6E5;')
 
-
         self.jdt = QProgressBar(self.yrqk)
-        self.jdt.setGeometry(31*self.width_scale, 80*self.height_scale, 228*self.width_scale, 6*self.height_scale)
+        self.jdt.setGeometry(31 * self.width_scale, 80 * self.height_scale, 228 * self.width_scale,
+                             6 * self.height_scale)
         self.jdt.setStyleSheet(
-            f"QProgressBar {{border-radius: {3*self.height_scale}px;background-color: #CAD6E5; text-align:center; font-size:0px; color: transparent}}"
-            f"QProgressBar::chunk {{border-radius: {3*self.height_scale}px;background-color: #72AFFF;}}"
+            f"QProgressBar {{border-radius: {3 * self.height_scale}px;background-color: #CAD6E5; text-align:center; font-size:0px; color: transparent}}"
+            f"QProgressBar::chunk {{border-radius: {3 * self.height_scale}px;background-color: #72AFFF;}}"
         )
 
         self.jdtTimer = QBasicTimer()
@@ -2698,47 +2734,55 @@ class ApplicationWindow(
 
         # 锅间协议
         self.gjxy = QWidget(self)
-        self.gjxy.setStyleSheet(f'border-radius: {25*self.height_scale}px;background-color: #EEF3F7;')
-        self.gjxy.setGeometry(231*self.width_scale, 436*self.height_scale, 290*self.width_scale, 120*self.height_scale)
+        self.gjxy.setStyleSheet(f'border-radius: {25 * self.height_scale}px;background-color: #EEF3F7;')
+        self.gjxy.setGeometry(231 * self.width_scale, 436 * self.height_scale, 290 * self.width_scale,
+                              120 * self.height_scale)
         self.gjxy.setVisible(False)
+
 
         self.gjxyLabel = QLabel(self.gjxy)
         self.gjxyLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.gjxyLabel.setText('锅间协议')
-        self.gjxyLabel.setGeometry(25*self.width_scale, 20*self.height_scale, 290*self.width_scale, 45*self.height_scale)
+        self.gjxyLabel.setGeometry(25 * self.width_scale, 20 * self.height_scale, 290 * self.width_scale,
+                                   45 * self.height_scale)
         self.gjxyLabel.setStyleSheet("color: #222222;")
         self.gjxyLabel.setFont(yrqkfont)
 
         self.temperature = QLabel(self.gjxy)
         self.temperature.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.temperature.setText(self.temperatureEdit.text())
-        self.temperature.setGeometry(106*self.width_scale, 21*self.height_scale, 56*self.width_scale, 24*self.height_scale)
+        self.temperature.setGeometry(106 * self.width_scale, 21 * self.height_scale, 56 * self.width_scale,
+                                     24 * self.height_scale)
         self.temperature.setStyleSheet(
-            f"color: #222222;background-color: #ffffff;border: 2px solid #F32B16;border-radius: {11*self.height_scale}px;")
-        temperatureTextfont = QFont(self.font_family2, 9*self.width_scale)
+            f"color: #222222;background-color: #ffffff;border: 2px solid #F32B16;border-radius: {11 * self.height_scale}px;")
+        temperatureTextfont = QFont(self.font_family2, 9 * self.width_scale)
         self.temperature.setFont(temperatureTextfont)
 
         self.gjxyTimeTxt = QLabel(self.gjxy)
         self.gjxyTimeTxt.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.gjxyTimeTxt.setText(self.intoTime3.toString("mm:ss"))
-        self.gjxyTimeTxt.setGeometry(171*self.width_scale, 53*self.height_scale, 49*self.width_scale, 19*self.height_scale)
+        self.gjxyTimeTxt.setGeometry(171 * self.width_scale, 53 * self.height_scale, 49 * self.width_scale,
+                                     19 * self.height_scale)
         self.gjxyTimeTxt.setStyleSheet("color: #222222;")
-        yrqkfont3 = QFont(self.font_family3, 10*self.width_scale)
+        yrqkfont3 = QFont(self.font_family3, 10 * self.width_scale)
         self.gjxyTimeTxt.setFont(yrqkfont3)
 
         self.gjxyLabel = QLabel(self.gjxy)
         self.gjxyLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.gjxyLabel.setText('| 8：00')
-        self.gjxyLabel.setGeometry(226*self.width_scale, 55*self.height_scale, 39*self.width_scale, 19*self.height_scale)
+        self.gjxyLabel.setGeometry(226 * self.width_scale, 55 * self.height_scale, 39 * self.width_scale,
+                                   19 * self.height_scale)
         self.gjxyLabel.setStyleSheet("color: #8A929C;")
         self.gjxyLabel.setFont(yrqkfont2)
 
         self.gjxy_jdtbk = QWidget(self.gjxy)  # 锅间协议进度条边框
-        self.gjxy_jdtbk.setStyleSheet(f'border-radius: {9*self.height_scale}px;border: 1px solid #CAD6E5;')
-        self.gjxy_jdtbk.setGeometry(25*self.width_scale, 73*self.height_scale, 240*self.width_scale, 20*self.height_scale)
+        self.gjxy_jdtbk.setStyleSheet(f'border-radius: {9 * self.height_scale}px;border: 1px solid #CAD6E5;')
+        self.gjxy_jdtbk.setGeometry(25 * self.width_scale, 73 * self.height_scale, 240 * self.width_scale,
+                                    20 * self.height_scale)
 
         self.jdtGJXY = QProgressBar(self.gjxy)
-        self.jdtGJXY.setGeometry(31*self.width_scale, 80*self.height_scale, 228*self.width_scale, 6*self.height_scale)
+        self.jdtGJXY.setGeometry(31 * self.width_scale, 80 * self.height_scale, 228 * self.width_scale,
+                                 6 * self.height_scale)
         self.jdtGJXY.setStyleSheet(
             "QProgressBar {border-radius: 3px;background-color: #CAD6E5; text-align:center; font-size:0px; color: transparent}"
             "QProgressBar::chunk {border-radius: 3px;background-color: #72AFFF;}"
@@ -2749,42 +2793,46 @@ class ApplicationWindow(
         self.gjxytimer = QTimer(self)
         self.gjxytimer.timeout.connect(self.gjxy_update_time)  # 定时器超时时更新时间
 
-
         # 进度情况
         self.jdqk = QWidget(self)
-        self.jdqk.setStyleSheet(f'border-radius: {25*self.height_scale}px;background-color: #EEF3F7;')
-        self.jdqk.setGeometry(231*self.width_scale, 436*self.height_scale, 290*self.width_scale, 120*self.height_scale)
+        self.jdqk.setStyleSheet(f'border-radius: {25 * self.height_scale}px;background-color: #EEF3F7;')
+        self.jdqk.setGeometry(231 * self.width_scale, 436 * self.height_scale, 290 * self.width_scale,
+                              120 * self.height_scale)
         self.jdqk.setVisible(False)
 
         self.jdqkLabel = QLabel(self.jdqk)
         self.jdqkLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.jdqkLabel.setText('进度情况')
-        self.jdqkLabel.setGeometry(25*self.width_scale, 20*self.height_scale, 290*self.width_scale, 45*self.height_scale)
+        self.jdqkLabel.setGeometry(25 * self.width_scale, 20 * self.height_scale, 290 * self.width_scale,
+                                   45 * self.height_scale)
         self.jdqkLabel.setStyleSheet("color: #222222;")
         self.jdqkLabel.setFont(yrqkfont)
 
         self.jdqkLabelTime = QLabel(self.jdqk)
         self.jdqkLabelTime.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.jdqkLabelTime.setText('00:00')
-        self.jdqkLabelTime.setGeometry(190*self.width_scale, 55*self.height_scale, 39*self.width_scale, 19*self.height_scale)
+        self.jdqkLabelTime.setGeometry(190 * self.width_scale, 55 * self.height_scale, 39 * self.width_scale,
+                                       19 * self.height_scale)
         self.jdqkLabelTime.setStyleSheet("color: #222222;")  # 仅在初始化时设置样式
         self.jdqkLabelTime.setFont(yrqkfont2)
 
         self.gjxyLabel = QLabel(self.jdqk)
         self.gjxyLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.gjxyLabel.setText('| 15min')
-        self.gjxyLabel.setGeometry(226*self.width_scale, 55*self.height_scale, 39*self.width_scale, 19*self.height_scale)
+        self.gjxyLabel.setGeometry(226 * self.width_scale, 55 * self.height_scale, 39 * self.width_scale,
+                                   19 * self.height_scale)
         self.gjxyLabel.setStyleSheet("color: #8A929C;")
         self.gjxyLabel.setFont(yrqkfont2)
 
         # 设置布局和进度条
         self.jdqk_jdtbk = QWidget(self.jdqk)  # 进度条容器
-        self.jdqk_jdtbk.setStyleSheet(f'border-radius: {9*self.height_scale}px; border: 1px solid #CAD6E5;')
-        self.jdqk_jdtbk.setGeometry(25*self.width_scale, 73*self.height_scale, 240*self.width_scale, 20*self.height_scale)
+        self.jdqk_jdtbk.setStyleSheet(f'border-radius: {9 * self.height_scale}px; border: 1px solid #CAD6E5;')
+        self.jdqk_jdtbk.setGeometry(25 * self.width_scale, 73 * self.height_scale, 240 * self.width_scale,
+                                    20 * self.height_scale)
 
         # 创建一个 QVBoxLayout，确保进度条可以垂直居中
         outer_layout = QVBoxLayout(self.jdqk_jdtbk)
-        outer_layout.setContentsMargins(6*self.width_scale, 0, 6*self.width_scale, 0)  # 去掉边距
+        outer_layout.setContentsMargins(6 * self.width_scale, 0, 6 * self.width_scale, 0)  # 去掉边距
         outer_layout.setAlignment(Qt.AlignmentFlag.AlignVCenter)  # 垂直居中
 
         # 创建一个水平布局用于放置进度条
@@ -2797,10 +2845,10 @@ class ApplicationWindow(
             progress_bar = QProgressBar()
             progress_bar.setValue(0)  # 初始值为 0
             progress_bar.setStyleSheet(
-                f"QProgressBar {{border-radius: {3*self.height_scale}px; background-color: #cccccc; text-align: center; font-size: 0px; color: transparent}}"
+                f"QProgressBar {{border-radius: {3 * self.height_scale}px; background-color: #cccccc; text-align: center; font-size: 0px; color: transparent}}"
                 f"QProgressBar::chunk {{ background-color: {color}; }}"
             )
-            progress_bar.setFixedHeight(6*self.height_scale)  # 设置进度条高度
+            progress_bar.setFixedHeight(6 * self.height_scale)  # 设置进度条高度
             self.progress_bars.append(progress_bar)
             self.jdqkProgressLayout.addWidget(progress_bar)
 
@@ -2827,27 +2875,31 @@ class ApplicationWindow(
 
         self.user_interacted = False  # 默认为 False
 
-
         # 情况反馈-----
         self.qkfk = QWidget(self)
-        self.qkfk.setStyleSheet(f'border-radius: {25*self.height_scale}px;background-color: #EEF3F7;')
-        self.qkfk.setGeometry(231*self.width_scale, 436*self.height_scale, 290*self.width_scale, 120*self.height_scale)
+        self.qkfk.setStyleSheet(f'border-radius: {25 * self.height_scale}px;background-color: #EEF3F7;')
+        self.qkfk.setGeometry(231 * self.width_scale, 436 * self.height_scale, 290 * self.width_scale,
+                              120 * self.height_scale)
         self.qkfk.setVisible(False)
 
         self.qkfkLabel = QLabel(self.qkfk)
         self.qkfkLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.qkfkLabel.setText('情况反馈')
-        self.qkfkLabel.setGeometry(25*self.width_scale, 20*self.height_scale, 290*self.width_scale, 45*self.height_scale)
+        self.qkfkLabel.setGeometry(25 * self.width_scale, 20 * self.height_scale, 290 * self.width_scale,
+                                   45 * self.height_scale)
         self.qkfkLabel.setStyleSheet("color: #222222;")
-        yrqkfont = QFont(self.font_family3, 14*self.width_scale)
+        yrqkfont = QFont(self.font_family3, 14 * self.width_scale)
         self.qkfkLabel.setFont(yrqkfont)
 
         self.srkBack = QWidget(self.qkfk)
-        self.srkBack.setStyleSheet(f'border-radius: {12*self.height_scale}px;border: 1px solid #CAD6E5;background-color: transparent')
-        self.srkBack.setGeometry(25*self.width_scale, 60*self.height_scale, 240*self.width_scale, 32*self.height_scale)
+        self.srkBack.setStyleSheet(
+            f'border-radius: {12 * self.height_scale}px;border: 1px solid #CAD6E5;background-color: transparent')
+        self.srkBack.setGeometry(25 * self.width_scale, 60 * self.height_scale, 240 * self.width_scale,
+                                 32 * self.height_scale)
 
         self.line_label = QLabel(self.srkBack)
-        self.line_label.setGeometry(18*self.width_scale, 11*self.height_scale, 1*self.width_scale, 9*self.height_scale)
+        self.line_label.setGeometry(18 * self.width_scale, 11 * self.height_scale, 1 * self.width_scale,
+                                    9 * self.height_scale)
         self.line_label.setStyleSheet("background-color: #CAD6E5;")
 
         self.line_edit = QLineEdit(self.srkBack)
@@ -2862,14 +2914,16 @@ class ApplicationWindow(
                                                                border: none;               /* 移除边框 */
                                                            }
                                                        """)
-        line_editfont = QFont(self.font_family4, 12*self.width_scale)
+        line_editfont = QFont(self.font_family4, 12 * self.width_scale)
         self.line_edit.setFont(line_editfont)
-        self.line_edit.setGeometry(24*self.width_scale, 8*self.height_scale, 175*self.width_scale, 14*self.height_scale)
+        self.line_edit.setGeometry(24 * self.width_scale, 8 * self.height_scale, 175 * self.width_scale,
+                                   14 * self.height_scale)
 
         self.icon_label = QLabel(self.srkBack)
         self.icon_label.setStyleSheet('border: none;')
         self.icon_label.setPixmap(QIcon(self.normalized_path + '/includes/Icons/yrzb/temperatureM.png').pixmap(17, 17))
-        self.icon_label.setGeometry(210*self.width_scale, 6*self.height_scale, 17*self.width_scale, 17*self.height_scale)
+        self.icon_label.setGeometry(210 * self.width_scale, 6 * self.height_scale, 17 * self.width_scale,
+                                    17 * self.height_scale)
 
         # self.orderList = QListWidget(self)
         # self.orderList.setGeometry(231, 591, 290, 406)
@@ -2895,12 +2949,39 @@ class ApplicationWindow(
         self.orderWidget = QWidget(self)
         self.orderWidget.setStyleSheet('border: none;background-color: transparent;')
         self.orderWidget.setGeometry(231 * self.width_scale, 591 * self.height_scale, 290 * self.width_scale,
-                                     456 * self.height_scale)
+                                     406 * self.height_scale)
 
         self.orderLayout = QVBoxLayout(self.orderWidget)
         self.orderLayout.setContentsMargins(0, 0, 0, 56 * self.height_scale)
 
-
+        # # 添加按钮
+        # self.addButton = QPushButton(self.orderWidget)
+        # self.addButton.setStyleSheet('''
+        #     QPushButton {
+        #         border-radius: 25px;
+        #         background-color: #f5f8fb;
+        #         border: 1px solid #e1f0fe;
+        #         padding: 0px;  /* 确保图片不会被拉伸 */
+        #         qproperty-icon: url('src/includes/Icons/general/addProject.png');
+        #         qproperty-iconSize: 100px 100px; /* 调整图片尺寸 */
+        #     }
+        #     QPushButton:hover {
+        #         background-color: #DEEEFE;
+        #         border: 1px solid #b5d5fd; /* 改变边框颜色 */
+        #     }
+        #     QPushButton:pressed {
+        #         background-color: #e1f0fe;
+        #         border: 1px solid #91c6fc; /* 按下时的边框颜色 */
+        #     }
+        # ''')
+        # self.addButton.setIcon(QIcon('src/includes/Icons/general/addProject.png'))  # 设置图标
+        # self.addButton.setIconSize(QSize(100 * self.height_scale, 100 * self.height_scale))  # 调整图标大小
+        # self.addButton.setMinimumSize(290 * self.width_scale, 185 * self.height_scale)  # 按钮大小
+        # self.addButton.setMaximumSize(290 * self.width_scale, 185 * self.height_scale)  # 固定按钮大小
+        # self.addButton.clicked.connect(self.add_orderDiolog)  # 绑定点击事件
+        #
+        # # 将按钮添加到布局中
+        # self.orderLayout.addWidget(self.addButton, alignment=Qt.AlignmentFlag.AlignBottom)
 
         # 将布局设置到 orderWidget
         self.orderWidget.setLayout(self.orderLayout)
@@ -2909,7 +2990,7 @@ class ApplicationWindow(
         self.orderScroll = QScrollArea(self)  # self 指向当前窗口
         self.orderScroll.setWidgetResizable(True)  # 自动调整大小以适应内容
         self.orderScroll.setGeometry(231 * self.width_scale, 591 * self.height_scale, 290 * self.width_scale,
-                                     456 * self.height_scale)
+                                     406 * self.height_scale)
         self.orderScroll.setStyleSheet('border: none;background-color: transparent; ')
         self.orderScroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)  # 隐藏横向滚动条
         self.orderScroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)  # 隐藏纵向滚动条
@@ -2921,20 +3002,24 @@ class ApplicationWindow(
         # self.chucangValue = []
 
         self.ordersRect = QWidget(self)  # 咖啡订单卡片
-        self.ordersRect.setStyleSheet(f'border-radius: {25*self.height_scale}px;background-color: #f5f8fb; border: 1px solid #e1f0fe;')
-        self.ordersRect.setGeometry(231*self.width_scale, 201*self.height_scale, 290*self.width_scale, 185*self.height_scale)
+        self.ordersRect.setStyleSheet(
+            f'border-radius: {25 * self.height_scale}px;background-color: #f5f8fb; border: 1px solid #e1f0fe;')
+        self.ordersRect.setGeometry(231 * self.width_scale, 201 * self.height_scale, 290 * self.width_scale,
+                                    185 * self.height_scale)
         self.ordersRect.setVisible(False)
 
         self.yrqkLabel = QLabel(self.ordersRect)
         self.yrqkLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.yrqkLabel.setText('01-玫瑰谷咖啡')
-        self.yrqkLabel.setGeometry(25*self.width_scale, 20*self.height_scale, 250*self.width_scale, 45*self.height_scale)
+        self.yrqkLabel.setGeometry(25 * self.width_scale, 20 * self.height_scale, 250 * self.width_scale,
+                                   45 * self.height_scale)
         self.yrqkLabel.setStyleSheet("color: #222222;border:none;")
-        yrqkfont = QFont(self.font_family3, 12*self.width_scale)
+        yrqkfont = QFont(self.font_family3, 12 * self.width_scale)
         self.yrqkLabel.setFont(yrqkfont)
 
         self.moreSet = QPushButton(self.ordersRect)
-        self.moreSet.setGeometry(260*self.width_scale, 25*self.height_scale, 9*self.width_scale, 23*self.height_scale)
+        self.moreSet.setGeometry(260 * self.width_scale, 25 * self.height_scale, 9 * self.width_scale,
+                                 23 * self.height_scale)
         self.moreSet.setStyleSheet(f"""
             QPushButton {{
                 border-image: url('{self.normalized_path}/includes/Icons/yrzb/more.png');
@@ -2947,25 +3032,28 @@ class ApplicationWindow(
         self.yrqkLabel = QLabel(self.ordersRect)
         self.yrqkLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.yrqkLabel.setText('任务订单：2024PG-0001')
-        self.yrqkLabel.setGeometry(24*self.width_scale, 68*self.height_scale, 250*self.width_scale, 45*self.height_scale)
+        self.yrqkLabel.setGeometry(24 * self.width_scale, 68 * self.height_scale, 250 * self.width_scale,
+                                   45 * self.height_scale)
         self.yrqkLabel.setStyleSheet("color: #222222;border:none;")
-        yrqkfont = QFont(self.font_family4, 12*self.width_scale)
+        yrqkfont = QFont(self.font_family4, 12 * self.width_scale)
         self.yrqkLabel.setFont(yrqkfont)
 
         self.yrqkLabel = QLabel(self.ordersRect)
         self.yrqkLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.yrqkLabel.setText('截止日期：2024/07/23/12:00')
-        self.yrqkLabel.setGeometry(24*self.width_scale, 103*self.height_scale, 250*self.width_scale, 45*self.height_scale)
+        self.yrqkLabel.setGeometry(24 * self.width_scale, 103 * self.height_scale, 250 * self.width_scale,
+                                   45 * self.height_scale)
         self.yrqkLabel.setStyleSheet("color: #222222;border:none;")
-        yrqkfont = QFont(self.font_family4, 12*self.width_scale)
+        yrqkfont = QFont(self.font_family4, 12 * self.width_scale)
         self.yrqkLabel.setFont(yrqkfont)
 
         self.yrqkLabel = QLabel(self.ordersRect)
         self.yrqkLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.yrqkLabel.setText('订单数量：01/30')
-        self.yrqkLabel.setGeometry(24*self.width_scale, 138*self.height_scale, 250*self.width_scale, 45*self.height_scale)
+        self.yrqkLabel.setGeometry(24 * self.width_scale, 138 * self.height_scale, 250 * self.width_scale,
+                                   45 * self.height_scale)
         self.yrqkLabel.setStyleSheet("color: #222222;border:none;")
-        yrqkfont = QFont(self.font_family4, 12*self.width_scale)
+        yrqkfont = QFont(self.font_family4, 12 * self.width_scale)
         self.yrqkLabel.setFont(yrqkfont)
 
         # self.yrqkLabel = QLabel(self.ordersRect)
@@ -3048,23 +3136,25 @@ class ApplicationWindow(
         self.status_label2.setFont(yrqkfont2)
 
         self.ordersRect_More = QWidget(self)  # 咖啡订单卡片
-        self.ordersRect_More.setStyleSheet(f'border-radius: {25*self.height_scale}px;background-color: #f5f8fb; border: 1px solid #70D0A3;')
-        self.ordersRect_More.setGeometry(231*self.width_scale, 201*self.height_scale, 290*self.width_scale, 575*self.height_scale)
+        self.ordersRect_More.setStyleSheet(
+            f'border-radius: {25 * self.height_scale}px;background-color: #f5f8fb; border: 1px solid #70D0A3;')
+        self.ordersRect_More.setGeometry(231 * self.width_scale, 201 * self.height_scale, 290 * self.width_scale,
+                                         575 * self.height_scale)
         self.ordersRect_More.setVisible(False)
 
         self.more_bakingBatch = QLabel(self.ordersRect_More)
         self.more_bakingBatch.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.more_bakingBatch.setText('阶段')
-        self.more_bakingBatch.setGeometry(21 * self.width_scale, 25*self.height_scale, 150 * self.width_scale,
-                                 23*self.height_scale)
+        self.more_bakingBatch.setGeometry(21 * self.width_scale, 25 * self.height_scale, 150 * self.width_scale,
+                                          23 * self.height_scale)
         self.more_bakingBatch.setStyleSheet(
             f"color: #222222; background-color: transparent; border:none;border-radius: {15 * self.height_scale}px;")
         more_bakingBatchfont = QFont(self.font_family3, 14 * self.width_scale)
         self.more_bakingBatch.setFont(more_bakingBatchfont)
 
-
         self.shouqi = QPushButton(self.ordersRect_More)
-        self.shouqi.setGeometry(241*self.width_scale, 25*self.height_scale, 23*self.width_scale, 23*self.height_scale)
+        self.shouqi.setGeometry(241 * self.width_scale, 25 * self.height_scale, 23 * self.width_scale,
+                                23 * self.height_scale)
         self.shouqi.setStyleSheet(f"""
                                     QPushButton {{
                                         border-image: url('{self.normalized_path}/includes/Icons/yrzb/moreandmore.png');
@@ -3077,59 +3167,68 @@ class ApplicationWindow(
         self.more_jd = QLabel(self.ordersRect_More)
         self.more_jd.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.more_jd.setText('阶段')
-        self.more_jd.setGeometry(21*self.width_scale, 70*self.height_scale, 50*self.width_scale, 50*self.height_scale)
-        self.more_jd.setStyleSheet(f"color: #ffffff; background-color: #222222; border:none;border-radius: {15*self.height_scale}px;")
-        more_jdfont = QFont(self.font_family3, 10*self.width_scale)
+        self.more_jd.setGeometry(21 * self.width_scale, 70 * self.height_scale, 50 * self.width_scale,
+                                 50 * self.height_scale)
+        self.more_jd.setStyleSheet(
+            f"color: #ffffff; background-color: #222222; border:none;border-radius: {15 * self.height_scale}px;")
+        more_jdfont = QFont(self.font_family3, 10 * self.width_scale)
         self.more_jd.setFont(more_jdfont)
 
         self.more_jdTitle = QLabel(self.ordersRect_More)
         self.more_jdTitle.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.more_jdTitle.setGeometry(75*self.width_scale, 70*self.height_scale, 196*self.width_scale, 50*self.height_scale)
-        self.more_jdTitle.setStyleSheet(f"color: #ffffff; background-color: #222222; border:none;border-radius: {15*self.height_scale}px;")
+        self.more_jdTitle.setGeometry(75 * self.width_scale, 70 * self.height_scale, 196 * self.width_scale,
+                                      50 * self.height_scale)
+        self.more_jdTitle.setStyleSheet(
+            f"color: #ffffff; background-color: #222222; border:none;border-radius: {15 * self.height_scale}px;")
 
         self.more_mbwd = QLabel(self.more_jdTitle)
         self.more_mbwd.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.more_mbwd.setText('目标温度')
-        self.more_mbwd.setGeometry(15*self.width_scale, 9*self.height_scale, 27*self.width_scale, 32*self.height_scale)
+        self.more_mbwd.setGeometry(15 * self.width_scale, 9 * self.height_scale, 27 * self.width_scale,
+                                   32 * self.height_scale)
         self.more_mbwd.setStyleSheet("color: #ffffff; background-color: #222222; border:none;")
         self.more_mbwd.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 10*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 10 * self.width_scale)
         self.more_mbwd.setFont(more_jdTitlefont)
 
-        # self.more_mbwd = QLabel(self.more_jdTitle)
-        # self.more_mbwd.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        # self.more_mbwd.setText('参考值')
-        # self.more_mbwd.setGeometry(52*self.width_scale, 9*self.height_scale, 27*self.width_scale, 32*self.height_scale)
-        # self.more_mbwd.setStyleSheet("color: #ffffff; background-color: #222222; border:none;")
-        # self.more_mbwd.setWordWrap(True)
-        # more_jdTitlefont = QFont(self.font_family3, 10*self.width_scale)
-        # self.more_mbwd.setFont(more_jdTitlefont)
+        self.more_mbwd = QLabel(self.more_jdTitle)
+        self.more_mbwd.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
+        self.more_mbwd.setText('参考值')
+        self.more_mbwd.setGeometry(52 * self.width_scale, 9 * self.height_scale, 27 * self.width_scale,
+                                   32 * self.height_scale)
+        self.more_mbwd.setStyleSheet("color: #ffffff; background-color: #222222; border:none;")
+        self.more_mbwd.setWordWrap(True)
+        more_jdTitlefont = QFont(self.font_family3, 10 * self.width_scale)
+        self.more_mbwd.setFont(more_jdTitlefont)
 
         self.more_mbwd = QLabel(self.more_jdTitle)
         self.more_mbwd.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.more_mbwd.setText('火力')
-        self.more_mbwd.setGeometry(63*self.width_scale, 9*self.height_scale, 27*self.width_scale, 32*self.height_scale)
+        self.more_mbwd.setGeometry(86 * self.width_scale, 9 * self.height_scale, 27 * self.width_scale,
+                                   32 * self.height_scale)
         self.more_mbwd.setStyleSheet("color: #ffffff; background-color: #222222; border:none;")
         self.more_mbwd.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 10*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 10 * self.width_scale)
         self.more_mbwd.setFont(more_jdTitlefont)
 
         self.more_mbwd = QLabel(self.more_jdTitle)
         self.more_mbwd.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.more_mbwd.setText('风门')
-        self.more_mbwd.setGeometry(109*self.width_scale, 9*self.height_scale, 27*self.width_scale, 32*self.height_scale)
+        self.more_mbwd.setGeometry(121 * self.width_scale, 9 * self.height_scale, 27 * self.width_scale,
+                                   32 * self.height_scale)
         self.more_mbwd.setStyleSheet("color: #ffffff; background-color: #222222; border:none;")
         self.more_mbwd.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 10*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 10 * self.width_scale)
         self.more_mbwd.setFont(more_jdTitlefont)
 
         self.more_mbwd = QLabel(self.more_jdTitle)
         self.more_mbwd.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.more_mbwd.setText('转速')
-        self.more_mbwd.setGeometry(156*self.width_scale, 9*self.height_scale, 27*self.width_scale, 32*self.height_scale)
+        self.more_mbwd.setGeometry(156 * self.width_scale, 9 * self.height_scale, 27 * self.width_scale,
+                                   32 * self.height_scale)
         self.more_mbwd.setStyleSheet("color: #ffffff; background-color: #222222; border:none;")
         self.more_mbwd.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 10*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 10 * self.width_scale)
         self.more_mbwd.setFont(more_jdTitlefont)
 
         self.setjieduanNum = 1
@@ -3137,17 +3236,19 @@ class ApplicationWindow(
         self.showjd1 = QLabel(self.ordersRect_More)
         self.showjd1.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd1.setText(str(self.setjieduanNum))
-        self.showjd1.setGeometry(21*self.width_scale, 125*self.height_scale, 50*self.width_scale, 28*self.height_scale)
+        self.showjd1.setGeometry(21 * self.width_scale, 125 * self.height_scale, 50 * self.width_scale,
+                                 28 * self.height_scale)
         self.showjd1.setStyleSheet(
-            f"color: #222222; background-color: #F6F9FC; border-radius: {13*self.height_scale}px; border: 1px solid #D9E4F4")
-        showjd1dfont = QFont(self.font_family3, 10*self.width_scale)
+            f"color: #222222; background-color: #F6F9FC; border-radius: {13 * self.height_scale}px; border: 1px solid #D9E4F4")
+        showjd1dfont = QFont(self.font_family3, 10 * self.width_scale)
         self.showjd1.setFont(showjd1dfont)
 
         self.showjdInfo1 = QLabel(self.ordersRect_More)
         self.showjdInfo1.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.showjdInfo1.setGeometry(75*self.width_scale, 125*self.height_scale, 196*self.width_scale, 28*self.height_scale)
+        self.showjdInfo1.setGeometry(75 * self.width_scale, 125 * self.height_scale, 196 * self.width_scale,
+                                     28 * self.height_scale)
         self.showjdInfo1.setStyleSheet(
-            f"color: #222222; background-color: #D9E4F4; border-radius: {13*self.height_scale}px; border: 1px solid #D9E4F4")
+            f"color: #222222; background-color: #D9E4F4; border-radius: {13 * self.height_scale}px; border: 1px solid #D9E4F4")
 
         self.setmuwdNum = 0
         self.setckzNum = 0
@@ -3158,418 +3259,394 @@ class ApplicationWindow(
         self.showjd1_mbwd = QLabel(self.showjdInfo1)
         self.showjd1_mbwd.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd1_mbwd.setText('1')
-        self.showjd1_mbwd.setGeometry(15*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd1_mbwd.setGeometry(15 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd1_mbwd.setStyleSheet("color: #222222; border:none;")
         self.showjd1_mbwd.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd1_mbwd.setFont(more_jdTitlefont)
 
-        # self.showjd1_ckz = QLabel(self.showjdInfo1)
-        # self.showjd1_ckz.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        # self.showjd1_ckz.setText('2')
-        # self.showjd1_ckz.setGeometry(52*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
-        # self.showjd1_ckz.setStyleSheet("color: #222222; border:none;")
-        # self.showjd1_ckz.setWordWrap(True)
-        # more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
-        # self.showjd1_ckz.setFont(more_jdTitlefont)
+        self.showjd1_ckz = QLabel(self.showjdInfo1)
+        self.showjd1_ckz.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
+        self.showjd1_ckz.setText('2')
+        self.showjd1_ckz.setGeometry(52 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
+        self.showjd1_ckz.setStyleSheet("color: #222222; border:none;")
+        self.showjd1_ckz.setWordWrap(True)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
+        self.showjd1_ckz.setFont(more_jdTitlefont)
 
         self.showjd1_hl = QLabel(self.showjdInfo1)
         self.showjd1_hl.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd1_hl.setText('3')
-        self.showjd1_hl.setGeometry(63*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd1_hl.setGeometry(86 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd1_hl.setStyleSheet("color: #222222; border:none;")
         self.showjd1_hl.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd1_hl.setFont(more_jdTitlefont)
 
         self.showjd1_fm = QLabel(self.showjdInfo1)
         self.showjd1_fm.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd1_fm.setText('4')
-        self.showjd1_fm.setGeometry(109*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd1_fm.setGeometry(121 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd1_fm.setStyleSheet("color: #222222; border:none;")
         self.showjd1_fm.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd1_fm.setFont(more_jdTitlefont)
 
         self.showjd1_zs = QLabel(self.showjdInfo1)
         self.showjd1_zs.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd1_zs.setText('5')
-        self.showjd1_zs.setGeometry(156*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd1_zs.setGeometry(156 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd1_zs.setStyleSheet("color: #222222; border:none;")
         self.showjd1_zs.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd1_zs.setFont(more_jdTitlefont)
 
         self.showjdInfo2 = QLabel(self.ordersRect_More)
         self.showjdInfo2.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.showjdInfo2.setGeometry(75*self.width_scale, 160*self.height_scale, 196*self.width_scale, 28*self.height_scale)
+        self.showjdInfo2.setGeometry(75 * self.width_scale, 160 * self.height_scale, 196 * self.width_scale,
+                                     28 * self.height_scale)
         self.showjdInfo2.setStyleSheet(
-            f"color: #222222; background-color: #D9E4F4; border-radius: {13*self.height_scale}px; border: 1px solid #D9E4F4")
+            f"color: #222222; background-color: #D9E4F4; border-radius: {13 * self.height_scale}px; border: 1px solid #D9E4F4")
 
         self.showjd2_mbwd = QLabel(self.showjdInfo2)
         self.showjd2_mbwd.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd2_mbwd.setText('148')
-        self.showjd2_mbwd.setGeometry(15*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd2_mbwd.setGeometry(15 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd2_mbwd.setStyleSheet("color: #222222; border:none;")
         self.showjd2_mbwd.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd2_mbwd.setFont(more_jdTitlefont)
 
-        # self.showjd2_ckz = QLabel(self.showjdInfo2)
-        # self.showjd2_ckz.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        # self.showjd2_ckz.setText('30')
-        # self.showjd2_ckz.setGeometry(52*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
-        # self.showjd2_ckz.setStyleSheet("color: #222222; border:none;")
-        # self.showjd2_ckz.setWordWrap(True)
-        # more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
-        # self.showjd2_ckz.setFont(more_jdTitlefont)
+        self.showjd2_ckz = QLabel(self.showjdInfo2)
+        self.showjd2_ckz.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
+        self.showjd2_ckz.setText('30')
+        self.showjd2_ckz.setGeometry(52 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
+        self.showjd2_ckz.setStyleSheet("color: #222222; border:none;")
+        self.showjd2_ckz.setWordWrap(True)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
+        self.showjd2_ckz.setFont(more_jdTitlefont)
 
         self.showjd2_hl = QLabel(self.showjdInfo2)
         self.showjd2_hl.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd2_hl.setText('10')
-        self.showjd2_hl.setGeometry(63*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd2_hl.setGeometry(86 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd2_hl.setStyleSheet("color: #222222; border:none;")
         self.showjd2_hl.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd2_hl.setFont(more_jdTitlefont)
 
         self.showjd2_fm = QLabel(self.showjdInfo2)
         self.showjd2_fm.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd2_fm.setText('30')
-        self.showjd2_fm.setGeometry(109*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd2_fm.setGeometry(121 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd2_fm.setStyleSheet("color: #222222; border:none;")
         self.showjd2_fm.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd2_fm.setFont(more_jdTitlefont)
 
         self.showjd2_zs = QLabel(self.showjdInfo2)
         self.showjd2_zs.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd2_zs.setText('62')
-        self.showjd2_zs.setGeometry(156*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd2_zs.setGeometry(156 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd2_zs.setStyleSheet("color: #222222; border:none;")
         self.showjd2_zs.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd2_zs.setFont(more_jdTitlefont)
 
         self.showjd2 = QLabel(self.ordersRect_More)
         self.showjd2.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd2.setText('2')
-        self.showjd2.setGeometry(21*self.width_scale, 160*self.height_scale, 50*self.width_scale, 28*self.height_scale)
+        self.showjd2.setGeometry(21 * self.width_scale, 160 * self.height_scale, 50 * self.width_scale,
+                                 28 * self.height_scale)
         self.showjd2.setStyleSheet(
-            f"color: #222222; background-color: #F6F9FC; border-radius: {13*self.height_scale}px; border: 1px solid #D9E4F4")
-        showjd2font = QFont(self.font_family3, 10*self.width_scale)
+            f"color: #222222; background-color: #F6F9FC; border-radius: {13 * self.height_scale}px; border: 1px solid #D9E4F4")
+        showjd2font = QFont(self.font_family3, 10 * self.width_scale)
         self.showjd2.setFont(showjd2font)
 
         self.showjd3 = QLabel(self.ordersRect_More)
         self.showjd3.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd3.setText('3')
-        self.showjd3.setGeometry(21*self.width_scale, 195*self.height_scale, 50*self.width_scale, 28*self.height_scale)
+        self.showjd3.setGeometry(21 * self.width_scale, 195 * self.height_scale, 50 * self.width_scale,
+                                 28 * self.height_scale)
         self.showjd3.setStyleSheet(
-            f"color: #222222; background-color: #F6F9FC; border-radius: {13*self.height_scale}px; border: 1px solid #D9E4F4")
-        showjd3font = QFont(self.font_family3, 10*self.width_scale)
+            f"color: #222222; background-color: #F6F9FC; border-radius: {13 * self.height_scale}px; border: 1px solid #D9E4F4")
+        showjd3font = QFont(self.font_family3, 10 * self.width_scale)
         self.showjd3.setFont(showjd3font)
 
         self.showjdInfo3 = QLabel(self.ordersRect_More)
         self.showjdInfo3.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.showjdInfo3.setGeometry(75*self.width_scale, 195*self.height_scale, 196*self.width_scale, 28*self.height_scale)
+        self.showjdInfo3.setGeometry(75 * self.width_scale, 195 * self.height_scale, 196 * self.width_scale,
+                                     28 * self.height_scale)
         self.showjdInfo3.setStyleSheet(
-            f"color: #222222; background-color: #D9E4F4; border-radius: {13*self.height_scale}px; border: 1px solid #D9E4F4")
+            f"color: #222222; background-color: #D9E4F4; border-radius: {13 * self.height_scale}px; border: 1px solid #D9E4F4")
 
         self.showjd3_mbwd = QLabel(self.showjdInfo3)
         self.showjd3_mbwd.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd3_mbwd.setText('170')
-        self.showjd3_mbwd.setGeometry(15*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd3_mbwd.setGeometry(15 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd3_mbwd.setStyleSheet("color: #222222; border:none;")
         self.showjd3_mbwd.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd3_mbwd.setFont(more_jdTitlefont)
 
-        # self.showjd3_ckz = QLabel(self.showjdInfo3)
-        # self.showjd3_ckz.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        # self.showjd3_ckz.setText('30')
-        # self.showjd3_ckz.setGeometry(52*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
-        # self.showjd3_ckz.setStyleSheet("color: #222222; border:none;")
-        # self.showjd3_ckz.setWordWrap(True)
-        # more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
-        # self.showjd3_ckz.setFont(more_jdTitlefont)
+        self.showjd3_ckz = QLabel(self.showjdInfo3)
+        self.showjd3_ckz.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
+        self.showjd3_ckz.setText('30')
+        self.showjd3_ckz.setGeometry(52 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
+        self.showjd3_ckz.setStyleSheet("color: #222222; border:none;")
+        self.showjd3_ckz.setWordWrap(True)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
+        self.showjd3_ckz.setFont(more_jdTitlefont)
 
         self.showjd3_hl = QLabel(self.showjdInfo3)
         self.showjd3_hl.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd3_hl.setText('15')
-        self.showjd3_hl.setGeometry(63*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd3_hl.setGeometry(86 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd3_hl.setStyleSheet("color: #222222; border:none;")
         self.showjd3_hl.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd3_hl.setFont(more_jdTitlefont)
 
         self.showjd3_fm = QLabel(self.showjdInfo3)
         self.showjd3_fm.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd3_fm.setText('30')
-        self.showjd3_fm.setGeometry(109*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd3_fm.setGeometry(121 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd3_fm.setStyleSheet("color: #222222; border:none;")
         self.showjd3_fm.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd3_fm.setFont(more_jdTitlefont)
 
         self.showjd3_zs = QLabel(self.showjdInfo3)
         self.showjd3_zs.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd3_zs.setText('62')
-        self.showjd3_zs.setGeometry(156*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd3_zs.setGeometry(156 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd3_zs.setStyleSheet("color: #222222; border:none;")
         self.showjd3_zs.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd3_zs.setFont(more_jdTitlefont)
 
         self.showjd4 = QLabel(self.ordersRect_More)
         self.showjd4.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd4.setText('4')
-        self.showjd4.setGeometry(21*self.width_scale, 230*self.height_scale, 50*self.width_scale, 28*self.height_scale)
+        self.showjd4.setGeometry(21 * self.width_scale, 230 * self.height_scale, 50 * self.width_scale,
+                                 28 * self.height_scale)
         self.showjd4.setStyleSheet(
-            f"color: #222222; background-color: #F6F9FC; border-radius: {13*self.height_scale}px; border: 1px solid #D9E4F4")
-        showjd4font = QFont(self.font_family3, 10*self.width_scale)
+            f"color: #222222; background-color: #F6F9FC; border-radius: {13 * self.height_scale}px; border: 1px solid #D9E4F4")
+        showjd4font = QFont(self.font_family3, 10 * self.width_scale)
         self.showjd4.setFont(showjd4font)
 
         self.showjdInfo4 = QLabel(self.ordersRect_More)
         self.showjdInfo4.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.showjdInfo4.setGeometry(75*self.width_scale, 230*self.height_scale, 196*self.width_scale, 28*self.height_scale)
+        self.showjdInfo4.setGeometry(75 * self.width_scale, 230 * self.height_scale, 196 * self.width_scale,
+                                     28 * self.height_scale)
         self.showjdInfo4.setStyleSheet(
-            f"color: #222222; background-color: #D9E4F4; border-radius: {13*self.height_scale}px; border: 1px solid #D9E4F4")
+            f"color: #222222; background-color: #D9E4F4; border-radius: {13 * self.height_scale}px; border: 1px solid #D9E4F4")
 
         self.showjd4_mbwd = QLabel(self.showjdInfo4)
         self.showjd4_mbwd.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd4_mbwd.setText('173')
-        self.showjd4_mbwd.setGeometry(15*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd4_mbwd.setGeometry(15 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd4_mbwd.setStyleSheet("color: #222222; border:none;")
         self.showjd4_mbwd.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd4_mbwd.setFont(more_jdTitlefont)
 
-        # self.showjd4_ckz = QLabel(self.showjdInfo4)
-        # self.showjd4_ckz.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        # self.showjd4_ckz.setText('30')
-        # self.showjd4_ckz.setGeometry(52*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
-        # self.showjd4_ckz.setStyleSheet("color: #222222; border:none;")
-        # self.showjd4_ckz.setWordWrap(True)
-        # more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
-        # self.showjd4_ckz.setFont(more_jdTitlefont)
+        self.showjd4_ckz = QLabel(self.showjdInfo4)
+        self.showjd4_ckz.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
+        self.showjd4_ckz.setText('30')
+        self.showjd4_ckz.setGeometry(52 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
+        self.showjd4_ckz.setStyleSheet("color: #222222; border:none;")
+        self.showjd4_ckz.setWordWrap(True)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
+        self.showjd4_ckz.setFont(more_jdTitlefont)
 
         self.showjd4_hl = QLabel(self.showjdInfo4)
         self.showjd4_hl.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd4_hl.setText('15')
-        self.showjd4_hl.setGeometry(63*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd4_hl.setGeometry(86 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd4_hl.setStyleSheet("color: #222222; border:none;")
         self.showjd4_hl.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd4_hl.setFont(more_jdTitlefont)
 
         self.showjd4_fm = QLabel(self.showjdInfo4)
         self.showjd4_fm.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd4_fm.setText('30')
-        self.showjd4_fm.setGeometry(109*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd4_fm.setGeometry(121 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd4_fm.setStyleSheet("color: #222222; border:none;")
         self.showjd4_fm.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd4_fm.setFont(more_jdTitlefont)
 
         self.showjd4_zs = QLabel(self.showjdInfo4)
         self.showjd4_zs.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd4_zs.setText('62')
-        self.showjd4_zs.setGeometry(156*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd4_zs.setGeometry(156 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd4_zs.setStyleSheet("color: #222222; border:none;")
         self.showjd4_zs.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd4_zs.setFont(more_jdTitlefont)
 
         self.showjd5 = QLabel(self.ordersRect_More)
         self.showjd5.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd5.setText('5')
-        self.showjd5.setGeometry(21*self.width_scale, 265*self.height_scale, 50*self.width_scale, 28*self.height_scale)
+        self.showjd5.setGeometry(21 * self.width_scale, 265 * self.height_scale, 50 * self.width_scale,
+                                 28 * self.height_scale)
         self.showjd5.setStyleSheet(
-            f"color: #222222; background-color: #F6F9FC; border-radius: {13*self.height_scale}px; border: 1px solid #D9E4F4")
-        showjd5font = QFont(self.font_family3, 10*self.width_scale)
+            f"color: #222222; background-color: #F6F9FC; border-radius: {13 * self.height_scale}px; border: 1px solid #D9E4F4")
+        showjd5font = QFont(self.font_family3, 10 * self.width_scale)
         self.showjd5.setFont(showjd5font)
 
         self.showjdInfo5 = QLabel(self.ordersRect_More)
         self.showjdInfo5.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.showjdInfo5.setGeometry(75*self.width_scale, 265*self.height_scale, 196*self.width_scale, 28*self.height_scale)
+        self.showjdInfo5.setGeometry(75 * self.width_scale, 265 * self.height_scale, 196 * self.width_scale,
+                                     28 * self.height_scale)
         self.showjdInfo5.setStyleSheet(
-            f"color: #222222; background-color: #D9E4F4; border-radius: {13*self.height_scale}px; border: 1px solid #D9E4F4")
+            f"color: #222222; background-color: #D9E4F4; border-radius: {13 * self.height_scale}px; border: 1px solid #D9E4F4")
 
         self.showjd5_mbwd = QLabel(self.showjdInfo5)
         self.showjd5_mbwd.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd5_mbwd.setText('188')
-        self.showjd5_mbwd.setGeometry(15*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd5_mbwd.setGeometry(15 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd5_mbwd.setStyleSheet("color: #222222; border:none;")
         self.showjd5_mbwd.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd5_mbwd.setFont(more_jdTitlefont)
 
-        # self.showjd5_ckz = QLabel(self.showjdInfo5)
-        # self.showjd5_ckz.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        # self.showjd5_ckz.setText('30')
-        # self.showjd5_ckz.setGeometry(52*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
-        # self.showjd5_ckz.setStyleSheet("color: #222222; border:none;")
-        # self.showjd5_ckz.setWordWrap(True)
-        # more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
-        # self.showjd5_ckz.setFont(more_jdTitlefont)
+        self.showjd5_ckz = QLabel(self.showjdInfo5)
+        self.showjd5_ckz.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
+        self.showjd5_ckz.setText('30')
+        self.showjd5_ckz.setGeometry(52 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
+        self.showjd5_ckz.setStyleSheet("color: #222222; border:none;")
+        self.showjd5_ckz.setWordWrap(True)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
+        self.showjd5_ckz.setFont(more_jdTitlefont)
 
         self.showjd5_hl = QLabel(self.showjdInfo5)
         self.showjd5_hl.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd5_hl.setText('1')
-        self.showjd5_hl.setGeometry(63*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd5_hl.setGeometry(86 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd5_hl.setStyleSheet("color: #222222; border:none;")
         self.showjd5_hl.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd5_hl.setFont(more_jdTitlefont)
 
         self.showjd5_fm = QLabel(self.showjdInfo5)
         self.showjd5_fm.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd5_fm.setText('30')
-        self.showjd5_fm.setGeometry(109*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd5_fm.setGeometry(121 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd5_fm.setStyleSheet("color: #222222; border:none;")
         self.showjd5_fm.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd5_fm.setFont(more_jdTitlefont)
 
         self.showjd5_zs = QLabel(self.showjdInfo5)
         self.showjd5_zs.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd5_zs.setText('62')
-        self.showjd5_zs.setGeometry(156*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd5_zs.setGeometry(156 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd5_zs.setStyleSheet("color: #222222; border:none;")
         self.showjd5_zs.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd5_zs.setFont(more_jdTitlefont)
 
         self.showjd6 = QLabel(self.ordersRect_More)
         self.showjd6.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd6.setText('6')
-        self.showjd6.setGeometry(21*self.width_scale, 300*self.height_scale, 50*self.width_scale, 28*self.height_scale)
+        self.showjd6.setGeometry(21 * self.width_scale, 300 * self.height_scale, 50 * self.width_scale,
+                                 28 * self.height_scale)
         self.showjd6.setStyleSheet(
-            f"color: #222222; background-color: #F6F9FC; border-radius: {13*self.height_scale}px; border: 1px solid #D9E4F4")
-        showjd6font = QFont(self.font_family3, 10*self.width_scale)
+            f"color: #222222; background-color: #F6F9FC; border-radius: {13 * self.height_scale}px; border: 1px solid #D9E4F4")
+        showjd6font = QFont(self.font_family3, 10 * self.width_scale)
         self.showjd6.setFont(showjd6font)
 
         self.showjdInfo6 = QLabel(self.ordersRect_More)
         self.showjdInfo6.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.showjdInfo6.setGeometry(75*self.width_scale, 300*self.height_scale, 196*self.width_scale, 28*self.height_scale)
+        self.showjdInfo6.setGeometry(75 * self.width_scale, 300 * self.height_scale, 196 * self.width_scale,
+                                     28 * self.height_scale)
         self.showjdInfo6.setStyleSheet(
-            f"color: #222222; background-color: #D9E4F4; border-radius: {13*self.height_scale}px; border: 1px solid #D9E4F4")
+            f"color: #222222; background-color: #D9E4F4; border-radius: {13 * self.height_scale}px; border: 1px solid #D9E4F4")
 
         self.showjd6_mbwd = QLabel(self.showjdInfo6)
         self.showjd6_mbwd.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd6_mbwd.setText('196')
-        self.showjd6_mbwd.setGeometry(15*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd6_mbwd.setGeometry(15 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd6_mbwd.setStyleSheet("color: #222222; border:none;")
         self.showjd6_mbwd.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd6_mbwd.setFont(more_jdTitlefont)
 
-        # self.showjd6_ckz = QLabel(self.showjdInfo6)
-        # self.showjd6_ckz.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        # self.showjd6_ckz.setText('30')
-        # self.showjd6_ckz.setGeometry(52*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
-        # self.showjd6_ckz.setStyleSheet("color: #222222; border:none;")
-        # self.showjd6_ckz.setWordWrap(True)
-        # more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
-        # self.showjd6_ckz.setFont(more_jdTitlefont)
+        self.showjd6_ckz = QLabel(self.showjdInfo6)
+        self.showjd6_ckz.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
+        self.showjd6_ckz.setText('30')
+        self.showjd6_ckz.setGeometry(52 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
+        self.showjd6_ckz.setStyleSheet("color: #222222; border:none;")
+        self.showjd6_ckz.setWordWrap(True)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
+        self.showjd6_ckz.setFont(more_jdTitlefont)
 
         self.showjd6_hl = QLabel(self.showjdInfo6)
         self.showjd6_hl.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd6_hl.setText('1')
-        self.showjd6_hl.setGeometry(63*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd6_hl.setGeometry(86 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd6_hl.setStyleSheet("color: #222222; border:none;")
         self.showjd6_hl.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd6_hl.setFont(more_jdTitlefont)
 
         self.showjd6_fm = QLabel(self.showjdInfo6)
         self.showjd6_fm.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd6_fm.setText('30')
-        self.showjd6_fm.setGeometry(109*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd6_fm.setGeometry(121 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd6_fm.setStyleSheet("color: #222222; border:none;")
         self.showjd6_fm.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd6_fm.setFont(more_jdTitlefont)
 
         self.showjd6_zs = QLabel(self.showjdInfo6)
         self.showjd6_zs.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.showjd6_zs.setText('62')
-        self.showjd6_zs.setGeometry(156*self.width_scale, 0, 27*self.width_scale, 28*self.height_scale)
+        self.showjd6_zs.setGeometry(156 * self.width_scale, 0, 27 * self.width_scale, 28 * self.height_scale)
         self.showjd6_zs.setStyleSheet("color: #222222; border:none;")
         self.showjd6_zs.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 8*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 8 * self.width_scale)
         self.showjd6_zs.setFont(more_jdTitlefont)
 
         self.zysxRect = QLabel(self.ordersRect_More)
         self.zysxRect.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.zysxRect.setGeometry(21*self.width_scale, 364*self.height_scale, 247*self.width_scale, 92*self.height_scale)
+        self.zysxRect.setGeometry(21 * self.width_scale, 364 * self.height_scale, 247 * self.width_scale,
+                                  92 * self.height_scale)
         self.zysxRect.setStyleSheet(
-            f"color: #222222; background-color: #F6F9FC; border-radius: {15*self.height_scale}px; border: 1px solid #DF7A7A")
+            f"color: #222222; background-color: #F6F9FC; border-radius: {15 * self.height_scale}px; border: 1px solid #DF7A7A")
 
         self.zysxRectText = QLabel(self.zysxRect)
         self.zysxRectText.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.zysxRectText.setText('一爆后请注意观察豆子的实时情况目标色值：60')
-        self.zysxRectText.setGeometry(18*self.width_scale, 28*self.height_scale, 214*self.width_scale, 92*self.height_scale)
+        self.zysxRectText.setGeometry(18 * self.width_scale, 28 * self.height_scale, 214 * self.width_scale,
+                                      92 * self.height_scale)
         self.zysxRectText.setStyleSheet("color: #222222; background-color: transparent; border:none;")
         self.zysxRectText.setWordWrap(True)
-        more_jdTitlefont = QFont(self.font_family3, 10*self.width_scale)
+        more_jdTitlefont = QFont(self.font_family3, 10 * self.width_scale)
         # more_jdTitlefont.setBold(True)
         self.zysxRectText.setFont(more_jdTitlefont)
 
         self.zysxTitle = QLabel(self.ordersRect_More)
         self.zysxTitle.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.zysxTitle.setGeometry(98*self.width_scale, 350*self.height_scale, 94*self.width_scale, 30*self.height_scale)
+        self.zysxTitle.setGeometry(98 * self.width_scale, 350 * self.height_scale, 94 * self.width_scale,
+                                   30 * self.height_scale)
         self.zysxTitle.setText('注意事项')
-        self.zysxTitle.setStyleSheet(f"background-color: #DF7A7A; border-radius: {15*self.height_scale}px;border:none;color: #ffffff")
-        more_jdfont = QFont(self.font_family3, 12*self.width_scale)
+        self.zysxTitle.setStyleSheet(
+            f"background-color: #DF7A7A; border-radius: {15 * self.height_scale}px;border:none;color: #ffffff")
+        more_jdfont = QFont(self.font_family3, 12 * self.width_scale)
         self.zysxTitle.setFont(more_jdfont)
 
         self.more_ddxq = QLabel(self.ordersRect_More)
         self.more_ddxq.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
-        self.more_ddxq.setGeometry(18*self.width_scale, 468*self.height_scale, 70*self.width_scale, 20*self.height_scale)
+        self.more_ddxq.setGeometry(18 * self.width_scale, 468 * self.height_scale, 70 * self.width_scale,
+                                   20 * self.height_scale)
         self.more_ddxq.setText('订单详情')
         self.more_ddxq.setStyleSheet("background-color: transparent; border:none;color: #222222")
-        more_jdfont = QFont(self.font_family3, 12*self.width_scale)
+        more_jdfont = QFont(self.font_family3, 12 * self.width_scale)
         self.more_ddxq.setFont(more_jdfont)
-
-        # 创建阴影 QLabel
-        self.shadow_label = QLabel(self)
-        self.shadow_label.setGeometry(190 * self.width_scale, 1080 * self.height_scale - 48 * self.height_scale,
-                                      1680 * self.width_scale, 30 * self.height_scale)  # 40px 高度
-
-        # 创建渐变图片
-        gradient_pixmap = QPixmap(1920 * self.width_scale, 30 * self.height_scale)  # 创建空白 pixmap
-        gradient_pixmap.fill(Qt.GlobalColor.transparent)  # 先填充透明背景
-
-        # 开始绘制
-        painter = QPainter()
-        painter.begin(gradient_pixmap)  # 开始绘制
-        painter.setRenderHint(QPainter.RenderHint.Antialiasing)  # 使渐变更平滑
-
-        # 创建线性渐变 (注意方向从下到上)
-        gradient = QLinearGradient(0, 40, 0, 0)  # 从底部 (40px) 渐变到顶部 (0px)
-
-        # 设置颜色
-        color1 = QColor("#e1eaf6")
-        color1.setAlpha(0)  # 顶部完全透明#e1eaf6
-
-        color2 = QColor("#e1eaf6")
-        color2.setAlpha(255)  # 底部完全不透明
-
-        # 应用渐变颜色
-        gradient.setColorAt(0.0, color2)  # 0.0 = 底部最深
-        gradient.setColorAt(1.0, color1)  # 1.0 = 顶部透明
-
-        # 设置画刷并填充
-        painter.setBrush(QBrush(gradient))
-        painter.setPen(Qt.PenStyle.NoPen)  # 不要边框
-        painter.drawRect(0, 0, 1920 * self.width_scale, 40 * self.height_scale)
-
-        painter.end()  # 结束绘制
-
-        # 设置渐变背景
-        self.shadow_label.setPixmap(gradient_pixmap)
-        self.shadow_label.setScaledContents(True)
 
         # self.ordersRect_typeList = QLabel(self.ordersRect_More)
         # self.ordersRect_typeList.setStyleSheet(
@@ -3645,8 +3722,9 @@ class ApplicationWindow(
         self.lookEtstr = 0
 
         self.processInfo1 = QLabel(self)  # 豆温|风温
-        self.processInfo1.setStyleSheet(f"border-radius: {25*self.height_scale}px;background-color: #f5f2ee;")
-        self.processInfo1.setGeometry(561*self.width_scale, 811*self.height_scale, 224*self.width_scale, 185*self.height_scale)
+        self.processInfo1.setStyleSheet(f"border-radius: {25 * self.height_scale}px;background-color: #f5f2ee;")
+        self.processInfo1.setGeometry(561 * self.width_scale, 811 * self.height_scale, 224 * self.width_scale,
+                                      185 * self.height_scale)
         # self.processInfo1Img = QPixmap(self.normalized_path + '/includes/Icons/yrzb/bottomBack.png')
         # self.processInfo1.setPixmap(QIcon(self.normalized_path + '/includes/Icons/yrzb/bottomBack.png').pixmap(224*self.width_scale, 185*self.height_scale))
 
@@ -3655,9 +3733,10 @@ class ApplicationWindow(
         self.processInfoLabel = QLabel(self.processInfo1)
         self.processInfoLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.processInfoLabel.setText('0')
-        self.processInfoLabel.setGeometry(24*self.width_scale, 15*self.height_scale, 100*self.width_scale, 58*self.height_scale)
+        self.processInfoLabel.setGeometry(24 * self.width_scale, 15 * self.height_scale, 100 * self.width_scale,
+                                          58 * self.height_scale)
         self.processInfoLabel.setStyleSheet("color: #252525;background-color: transparent;")
-        processInfofont = QFont(self.font_family7, 42*self.width_scale)
+        processInfofont = QFont(self.font_family7, 42 * self.width_scale)
         self.processInfoLabel.setFont(processInfofont)
         self.processInfotimer = QTimer()
         self.processInfotimer.timeout.connect(self.checkTextChanged)
@@ -3666,11 +3745,10 @@ class ApplicationWindow(
         self.processInfoLabel_point = QLabel(self.processInfo1)
         self.processInfoLabel_point.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.processInfoLabel_point.setText('.0')
-        # self.processInfoLabel_point.setGeometry((26+self.calculate_text_width(self.processInfoLabel)) * self.width_scale, 37 * self.height_scale, 50 * self.width_scale,
-        #                                   58 * self.height_scale)
-        self.processInfoLabel_point.setGeometry(57 * self.width_scale, 37 * self.height_scale, 100 * self.width_scale,
-                                          58 * self.height_scale)
-
+        self.processInfoLabel_point.setGeometry(
+            (26 + self.calculate_text_width(self.processInfoLabel)) * self.width_scale, 37 * self.height_scale,
+            50 * self.width_scale,
+            58 * self.height_scale)
         self.processInfoLabel_point.setStyleSheet("color: #C8C8C8;background-color: transparent;")
         processInfoLabel_pointFont = QFont(self.font_family7, 26 * self.width_scale)
         self.processInfoLabel_point.setFont(processInfoLabel_pointFont)
@@ -3678,37 +3756,39 @@ class ApplicationWindow(
         self.ssdLabel1 = QLabel(self.processInfo1)
         self.ssdLabel1.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.ssdLabel1.setText('℃')
-        # self.ssdLabel1.setGeometry((26+self.calculate_text_width(self.processInfoLabel)+self.calculate_text_width(self.processInfoLabel_point))*self.width_scale, 26*self.height_scale, 16*self.width_scale, 18*self.height_scale)
-        self.ssdLabel1.setGeometry(85 * self.width_scale, 26 * self.height_scale, 16 * self.width_scale,
+        self.ssdLabel1.setGeometry((26 + self.calculate_text_width(self.processInfoLabel) + self.calculate_text_width(
+            self.processInfoLabel_point)) * self.width_scale, 26 * self.height_scale, 16 * self.width_scale,
                                    18 * self.height_scale)
-
-        self.ssdLabel1.setStyleSheet("color: #C8C8C8;background-color: transparent;")
-        ssdfont = QFont(self.font_family4, 12*self.width_scale)
+        self.ssdLabel1.setStyleSheet("color: #C8C8C8;")
+        ssdfont = QFont(self.font_family4, 12 * self.width_scale)
         self.ssdLabel1.setFont(ssdfont)
 
-        # self.lineLabel1 = QWidget(self.processInfo1)
-        # self.lineLabel1.setStyleSheet('background-color: #C8C8C8;')
-        # self.lineLabel1.setGeometry(130*self.width_scale, 77*self.height_scale, 1*self.width_scale, 18*self.height_scale)
+        self.lineLabel = QWidget(self.processInfo1)
+        self.lineLabel.setStyleSheet('background-color: #C8C8C8;')
+        self.lineLabel.setGeometry(128 * self.width_scale, 77 * self.height_scale, 1 * self.width_scale,
+                                   18 * self.height_scale)
 
         self.processInfo1WD = QLabel(self.processInfo1)
-        self.processInfo1WD.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignRight)
+        self.processInfo1WD.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.processInfo1WD.setText('0.0')
-        self.processInfo1WD.setGeometry(117*self.width_scale, 75*self.height_scale, 66*self.width_scale, 18*self.height_scale)
-        self.processInfo1WD.setStyleSheet("color: #616265;background-color: transparent;")
-        ssdfont = QFont(self.font_family4, 12*self.width_scale)
+        self.processInfo1WD.setGeometry(131 * self.width_scale, 75 * self.height_scale, 66 * self.width_scale,
+                                        18 * self.height_scale)
+        self.processInfo1WD.setStyleSheet("color: #616265;")
+        ssdfont = QFont(self.font_family4, 12 * self.width_scale)
         self.processInfo1WD.setFont(ssdfont)
 
         self.ssdLabel2 = QLabel(self.processInfo1)
         self.ssdLabel2.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.ssdLabel2.setText('℃')
-        # self.ssdLabel2.setGeometry((135+self.calculate_text_width(self.processInfo1WD))*self.width_scale, 72*self.height_scale, 16*self.width_scale, 18*self.height_scale)
-        self.ssdLabel2.setGeometry(187 * self.width_scale,72 * self.height_scale, 16 * self.width_scale, 18 * self.height_scale)
-        self.ssdLabel2.setStyleSheet("color: #C8C8C8;background-color: transparent;")
-        ssdfont = QFont(self.font_family4, 8*self.width_scale)
+        self.ssdLabel2.setGeometry((135 + self.calculate_text_width(self.processInfo1WD)) * self.width_scale,
+                                   72 * self.height_scale, 16 * self.width_scale, 18 * self.height_scale)
+        self.ssdLabel2.setStyleSheet("color: #C8C8C8;")
+        ssdfont = QFont(self.font_family4, 8 * self.width_scale)
         self.ssdLabel2.setFont(ssdfont)
 
         self.processInfoImg = QLabel(self.processInfo1)
-        self.processInfoImg.setGeometry(24*self.width_scale, 109*self.height_scale, 50*self.width_scale, 50*self.width_scale)  # Position and size of the label
+        self.processInfoImg.setGeometry(24 * self.width_scale, 109 * self.height_scale, 50 * self.width_scale,
+                                        50 * self.width_scale)  # Position and size of the label
         douwenPixmap = QPixmap(self.normalized_path + '/includes/Icons/yrzb/douwen.png')  # Path to your icon image
         self.processInfoImg.setPixmap(douwenPixmap)
         self.processInfoImg.setScaledContents(True)  # Scale pixmap to fit QLabel
@@ -3716,14 +3796,16 @@ class ApplicationWindow(
         self.processInfoLabel_wd = QLabel(self.processInfo1)
         self.processInfoLabel_wd.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.processInfoLabel_wd.setText('风温|豆温')
-        self.processInfoLabel_wd.setGeometry(143*self.width_scale, 127*self.height_scale, 80*self.width_scale, 24*self.height_scale)
+        self.processInfoLabel_wd.setGeometry(140 * self.width_scale, 127 * self.height_scale, 80 * self.width_scale,
+                                             24 * self.height_scale)
         self.processInfoLabel_wd.setStyleSheet("color: #616265;font-weight: 400;")
-        processInfofont2 = QFont(self.font_family3, 10*self.width_scale)
+        processInfofont2 = QFont(self.font_family3, 10 * self.width_scale)
         self.processInfoLabel_wd.setFont(processInfofont2)
 
         self.processInfo2 = QLabel(self)  # ROR
-        self.processInfo2.setStyleSheet(f'border-radius: {25*self.height_scale}px;background-color: #f5f2ee;')
-        self.processInfo2.setGeometry(820*self.width_scale, 811*self.height_scale, 224*self.width_scale, 185*self.height_scale)
+        self.processInfo2.setStyleSheet(f'border-radius: {25 * self.height_scale}px;background-color: #f5f2ee;')
+        self.processInfo2.setGeometry(820 * self.width_scale, 811 * self.height_scale, 224 * self.width_scale,
+                                      185 * self.height_scale)
         # self.processInfo2.setPixmap(
         #     QIcon(self.normalized_path + '/includes/Icons/yrzb/bottomBack.png').pixmap(224 * self.width_scale,
         #                                                                                185 * self.height_scale))
@@ -3731,13 +3813,15 @@ class ApplicationWindow(
         self.processInfo2ROR = QLabel(self.processInfo2)
         self.processInfo2ROR.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.processInfo2ROR.setText('0')
-        self.processInfo2ROR.setGeometry(24*self.width_scale, 15*self.height_scale, 280*self.width_scale, 70*self.height_scale)
+        self.processInfo2ROR.setGeometry(24 * self.width_scale, 15 * self.height_scale, 280 * self.width_scale,
+                                         70 * self.height_scale)
         self.processInfo2ROR.setStyleSheet("color: #252525;")
-        processInfofont = QFont(self.font_family7, 42*self.width_scale)
+        processInfofont = QFont(self.font_family7, 42 * self.width_scale)
         self.processInfo2ROR.setFont(processInfofont)
 
         self.processInfoImg = QLabel(self.processInfo2)
-        self.processInfoImg.setGeometry(24*self.width_scale, 109*self.height_scale, 50*self.width_scale, 50*self.width_scale)  # Position and size of the label
+        self.processInfoImg.setGeometry(24 * self.width_scale, 109 * self.height_scale, 50 * self.width_scale,
+                                        50 * self.width_scale)  # Position and size of the label
         douwenPixmap = QPixmap(self.normalized_path + '/includes/Icons/yrzb/ROR.png')  # Path to your icon image
         self.processInfoImg.setPixmap(douwenPixmap)
         self.processInfoImg.setScaledContents(True)  # Scale pixmap to fit QLabel
@@ -3745,14 +3829,16 @@ class ApplicationWindow(
         self.processInfoLabel2 = QLabel(self.processInfo2)
         self.processInfoLabel2.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.processInfoLabel2.setText('ROR')
-        self.processInfoLabel2.setGeometry(169*self.width_scale, 127*self.height_scale, 80*self.width_scale, 24*self.height_scale)
+        self.processInfoLabel2.setGeometry(169 * self.width_scale, 127 * self.height_scale, 80 * self.width_scale,
+                                           24 * self.height_scale)
         self.processInfoLabel2.setStyleSheet("color: #616265;font-weight: 400;")
-        processInfofont2 = QFont(self.font_family3, 10*self.width_scale)
+        processInfofont2 = QFont(self.font_family3, 10 * self.width_scale)
         self.processInfoLabel2.setFont(processInfofont2)
 
         self.processInfo3 = QLabel(self)  # Agtron色值
-        self.processInfo3.setStyleSheet(f'border-radius: {25*self.height_scale}px;background-color: transparent;')
-        self.processInfo3.setGeometry(1079*self.width_scale, 811*self.height_scale, 224*self.width_scale, 185*self.height_scale)
+        self.processInfo3.setStyleSheet(f'border-radius: {25 * self.height_scale}px;background-color: transparent;')
+        self.processInfo3.setGeometry(1079 * self.width_scale, 811 * self.height_scale, 224 * self.width_scale,
+                                      185 * self.height_scale)
         # self.processInfo3.setPixmap(
         #     QIcon(self.normalized_path + '/includes/Icons/yrzb/bottomBack.png').pixmap(224 * self.width_scale,
         #                                                                                185 * self.height_scale))
@@ -3765,9 +3851,10 @@ class ApplicationWindow(
         self.agtronNum = QLabel(self.processInfo3)
         self.agtronNum.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.agtronNum.setText('0')
-        self.agtronNum.setGeometry(24*self.width_scale, 15*self.height_scale, 180*self.width_scale, 70*self.height_scale)
+        self.agtronNum.setGeometry(24 * self.width_scale, 15 * self.height_scale, 180 * self.width_scale,
+                                   70 * self.height_scale)
         self.agtronNum.setStyleSheet("color: #FFFFFF;background-color:transparent")
-        processInfofont = QFont(self.font_family7, 42*self.width_scale)
+        processInfofont = QFont(self.font_family7, 42 * self.width_scale)
         self.agtronNum.setFont(processInfofont)
 
         shadow_effect_agtronNum = QGraphicsDropShadowEffect(self.agtronNum)
@@ -3777,7 +3864,8 @@ class ApplicationWindow(
         self.agtronNum.setGraphicsEffect(shadow_effect_agtronNum)
 
         self.processInfoImg = QLabel(self.processInfo3)
-        self.processInfoImg.setGeometry(24*self.width_scale, 109*self.height_scale, 54*self.width_scale, 54*self.width_scale)  # Position and size of the label
+        self.processInfoImg.setGeometry(24 * self.width_scale, 109 * self.height_scale, 54 * self.width_scale,
+                                        54 * self.width_scale)  # Position and size of the label
         douwenPixmap = QPixmap(self.normalized_path + '/includes/Icons/yrzb/angronIcon.png')  # Path to your icon image
         self.processInfoImg.setPixmap(douwenPixmap)
         self.processInfoImg.setScaledContents(True)  # Scale pixmap to fit QLabel
@@ -3785,7 +3873,8 @@ class ApplicationWindow(
         self.cksezLabel = QLabel(self.processInfo3)
         self.cksezLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.cksezLabel.setText('# 0')
-        self.cksezLabel.setGeometry(171*self.width_scale, 72*self.height_scale, 46*self.width_scale, 18*self.height_scale)
+        self.cksezLabel.setGeometry(171 * self.width_scale, 72 * self.height_scale, 46 * self.width_scale,
+                                    18 * self.height_scale)
         self.cksezLabel.setStyleSheet("color: #FFFFFF;background-color:transparent")
         ssdfont = QFont(self.font_family4, 12 * self.width_scale)
         self.cksezLabel.setFont(ssdfont)
@@ -3793,14 +3882,16 @@ class ApplicationWindow(
         self.processInfoLabel2 = QLabel(self.processInfo3)
         self.processInfoLabel2.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.processInfoLabel2.setText('Agtron色值')
-        self.processInfoLabel2.setGeometry(124*self.width_scale, 127*self.height_scale, 80*self.width_scale, 24*self.height_scale)
+        self.processInfoLabel2.setGeometry(124 * self.width_scale, 127 * self.height_scale, 80 * self.width_scale,
+                                           24 * self.height_scale)
         self.processInfoLabel2.setStyleSheet("color: #ffffff;font-weight: 400;")
-        processInfofont2 = QFont(self.font_family3, 10*self.width_scale)
+        processInfofont2 = QFont(self.font_family3, 10 * self.width_scale)
         self.processInfoLabel2.setFont(processInfofont2)
 
         self.processInfo4 = QLabel(self)  # 排气湿度
-        self.processInfo4.setStyleSheet(f'border-radius: {25*self.height_scale}px;background-color: #f5f2ee;')
-        self.processInfo4.setGeometry(1338*self.width_scale, 811*self.height_scale, 224*self.width_scale, 185*self.height_scale)
+        self.processInfo4.setStyleSheet(f'border-radius: {25 * self.height_scale}px;background-color: #f5f2ee;')
+        self.processInfo4.setGeometry(1338 * self.width_scale, 811 * self.height_scale, 224 * self.width_scale,
+                                      185 * self.height_scale)
         # self.processInfo4.setPixmap(
         #     QIcon(self.normalized_path + '/includes/Icons/yrzb/bottomBack.png').pixmap(224 * self.width_scale,
         #                                                                                185 * self.height_scale))
@@ -3808,9 +3899,10 @@ class ApplicationWindow(
         self.processInfo4rhNum = QLabel(self.processInfo4)
         self.processInfo4rhNum.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.processInfo4rhNum.setText('0')
-        self.processInfo4rhNum.setGeometry(24*self.width_scale, 15*self.height_scale, 180*self.width_scale, 70*self.height_scale)
+        self.processInfo4rhNum.setGeometry(24 * self.width_scale, 15 * self.height_scale, 180 * self.width_scale,
+                                           70 * self.height_scale)
         self.processInfo4rhNum.setStyleSheet("color: #252525;")
-        processInfofont = QFont(self.font_family7, 42*self.width_scale)
+        processInfofont = QFont(self.font_family7, 42 * self.width_scale)
         self.processInfo4rhNum.setFont(processInfofont)
 
         self.processInfoLabel_point2 = QLabel(self.processInfo4)
@@ -3827,33 +3919,39 @@ class ApplicationWindow(
         self.ssdLabel = QLabel(self.processInfo4)
         self.ssdLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.ssdLabel.setText('RH%')
-        self.ssdLabel.setGeometry((26+self.calculate_text_width(self.processInfo4rhNum)+self.calculate_text_width(self.processInfoLabel_point2))*self.width_scale, 26*self.height_scale, 40*self.width_scale, 18*self.height_scale)
+        self.ssdLabel.setGeometry((26 + self.calculate_text_width(self.processInfo4rhNum) + self.calculate_text_width(
+            self.processInfoLabel_point2)) * self.width_scale, 26 * self.height_scale, 40 * self.width_scale,
+                                  18 * self.height_scale)
         self.ssdLabel.setStyleSheet("color: #C8C8C8;")
-        ssdfont = QFont(self.font_family4, 12*self.width_scale)
+        ssdfont = QFont(self.font_family4, 12 * self.width_scale)
         self.ssdLabel.setFont(ssdfont)
 
-        # self.lineLabel = QWidget(self.processInfo4)
-        # self.lineLabel.setStyleSheet('background-color: #C8C8C8;')
-        # self.lineLabel.setGeometry(155*self.width_scale, 73*self.height_scale, 1*self.width_scale, 18*self.height_scale)
+        self.lineLabel = QWidget(self.processInfo4)
+        self.lineLabel.setStyleSheet('background-color: #C8C8C8;')
+        self.lineLabel.setGeometry(153 * self.width_scale, 73 * self.height_scale, 1 * self.width_scale,
+                                   18 * self.height_scale)
 
         self.rhWendu = QLabel(self.processInfo4)
         self.rhWendu.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.rhWendu.setText('0.0')
-        self.rhWendu.setGeometry(159*self.width_scale, 72*self.height_scale, 46*self.width_scale, 18*self.height_scale)
+        self.rhWendu.setGeometry(157 * self.width_scale, 72 * self.height_scale, 46 * self.width_scale,
+                                 18 * self.height_scale)
         self.rhWendu.setStyleSheet("color: #616265;")
-        ssdfont = QFont(self.font_family4, 12*self.width_scale)
+        ssdfont = QFont(self.font_family4, 12 * self.width_scale)
         self.rhWendu.setFont(ssdfont)
 
         self.ssdLabel = QLabel(self.processInfo4)
         self.ssdLabel.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.ssdLabel.setText('℃')
-        self.ssdLabel.setGeometry((163+self.calculate_text_width(self.rhWendu))*self.width_scale, 66*self.height_scale, 16*self.width_scale, 18*self.height_scale)
-        self.ssdLabel.setStyleSheet("color: #C8C8C8;background-color: transparent;")
-        ssdfont = QFont(self.font_family4, 8*self.width_scale)
+        self.ssdLabel.setGeometry((161 + self.calculate_text_width(self.rhWendu)) * self.width_scale,
+                                  66 * self.height_scale, 16 * self.width_scale, 18 * self.height_scale)
+        self.ssdLabel.setStyleSheet("color: #C8C8C8;")
+        ssdfont = QFont(self.font_family4, 8 * self.width_scale)
         self.ssdLabel.setFont(ssdfont)
 
         self.processInfoImg = QLabel(self.processInfo4)
-        self.processInfoImg.setGeometry(24*self.width_scale, 109*self.height_scale, 50*self.width_scale, 50*self.width_scale)  # Position and size of the label
+        self.processInfoImg.setGeometry(24 * self.width_scale, 109 * self.height_scale, 50 * self.width_scale,
+                                        50 * self.width_scale)  # Position and size of the label
         douwenPixmap = QPixmap(self.normalized_path + '/includes/Icons/yrzb/pqsd.png')  # Path to your icon image
         self.processInfoImg.setPixmap(douwenPixmap)
         self.processInfoImg.setScaledContents(True)  # Scale pixmap to fit QLabel
@@ -3861,65 +3959,71 @@ class ApplicationWindow(
         self.processInfoLabel2 = QLabel(self.processInfo4)
         self.processInfoLabel2.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.processInfoLabel2.setText('排气湿度|温度')
-        self.processInfoLabel2.setGeometry(119*self.width_scale, 127*self.height_scale, 93*self.width_scale, 24*self.height_scale)
+        self.processInfoLabel2.setGeometry(119 * self.width_scale, 127 * self.height_scale, 93 * self.width_scale,
+                                           24 * self.height_scale)
         self.processInfoLabel2.setStyleSheet("color: #616265;font-weight: 400;")
-        processInfofont2 = QFont(self.font_family3, 10*self.width_scale)
+        processInfofont2 = QFont(self.font_family3, 10 * self.width_scale)
         self.processInfoLabel2.setFont(processInfofont2)
 
         self.rightTop = QWidget(self)  # 右上
-        self.rightTop.setStyleSheet(f'border-radius: {25*self.height_scale}px;background-color: #EEF3F7;')
-        self.rightTop.setGeometry(1601*self.width_scale, 201*self.height_scale, 230*self.width_scale, 270*self.height_scale)
+        self.rightTop.setStyleSheet(f'border-radius: {25 * self.height_scale}px;background-color: #EEF3F7;')
+        self.rightTop.setGeometry(1601 * self.width_scale, 201 * self.height_scale, 230 * self.width_scale,
+                                  270 * self.height_scale)
 
         self.rightTopLabel1 = QLabel(self.rightTop)
         self.rightTopLabel1.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.rightTopLabel1.setText('2024PG-001')
-        self.rightTopLabel1.setGeometry(25*self.width_scale, 25*self.height_scale, 180*self.width_scale, 29*self.height_scale)
-        self.rightTopLabel1.setStyleSheet(f"background-color: #393939;color:white;border-radius: {14*self.height_scale}px;")
-        rightTopFont1 = QFont(self.font_family3, 12*self.width_scale)
+        self.rightTopLabel1.setGeometry(25 * self.width_scale, 25 * self.height_scale, 180 * self.width_scale,
+                                        29 * self.height_scale)
+        self.rightTopLabel1.setStyleSheet(
+            f"background-color: #393939;color:white;border-radius: {14 * self.height_scale}px;")
+        rightTopFont1 = QFont(self.font_family3, 12 * self.width_scale)
         self.rightTopLabel1.setFont(rightTopFont1)
 
         self.rightTopLabel2 = QLabel(self.rightTop)
         self.rightTopLabel2.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.rightTopLabel2.setText('阶段：')
-        self.rightTopLabel2.setGeometry(25*self.width_scale, 62*self.height_scale, 180*self.width_scale, 29*self.height_scale)
+        self.rightTopLabel2.setGeometry(25 * self.width_scale, 62 * self.height_scale, 180 * self.width_scale,
+                                        29 * self.height_scale)
         self.rightTopLabel2.setStyleSheet(
-            f"QLabel{{background-color: #D9E4F4;color:#222222;padding-left: {14*self.height_scale}px;border-radius: {14*self.height_scale}px;}}"
-            f"QLabel:hover{{background-color: #89B8EE;color:#222222;padding-left: {14*self.height_scale}px;border-radius: {14*self.height_scale}px;}}"
+            f"QLabel{{background-color: #D9E4F4;color:#222222;padding-left: {14 * self.height_scale}px;border-radius: {14 * self.height_scale}px;}}"
+            f"QLabel:hover{{background-color: #89B8EE;color:#222222;padding-left: {14 * self.height_scale}px;border-radius: {14 * self.height_scale}px;}}"
         )
-        rightTopFont2 = QFont(self.font_family3, 12*self.width_scale)
+        rightTopFont2 = QFont(self.font_family3, 12 * self.width_scale)
         self.rightTopLabel2.setFont(rightTopFont2)
 
         self.jieduanNum = QLabel(self.rightTopLabel2)
         self.jieduanNum.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignRight)
         self.jieduanNum.setText('1')
-        self.jieduanNum.setGeometry(135*self.width_scale, 0, 30*self.width_scale, 29*self.height_scale)
+        self.jieduanNum.setGeometry(135 * self.width_scale, 0, 30 * self.width_scale, 29 * self.height_scale)
         self.jieduanNum.setStyleSheet(
-            f"QLabel{{background-color: transparent;color:#222222;border-radius: {14*self.height_scale}px;}}"
-            f"QLabel:hover{{background-color: transparent;color:#222222;border-radius: {14*self.height_scale}px;}}"
+            f"QLabel{{background-color: transparent;color:#222222;border-radius: {14 * self.height_scale}px;}}"
+            f"QLabel:hover{{background-color: transparent;color:#222222;border-radius: {14 * self.height_scale}px;}}"
         )
-        rightTopFont2 = QFont(self.font_family3, 12*self.width_scale)
+        rightTopFont2 = QFont(self.font_family3, 12 * self.width_scale)
         self.jieduanNum.setFont(rightTopFont2)
 
         self.rightTopLabel3 = QLabel(self.rightTop)
         # rightTopLabel3.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.rightTopLabel3.setText('目标温度：')
-        self.rightTopLabel3.setGeometry(25*self.width_scale, 100*self.height_scale, 180*self.width_scale, 29*self.height_scale)
+        self.rightTopLabel3.setGeometry(25 * self.width_scale, 100 * self.height_scale, 180 * self.width_scale,
+                                        29 * self.height_scale)
         self.rightTopLabel3.setStyleSheet(
-            f"QLabel{{background-color: #D9E4F4;color:#222222;padding-left: {14*self.height_scale}px;border-radius: {14*self.height_scale}px;}}"
-            f"QLabel:hover{{background-color: #89B8EE;color:#222222;padding-left: {14*self.height_scale}px;border-radius: {14*self.height_scale}px;}}"
+            f"QLabel{{background-color: #D9E4F4;color:#222222;padding-left: {14 * self.height_scale}px;border-radius: {14 * self.height_scale}px;}}"
+            f"QLabel:hover{{background-color: #89B8EE;color:#222222;padding-left: {14 * self.height_scale}px;border-radius: {14 * self.height_scale}px;}}"
         )
-        rightTopFont3 = QFont(self.font_family3, 12*self.width_scale)
+        rightTopFont3 = QFont(self.font_family3, 12 * self.width_scale)
         self.rightTopLabel3.setFont(rightTopFont3)
 
         self.mbwdNum = QLabel(self.rightTopLabel3)
         self.mbwdNum.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignRight)
         self.mbwdNum.setText(str(self.setmuwdNum))
-        self.mbwdNum.setGeometry(135*self.width_scale, 0, 30*self.width_scale, 29*self.height_scale)
+        self.mbwdNum.setGeometry(135 * self.width_scale, 0, 30 * self.width_scale, 29 * self.height_scale)
         self.mbwdNum.setStyleSheet(
             f"QLabel{{background-color: transparent;color:#222222;border-radius: 14px;}}"
             f"QLabel:hover{{background-color: transparent;color:#222222;border-radius: 14px;}}"
         )
-        rightTopFont2 = QFont(self.font_family3, 12*self.width_scale)
+        rightTopFont2 = QFont(self.font_family3, 12 * self.width_scale)
         self.mbwdNum.setFont(rightTopFont2)
 
         # self.rightTopLabel4 = QLabel(self.rightTop)
@@ -3947,79 +4051,83 @@ class ApplicationWindow(
         self.rightTopLabel5 = QLabel(self.rightTop)
         # rightTopLabel3.stAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.rightTopLabel5.setText('火力：')
-        self.rightTopLabel5.setGeometry(25*self.width_scale, 138*self.height_scale, 180*self.width_scale, 29*self.height_scale)
+        self.rightTopLabel5.setGeometry(25 * self.width_scale, 138 * self.height_scale, 180 * self.width_scale,
+                                        29 * self.height_scale)
         self.rightTopLabel5.setStyleSheet(
-            f"QLabel{{background-color: #D9E4F4;color:#222222;padding-left: {14*self.height_scale}px;border-radius: {14*self.height_scale}px;}}"
-            f"QLabel:hover{{background-color: #89B8EE;color:#222222;padding-left: {14*self.height_scale}px;border-radius: {14*self.height_scale}px;}}"
+            f"QLabel{{background-color: #D9E4F4;color:#222222;padding-left: {14 * self.height_scale}px;border-radius: {14 * self.height_scale}px;}}"
+            f"QLabel:hover{{background-color: #89B8EE;color:#222222;padding-left: {14 * self.height_scale}px;border-radius: {14 * self.height_scale}px;}}"
         )
-        rightTopFont3 = QFont(self.font_family3, 12*self.width_scale)
+        rightTopFont3 = QFont(self.font_family3, 12 * self.width_scale)
         self.rightTopLabel5.setFont(rightTopFont3)
 
         self.hlNumR = QLabel(self.rightTopLabel5)
         self.hlNumR.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignRight)
         self.hlNumR.setText(str(self.setHuoliNum))
-        self.hlNumR.setGeometry(135*self.width_scale, 0, 30*self.width_scale, 29*self.height_scale)
+        self.hlNumR.setGeometry(135 * self.width_scale, 0, 30 * self.width_scale, 29 * self.height_scale)
         self.hlNumR.setStyleSheet(
-            f"QLabel{{background-color: transparent;color:#222222;border-radius: {14*self.height_scale}px;}}"
-            f"QLabel:hover{{background-color: transparent;color:#222222;border-radius: {14*self.height_scale}px;}}"
+            f"QLabel{{background-color: transparent;color:#222222;border-radius: {14 * self.height_scale}px;}}"
+            f"QLabel:hover{{background-color: transparent;color:#222222;border-radius: {14 * self.height_scale}px;}}"
         )
-        rightTopFont2 = QFont(self.font_family3, 12*self.width_scale)
+        rightTopFont2 = QFont(self.font_family3, 12 * self.width_scale)
         self.hlNumR.setFont(rightTopFont2)
 
         self.rightTopLabel6 = QLabel(self.rightTop)
         # rightTopLabel3.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.rightTopLabel6.setText('风门：')
-        self.rightTopLabel6.setGeometry(25*self.width_scale, 176*self.height_scale, 180*self.width_scale, 29*self.height_scale)
+        self.rightTopLabel6.setGeometry(25 * self.width_scale, 176 * self.height_scale, 180 * self.width_scale,
+                                        29 * self.height_scale)
         self.rightTopLabel6.setStyleSheet(
-            f"QLabel{{background-color: #D9E4F4;color:#222222;padding-left: {14*self.height_scale}px;border-radius: {14*self.height_scale}px;}}"
-            f"QLabel:hover{{background-color: #89B8EE;color:#222222;padding-left: {14*self.height_scale}px;border-radius: {14*self.height_scale}px;}}"
+            f"QLabel{{background-color: #D9E4F4;color:#222222;padding-left: {14 * self.height_scale}px;border-radius: {14 * self.height_scale}px;}}"
+            f"QLabel:hover{{background-color: #89B8EE;color:#222222;padding-left: {14 * self.height_scale}px;border-radius: {14 * self.height_scale}px;}}"
         )
-        rightTopFont3 = QFont(self.font_family3, 12*self.width_scale)
+        rightTopFont3 = QFont(self.font_family3, 12 * self.width_scale)
         self.rightTopLabel6.setFont(rightTopFont3)
 
         self.fmNumR = QLabel(self.rightTopLabel6)
         self.fmNumR.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignRight)
         self.fmNumR.setText(str(self.setFengmenNum))
-        self.fmNumR.setGeometry(135*self.width_scale, 0, 30*self.width_scale, 29*self.height_scale)
+        self.fmNumR.setGeometry(135 * self.width_scale, 0, 30 * self.width_scale, 29 * self.height_scale)
         self.fmNumR.setStyleSheet(
-            f"QLabel{{background-color: transparent;color:#222222;border-radius: {14*self.height_scale}px;}}"
-            f"QLabel:hover{{background-color: transparent;color:#222222;border-radius: {14*self.height_scale}px;}}"
+            f"QLabel{{background-color: transparent;color:#222222;border-radius: {14 * self.height_scale}px;}}"
+            f"QLabel:hover{{background-color: transparent;color:#222222;border-radius: {14 * self.height_scale}px;}}"
         )
-        rightTopFont2 = QFont(self.font_family3, 12*self.width_scale)
+        rightTopFont2 = QFont(self.font_family3, 12 * self.width_scale)
         self.fmNumR.setFont(rightTopFont2)
 
         self.rightTopLabel7 = QLabel(self.rightTop)
         # rightTopLabel3.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.rightTopLabel7.setText('转速：')
-        self.rightTopLabel7.setGeometry(25*self.width_scale, 214*self.height_scale, 180*self.width_scale, 29*self.height_scale)
+        self.rightTopLabel7.setGeometry(25 * self.width_scale, 214 * self.height_scale, 180 * self.width_scale,
+                                        29 * self.height_scale)
         self.rightTopLabel7.setStyleSheet(
-            f"QLabel{{background-color: #D9E4F4;color:#222222;padding-left: {14*self.height_scale}px;border-radius: {14*self.height_scale}px;}}"
-            f"QLabel:hover{{background-color: #89B8EE;color:#222222;padding-left: {14*self.height_scale}px;border-radius: {14*self.height_scale}px;}}"
+            f"QLabel{{background-color: #D9E4F4;color:#222222;padding-left: {14 * self.height_scale}px;border-radius: {14 * self.height_scale}px;}}"
+            f"QLabel:hover{{background-color: #89B8EE;color:#222222;padding-left: {14 * self.height_scale}px;border-radius: {14 * self.height_scale}px;}}"
         )
-        rightTopFont3 = QFont(self.font_family3, 12*self.width_scale)
+        rightTopFont3 = QFont(self.font_family3, 12 * self.width_scale)
         self.rightTopLabel7.setFont(rightTopFont3)
 
         self.zsNumR = QLabel(self.rightTopLabel7)
         self.zsNumR.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignRight)
         self.zsNumR.setText(str(self.setzhuansuNum))
-        self.zsNumR.setGeometry(135*self.width_scale, 0, 30*self.width_scale, 29*self.height_scale)
+        self.zsNumR.setGeometry(135 * self.width_scale, 0, 30 * self.width_scale, 29 * self.height_scale)
         self.zsNumR.setStyleSheet(
-            f"QLabel{{background-color: transparent;color:#222222;border-radius: {14*self.height_scale}px;}}"
-            f"QLabel:hover{{background-color: transparent;color:#222222;border-radius: {14*self.height_scale}px;}}"
+            f"QLabel{{background-color: transparent;color:#222222;border-radius: {14 * self.height_scale}px;}}"
+            f"QLabel:hover{{background-color: transparent;color:#222222;border-radius: {14 * self.height_scale}px;}}"
         )
-        rightTopFont2 = QFont(self.font_family3, 12*self.width_scale)
+        rightTopFont2 = QFont(self.font_family3, 12 * self.width_scale)
         self.zsNumR.setFont(rightTopFont2)
 
         self.rightCenter = QWidget(self)  # 右中
-        self.rightCenter.setStyleSheet(f'border-radius: {25*self.height_scale}px;background-color: #EEF3F7;')
-        self.rightCenter.setGeometry(1601*self.width_scale, 506*self.height_scale, 230*self.width_scale, 270*self.height_scale)
+        self.rightCenter.setStyleSheet(f'border-radius: {25 * self.height_scale}px;background-color: #EEF3F7;')
+        self.rightCenter.setGeometry(1601 * self.width_scale, 506 * self.height_scale, 230 * self.width_scale,
+                                     270 * self.height_scale)
 
         self.setPoint = QLabel(self.rightCenter)
         self.setPoint.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.setPoint.setText('·')
-        self.setPoint.setGeometry(25*self.width_scale, 30*self.height_scale, 6*self.width_scale, 6)
+        self.setPoint.setGeometry(25 * self.width_scale, 30 * self.height_scale, 6 * self.width_scale, 6)
         self.setPoint.setStyleSheet("color: #89B8EE;")
-        pointfont = QFont(self.font_family2, 22*self.width_scale)
+        pointfont = QFont(self.font_family2, 22 * self.width_scale)
         self.setPoint.setFont(pointfont)
 
         self.setHuoli = 0
@@ -4029,22 +4137,25 @@ class ApplicationWindow(
         self.setHl = QLabel(self.rightCenter)
         self.setHl.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.setHl.setText('30')
-        self.setHl.setGeometry(37*self.width_scale, 25*self.height_scale, 35*self.width_scale, 16*self.height_scale)
+        self.setHl.setGeometry(37 * self.width_scale, 25 * self.height_scale, 35 * self.width_scale,
+                               16 * self.height_scale)
         self.setHl.setStyleSheet(
-            f"color: #222222;background-color: #F0F3F7;border-radius: {7*self.height_scale}px;border: 1px solid #222222;")
-        setHlfont = QFont(self.font_family2, 10*self.width_scale)
+            f"color: #222222;background-color: #F0F3F7;border-radius: {7 * self.height_scale}px;border: 1px solid #222222;")
+        setHlfont = QFont(self.font_family2, 10 * self.width_scale)
         self.setHl.setFont(setHlfont)
 
         self.hl = QLabel(self.rightCenter)
         self.hl.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.hl.setText('火力')
-        self.hl.setGeometry(38*self.width_scale, 52*self.height_scale, 35*self.width_scale, 18*self.height_scale)
+        self.hl.setGeometry(38 * self.width_scale, 52 * self.height_scale, 35 * self.width_scale,
+                            18 * self.height_scale)
         self.hl.setStyleSheet("color: #222222;")
-        hlfont = QFont(self.font_family2, 14*self.width_scale)
+        hlfont = QFont(self.font_family2, 14 * self.width_scale)
         self.hl.setFont(hlfont)
 
         self.jiaImg = QPushButton(self.rightCenter)
-        self.jiaImg.setGeometry(98*self.width_scale, 40*self.height_scale, 38*self.width_scale, 38*self.width_scale)
+        self.jiaImg.setGeometry(98 * self.width_scale, 40 * self.height_scale, 38 * self.width_scale,
+                                38 * self.width_scale)
         # jiaPixmap = QPixmap('G:/Vue/artisan/src/includes/Icons/yrzb/jia.png')
         # self.jiaImg.setPixmap(jiaPixmap)
         self.jiaImg.setStyleSheet(f"""
@@ -4064,7 +4175,8 @@ class ApplicationWindow(
         # self.jianPixmap = QPixmap('G:/Vue/artisan/src/includes/Icons/yrzb/jian.png')
         # self.jianPixmap2 = QPixmap('G:/Vue/artisan/src/includes/Icons/yrzb/jianClick.png')
         self.jianImg = QPushButton(self.rightCenter)
-        self.jianImg.setGeometry(154*self.width_scale, 40*self.height_scale, 38*self.width_scale, 38*self.width_scale)  # 设置按钮位置和大小
+        self.jianImg.setGeometry(154 * self.width_scale, 40 * self.height_scale, 38 * self.width_scale,
+                                 38 * self.width_scale)  # 设置按钮位置和大小
         self.jianImg.setStyleSheet(f"""
                     QPushButton {{
                         border-image: url('{self.normalized_path}/includes/Icons/yrzb/jian.png');
@@ -4083,30 +4195,34 @@ class ApplicationWindow(
         self.setPoint = QLabel(self.rightCenter)
         self.setPoint.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.setPoint.setText('·')
-        self.setPoint.setGeometry(25*self.width_scale, 114*self.height_scale, 6*self.width_scale, 6*self.height_scale)
+        self.setPoint.setGeometry(25 * self.width_scale, 114 * self.height_scale, 6 * self.width_scale,
+                                  6 * self.height_scale)
         self.setPoint.setStyleSheet("color: #89B8EE;")
-        pointfont = QFont(self.font_family2, 22*self.width_scale)
+        pointfont = QFont(self.font_family2, 22 * self.width_scale)
         self.setPoint.setFont(pointfont)
 
         self.setFm = QLabel(self.rightCenter)
         self.setFm.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.setFm.setText('60')
-        self.setFm.setGeometry(37*self.width_scale, 109*self.height_scale, 35*self.width_scale, 16*self.height_scale)
+        self.setFm.setGeometry(37 * self.width_scale, 109 * self.height_scale, 35 * self.width_scale,
+                               16 * self.height_scale)
         self.setFm.setStyleSheet(
-            f"color: #222222;background-color: #F0F3F7;border-radius: {7*self.height_scale}px;border: 1px solid #222222;")
-        setHlfont = QFont(self.font_family2, 10*self.width_scale)
+            f"color: #222222;background-color: #F0F3F7;border-radius: {7 * self.height_scale}px;border: 1px solid #222222;")
+        setHlfont = QFont(self.font_family2, 10 * self.width_scale)
         self.setFm.setFont(setHlfont)
 
         self.hl = QLabel(self.rightCenter)
         self.hl.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.hl.setText('风门')
-        self.hl.setGeometry(38*self.width_scale, 136*self.height_scale, 35*self.width_scale, 18*self.height_scale)
+        self.hl.setGeometry(38 * self.width_scale, 136 * self.height_scale, 35 * self.width_scale,
+                            18 * self.height_scale)
         self.hl.setStyleSheet("color: #222222;")
-        hlfont = QFont(self.font_family2, 14*self.width_scale)
+        hlfont = QFont(self.font_family2, 14 * self.width_scale)
         self.hl.setFont(hlfont)
 
         self.jiaImg = QPushButton(self.rightCenter)
-        self.jiaImg.setGeometry(98*self.width_scale, 124*self.height_scale, 38*self.width_scale, 38*self.width_scale)
+        self.jiaImg.setGeometry(98 * self.width_scale, 124 * self.height_scale, 38 * self.width_scale,
+                                38 * self.width_scale)
         self.jiaImg.setStyleSheet(f"""
                     QPushButton {{
                         border-image: url('{self.normalized_path}/includes/Icons/yrzb/jia.png');
@@ -4121,7 +4237,8 @@ class ApplicationWindow(
         self.jiaImg.clicked.connect(self.fengmen_jia_clicked)
 
         self.jianImg = QPushButton(self.rightCenter)
-        self.jianImg.setGeometry(154*self.width_scale, 124*self.height_scale, 38*self.width_scale, 38*self.width_scale)  # 设置按钮位置和大小
+        self.jianImg.setGeometry(154 * self.width_scale, 124 * self.height_scale, 38 * self.width_scale,
+                                 38 * self.width_scale)  # 设置按钮位置和大小
         self.jianImg.setStyleSheet(f"""
                     QPushButton {{
                         border-image: url('{self.normalized_path}/includes/Icons/yrzb/jian.png');
@@ -4138,30 +4255,34 @@ class ApplicationWindow(
         self.setPoint = QLabel(self.rightCenter)
         self.setPoint.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.setPoint.setText('·')
-        self.setPoint.setGeometry(25*self.width_scale, 196*self.height_scale, 6*self.width_scale, 6*self.height_scale)
+        self.setPoint.setGeometry(25 * self.width_scale, 196 * self.height_scale, 6 * self.width_scale,
+                                  6 * self.height_scale)
         self.setPoint.setStyleSheet("color: #89B8EE;")
-        pointfont = QFont(self.font_family2, 22*self.width_scale)
+        pointfont = QFont(self.font_family2, 22 * self.width_scale)
         self.setPoint.setFont(pointfont)
 
         self.setZs = QLabel(self.rightCenter)
         self.setZs.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.setZs.setText('42')
-        self.setZs.setGeometry(37*self.width_scale, 192*self.height_scale, 35*self.width_scale, 16*self.height_scale)
+        self.setZs.setGeometry(37 * self.width_scale, 192 * self.height_scale, 35 * self.width_scale,
+                               16 * self.height_scale)
         self.setZs.setStyleSheet(
-            f"color: #222222;background-color: #F0F3F7;border-radius: {7*self.height_scale}px;border: 1px solid #222222;")
-        setHlfont = QFont(self.font_family2, 10*self.width_scale)
+            f"color: #222222;background-color: #F0F3F7;border-radius: {7 * self.height_scale}px;border: 1px solid #222222;")
+        setHlfont = QFont(self.font_family2, 10 * self.width_scale)
         self.setZs.setFont(setHlfont)
 
         self.hl = QLabel(self.rightCenter)
         self.hl.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.hl.setText('转速')
-        self.hl.setGeometry(38*self.width_scale, 219*self.height_scale, 35*self.width_scale, 18*self.height_scale)
+        self.hl.setGeometry(38 * self.width_scale, 219 * self.height_scale, 35 * self.width_scale,
+                            18 * self.height_scale)
         self.hl.setStyleSheet("color: #222222;")
-        hlfont = QFont(self.font_family2, 14*self.width_scale)
+        hlfont = QFont(self.font_family2, 14 * self.width_scale)
         self.hl.setFont(hlfont)
 
         self.jiaImg = QPushButton(self.rightCenter)
-        self.jiaImg.setGeometry(98*self.width_scale, 207*self.height_scale, 38*self.width_scale, 38*self.width_scale)
+        self.jiaImg.setGeometry(98 * self.width_scale, 207 * self.height_scale, 38 * self.width_scale,
+                                38 * self.width_scale)
         self.jiaImg.setStyleSheet(f"""
                     QPushButton {{
                         border-image: url('{self.normalized_path}/includes/Icons/yrzb/jia.png');
@@ -4175,7 +4296,8 @@ class ApplicationWindow(
                 """)
         self.jiaImg.clicked.connect(self.zhuansu_jia_clicked)
         self.jianImg = QPushButton(self.rightCenter)
-        self.jianImg.setGeometry(154*self.width_scale, 207*self.height_scale, 38*self.width_scale, 38*self.width_scale)  # 设置按钮位置和大小
+        self.jianImg.setGeometry(154 * self.width_scale, 207 * self.height_scale, 38 * self.width_scale,
+                                 38 * self.width_scale)  # 设置按钮位置和大小
         self.jianImg.setStyleSheet(f"""
                     QPushButton {{
                         border-image: url('{self.normalized_path}/includes/Icons/yrzb/jian.png');
@@ -4190,57 +4312,44 @@ class ApplicationWindow(
         self.jianImg.clicked.connect(self.zhuansu_jian_clicked)
 
         self.chartRect = QLabel(self)  # 统计图
-        self.chartRect.setStyleSheet(f'border-radius: {25*self.height_scale}px;background-color: #f1ebe7;')
-        self.chartRect.setGeometry(566*self.width_scale, 201*self.height_scale, 996*self.width_scale, 575*self.height_scale)
+        self.chartRect.setStyleSheet(f'border-radius: {25 * self.height_scale}px;background-color: #f1ebe7;')
+        self.chartRect.setGeometry(566 * self.width_scale, 201 * self.height_scale, 996 * self.width_scale,
+                                   575 * self.height_scale)
         # self.chartRectImg = QPixmap(self.normalized_path + '/includes/Icons/yrzb/hbdt.png')
         # self.chartRect.setPixmap(self.chartRectImg)
         # self.chartRect.setPixmap(
         #     QIcon(self.normalized_path + '/includes/Icons/yrzb/hbdt.png').pixmap(996 * self.width_scale,
         #                                                                                575 * self.height_scale))
         # self.chartRect.lower()
-        self.ySSD = QLabel(self.chartRect)
-        self.ySSD.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
-        self.ySSD.setText('℃')
-        self.ySSD.setGeometry(65 * self.width_scale, 35 * self.height_scale, 28 * self.width_scale,
-                                         18 * self.height_scale)
-        self.ySSD.setStyleSheet("color: #7D7A79;border:none;")
-        ySSDfont = QFont(self.font_family4, 12 * self.width_scale)
-        self.ySSD.setFont(ySSDfont)
-
-        self.chart_min = QLabel(self.chartRect)
-        self.chart_min.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
-        self.chart_min.setText('min')
-        self.chart_min.setGeometry(942 * self.width_scale, 385 * self.height_scale, 28 * self.width_scale,
-                              18 * self.height_scale)
-        self.chart_min.setStyleSheet("color: #4D4B4A;border:none;")
-        self.chart_min.setFont(ySSDfont)
 
         self.qmc: tgraphcanvas = tgraphcanvas(self.chartRect, self.dpi, locale, self)
-        self.qmc.setGeometry(56*self.width_scale, 50*self.height_scale, 884*self.width_scale, 360*self.height_scale)
+        self.qmc.setGeometry(56 * self.width_scale, 50 * self.height_scale, 884 * self.width_scale,
+                             360 * self.height_scale)
         self.qmc.setVisible(True)
 
         print('canvas=', self.dpi, locale)
 
-
         self.chartKey = QLabel(self.chartRect)
         self.chartKey.setGeometry(54 * self.width_scale, 420 * self.height_scale, 891 * self.width_scale,
                                   34 * self.height_scale)
-        self.chartKey.setStyleSheet(f'border-radius: {16*self.height_scale}px;background-color: #e8e1dd;')
-
+        self.chartKey.setStyleSheet(f'border-radius: {16 * self.height_scale}px;background-color: #e8e1dd;')
 
         self.chartKey_dw = QLabel(self.chartKey)
-        self.chartKey_dw.setStyleSheet(f'border-radius: {2*self.height_scale}px;background-color: #D18F65;')
-        self.chartKey_dw.setGeometry(154*self.width_scale, 11*self.height_scale, 7*self.width_scale, 12*self.height_scale)
+        self.chartKey_dw.setStyleSheet(f'border-radius: {2 * self.height_scale}px;background-color: #D18F65;')
+        self.chartKey_dw.setGeometry(154 * self.width_scale, 11 * self.height_scale, 7 * self.width_scale,
+                                     12 * self.height_scale)
         self.chartKey_dwText = QLabel(self.chartKey)
         self.chartKey_dwText.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.chartKey_dwText.setText('豆温')
-        self.chartKey_dwText.setGeometry(170*self.width_scale, 9*self.height_scale, 28*self.width_scale, 18*self.height_scale)
+        self.chartKey_dwText.setGeometry(170 * self.width_scale, 9 * self.height_scale, 28 * self.width_scale,
+                                         18 * self.height_scale)
         self.chartKey_dwText.setStyleSheet("color: #292827;border:none;")
-        chartKeyfont = QFont(self.font_family4, 10*self.width_scale)
+        chartKeyfont = QFont(self.font_family4, 10 * self.width_scale)
         self.chartKey_dwText.setFont(chartKeyfont)
 
         self.setBTVisivble = QPushButton(self.chartKey)
-        self.setBTVisivble.setGeometry(154*self.width_scale, 9*self.height_scale, 50 * self.width_scale, 22 * self.height_scale)
+        self.setBTVisivble.setGeometry(154 * self.width_scale, 9 * self.height_scale, 50 * self.width_scale,
+                                       22 * self.height_scale)
         self.setBTVisivble.setStyleSheet("""
                                                     border: none;  /* 去掉按钮的边框 */
                                                     background-color: transparent;  /* 设置背景为透明 */
@@ -4249,14 +4358,16 @@ class ApplicationWindow(
         self.setBTVisivble.clicked.connect(self.toggle_BTline_visibility)
 
         self.chartKey_fw = QLabel(self.chartKey)
-        self.chartKey_fw.setStyleSheet(f'border-radius: {2*self.height_scale}px;background-color: #AC3230;')
-        self.chartKey_fw.setGeometry(256*self.width_scale, 11*self.height_scale, 7*self.width_scale, 12*self.height_scale)
+        self.chartKey_fw.setStyleSheet(f'border-radius: {2 * self.height_scale}px;background-color: #AC3230;')
+        self.chartKey_fw.setGeometry(256 * self.width_scale, 11 * self.height_scale, 7 * self.width_scale,
+                                     12 * self.height_scale)
         self.chartKey_fwText = QLabel(self.chartKey)
         self.chartKey_fwText.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.chartKey_fwText.setText('风温')
-        self.chartKey_fwText.setGeometry(272*self.width_scale, 9*self.height_scale, 28*self.width_scale, 18*self.height_scale)
+        self.chartKey_fwText.setGeometry(272 * self.width_scale, 9 * self.height_scale, 28 * self.width_scale,
+                                         18 * self.height_scale)
         self.chartKey_fwText.setStyleSheet("color: #292827;border:none;")
-        chartKeyfont = QFont(self.font_family4, 10*self.width_scale)
+        chartKeyfont = QFont(self.font_family4, 10 * self.width_scale)
         self.chartKey_fwText.setFont(chartKeyfont)
 
         self.setETVisivble = QPushButton(self.chartKey)
@@ -4270,19 +4381,21 @@ class ApplicationWindow(
         self.setETVisivble.clicked.connect(self.toggle_ETline_visibility)
 
         self.chartKey_ror = QLabel(self.chartKey)
-        self.chartKey_ror.setStyleSheet(f'border-radius: {2*self.height_scale}px;background-color: #7864AA;')
-        self.chartKey_ror.setGeometry(358*self.width_scale, 11*self.height_scale, 7*self.width_scale, 12*self.height_scale)
+        self.chartKey_ror.setStyleSheet(f'border-radius: {2 * self.height_scale}px;background-color: #7864AA;')
+        self.chartKey_ror.setGeometry(358 * self.width_scale, 11 * self.height_scale, 7 * self.width_scale,
+                                      12 * self.height_scale)
         self.chartKey_rorText = QLabel(self.chartKey)
         self.chartKey_rorText.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.chartKey_rorText.setText('ROR')
-        self.chartKey_rorText.setGeometry(373*self.width_scale, 9*self.height_scale, 30*self.width_scale, 18*self.height_scale)
+        self.chartKey_rorText.setGeometry(373 * self.width_scale, 9 * self.height_scale, 30 * self.width_scale,
+                                          18 * self.height_scale)
         self.chartKey_rorText.setStyleSheet("color: #292827;border:none;")
-        chartKeyfont = QFont(self.font_family4, 10*self.width_scale)
+        chartKeyfont = QFont(self.font_family4, 10 * self.width_scale)
         self.chartKey_rorText.setFont(chartKeyfont)
 
         self.setDeltaBTVisivble = QPushButton(self.chartKey)
         self.setDeltaBTVisivble.setGeometry(358 * self.width_scale, 9 * self.height_scale, 50 * self.width_scale,
-                                       22 * self.height_scale)
+                                            22 * self.height_scale)
         self.setDeltaBTVisivble.setStyleSheet("""
                                                                     border: none;  /* 去掉按钮的边框 */
                                                                     background-color: transparent;  /* 设置背景为透明 */
@@ -4292,18 +4405,20 @@ class ApplicationWindow(
 
         self.chartKey_sz = QLabel(self.chartKey)
         self.chartKey_sz.setStyleSheet('border-radius: 2px;background-color: #6BAE76;')
-        self.chartKey_sz.setGeometry(460*self.width_scale, 11*self.height_scale, 7*self.width_scale, 12*self.height_scale)
+        self.chartKey_sz.setGeometry(460 * self.width_scale, 11 * self.height_scale, 7 * self.width_scale,
+                                     12 * self.height_scale)
         self.chartKey_szText = QLabel(self.chartKey)
         self.chartKey_szText.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.chartKey_szText.setText('色值')
-        self.chartKey_szText.setGeometry(476*self.width_scale, 9*self.height_scale, 28*self.width_scale, 18*self.height_scale)
+        self.chartKey_szText.setGeometry(476 * self.width_scale, 9 * self.height_scale, 28 * self.width_scale,
+                                         18 * self.height_scale)
         self.chartKey_szText.setStyleSheet("color: #292827;border:none;")
-        chartKeyfont = QFont(self.font_family4, 10*self.width_scale)
+        chartKeyfont = QFont(self.font_family4, 10 * self.width_scale)
         self.chartKey_szText.setFont(chartKeyfont)
 
         self.setAgtronVisivble = QPushButton(self.chartKey)
         self.setAgtronVisivble.setGeometry(460 * self.width_scale, 9 * self.height_scale, 50 * self.width_scale,
-                                            22 * self.height_scale)
+                                           22 * self.height_scale)
         self.setAgtronVisivble.setStyleSheet("""
                                                                             border: none;  /* 去掉按钮的边框 */
                                                                             background-color: transparent;  /* 设置背景为透明 */
@@ -4312,40 +4427,47 @@ class ApplicationWindow(
         self.setAgtronVisivble.clicked.connect(self.toggle_Agtronline_visibility)
 
         self.chartKey_pqsd = QLabel(self.chartKey)
-        self.chartKey_pqsd.setStyleSheet(f'border-radius: {2*self.height_scale}px;background-color: #1EA1A9;')
-        self.chartKey_pqsd.setGeometry(563*self.width_scale, 11*self.height_scale, 7*self.width_scale, 12*self.height_scale)
+        self.chartKey_pqsd.setStyleSheet(f'border-radius: {2 * self.height_scale}px;background-color: #1EA1A9;')
+        self.chartKey_pqsd.setGeometry(563 * self.width_scale, 11 * self.height_scale, 7 * self.width_scale,
+                                       12 * self.height_scale)
         self.chartKey_pqsdText = QLabel(self.chartKey)
         self.chartKey_pqsdText.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.chartKey_pqsdText.setText('排气湿度')
-        self.chartKey_pqsdText.setGeometry(581*self.width_scale, 9*self.height_scale, 62*self.width_scale, 18*self.height_scale)
+        self.chartKey_pqsdText.setGeometry(581 * self.width_scale, 9 * self.height_scale, 62 * self.width_scale,
+                                           18 * self.height_scale)
         self.chartKey_pqsdText.setStyleSheet("color: #292827;border:none;")
-        chartKeyfont = QFont(self.font_family4, 10*self.width_scale)
+        chartKeyfont = QFont(self.font_family4, 10 * self.width_scale)
         self.chartKey_pqsdText.setFont(chartKeyfont)
 
         self.chartKey_pqwd = QLabel(self.chartKey)
-        self.chartKey_pqwd.setStyleSheet(f'border-radius: {2*self.height_scale}px;background-color: #D0B53F;')
-        self.chartKey_pqwd.setGeometry(665*self.width_scale, 11*self.height_scale, 7*self.width_scale, 12*self.height_scale)
+        self.chartKey_pqwd.setStyleSheet(f'border-radius: {2 * self.height_scale}px;background-color: #D0B53F;')
+        self.chartKey_pqwd.setGeometry(665 * self.width_scale, 11 * self.height_scale, 7 * self.width_scale,
+                                       12 * self.height_scale)
         self.chartKey_pqwdText = QLabel(self.chartKey)
         self.chartKey_pqwdText.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.chartKey_pqwdText.setText('排气温度')
-        self.chartKey_pqwdText.setGeometry(683*self.width_scale, 9*self.height_scale, 62*self.width_scale, 18*self.height_scale)
+        self.chartKey_pqwdText.setGeometry(683 * self.width_scale, 9 * self.height_scale, 62 * self.width_scale,
+                                           18 * self.height_scale)
         self.chartKey_pqwdText.setStyleSheet("color: #292827;border:none;")
-        chartKeyfont = QFont(self.font_family4, 10*self.width_scale)
+        chartKeyfont = QFont(self.font_family4, 10 * self.width_scale)
         self.chartKey_pqwdText.setFont(chartKeyfont)
 
         self.chartjdt = QLabel(self.chartRect)
-        self.chartjdt.setStyleSheet(f'border-radius: {3*self.height_scale}px;background-color: #D3C9C2;')
-        self.chartjdt.setGeometry(54*self.width_scale, 508*self.height_scale, 891*self.width_scale, 6*self.height_scale)
+        self.chartjdt.setStyleSheet(f'border-radius: {3 * self.height_scale}px;background-color: #D3C9C2;')
+        self.chartjdt.setGeometry(54 * self.width_scale, 508 * self.height_scale, 891 * self.width_scale,
+                                  6 * self.height_scale)
 
         self.rudouBarBack = QLabel(self.chartRect)
-        self.rudouBarBack.setStyleSheet(f'border-radius: {3*self.height_scale}px;background-color: #D3C9C2;')
-        self.rudouBarBack.setGeometry(88*self.width_scale, 508*self.height_scale, 301*self.width_scale, 6*self.height_scale)
+        self.rudouBarBack.setStyleSheet(f'border-radius: {3 * self.height_scale}px;background-color: #D3C9C2;')
+        self.rudouBarBack.setGeometry(88 * self.width_scale, 508 * self.height_scale, 301 * self.width_scale,
+                                      6 * self.height_scale)
 
         self.rudouBar = QProgressBar(self.chartRect)
-        self.rudouBar.setGeometry(88*self.width_scale, 508*self.height_scale, 803*self.width_scale, 6*self.height_scale)
+        self.rudouBar.setGeometry(88 * self.width_scale, 508 * self.height_scale, 803 * self.width_scale,
+                                  6 * self.height_scale)
         self.rudouBar.setStyleSheet(
-            f"QProgressBar {{border-radius: {1*self.height_scale}px; background-color: #D3C9C2; text-align:center; font-size:0px; color: transparent}}"
-            f"QProgressBar::chunk {{border-radius: {1*self.height_scale}px; background-color: #986C4D; }}"
+            f"QProgressBar {{border-radius: {1 * self.height_scale}px; background-color: #D3C9C2; text-align:center; font-size:0px; color: transparent}}"
+            f"QProgressBar::chunk {{border-radius: {1 * self.height_scale}px; background-color: #986C4D; }}"
         )
 
         self.rudouTimer = QBasicTimer()
@@ -4353,29 +4475,33 @@ class ApplicationWindow(
         # self.rudouTimer.timeout.connect(self.updateRudouBar)
 
         self.rudouImg = QLabel(self.chartRect)  # 入豆
-        self.rudouImg.setGeometry(54*self.width_scale, 494*self.height_scale, 36*self.width_scale, 36*self.width_scale)
+        self.rudouImg.setGeometry(54 * self.width_scale, 494 * self.height_scale, 36 * self.width_scale,
+                                  36 * self.width_scale)
         self.rudouPixmap = QPixmap(self.normalized_path + '/includes/Icons/yrzb/rd.png')
         self.rudouImg.setPixmap(self.rudouPixmap)
         self.rudouImg.setScaledContents(True)
 
         self.rudouImg_up = QLabel(self.chartRect)
         self.rudouImg_up.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.rudouImg_up.setGeometry(51*self.width_scale, 471*self.height_scale, 41*self.width_scale, 15*self.height_scale)
+        self.rudouImg_up.setGeometry(54 * self.width_scale, 471 * self.height_scale, 36 * self.width_scale,
+                                     15 * self.height_scale)
         self.rudouImg_up.setText('入豆')
         self.rudouImg_up.setStyleSheet("background-color: transparent; border:none;color: #292827")
-        rudouImg_upfont = QFont(self.font_family3, 10*self.width_scale)
+        rudouImg_upfont = QFont(self.font_family3, 10 * self.width_scale)
         self.rudouImg_up.setFont(rudouImg_upfont)
 
         self.rudouImg_down = QLabel(self.chartRect)
         self.rudouImg_down.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.rudouImg_down.setGeometry(54*self.width_scale, 543*self.height_scale, 41*self.width_scale, 15*self.height_scale)
+        self.rudouImg_down.setGeometry(54 * self.width_scale, 543 * self.height_scale, 36 * self.width_scale,
+                                       15 * self.height_scale)
         # self.rudouImg_down.setText('160℃')
         self.rudouImg_down.setStyleSheet("background-color: transparent; border:none;color: #66605B")
-        rudouImg_downfont = QFont(self.font_family3, 10*self.width_scale)
+        rudouImg_downfont = QFont(self.font_family3, 10 * self.width_scale)
         self.rudouImg_down.setFont(rudouImg_downfont)
 
         self.zhdImg = QPushButton(self.chartRect)  # 转黄点
-        self.zhdImg.setGeometry(375*self.width_scale, 494*self.height_scale, 36*self.width_scale, 36*self.width_scale)
+        self.zhdImg.setGeometry(375 * self.width_scale, 494 * self.height_scale, 36 * self.width_scale,
+                                36 * self.width_scale)
         # self.zhdPixmap = QPixmap(self.normalized_path + '/includes/Icons/yrzb/zhd.png')
         # self.zhdImg.setPixmap(self.zhdPixmap)
         self.zhdImg.setStyleSheet(f"""
@@ -4399,22 +4525,25 @@ class ApplicationWindow(
 
         self.zhd_up = QLabel(self.chartRect)
         self.zhd_up.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.zhd_up.setGeometry(372*self.width_scale, 471*self.height_scale, 41*self.width_scale, 15*self.height_scale)
+        self.zhd_up.setGeometry(375 * self.width_scale, 471 * self.height_scale, 36 * self.width_scale,
+                                15 * self.height_scale)
         self.zhd_up.setText('转黄点')
         self.zhd_up.setStyleSheet("background-color: transparent; border:none;color: #292827")
-        zhd_upfont = QFont(self.font_family3, 10*self.width_scale)
+        zhd_upfont = QFont(self.font_family3, 10 * self.width_scale)
         self.zhd_up.setFont(zhd_upfont)
 
         self.zhd_down = QLabel(self.chartRect)
         self.zhd_down.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.zhd_down.setGeometry(366*self.width_scale, 543*self.height_scale, 60*self.width_scale, 15*self.height_scale)
+        self.zhd_down.setGeometry(366 * self.width_scale, 543 * self.height_scale, 60 * self.width_scale,
+                                  15 * self.height_scale)
         # self.zhd_down.setText('30(RH%)')
         self.zhd_down.setStyleSheet("background-color: transparent; border:none;color: #66605B")
-        zhd_downfont = QFont(self.font_family3, 10*self.width_scale)
+        zhd_downfont = QFont(self.font_family3, 10 * self.width_scale)
         self.zhd_down.setFont(zhd_downfont)
 
-        self.yibaoImg = QPushButton(self.chartRect) # 一爆
-        self.yibaoImg.setGeometry(652*self.width_scale, 494*self.height_scale, 36*self.width_scale, 36*self.width_scale)
+        self.yibaoImg = QPushButton(self.chartRect)  # 一爆
+        self.yibaoImg.setGeometry(652 * self.width_scale, 494 * self.height_scale, 36 * self.width_scale,
+                                  36 * self.width_scale)
         self.yibaoImg.setStyleSheet(f"""
                                     QPushButton {{
                                         border-image: url('{self.normalized_path}/includes/Icons/yrzb/yb.png');
@@ -4424,15 +4553,16 @@ class ApplicationWindow(
 
         self.yb_up = QLabel(self.chartRect)
         self.yb_up.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.yb_up.setGeometry(649*self.width_scale, 471*self.height_scale, 41*self.width_scale, 15*self.height_scale)
+        self.yb_up.setGeometry(652 * self.width_scale, 471 * self.height_scale, 36 * self.width_scale,
+                               15 * self.height_scale)
         self.yb_up.setText('一爆')
         self.yb_up.setStyleSheet("background-color: transparent; border:none;color: #292827")
-        yb_upfont = QFont(self.font_family3, 10*self.width_scale)
+        yb_upfont = QFont(self.font_family3, 10 * self.width_scale)
         self.yb_up.setFont(yb_upfont)
 
         self.yb_up = QLabel(self.chartRect)
         self.yb_up.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.yb_up.setGeometry(887 * self.width_scale, 471 * self.height_scale, 41 * self.width_scale,
+        self.yb_up.setGeometry(890 * self.width_scale, 471 * self.height_scale, 36 * self.width_scale,
                                15 * self.height_scale)
         self.yb_up.setText('出仓')
         self.yb_up.setStyleSheet("background-color: transparent; border:none;color: #292827")
@@ -4441,14 +4571,16 @@ class ApplicationWindow(
 
         self.zhd_down = QLabel(self.chartRect)
         self.zhd_down.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.zhd_down.setGeometry(652*self.width_scale, 543*self.height_scale, 41*self.width_scale, 15*self.height_scale)
+        self.zhd_down.setGeometry(652 * self.width_scale, 543 * self.height_scale, 36 * self.width_scale,
+                                  15 * self.height_scale)
         # self.zhd_down.setText('#80')
         self.zhd_down.setStyleSheet("background-color: transparent; border:none;color: #66605B")
-        zhd_downfont = QFont(self.font_family3, 10*self.width_scale)
+        zhd_downfont = QFont(self.font_family3, 10 * self.width_scale)
         self.zhd_down.setFont(zhd_downfont)
 
         self.chukuImg = QPushButton(self.chartRect)  # 出库
-        self.chukuImg.setGeometry(890*self.width_scale, 494*self.height_scale, 36*self.width_scale, 36*self.width_scale)
+        self.chukuImg.setGeometry(890 * self.width_scale, 494 * self.height_scale, 36 * self.width_scale,
+                                  36 * self.width_scale)
         self.chukuImg.setStyleSheet(f"""
                                             QPushButton {{
                                                 border-image: url('{self.normalized_path}/includes/Icons/yrzb/ck.png');
@@ -4457,10 +4589,11 @@ class ApplicationWindow(
 
         self.zhd_down = QLabel(self.chartRect)
         self.zhd_down.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.zhd_down.setGeometry(890*self.width_scale, 543*self.height_scale, 41*self.width_scale, 15*self.height_scale)
+        self.zhd_down.setGeometry(890 * self.width_scale, 543 * self.height_scale, 41 * self.width_scale,
+                                  15 * self.height_scale)
         # self.zhd_down.setText('#65')
         self.zhd_down.setStyleSheet("background-color: transparent; border:none;color: #66605B")
-        zhd_downfont = QFont(self.font_family3, 10*self.width_scale)
+        zhd_downfont = QFont(self.font_family3, 10 * self.width_scale)
         self.zhd_down.setFont(zhd_downfont)
 
         self.diologRect = QLabel(self.chartRect)  # 入豆提醒
@@ -4485,33 +4618,35 @@ class ApplicationWindow(
 
         self.jbLbel = QLabel(self.diologRect)
         self.jbLbel.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.jbLbel.setGeometry(0, 63*self.height_scale, 270*self.width_scale, 35*self.height_scale)
+        self.jbLbel.setGeometry(0, 63 * self.height_scale, 270 * self.width_scale, 35 * self.height_scale)
         self.jbLbel.setText('警 报')
         self.jbLbel.setStyleSheet("background-color: transparent; border:none;color: #ffffff")
-        jbLbelfont = QFont(self.font_family3, 16*self.width_scale)
+        jbLbelfont = QFont(self.font_family3, 16 * self.width_scale)
         self.jbLbel.setFont(jbLbelfont)
 
         self.jbCentent = QLabel(self.diologRect)
         self.jbCentent.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.jbCentent.setGeometry(0, 88*self.height_scale, 270*self.width_scale, 117*self.height_scale)
+        self.jbCentent.setGeometry(0, 88 * self.height_scale, 270 * self.width_scale, 117 * self.height_scale)
         self.jbCentent.setText('准备入豆')
         self.jbCentent.setStyleSheet("background-color: transparent; border:none;color: #222222")
-        jbCententfont = QFont(self.font_family3, 16*self.width_scale)
+        jbCententfont = QFont(self.font_family3, 16 * self.width_scale)
         self.jbCentent.setFont(jbCententfont)
 
         self.rightBottom = QWidget(self)  # 右下
-        self.rightBottom.setStyleSheet(f'border-radius: {25*self.height_scale}px;background-color: #EEF3F7;')
-        self.rightBottom.setGeometry(1601*self.width_scale, 811*self.height_scale, 230*self.width_scale, 185*self.height_scale)
+        self.rightBottom.setStyleSheet(f'border-radius: {25 * self.height_scale}px;background-color: #EEF3F7;')
+        self.rightBottom.setGeometry(1601 * self.width_scale, 811 * self.height_scale, 230 * self.width_scale,
+                                     185 * self.height_scale)
 
         self.rdBtn = QPushButton(self.rightBottom)
         # self.rdBtn.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.rdBtn.setText('入 豆')
-        self.rdBtn.setGeometry(30*self.width_scale, 40*self.height_scale, 76*self.width_scale, 40*self.height_scale)
+        self.rdBtn.setGeometry(30 * self.width_scale, 40 * self.height_scale, 76 * self.width_scale,
+                               40 * self.height_scale)
         self.rdBtn.setStyleSheet(
-            f"QPushButton{{color: #222222;background-color: #F0F3F7;border-radius: {19*self.height_scale}px;border: 1px solid #222222}}"
-            f"QPushButton:hover{{color: #ffffff;background-color: #393939;border-radius: {19*self.height_scale}px;}}"
+            f"QPushButton{{color: #222222;background-color: #F0F3F7;border-radius: {19 * self.height_scale}px;border: 1px solid #222222}}"
+            f"QPushButton:hover{{color: #ffffff;background-color: #393939;border-radius: {19 * self.height_scale}px;}}"
         )
-        rdfont = QFont(self.font_family2, 12*self.width_scale)
+        rdfont = QFont(self.font_family2, 12 * self.width_scale)
         self.rdBtn.setFont(rdfont)
         # self.rdBtn.clicked.connect(self.fileLoad)
         self.rdBtn.clicked.connect(self.qmc.markCharge)
@@ -4519,12 +4654,13 @@ class ApplicationWindow(
         self.ccBtn = QPushButton(self.rightBottom)
         # self.ccBtn.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.ccBtn.setText('出 仓')
-        self.ccBtn.setGeometry(124*self.width_scale, 40*self.height_scale, 76*self.width_scale, 40*self.height_scale)
+        self.ccBtn.setGeometry(124 * self.width_scale, 40 * self.height_scale, 76 * self.width_scale,
+                               40 * self.height_scale)
         self.ccBtn.setStyleSheet(
-            f"QPushButton{{color: #222222;background-color: #F0F3F7;border-radius: {19*self.height_scale}px;border: 1px solid #222222}}"
-            f"QPushButton:hover{{color: #ffffff;background-color: #393939;border-radius: {19*self.height_scale}px;}}"
+            f"QPushButton{{color: #222222;background-color: #F0F3F7;border-radius: {19 * self.height_scale}px;border: 1px solid #222222}}"
+            f"QPushButton:hover{{color: #ffffff;background-color: #393939;border-radius: {19 * self.height_scale}px;}}"
         )
-        ccfont = QFont(self.font_family2, 12*self.width_scale)
+        ccfont = QFont(self.font_family2, 12 * self.width_scale)
         self.ccBtn.setFont(ccfont)
         self.ccBtn.clicked.connect(self.qmc.markDrop)
         # self.ccBtn.clicked.connect(self.markDropClick)
@@ -4532,53 +4668,47 @@ class ApplicationWindow(
         self.lqBtn = QLabel(self.rightBottom)
         self.lqBtn.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.lqBtn.setText('冷 却')
-        self.lqBtn.setGeometry(29*self.width_scale, 106*self.height_scale, 76*self.width_scale, 40*self.height_scale)
+        self.lqBtn.setGeometry(29 * self.width_scale, 106 * self.height_scale, 76 * self.width_scale,
+                               40 * self.height_scale)
         self.lqBtn.setStyleSheet(
-            f"QLabel{{color: #222222;background-color: #F0F3F7;border-radius: {19*self.height_scale}px;border: 1px solid #222222}}"
-            f"QLabel:hover{{color: #ffffff;background-color: #393939;border-radius: {19*self.height_scale}px;}}"
+            f"QLabel{{color: #222222;background-color: #F0F3F7;border-radius: {19 * self.height_scale}px;border: 1px solid #222222}}"
+            f"QLabel:hover{{color: #ffffff;background-color: #393939;border-radius: {19 * self.height_scale}px;}}"
         )
-        lqfont = QFont(self.font_family2, 12*self.width_scale)
+        lqfont = QFont(self.font_family2, 12 * self.width_scale)
         self.lqBtn.setFont(lqfont)
         self.lqBtn.setEnabled(False)
 
         self.jbBtn = QLabel(self.rightBottom)
         self.jbBtn.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.jbBtn.setText('搅 拌')
-        self.jbBtn.setGeometry(125*self.width_scale, 106*self.height_scale, 76*self.width_scale, 40*self.height_scale)
+        self.jbBtn.setGeometry(125 * self.width_scale, 106 * self.height_scale, 76 * self.width_scale,
+                               40 * self.height_scale)
         self.jbBtn.setStyleSheet(
-            f"QLabel{{color: #222222;background-color: #F0F3F7;border-radius: {19*self.height_scale}px;border: 1px solid #222222}}"
-            f"QLabel:hover{{color: #ffffff;background-color: #393939;border-radius: {19*self.height_scale}px;}}"
+            f"QLabel{{color: #222222;background-color: #F0F3F7;border-radius: {19 * self.height_scale}px;border: 1px solid #222222}}"
+            f"QLabel:hover{{color: #ffffff;background-color: #393939;border-radius: {19 * self.height_scale}px;}}"
         )
-        jbfont = QFont(self.font_family2, 12*self.width_scale)
+        jbfont = QFont(self.font_family2, 12 * self.width_scale)
         self.jbBtn.setFont(jbfont)
         self.jbBtn.setEnabled(False)
 
         self.toumingZheZhao = QPushButton(self)  # 出仓报错弹窗
         self.toumingZheZhao.setStyleSheet('border: none;background-color: rgba(0, 0, 0, 0);')
         self.toumingZheZhao.setGeometry(0, 0, 1920 * self.width_scale,
-                                            1080 * self.width_scale)
+                                        1080 * self.width_scale)
         self.toumingZheZhao.installEventFilter(self)
         self.toumingZheZhao.setVisible(False)
         self.toumingZheZhao.clicked.connect(self.sblb_closeDiolog)
 
-
         self.sblb = QLabel(self.toumingZheZhao)
         self.sblb.setStyleSheet(f'background-color: #eeebe7;border-radius: 0px;')
-        self.sblb.setGeometry(231*self.width_scale, 109*self.height_scale, 240*self.width_scale, 160*self.height_scale)
+        self.sblb.setGeometry(231 * self.width_scale, 109 * self.height_scale, 240 * self.width_scale,
+                              160 * self.height_scale)
         # self.sblb.setAttribute(Qt.WA_TransparentForMouseEvents, False)
         self.sblb.installEventFilter(self)
         self.sblb.hide()  # 初始隐藏
 
         # 加载订单列表的 JSON 数据
-        self.load_order_json()
-
-        self.ksyrBtn.setEnabled(False)
-        self.rdBtn.setEnabled(False)
-        self.ccBtn.setEnabled(False)
-        self.zhdImg.setEnabled(False)
-        self.yibaoImg.setEnabled(False)
-
-
+        # self.load_order_json()
 
         self.sheibeiId = "0"
         self.sblbList = QListWidget(self.sblb)
@@ -4595,12 +4725,14 @@ class ApplicationWindow(
 
         self.zhezhaoWidget = QWidget(self)
         self.zhezhaoWidget.setStyleSheet('background-color: rgba(0, 0, 0, 128); border: none; ')
-        self.zhezhaoWidget.setGeometry(0, 0, 1920*self.width_scale, 1080*self.height_scale)
+        self.zhezhaoWidget.setGeometry(0, 0, 1920 * self.width_scale, 1080 * self.height_scale)
         self.zhezhaoWidget.setVisible(False)
 
         self.ccjlWidget = QWidget(self)
-        self.ccjlWidget.setStyleSheet(f'border-radius: {25*self.height_scale}px;background-color: #ffffff; border: none; ')
-        self.ccjlWidget.setGeometry(739*self.width_scale, 312*self.height_scale, 442*self.width_scale, 430*self.height_scale)
+        self.ccjlWidget.setStyleSheet(
+            f'border-radius: {25 * self.height_scale}px;background-color: #ffffff; border: none; ')
+        self.ccjlWidget.setGeometry(739 * self.width_scale, 312 * self.height_scale, 442 * self.width_scale,
+                                    430 * self.height_scale)
         self.ccjlWidget.setVisible(False)
         shadow_effect = QGraphicsDropShadowEffect(self.ccjlWidget)
         shadow_effect.setColor(QColor(0, 0, 0, 160))  # 设置阴影颜色为半透明黑色
@@ -4611,7 +4743,8 @@ class ApplicationWindow(
         self.ccjlTitle = QLabel(self.ccjlWidget)
         self.ccjlTitle.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.ccjlTitle.setText('出仓记录')
-        self.ccjlTitle.setGeometry(45*self.width_scale, 30*self.height_scale, 83*self.width_scale, 19*self.height_scale)
+        self.ccjlTitle.setGeometry(45 * self.width_scale, 30 * self.height_scale, 83 * self.width_scale,
+                                   19 * self.height_scale)
         self.ccjlTitle.setStyleSheet(
             "color: #333333;background-color:transparent; border: none"
         )
@@ -4625,7 +4758,7 @@ class ApplicationWindow(
         # self.hcsjTxt.setStyleSheet(
         #     "color: #333333;background-color:transparent; border: none"
         # )
-        hcsjTxtfont = QFont(self.font_family4, 12*self.width_scale)
+        hcsjTxtfont = QFont(self.font_family4, 12 * self.width_scale)
         # self.hcsjTxt.setFont(hcsjTxtfont)
 
         # self.hcsjContent = QLineEdit(self.ccjlWidget)
@@ -4640,7 +4773,7 @@ class ApplicationWindow(
         #                                         border-radius: 10px;
         #                                     }
         #                                 """)
-        hcsjContentfont = QFont(self.font_family3, 14*self.width_scale)
+        hcsjContentfont = QFont(self.font_family3, 14 * self.width_scale)
         # self.hcsjContent.setFont(hcsjContentfont)
         # self.hcsjContent.setGeometry(48*self.width_scale, 117*self.height_scale, 132*self.width_scale, 32*self.height_scale)
 
@@ -4651,13 +4784,14 @@ class ApplicationWindow(
         # self.hcsjTxt.setStyleSheet(
         #     "color: #333333;background-color:transparent; border: none"
         # )
-        hcsjTxtfont2 = QFont(self.font_family6, 10*self.width_scale)
+        hcsjTxtfont2 = QFont(self.font_family6, 10 * self.width_scale)
         # self.hcsjTxt.setFont(hcsjTxtfont2)
 
         self.ccjlTxt = QLabel(self.ccjlWidget)
         self.ccjlTxt.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.ccjlTxt.setText('瑕疵率')
-        self.ccjlTxt.setGeometry(47*self.width_scale, 176*self.height_scale, 74*self.width_scale, 19*self.height_scale)
+        self.ccjlTxt.setGeometry(47 * self.width_scale, 176 * self.height_scale, 74 * self.width_scale,
+                                 19 * self.height_scale)
         self.ccjlTxt.setStyleSheet(
             "color: #333333;background-color:transparent; border: none"
         )
@@ -4672,13 +4806,15 @@ class ApplicationWindow(
                                                         padding-left: 9px;         /* 设置文字左边距 */
                                                         font-size: 12px;            /* 设置字体大小 */
                                                         border: none;               /* 移除边框 */
-                                                        border-radius: {10*self.height_scale}px;
+                                                        border-radius: {10 * self.height_scale}px;
                                                     }}
                                                 """)
         self.xclContent.setFont(hcsjContentfont)
-        self.xclContent.setGeometry(48*self.width_scale, 204*self.height_scale, 132*self.width_scale, 32*self.height_scale)
+        self.xclContent.setGeometry(48 * self.width_scale, 204 * self.height_scale, 132 * self.width_scale,
+                                    32 * self.height_scale)
         xclContent_validator = QIntValidator(0, 100, self.xclContent)
         self.xclContent.setValidator(xclContent_validator)
+
         def on_xcltext_changed():
             text = self.xclContent.text()
             try:
@@ -4693,17 +4829,18 @@ class ApplicationWindow(
         self.hcsjTxt = QLabel(self.ccjlWidget)
         self.hcsjTxt.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignLeft)
         self.hcsjTxt.setText('%')
-        self.hcsjTxt.setGeometry(176*self.width_scale, 204*self.height_scale, 32*self.width_scale, 32*self.width_scale)
+        self.hcsjTxt.setGeometry(176 * self.width_scale, 204 * self.height_scale, 32 * self.width_scale,
+                                 32 * self.width_scale)
         self.hcsjTxt.setStyleSheet(
             "color: #333333;background-color:transparent; border: none"
         )
         self.hcsjTxt.setFont(hcsjTxtfont2)
 
-
         self.ccjlTxt = QLabel(self.ccjlWidget)
         self.ccjlTxt.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.ccjlTxt.setText('脱水率')
-        self.ccjlTxt.setGeometry(47*self.width_scale, 89*self.height_scale, 74*self.width_scale, 19*self.height_scale)
+        self.ccjlTxt.setGeometry(47 * self.width_scale, 89 * self.height_scale, 74 * self.width_scale,
+                                 19 * self.height_scale)
         self.ccjlTxt.setStyleSheet(
             "color: #333333;background-color:transparent; border: none"
         )
@@ -4718,11 +4855,12 @@ class ApplicationWindow(
                                                                 padding-left: 9px;         /* 设置文字左边距 */
                                                                 font-size: 12px;            /* 设置字体大小 */
                                                                 border: none;               /* 移除边框 */
-                                                                border-radius: {10*self.height_scale}px;
+                                                                border-radius: {10 * self.height_scale}px;
                                                             }}
                                                         """)
         self.tslContent.setFont(hcsjContentfont)
-        self.tslContent.setGeometry(48*self.width_scale, 117*self.height_scale, 132*self.width_scale, 32*self.height_scale)
+        self.tslContent.setGeometry(48 * self.width_scale, 117 * self.height_scale, 132 * self.width_scale,
+                                    32 * self.height_scale)
         tslContent_validator = QIntValidator(0, 100, self.tslContent)
         self.tslContent.setValidator(tslContent_validator)
 
@@ -4740,7 +4878,8 @@ class ApplicationWindow(
         self.hcsjTxt = QLabel(self.ccjlWidget)
         self.hcsjTxt.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignLeft)
         self.hcsjTxt.setText('%')
-        self.hcsjTxt.setGeometry(176*self.width_scale, 117*self.height_scale, 32*self.width_scale, 32*self.width_scale)
+        self.hcsjTxt.setGeometry(176 * self.width_scale, 117 * self.height_scale, 32 * self.width_scale,
+                                 32 * self.width_scale)
         self.hcsjTxt.setStyleSheet(
             "color: #333333;background-color:transparent; border: none"
         )
@@ -4749,7 +4888,8 @@ class ApplicationWindow(
         self.ccjlTxt = QLabel(self.ccjlWidget)
         self.ccjlTxt.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.ccjlTxt.setText('熟豆数量')
-        self.ccjlTxt.setGeometry(236*self.width_scale, 89*self.height_scale, 74*self.width_scale, 19*self.height_scale)
+        self.ccjlTxt.setGeometry(236 * self.width_scale, 89 * self.height_scale, 74 * self.width_scale,
+                                 19 * self.height_scale)
         self.ccjlTxt.setStyleSheet(
             "color: #333333;background-color:transparent; border: none"
         )
@@ -4819,7 +4959,8 @@ class ApplicationWindow(
         self.hcsjTxt = QLabel(self.ccjlWidget)
         self.hcsjTxt.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignLeft)
         self.hcsjTxt.setText('kg')
-        self.hcsjTxt.setGeometry(365*self.width_scale, 117*self.height_scale, 32*self.width_scale, 32*self.height_scale)
+        self.hcsjTxt.setGeometry(365 * self.width_scale, 117 * self.height_scale, 32 * self.width_scale,
+                                 32 * self.height_scale)
         self.hcsjTxt.setStyleSheet(
             "color: #333333;background-color:transparent; border: none"
         )
@@ -4838,7 +4979,8 @@ class ApplicationWindow(
         self.ccjlTxt = QLabel(self.ccjlWidget)
         self.ccjlTxt.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.ccjlTxt.setText('情况反馈')
-        self.ccjlTxt.setGeometry(47*self.width_scale, 262*self.height_scale, 74*self.width_scale, 19*self.height_scale)
+        self.ccjlTxt.setGeometry(47 * self.width_scale, 262 * self.height_scale, 74 * self.width_scale,
+                                 19 * self.height_scale)
         self.ccjlTxt.setStyleSheet(
             "color: #333333;background-color:transparent; border: none"
         )
@@ -4855,28 +4997,31 @@ class ApplicationWindow(
                                                                                         padding-left: 9px;         /* 设置文字左边距 */
                                                                                         font-size: 12px;            /* 设置字体大小 */
                                                                                         border: none;               /* 移除边框 */
-                                                                                        border-radius: {10*self.height_scale}px;
+                                                                                        border-radius: {10 * self.height_scale}px;
                                                                                     }}
                                                                                 """)
         self.qkfhContent.setFont(hcsjContentfont)
-        self.qkfhContent.setGeometry(48*self.width_scale, 290*self.height_scale, 347*self.width_scale, 52*self.height_scale)
+        self.qkfhContent.setGeometry(48 * self.width_scale, 290 * self.height_scale, 347 * self.width_scale,
+                                     52 * self.height_scale)
 
         self.ccjlBtn = QPushButton(self.ccjlWidget)
+        # self.rdBtn.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.ccjlBtn.setText('确定')
-        self.ccjlBtn.setGeometry(176*self.width_scale, 370*self.height_scale, 90*self.width_scale, 40*self.height_scale)
+        self.ccjlBtn.setGeometry(176 * self.width_scale, 370 * self.height_scale, 90 * self.width_scale,
+                                 40 * self.height_scale)
         self.ccjlBtn.setStyleSheet(
-            f"QPushButton{{color: #ffffff;background-color: #393939;border-radius: {20*self.height_scale}px;border: none}}"
-            f"QPushButton:hover{{color: #ffffff;background-color: #8C6348;border-radius: {20*self.height_scale}px;border: none;}}"
+            f"QPushButton{{color: #ffffff;background-color: #393939;border-radius: {20 * self.height_scale}px;border: none}}"
+            f"QPushButton:hover{{color: #ffffff;background-color: #8C6348;border-radius: {20 * self.height_scale}px;border: none;}}"
         )
-        ccjlBtnfont = QFont(self.font_family4, 14*self.width_scale)
+        ccjlBtnfont = QFont(self.font_family4, 14 * self.width_scale)
         self.ccjlBtn.setFont(ccjlBtnfont)
         self.ccjlBtn.clicked.connect(self.submitCCJL)
-
 
         # 流转记录页 lzTabel
 
         self.lzTabel = QWidget(self)
-        self.lzTabel.setStyleSheet(f'border-radius: {25*self.height_scale}px;background-color: #ffffff; border: 1px solid #DEE0E3; ')
+        self.lzTabel.setStyleSheet(
+            f'border-radius: {25 * self.height_scale}px;background-color: #ffffff; border: 1px solid #DEE0E3; ')
         self.lzTabel.setGeometry(231, 200, 1600, 796)
         self.lzTabel.setVisible(False)
 
@@ -4899,15 +5044,14 @@ class ApplicationWindow(
         self.lzScroll.setWidget(self.lzTabel)
         self.lzScroll.setVisible(False)
 
-
-
         self.zhezhaoWidget_addOrder = QWidget(self)
         self.zhezhaoWidget_addOrder.setStyleSheet('background-color: rgba(0, 0, 0, 128); border: none; ')
         self.zhezhaoWidget_addOrder.setGeometry(0, 0, 1920 * self.width_scale, 1080 * self.height_scale)
         self.zhezhaoWidget_addOrder.setVisible(False)
 
         self.addOrderWidget = QWidget(self)
-        self.addOrderWidget.setStyleSheet(f'border-radius: {25*self.height_scale}px;background-color: #ffffff; border: none; ')
+        self.addOrderWidget.setStyleSheet(
+            f'border-radius: {25 * self.height_scale}px;background-color: #ffffff; border: none; ')
         self.addOrderWidget.setGeometry(650 * self.width_scale, 178 * self.height_scale, 620 * self.width_scale,
                                         724 * self.height_scale)
         self.addOrderWidget.setVisible(False)
@@ -4940,7 +5084,7 @@ class ApplicationWindow(
                                 """)
         self.closeAddOrder.setFixedSize(24 * self.width_scale, 24 * self.width_scale)  # 设置按钮大小
         self.closeAddOrder.setGeometry(562 * self.width_scale, 28 * self.height_scale,
-                                      24 * self.width_scale, 24 * self.height_scale)
+                                       24 * self.width_scale, 24 * self.height_scale)
         # 连接按钮点击事件
         self.closeAddOrder.clicked.connect(self.closeAddOrderClicked)
 
@@ -4951,7 +5095,7 @@ class ApplicationWindow(
         self.taskbh.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.taskbh.setText('订单编号')
         self.taskbh.setGeometry(38 * self.width_scale, 79 * self.height_scale, 64 * self.width_scale,
-                                     32 * self.height_scale)
+                                32 * self.height_scale)
         self.taskbh.setStyleSheet(
             "color: #333333;background-color:transparent; border: none"
         )
@@ -4971,7 +5115,7 @@ class ApplicationWindow(
         self.taskbhContent.setFont(addTaskContentfont)
         # self.taskbhContent.setText()
         self.taskbhContent.setGeometry(124 * self.width_scale, 79 * self.height_scale, 175 * self.width_scale,
-                                         32 * self.height_scale)
+                                       32 * self.height_scale)
         self.taskbhContent.setReadOnly(True)
 
         self.taskNameTxt = QLabel(self.addOrderWidget)
@@ -4992,7 +5136,7 @@ class ApplicationWindow(
                                                                 color: #333333;             /* 设置文字颜色 */
                                                                 padding-left: 9px;         /* 设置文字左边距 */
                                                                 border: none;               /* 移除边框 */
-                                                                border-radius: {5*self.height_scale}px;
+                                                                border-radius: {5 * self.height_scale}px;
                                                             }}
                                                         """)
         self.taskNameContent.setFont(addTaskContentfont)
@@ -5005,7 +5149,7 @@ class ApplicationWindow(
         self.formulationNameTxt.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.formulationNameTxt.setText('配方名称')
         self.formulationNameTxt.setGeometry(38 * self.width_scale, 130 * self.height_scale, 64 * self.width_scale,
-                                     32 * self.height_scale)
+                                            32 * self.height_scale)
         self.formulationNameTxt.setStyleSheet(
             "color: #333333;background-color:transparent; border: none"
         )
@@ -5025,7 +5169,7 @@ class ApplicationWindow(
         self.formulatioNameContent.setFont(addTaskContentfont)
         # self.formulatioNameContent.setText()
         self.formulatioNameContent.setGeometry(124 * self.width_scale, 130 * self.height_scale, 175 * self.width_scale,
-                                         32 * self.height_scale)
+                                               32 * self.height_scale)
 
         # self.numberTxt = QLabel(self.addOrderWidget)
         # self.numberTxt.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
@@ -5163,9 +5307,9 @@ class ApplicationWindow(
                                 height: 20px;
                             }}
                         """)
-        self.finishbutton.setFixedSize(24* self.width_scale, 24* self.width_scale)  # 设置按钮大小
+        self.finishbutton.setFixedSize(24 * self.width_scale, 24 * self.width_scale)  # 设置按钮大小
         self.finishbutton.setGeometry(145 * self.width_scale, 4 * self.height_scale,
-                                24 * self.width_scale, 24 * self.height_scale)
+                                      24 * self.width_scale, 24 * self.height_scale)
         # 连接按钮点击事件
         self.finishbutton.clicked.connect(self.onButtonClicked)
 
@@ -5185,7 +5329,7 @@ class ApplicationWindow(
         self.shengdouBack = QLabel(self.addOrderWidget)
         self.shengdouBack.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.shengdouBack.setGeometry(38 * self.width_scale, 210 * self.height_scale, 546 * self.width_scale,
-                                   32 * self.height_scale)
+                                      32 * self.height_scale)
         self.shengdouBack.setStyleSheet(
             f"color: #333333;background-color:#D9E4F4; border: 1px solid #DEEEFE; border-radius:{10 * self.width_scale}px"
         )
@@ -5268,12 +5412,11 @@ class ApplicationWindow(
         self.addsdSetBtn.setFont(addTaskContentfont)
         self.addsdSetBtn.clicked.connect(self.addTasksdType)
 
-
         self.jdszTxt = QLabel(self.addOrderWidget)
         self.jdszTxt.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.jdszTxt.setText('阶段设置')
         self.jdszTxt.setGeometry(38 * self.width_scale, 348 * self.height_scale, 64 * self.width_scale,
-                                   32 * self.height_scale)
+                                 32 * self.height_scale)
         self.jdszTxt.setStyleSheet(
             "color: #333333;background-color:transparent; border: none"
         )
@@ -5282,7 +5425,8 @@ class ApplicationWindow(
         self.scale_factor2 = 546 / 417
         self.stageBack = QLabel(self.addOrderWidget)
         self.stageBack.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
-        self.stageBack.setGeometry(38 * self.width_scale, 380 * self.height_scale, 417 * self.width_scale *self.scale_factor2,
+        self.stageBack.setGeometry(38 * self.width_scale, 380 * self.height_scale,
+                                   417 * self.width_scale * self.scale_factor2,
                                    216 * self.height_scale)
         self.stageBack.setStyleSheet(
             f"color: #333333;background-color:#D9E4F4; border: none; border-radius:{10 * self.width_scale}px"
@@ -5292,7 +5436,8 @@ class ApplicationWindow(
 
         self.stageTitle = QLabel(self.stageBack)
         self.stageTitle.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignCenter)
-        self.stageTitle.setGeometry(0 * self.width_scale, 0 * self.height_scale, 60 * self.width_scale*self.scale_factor2,
+        self.stageTitle.setGeometry(0 * self.width_scale, 0 * self.height_scale,
+                                    60 * self.width_scale * self.scale_factor2,
                                     30 * self.height_scale)
         self.stageTitle.setText('阶段')
         self.stageTitle.setStyleSheet(
@@ -5305,8 +5450,9 @@ class ApplicationWindow(
 
         self.stageTitle_wd = QLabel(self.stageBack)
         self.stageTitle_wd.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignCenter)
-        self.stageTitle_wd.setGeometry(61 * self.width_scale*self.scale_factor2, 0 * self.height_scale, 88 * self.width_scale*self.scale_factor2,
-                                    30 * self.height_scale)
+        self.stageTitle_wd.setGeometry(61 * self.width_scale * self.scale_factor2, 0 * self.height_scale,
+                                       88 * self.width_scale * self.scale_factor2,
+                                       30 * self.height_scale)
         self.stageTitle_wd.setText('温度')
         self.stageTitle_wd.setStyleSheet(
             f"color: #252525;background-color:#D9E4F4; border: none;border-radius: none"
@@ -5315,8 +5461,9 @@ class ApplicationWindow(
 
         self.stageTitle_hl = QLabel(self.stageBack)
         self.stageTitle_hl.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignCenter)
-        self.stageTitle_hl.setGeometry(150 * self.width_scale*self.scale_factor2, 0 * self.height_scale, 88 * self.width_scale*self.scale_factor2,
-                                    30 * self.height_scale)
+        self.stageTitle_hl.setGeometry(150 * self.width_scale * self.scale_factor2, 0 * self.height_scale,
+                                       88 * self.width_scale * self.scale_factor2,
+                                       30 * self.height_scale)
         self.stageTitle_hl.setText('火力')
         self.stageTitle_hl.setStyleSheet(
             f"color: #252525;background-color:#D9E4F4; border: none;border-radius: none"
@@ -5325,8 +5472,9 @@ class ApplicationWindow(
 
         self.stageTitle_fm = QLabel(self.stageBack)
         self.stageTitle_fm.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignCenter)
-        self.stageTitle_fm.setGeometry(239 * self.width_scale*self.scale_factor2, 0 * self.height_scale, 88 * self.width_scale*self.scale_factor2,
-                                    30 * self.height_scale)
+        self.stageTitle_fm.setGeometry(239 * self.width_scale * self.scale_factor2, 0 * self.height_scale,
+                                       88 * self.width_scale * self.scale_factor2,
+                                       30 * self.height_scale)
         self.stageTitle_fm.setText('风门')
         self.stageTitle_fm.setStyleSheet(
             f"color: #252525;background-color:#D9E4F4; border: none;border-radius: none"
@@ -5335,8 +5483,9 @@ class ApplicationWindow(
 
         self.stageTitle_zs = QLabel(self.stageBack)
         self.stageTitle_zs.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignCenter)
-        self.stageTitle_zs.setGeometry(328 * self.width_scale*self.scale_factor2, 0 * self.height_scale, 88 * self.width_scale*self.scale_factor2,
-                                    30 * self.height_scale)
+        self.stageTitle_zs.setGeometry(328 * self.width_scale * self.scale_factor2, 0 * self.height_scale,
+                                       88 * self.width_scale * self.scale_factor2,
+                                       30 * self.height_scale)
         self.stageTitle_zs.setText('转速')
         self.stageTitle_zs.setStyleSheet(
             f"color: #252525;background-color:#D9E4F4; border: none;border-radius: 10px;"
@@ -5345,8 +5494,9 @@ class ApplicationWindow(
 
         self.stageTitle_1 = QLabel(self.stageBack)
         self.stageTitle_1.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignCenter)
-        self.stageTitle_1.setGeometry(0 * self.height_scale, 31 * self.width_scale, 60 * self.width_scale*self.scale_factor2,
-                                    30 * self.height_scale)
+        self.stageTitle_1.setGeometry(0 * self.height_scale, 31 * self.width_scale,
+                                      60 * self.width_scale * self.scale_factor2,
+                                      30 * self.height_scale)
         self.stageTitle_1.setText('1')
         self.stageTitle_1.setStyleSheet(
             f"color: #252525;background-color:#D9E4F4; border: none;border-radius: none"
@@ -5355,7 +5505,8 @@ class ApplicationWindow(
 
         self.stageTitle_2 = QLabel(self.stageBack)
         self.stageTitle_2.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignCenter)
-        self.stageTitle_2.setGeometry(0 * self.height_scale, 62 * self.width_scale, 60 * self.width_scale*self.scale_factor2,
+        self.stageTitle_2.setGeometry(0 * self.height_scale, 62 * self.width_scale,
+                                      60 * self.width_scale * self.scale_factor2,
                                       30 * self.height_scale)
         self.stageTitle_2.setText('2')
         self.stageTitle_2.setStyleSheet(
@@ -5365,7 +5516,8 @@ class ApplicationWindow(
 
         self.stageTitle_3 = QLabel(self.stageBack)
         self.stageTitle_3.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignCenter)
-        self.stageTitle_3.setGeometry(0 * self.height_scale, 93 * self.width_scale, 60 * self.width_scale*self.scale_factor2,
+        self.stageTitle_3.setGeometry(0 * self.height_scale, 93 * self.width_scale,
+                                      60 * self.width_scale * self.scale_factor2,
                                       30 * self.height_scale)
         self.stageTitle_3.setText('3')
         self.stageTitle_3.setStyleSheet(
@@ -5375,7 +5527,8 @@ class ApplicationWindow(
 
         self.stageTitle_4 = QLabel(self.stageBack)
         self.stageTitle_4.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignCenter)
-        self.stageTitle_4.setGeometry(0 * self.height_scale, 124 * self.width_scale, 60 * self.width_scale*self.scale_factor2,
+        self.stageTitle_4.setGeometry(0 * self.height_scale, 124 * self.width_scale,
+                                      60 * self.width_scale * self.scale_factor2,
                                       30 * self.height_scale)
         self.stageTitle_4.setText('4')
         self.stageTitle_4.setStyleSheet(
@@ -5385,7 +5538,8 @@ class ApplicationWindow(
 
         self.stageTitle_5 = QLabel(self.stageBack)
         self.stageTitle_5.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignCenter)
-        self.stageTitle_5.setGeometry(0 * self.height_scale, 155 * self.width_scale, 60 * self.width_scale*self.scale_factor2,
+        self.stageTitle_5.setGeometry(0 * self.height_scale, 155 * self.width_scale,
+                                      60 * self.width_scale * self.scale_factor2,
                                       30 * self.height_scale)
         self.stageTitle_5.setText('5')
         self.stageTitle_5.setStyleSheet(
@@ -5395,7 +5549,8 @@ class ApplicationWindow(
 
         self.stageTitle_6 = QLabel(self.stageBack)
         self.stageTitle_6.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignCenter)
-        self.stageTitle_6.setGeometry(0 * self.height_scale, 186 * self.width_scale, 60 * self.width_scale*self.scale_factor2,
+        self.stageTitle_6.setGeometry(0 * self.height_scale, 186 * self.width_scale,
+                                      60 * self.width_scale * self.scale_factor2,
                                       30 * self.height_scale)
         self.stageTitle_6.setText('6')
         self.stageTitle_6.setStyleSheet(
@@ -5425,7 +5580,8 @@ class ApplicationWindow(
                 x_pos = (88 * self.width_scale * col) + col + 61 * self.width_scale
                 y_pos = (30 * self.height_scale * row) + row + 31 * self.height_scale
 
-                line_edit.setGeometry(x_pos*self.scale_factor2, y_pos, 88 * self.width_scale*self.scale_factor2, 30 * self.height_scale)
+                line_edit.setGeometry(x_pos * self.scale_factor2, y_pos, 88 * self.width_scale * self.scale_factor2,
+                                      30 * self.height_scale)
 
                 # 设置每个 QLineEdit 的 objectName，确保唯一
                 line_edit.setObjectName(f"lineEdit_{row}_{col}")
@@ -5446,7 +5602,8 @@ class ApplicationWindow(
         for i in range(6):  # Loop for 6 lines
             self.backLine = QLabel(self.stageBack)
             self.backLine.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
-            self.backLine.setGeometry(0 * self.width_scale, (31 * self.height_scale) * i + 29 * self.height_scale, 417 * self.width_scale*self.scale_factor2,
+            self.backLine.setGeometry(0 * self.width_scale, (31 * self.height_scale) * i + 29 * self.height_scale,
+                                      417 * self.width_scale * self.scale_factor2,
                                       2 * self.height_scale)
             self.backLine.setStyleSheet(
                 f"color: #333333;background-color:#DEEEFE; border: none; "
@@ -5454,7 +5611,7 @@ class ApplicationWindow(
 
         self.backLine = QLabel(self.stageBack)
         self.backLine.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
-        self.backLine.setGeometry(60 * self.width_scale*self.scale_factor2, 0,
+        self.backLine.setGeometry(60 * self.width_scale * self.scale_factor2, 0,
                                   2 * self.width_scale,
                                   216 * self.height_scale)
         self.backLine.setStyleSheet(
@@ -5464,15 +5621,12 @@ class ApplicationWindow(
         for i in range(3):  # Loop for 6 lines
             self.backLine = QLabel(self.stageBack)
             self.backLine.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
-            self.backLine.setGeometry((148 * self.width_scale+(89 * self.height_scale) * i)*self.scale_factor2, 0,
+            self.backLine.setGeometry((148 * self.width_scale + (89 * self.height_scale) * i) * self.scale_factor2, 0,
                                       2 * self.width_scale,
                                       216 * self.height_scale)
             self.backLine.setStyleSheet(
                 f"color: #333333;background-color:#DEEEFE; border: none; "
             )
-
-
-
 
         # 创建下拉列表（QComboBox）
         # self.stage_combo_box = QComboBox(self.addOrderWidget)
@@ -5578,13 +5732,12 @@ class ApplicationWindow(
         # self.stage_four_bContent.setGeometry(313 * self.width_scale, 295 * self.height_scale, 50 * self.width_scale,
         #                                      32 * self.height_scale)
 
-
         self.addOrderBtn = QPushButton(self.addOrderWidget)
         self.addOrderBtn.setText('确定')
         self.addOrderBtn.setGeometry(270 * self.width_scale, 630 * self.height_scale, 74 * self.width_scale,
                                      34 * self.height_scale)
         self.addOrderBtn.setStyleSheet(
-            f"QPushButton{{color: #ffffff;background-color: #393939;border-radius: {16*self.height_scale}px;border: none;}}"
+            f"QPushButton{{color: #ffffff;background-color: #393939;border-radius: {16 * self.height_scale}px;border: none;}}"
             f"QPushButton:hover{{color: #ffffff;background-color: #8C6348;border-radius: {16 * self.height_scale}px;border: none;}}"
         )
         self.addOrderBtn.setFont(addTaskContentfont)
@@ -5595,21 +5748,9 @@ class ApplicationWindow(
 
         # background_image_path = self.normalized_path + '/includes/Icons/general/jiankong.png'
         # # 创建监控显示区域
-        # self.jiankongTabel = QWidget(self)
-        # self.jiankongTabel.setStyleSheet(
-        #     f'border-radius: {25 * self.height_scale}px;background-color: #ffffff; border: none; background-image: url({background_image_path});background-position: center;background-repeat: no-repeat;background-size: cover;')
-        # self.jiankongTabel.setGeometry(226 * self.width_scale, 197 * self.height_scale, 1610 * self.width_scale,
-        #                                800 * self.height_scale)
-        # self.jiankongTabel.setVisible(False)
-
-        # 创建监控显示区域
-        # self.jiankongTabel = QWidget(self)
-        # self.jiankongTabel.setStyleSheet(
-        #     f'border-radius: {25 * self.height_scale}px; background-color: white; border: none;')
-        # self.jiankongTabel.setGeometry(226 * self.width_scale, 150 * self.height_scale, 1610 * self.width_scale,857 * self.height_scale)
-        # self.jiankongTabel.setVisible(False)
         self.jiankongTabel = QLabel(self)
-        self.jiankongTabel.setGeometry(226 * self.width_scale, 150 * self.height_scale, 1610 * self.width_scale,857 * self.height_scale)
+        self.jiankongTabel.setGeometry(226 * self.width_scale, 150 * self.height_scale, 1610 * self.width_scale,
+                                       857 * self.height_scale)
         self.jiankongpixmap = QPixmap(self.normalized_path + '/includes/Icons/general/back.png')  # 背景图
         self.jiankongTabel.setPixmap(self.jiankongpixmap)
         self.jiankongTabel.setScaledContents(True)
@@ -5617,9 +5758,11 @@ class ApplicationWindow(
 
         # 创建 QLabel 来显示 GIF 动画
         self.gif_label = QLabel(self.jiankongTabel)
-        self.gif_label.setGeometry(0, 15 * self.height_scale, 1471 * self.width_scale, 828 * self.height_scale)  # 设置与 QWidget 相同的尺寸
+        self.gif_label.setGeometry(0, 15 * self.height_scale, 1471 * self.width_scale,
+                                   828 * self.height_scale)  # 设置与 QWidget 相同的尺寸
         self.gif_label.setStyleSheet(
-            f"QLabel{{background-color: transparent; border: none;border-radius: {25 * self.height_scale}px; }}"  # 背景透明，无边框
+            f"QLabel{{background-color: transparent; border: none;border-radius: {25 * self.height_scale}px; }}"
+            # 背景透明，无边框
         )
 
         # 创建 QMovie 并设置 GIF 文件路径
@@ -5817,7 +5960,7 @@ class ApplicationWindow(
         self.storeroomName = QLabel(self.jiankongTabel)
         self.storeroomName.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.storeroomName.setGeometry(44 * self.width_scale, 51 * self.height_scale, 132 * self.width_scale,
-                                    38 * self.height_scale)
+                                       38 * self.height_scale)
         self.storeroomName.setStyleSheet(
             f"QLabel{{background-color: #393939;border-radius: {19 * self.height_scale}px; border: 1px solid #F5F5F5;color: white;}}"
         )
@@ -5833,7 +5976,7 @@ class ApplicationWindow(
         self.monitorTime = QLabel(self.jiankongTabel)
         self.monitorTime.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.monitorTime.setGeometry(1200 * self.width_scale, 51 * self.height_scale, 220 * self.width_scale,
-                                       38 * self.height_scale)
+                                     38 * self.height_scale)
         self.monitorTime.setStyleSheet(
             f"QLabel{{background-color: #393939;border-radius: {19 * self.height_scale}px; border: 1px solid #F5F5F5;color: white;}}"
         )
@@ -5849,8 +5992,6 @@ class ApplicationWindow(
         self.todayTimer.start(1000)  # 每1000毫秒（1秒）触发一次
         # 初始化显示时间
         self.updatetodayTime()
-
-
 
         # 创建一个 QLabel 用于显示视频流
         # self.video_label = QLabel(self.jiankongTabel)
@@ -5887,14 +6028,14 @@ class ApplicationWindow(
 
         self.openCalendar = QPushButton(self.setMonitorWidget)
         self.openCalendar.setGeometry(36 * self.width_scale, 660 * self.height_scale, 32 * self.width_scale,
-                                         32 * self.height_scale)  # Position and size of the label
+                                      32 * self.height_scale)  # Position and size of the label
         self.openCalendar.setStyleSheet(f"""
-                                                                                                         QPushButton {{
-                                                                                                             background-color: #F3F3F3;
-                                                                                                             border: none;
-                                                                                                             border-radius:{15 * self.width_scale}px
-                                                                                                         }}
-                                                                                                     """)
+                                                                                                                 QPushButton {{
+                                                                                                                     background-color: #F3F3F3;
+                                                                                                                     border: none;
+                                                                                                                     border-radius:{15 * self.width_scale}px
+                                                                                                                 }}
+                                                                                                             """)
         self.openCalendarPixmap = QIcon(
             self.normalized_path + '/includes/Icons/monitor/calendar.png')  # Path to your icon image
         self.openCalendar.setIcon(self.openCalendarPixmap)
@@ -5902,14 +6043,14 @@ class ApplicationWindow(
 
         self.openVideo = QPushButton(self.setMonitorWidget)
         self.openVideo.setGeometry(36 * self.width_scale, 710 * self.height_scale, 32 * self.width_scale,
-                                      32 * self.height_scale)  # Position and size of the label
+                                   32 * self.height_scale)  # Position and size of the label
         self.openVideo.setStyleSheet(f"""
-                                                                                                                 QPushButton {{
-                                                                                                                     background-color: #F3F3F3;
-                                                                                                                     border: none;
-                                                                                                                     border-radius:{15 * self.width_scale}px
-                                                                                                                 }}
-                                                                                                             """)
+                                                                                                                         QPushButton {{
+                                                                                                                             background-color: #F3F3F3;
+                                                                                                                             border: none;
+                                                                                                                             border-radius:{15 * self.width_scale}px
+                                                                                                                         }}
+                                                                                                                     """)
         self.openVideoPixmap = QIcon(
             self.normalized_path + '/includes/Icons/monitor/video.png')  # Path to your icon image
         self.openVideo.setIcon(self.openVideoPixmap)
@@ -5917,14 +6058,14 @@ class ApplicationWindow(
 
         self.openMonitorList = QPushButton(self.setMonitorWidget)
         self.openMonitorList.setGeometry(36 * self.width_scale, 760 * self.height_scale, 32 * self.width_scale,
-                                        32 * self.height_scale)  # Position and size of the label
+                                         32 * self.height_scale)  # Position and size of the label
         self.openMonitorList.setStyleSheet(f"""
-                                                                                                  QPushButton {{
-                                                                                                      background-color: #F3F3F3;
-                                                                                                      border: none;
-                                                                                                      border-radius:{15 * self.width_scale}px
-                                                                                                  }}
-                                                                                              """)
+                                                                                                          QPushButton {{
+                                                                                                              background-color: #F3F3F3;
+                                                                                                              border: none;
+                                                                                                              border-radius:{15 * self.width_scale}px
+                                                                                                          }}
+                                                                                                      """)
         self.openMonitorListPixmap = QIcon(
             self.normalized_path + '/includes/Icons/monitor/set.png')  # Path to your icon image
         self.openMonitorList.setIcon(self.openMonitorListPixmap)
@@ -5938,19 +6079,19 @@ class ApplicationWindow(
             f'border: none; '
         )
         self.grayBack.setGeometry(11 * self.width_scale, 11 * self.height_scale, 82 * self.width_scale,
-                                          514 * self.height_scale)
+                                  514 * self.height_scale)
 
         self.rightMonitorIMG1 = QLabel(self.grayBack)
         self.rightMonitorIMG1.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.rightMonitorIMG1.setGeometry(12 * self.width_scale, 11 * self.height_scale, 59 * self.width_scale,
-                                       59 * self.width_scale)
+                                          59 * self.width_scale)
         rightMonitorIMG1_path = f"{self.normalized_path}/includes/Icons/monitor/a.png"
         rightMonitorIMG1_pixmap = QPixmap(rightMonitorIMG1_path)
         rightMonitorIMG1_pixmap = rightMonitorIMG1_pixmap.scaled(self.rightMonitorIMG1.size(),
-                                                             aspectRatioMode=Qt.AspectRatioMode.KeepAspectRatio)
+                                                                 aspectRatioMode=Qt.AspectRatioMode.KeepAspectRatio)
         self.rightMonitorIMG1.setPixmap(rightMonitorIMG1_pixmap)
         self.rightMonitorIMG1.setStyleSheet(
-            f"QLabel{{background-color: transparent; border: none; border-radius: {18* self.width_scale}px}}"
+            f"QLabel{{background-color: transparent; border: none; border-radius: {18 * self.width_scale}px}}"
         )
 
         self.rightMonitorIMG2 = QLabel(self.grayBack)
@@ -5981,7 +6122,7 @@ class ApplicationWindow(
 
         self.openAddMonitor = QPushButton(self.grayBack)
         self.openAddMonitor.setGeometry(12 * self.width_scale, 227 * self.height_scale, 59 * self.width_scale,
-                                       59 * self.height_scale)  # Position and size of the label
+                                        59 * self.height_scale)  # Position and size of the label
         self.openAddMonitor.setStyleSheet("""
                                                                                           QPushButton {
                                                                                               background-color: transparent;
@@ -5994,7 +6135,6 @@ class ApplicationWindow(
         self.openAddMonitor.setIconSize(QSize(59 * self.width_scale, 59 * self.width_scale))
         self.openAddMonitor.clicked.connect(self.openAddMonitorClick)
 
-
         self.shadowLine = QWidget(self.setMonitorWidget)
         self.shadowLine.setStyleSheet(
             f'border-radius: {0 * self.height_scale}px; '
@@ -6002,7 +6142,7 @@ class ApplicationWindow(
             f'border: none; '
         )
         self.shadowLine.setGeometry(0 * self.width_scale, 509 * self.height_scale, 104 * self.width_scale,
-                                  30 * self.height_scale)
+                                    30 * self.height_scale)
         top_shadow = QGraphicsDropShadowEffect()
         top_shadow.setColor(QColor(183, 175, 169, 17))  # 颜色 #B7AFA9，透明度 50%（127/255）
         top_shadow.setBlurRadius(20)  # 模糊度
@@ -6016,7 +6156,7 @@ class ApplicationWindow(
             f'border: none; '
         )
         self.addMonitorWidget.setGeometry(1072 * self.width_scale, 110 * self.height_scale, 359 * self.width_scale,
-                                  391 * self.height_scale)
+                                          391 * self.height_scale)
         self.addMonitorWidget.setVisible(False)
 
         self.tjsbTitle = QLabel(self.addMonitorWidget)
@@ -6035,7 +6175,7 @@ class ApplicationWindow(
         self.sxtTxt.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.sxtTxt.setText('摄像头名称')
         self.sxtTxt.setGeometry(39 * self.width_scale, 81 * self.height_scale, 114 * self.width_scale,
-                                 19 * self.height_scale)
+                                19 * self.height_scale)
         self.sxtTxt.setStyleSheet(
             "color: #333333;background-color:transparent; border: none"
         )
@@ -6055,7 +6195,7 @@ class ApplicationWindow(
                                                         """)
         self.sxtmcContent.setFont(hcsjContentfont)
         self.sxtmcContent.setGeometry(30 * self.width_scale, 110 * self.height_scale, 142 * self.width_scale,
-                                    34 * self.height_scale)
+                                      34 * self.height_scale)
 
         self.sxtTxt = QLabel(self.addMonitorWidget)
         self.sxtTxt.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
@@ -6081,7 +6221,7 @@ class ApplicationWindow(
                                                                 """)
         self.spdzContent.setFont(hcsjContentfont)
         self.spdzContent.setGeometry(187 * self.width_scale, 111 * self.height_scale, 142 * self.width_scale,
-                                      34 * self.height_scale)
+                                     34 * self.height_scale)
 
         self.sxtTxt = QLabel(self.addMonitorWidget)
         self.sxtTxt.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
@@ -6138,7 +6278,7 @@ class ApplicationWindow(
         self.monitorBtn = QPushButton(self.addMonitorWidget)
         self.monitorBtn.setText('确定')
         self.monitorBtn.setGeometry(192 * self.width_scale, 293 * self.height_scale, 85 * self.width_scale,
-                                   38 * self.height_scale)
+                                    38 * self.height_scale)
         self.monitorBtn.setStyleSheet(
             f"QPushButton{{color: #ffffff;background-color: #393939;border-radius: {18 * self.height_scale}px;border: none;}}"
             f"QPushButton:hover{{color: #ffffff;background-color: #8C6348;border-radius: {18 * self.height_scale}px;border: none;}}"
@@ -6150,7 +6290,7 @@ class ApplicationWindow(
         self.monitorBtn_cancel = QPushButton(self.addMonitorWidget)
         self.monitorBtn_cancel.setText('取消')
         self.monitorBtn_cancel.setGeometry(83 * self.width_scale, 293 * self.height_scale, 85 * self.width_scale,
-                                    38 * self.height_scale)
+                                           38 * self.height_scale)
         self.monitorBtn_cancel.setStyleSheet(
             f"QPushButton{{color: #333333;background-color: #F5F5F5;border-radius: {18 * self.height_scale}px;border: none;}}"
             f"QPushButton:hover{{color: #ffffff;background-color: #222222;border-radius: {18 * self.height_scale}px;border: none;}}"
@@ -6158,40 +6298,30 @@ class ApplicationWindow(
         self.monitorBtn_cancel.setFont(monitorBtnfont)
         self.monitorBtn_cancel.clicked.connect(self.onMonitorBtn_cancel)
 
-
-
-
         # 设备管理页 deviceTabel
-        # self.deviceTabel = QWidget(self)
-        # self.deviceTabel.setStyleSheet(f'border-radius: {25*self.height_scale}px;background-color: transparent; border: none; ')
-        # self.deviceTabel.setGeometry(231*self.width_scale, 200*self.height_scale, 1600*self.width_scale, 796*self.height_scale)
-        # self.deviceTabel.setVisible(False)
         self.deviceTabel = QLabel(self)
-        self.deviceTabel.setGeometry(231*self.width_scale, 200*self.height_scale, 1600*self.width_scale, 796*self.height_scale)
-        self.deviceTabel.setStyleSheet(
-            f'border-radius: {25 * self.height_scale}px;background-color: transparent; border: none; ')
+        self.deviceTabel.setGeometry(231 * self.width_scale, 200 * self.height_scale, 1600 * self.width_scale,
+                                     796 * self.height_scale)
         self.deviceTabelpixmap = QPixmap(self.normalized_path + '/includes/Icons/general/back.png')  # 背景图
         self.deviceTabel.setPixmap(self.deviceTabelpixmap)
-        scaled_pixmap2 = self.deviceTabelpixmap.scaled(self.deviceTabel.size(),
-                                                          Qt.AspectRatioMode.IgnoreAspectRatio)
-
-        self.deviceTabel.setPixmap(scaled_pixmap2)
         self.deviceTabel.setScaledContents(True)
         self.deviceTabel.setVisible(False)
 
         self.deviceGridLayout = QGridLayout(self.deviceTabel)
-        self.deviceGridLayout.setContentsMargins(0, 50*self.height_scale, 0*self.width_scale, 0*self.width_scale)
+        self.deviceGridLayout.setContentsMargins(0, 50 * self.height_scale, 21 * self.width_scale,
+                                                 21 * self.width_scale)
 
         # 设置每个组件之间的水平和垂直间距
-        self.deviceGridLayout.setHorizontalSpacing(0*self.width_scale)
-        self.deviceGridLayout.setVerticalSpacing(0*self.width_scale)
+        self.deviceGridLayout.setHorizontalSpacing(21 * self.width_scale)
+        self.deviceGridLayout.setVerticalSpacing(21 * self.width_scale)
 
         # 设置布局
         self.deviceTabel.setLayout(self.deviceGridLayout)
 
         self.deviceScroll = QScrollArea(self)
         self.deviceScroll.setWidgetResizable(True)
-        self.deviceScroll.setGeometry(231*self.width_scale, 200*self.height_scale, 1600*self.width_scale, 796*self.height_scale)
+        self.deviceScroll.setGeometry(231 * self.width_scale, 200 * self.height_scale, 1600 * self.width_scale,
+                                      796 * self.height_scale)
         self.deviceScroll.setStyleSheet('border: none;background-color: #ffffff; ')
         self.deviceScroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)  # 隐藏横向滚动条
         self.deviceScroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)  # 隐藏纵向滚动条
@@ -6201,7 +6331,8 @@ class ApplicationWindow(
 
         # 设备详情页
         self.deviceDetail = QWidget(self)
-        self.deviceDetail.setStyleSheet(f'border-radius: {25*self.height_scale}px;background-color: #f5f8fc; border: 1px solid #DEE0E3; ')
+        self.deviceDetail.setStyleSheet(
+            f'border-radius: {25 * self.height_scale}px;background-color: #f5f8fc; border: 1px solid #DEE0E3; ')
         self.deviceDetail.setGeometry(231 * self.width_scale, 200 * self.height_scale, 1600 * self.width_scale,
                                       796 * self.height_scale)
         self.deviceDetail.setVisible(False)
@@ -6219,14 +6350,14 @@ class ApplicationWindow(
         # 设置缩放后的图片到QLabel
         self.deviceDetailTouxiang.setPixmap(scaled_pixmap)
         # 监听双击事件，
-        self.deviceDetailTouxiang.mouseDoubleClickEvent = self.openFileDialog
+        # self.deviceDetailTouxiang.mouseDoubleClickEvent = self.openFileDialog
 
         self.deviceName = QLabel(self.deviceDetail)
         self.deviceName.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.deviceName.setGeometry(409 * self.width_scale, 263 * self.height_scale, 100 * self.width_scale,
                                     32 * self.height_scale)
         self.deviceName.setStyleSheet(
-            f"QLabel{{background-color: transparent; border-radius: {16*self.height_scale}px; border: none;}}"
+            f"QLabel{{background-color: transparent; border-radius: {16 * self.height_scale}px; border: none;}}"
         )
         self.deviceName.setText("名称：")
         deviceNameFont = QFont(self.font_family4, 14 * self.width_scale)
@@ -6241,74 +6372,74 @@ class ApplicationWindow(
                                                 color: #393939;             /* 设置文字颜色 */
                                                 padding-left: 21px;         /* 设置文字左边距 */
                                                 border: 1px solid #DEE0E3;               /* 移除边框 */
-                                                border-radius: {12*self.height_scale}px;
+                                                border-radius: {12 * self.height_scale}px;
                                             }}
                                         """)
         deviceNameEditfont = QFont(self.font_family4, 14 * self.width_scale)
         self.deviceNameLineEdit.setFont(deviceNameEditfont)
         self.deviceNameLineEdit.setGeometry(407 * self.width_scale, 301 * self.height_scale, 374 * self.width_scale,
                                             60 * self.height_scale)  # 设置控件的固定大小为56x24px
-
-        self.deviceNameEdit = QComboBox(self.deviceDetail)
-        # self.deviceNameEdit.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignLeft)
-        self.deviceNameEdit.setStyleSheet(f"""
-                            QComboBox {{
-                                background-color: #FFFFFF;
-                                color: #393939;
-                                border: 1px solid #DEE0E3;
-                                border-radius: {12*self.height_scale}px;
-                                padding-left: {24*self.height_scale}px;
-                            }}
-                            QComboBox::drop-down {{  /* 隐藏默认下拉按钮 */
-                                border: 0px;
-                            }}
-                            QComboBox::down-arrow {{ /* 替换为自定义小三角 */
-                                image: url('{self.normalized_path}/includes/Icons/general/xiala.png'); /* 替换为你的小三角图片路径 */
-                                width: {12*self.height_scale}px;
-                                height: {12*self.height_scale}px;
-                                margin-right: {12*self.height_scale}px; /* 调整三角形与边界的间距 */
-                            }}
-                        """)
-
-        # 设置字体
-        deviceNameEditfont = QFont(self.font_family4, 14 * self.width_scale)
-        self.deviceNameEdit.setFont(deviceNameEditfont)
-        self.deviceNameEdit.setGeometry(407 * self.width_scale, 301 * self.height_scale, 374 * self.width_scale,
-                                        60 * self.height_scale)  # 设置控件的固定大小为56x24px
-        self.load_files(os.path.join(ytycwdpath,"Machines"))
+        #
+        # self.deviceNameEdit = QComboBox(self.deviceDetail)
+        # # self.deviceNameEdit.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignLeft)
+        # self.deviceNameEdit.setStyleSheet(f"""
+        #                     QComboBox {{
+        #                         background-color: #FFFFFF;
+        #                         color: #393939;
+        #                         border: 1px solid #DEE0E3;
+        #                         border-radius: {12 * self.height_scale}px;
+        #                         padding-left: {24 * self.height_scale}px;
+        #                     }}
+        #                     QComboBox::drop-down {{  /* 隐藏默认下拉按钮 */
+        #                         border: 0px;
+        #                     }}
+        #                     QComboBox::down-arrow {{ /* 替换为自定义小三角 */
+        #                         image: url('{self.normalized_path}/includes/Icons/general/xiala.png'); /* 替换为你的小三角图片路径 */
+        #                         width: {12 * self.height_scale}px;
+        #                         height: {12 * self.height_scale}px;
+        #                         margin-right: {12 * self.height_scale}px; /* 调整三角形与边界的间距 */
+        #                     }}
+        #                 """)
+        #
+        # # 设置字体
+        # deviceNameEditfont = QFont(self.font_family4, 14 * self.width_scale)
+        # self.deviceNameEdit.setFont(deviceNameEditfont)
+        # self.deviceNameEdit.setGeometry(407 * self.width_scale, 301 * self.height_scale, 374 * self.width_scale,
+        #                                 60 * self.height_scale)  # 设置控件的固定大小为56x24px
+        # self.load_files(os.path.join(ytycwdpath, "Machines"))
 
         self.deviceModel = QLabel(self.deviceDetail)
         self.deviceModel.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.deviceModel.setGeometry(820 * self.width_scale, 264 * self.height_scale, 100 * self.width_scale,
                                      32 * self.height_scale)
         self.deviceModel.setStyleSheet(
-            f"QLabel{{background-color: transparent; border-radius: {16*self.height_scale}px; border: none;}}"
+            f"QLabel{{background-color: transparent; border-radius: {16 * self.height_scale}px; border: none;}}"
         )
         self.deviceModel.setText("机型：")
         self.deviceModel.setFont(deviceNameFont)
 
-        self.deviceModelEdit = QComboBox(self.deviceDetail)
-        self.deviceModelEdit.setStyleSheet(f"""
-                            QComboBox {{
-                                background-color: #FFFFFF;
-                                color: #393939;
-                                border: 1px solid #DEE0E3;
-                                border-radius: {12*self.height_scale}px;
-                                padding-left: {24*self.height_scale}px;
-                            }}
-                            QComboBox::drop-down {{  /* 隐藏默认下拉按钮 */
-                                border: 0px;
-                            }}
-                            QComboBox::down-arrow {{ /* 替换为自定义小三角 */
-                                image: url('{self.normalized_path}/includes/Icons/general/xiala.png'); /* 替换为你的小三角图片路径 */
-                                width: {12*self.height_scale}px;
-                                height: {12*self.height_scale}px;
-                                margin-right: {12*self.height_scale}px; /* 调整三角形与边界的间距 */
-                            }}
-                        """)
-        self.deviceModelEdit.setFont(QFont(self.font_family4, 14 * self.width_scale))
-        self.deviceModelEdit.setGeometry(820 * self.width_scale, 301 * self.height_scale, 374 * self.width_scale,
-                                         60 * self.height_scale)
+        # self.deviceModelEdit = QComboBox(self.deviceDetail)
+        # self.deviceModelEdit.setStyleSheet(f"""
+        #                     QComboBox {{
+        #                         background-color: #FFFFFF;
+        #                         color: #393939;
+        #                         border: 1px solid #DEE0E3;
+        #                         border-radius: {12 * self.height_scale}px;
+        #                         padding-left: {24 * self.height_scale}px;
+        #                     }}
+        #                     QComboBox::drop-down {{  /* 隐藏默认下拉按钮 */
+        #                         border: 0px;
+        #                     }}
+        #                     QComboBox::down-arrow {{ /* 替换为自定义小三角 */
+        #                         image: url('{self.normalized_path}/includes/Icons/general/xiala.png'); /* 替换为你的小三角图片路径 */
+        #                         width: {12 * self.height_scale}px;
+        #                         height: {12 * self.height_scale}px;
+        #                         margin-right: {12 * self.height_scale}px; /* 调整三角形与边界的间距 */
+        #                     }}
+        #                 """)
+        # self.deviceModelEdit.setFont(QFont(self.font_family4, 14 * self.width_scale))
+        # self.deviceModelEdit.setGeometry(820 * self.width_scale, 301 * self.height_scale, 374 * self.width_scale,
+        #                                  60 * self.height_scale)
 
         self.deviceModelLineEdit = QLineEdit(self.deviceDetail)
         self.deviceModelLineEdit.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignLeft)
@@ -6319,22 +6450,22 @@ class ApplicationWindow(
                                                                 color: #393939;             /* 设置文字颜色 */
                                                                 padding-left: 21px;         /* 设置文字左边距 */
                                                                 border: 1px solid #DEE0E3;               /* 移除边框 */
-                                                                border-radius: {12*self.height_scale}px;
+                                                                border-radius: {12 * self.height_scale}px;
                                                             }}
                                                         """)
         self.deviceModelLineEdit.setFont(deviceNameEditfont)
         self.deviceModelLineEdit.setGeometry(820 * self.width_scale, 301 * self.height_scale, 374 * self.width_scale,
                                              60 * self.height_scale)  # 设置控件的固定大小为56x24px
 
-        self.deviceNameEdit.currentTextChanged.connect(self.load_files_from_folder)
-        self.deviceModelEdit.currentTextChanged.connect(self.load_modbus_host)
+        # self.deviceNameEdit.currentTextChanged.connect(self.load_files_from_folder)
+        # self.deviceModelEdit.currentTextChanged.connect(self.load_modbus_host)
 
         self.deviceXLH = QLabel(self.deviceDetail)
         self.deviceXLH.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.deviceXLH.setGeometry(409 * self.width_scale, 389 * self.height_scale, 150 * self.width_scale,
                                    32 * self.height_scale)
         self.deviceXLH.setStyleSheet(
-            f"QLabel{{background-color: transparent; border-radius: {16*self.height_scale}px; border: none;}}"
+            f"QLabel{{background-color: transparent; border-radius: {16 * self.height_scale}px; border: none;}}"
         )
         self.deviceXLH.setText("设备序列号：")
         self.deviceXLH.setFont(deviceNameFont)
@@ -6348,7 +6479,7 @@ class ApplicationWindow(
                                                                 color: #393939;             /* 设置文字颜色 */
                                                                 padding-left: 21px;         /* 设置文字左边距 */
                                                                 border: 1px solid #DEE0E3;               /* 移除边框 */
-                                                                border-radius: {12*self.height_scale}px;
+                                                                border-radius: {12 * self.height_scale}px;
                                                             }}
                                                         """)
         self.deviceXLHEdit.setFont(deviceNameEditfont)
@@ -6360,88 +6491,76 @@ class ApplicationWindow(
         self.deviceAddress.setGeometry(820 * self.width_scale, 389 * self.height_scale, 150 * self.width_scale,
                                        32 * self.height_scale)
         self.deviceAddress.setStyleSheet(
-            f"QLabel{{background-color: transparent; border-radius: {16*self.height_scale}px; border: none;}}"
+            f"QLabel{{background-color: transparent; border-radius: {16 * self.height_scale}px; border: none;}}"
         )
         self.deviceAddress.setText("设备IP：")
         self.deviceAddress.setFont(deviceNameFont)
 
         self.deviceAddressEdit = QLineEdit(self.deviceDetail)
         self.deviceAddressEdit.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignLeft)
-        # self.deviceAddressEdit.setText('185°')
+        # self.deviceNameEdit.setText('185°')
         self.deviceAddressEdit.setStyleSheet(f"""
                                                                     QLineEdit {{
                                                                         background-color: #FFFFFF;  /* 设置背景颜色 */
                                                                         color: #393939;             /* 设置文字颜色 */
-                                                                        padding-left: {21*self.height_scale}px;         /* 设置文字左边距 */
+                                                                        padding-left: {21 * self.height_scale}px;         /* 设置文字左边距 */
                                                                         border: 1px solid #DEE0E3;               /* 移除边框 */
-                                                                        border-radius: {12*self.height_scale}px;
+                                                                        border-radius: {12 * self.height_scale}px;
                                                                     }}
                                                                 """)
         self.deviceAddressEdit.setFont(deviceNameEditfont)
         self.deviceAddressEdit.setGeometry(820 * self.width_scale, 429 * self.height_scale, 374 * self.width_scale,
                                            60 * self.height_scale)  # 设置控件的固定大小为56x24px
-        self.deviceAddressEdit.setVisible(True)
-
-        self.deviceAddressCom = QComboBox(self.deviceDetail)
-        self.deviceAddressCom.setStyleSheet(f"""
-                                    QComboBox {{
-                                        background-color: #FFFFFF;
-                                        color: #393939;
-                                        border: 1px solid #DEE0E3;
-                                        border-radius: {12 * self.height_scale}px;
-                                        padding-left: {24 * self.height_scale}px;
-                                    }}
-                                    QComboBox::drop-down {{  /* 隐藏默认下拉按钮 */
-                                        border: 0px;
-                                    }}
-                                    QComboBox::down-arrow {{ /* 替换为自定义小三角 */
-                                        image: url('{self.normalized_path}/includes/Icons/general/xiala.png'); /* 替换为你的小三角图片路径 */
-                                        width: {12 * self.height_scale}px;
-                                        height: {12 * self.height_scale}px;
-                                        margin-right: {12 * self.height_scale}px; /* 调整三角形与边界的间距 */
-                                    }}
-                                """)
-        self.deviceAddressCom.setFont(QFont(self.font_family4, 14 * self.width_scale))
-        self.deviceAddressCom.setGeometry(820 * self.width_scale, 429 * self.height_scale, 374 * self.width_scale,
-                                       60 * self.height_scale)
-        self.deviceAddressCom.addItems(self.get_serial_ports())
-        self.deviceAddressCom.setVisible(False)
 
         self.devicejrfs = QLabel(self.deviceDetail)
         self.devicejrfs.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.devicejrfs.setGeometry(409 * self.width_scale, 515 * self.height_scale, 150 * self.width_scale,
                                     32 * self.height_scale)
         self.devicejrfs.setStyleSheet(
-            f"QLabel{{background-color: transparent; border-radius: {16*self.height_scale}px; border: none;}}"
+            f"QLabel{{background-color: transparent; border-radius: {16 * self.height_scale}px; border: none;}}"
         )
         self.devicejrfs.setText("加热方式：")
         self.devicejrfs.setFont(deviceNameFont)
 
-        # self.deviceHeating = QLineEdit(self.deviceDetail)
-
-        self.deviceHeating = QComboBox(self.deviceDetail)
+        self.deviceHeating = QLineEdit(self.deviceDetail)
+        self.deviceHeating.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignLeft)
+        # self.deviceNameEdit.setText('185°')
         self.deviceHeating.setStyleSheet(f"""
-                            QComboBox {{
-                                background-color: #FFFFFF;
-                                color: #393939;
-                                border: 1px solid #DEE0E3;
-                                border-radius: {12*self.height_scale}px;
-                                padding-left: {24*self.height_scale}px;
-                            }}
-                            QComboBox::drop-down {{  /* 隐藏默认下拉按钮 */
-                                border: 0px;
-                            }}
-                            QComboBox::down-arrow {{ /* 替换为自定义小三角 */
-                                image: url('{self.normalized_path}/includes/Icons/general/xiala.png'); /* 替换为你的小三角图片路径 */
-                                width: {12*self.height_scale}px;
-                                height: {12*self.height_scale}px;
-                                margin-right: {12*self.height_scale}px; /* 调整三角形与边界的间距 */
-                            }}
-                        """)
-        self.deviceHeating.setFont(QFont(self.font_family4, 14 * self.width_scale))
+                                                                    QLineEdit {{
+                                                                        background-color: #FFFFFF;  /* 设置背景颜色 */
+                                                                        color: #393939;             /* 设置文字颜色 */
+                                                                        padding-left: 21px;         /* 设置文字左边距 */
+                                                                        border: 1px solid #DEE0E3;               /* 移除边框 */
+                                                                        border-radius: {12 * self.height_scale}px;
+                                                                    }}
+                                                                """)
+        self.deviceHeating.setFont(deviceNameEditfont)
         self.deviceHeating.setGeometry(409 * self.width_scale, 557 * self.height_scale, 374 * self.width_scale,
                                        60 * self.height_scale)
-        self.deviceHeating.addItems(self.qmc.heating_types)
+
+        # self.deviceHeating = QComboBox(self.deviceDetail)
+        # self.deviceHeating.setStyleSheet(f"""
+        #                     QComboBox {{
+        #                         background-color: #FFFFFF;
+        #                         color: #393939;
+        #                         border: 1px solid #DEE0E3;
+        #                         border-radius: {12 * self.height_scale}px;
+        #                         padding-left: {24 * self.height_scale}px;
+        #                     }}
+        #                     QComboBox::drop-down {{  /* 隐藏默认下拉按钮 */
+        #                         border: 0px;
+        #                     }}
+        #                     QComboBox::down-arrow {{ /* 替换为自定义小三角 */
+        #                         image: url('{self.normalized_path}/includes/Icons/general/xiala.png'); /* 替换为你的小三角图片路径 */
+        #                         width: {12 * self.height_scale}px;
+        #                         height: {12 * self.height_scale}px;
+        #                         margin-right: {12 * self.height_scale}px; /* 调整三角形与边界的间距 */
+        #                     }}
+        #                 """)
+        # self.deviceHeating.setFont(QFont(self.font_family4, 14 * self.width_scale))
+        # self.deviceHeating.setGeometry(409 * self.width_scale, 557 * self.height_scale, 374 * self.width_scale,
+        #                                60 * self.height_scale)
+        # self.deviceHeating.addItems(self.qmc.heating_types)
 
         self.deviceDZ = QLabel(self.deviceDetail)
         self.deviceDZ.setAlignment(Qt.AlignmentFlag.AlignLeft)
@@ -6469,27 +6588,27 @@ class ApplicationWindow(
         self.deviceDZEdit.setGeometry(820 * self.width_scale, 557 * self.height_scale, 374 * self.width_scale,
                                       60 * self.height_scale)  # 设置控件的固定大小为56x24px
 
-        self.deviceBtn = QPushButton(self.deviceDetail)
-        self.deviceBtn.setText('确定')
-        self.deviceBtn.setGeometry(672 * self.width_scale, 703 * self.height_scale, 120 * self.width_scale,
-                                   50 * self.height_scale)
-        self.deviceBtn.setStyleSheet(
-            f"QPushButton{{color: #ffffff;background-color: #393939;border-radius: {24*self.height_scale}px;border: none;}}"
-            f"QPushButton:hover{{color: #ffffff;background-color: #8C6348;border-radius: {24*self.height_scale}px;border: none;}}"
-        )
-        deviceBtnfont = QFont(self.font_family4, 12 * self.width_scale)
-        self.deviceBtn.setFont(deviceBtnfont)
-        self.deviceBtn.clicked.connect(self.onConfirmClick)
+        # self.deviceBtn = QPushButton(self.deviceDetail)
+        # self.deviceBtn.setText('确定')
+        # self.deviceBtn.setGeometry(672 * self.width_scale, 703 * self.height_scale, 120 * self.width_scale,
+        #                            50 * self.height_scale)
+        # self.deviceBtn.setStyleSheet(
+        #     f"QPushButton{{color: #ffffff;background-color: #393939;border-radius: {24 * self.height_scale}px;border: none;}}"
+        #     f"QPushButton:hover{{color: #ffffff;background-color: #8C6348;border-radius: {24 * self.height_scale}px;border: none;}}"
+        # )
+        # deviceBtnfont = QFont(self.font_family4, 12 * self.width_scale)
+        # self.deviceBtn.setFont(deviceBtnfont)
+        # self.deviceBtn.clicked.connect(self.onConfirmClick)
 
-        self.d_deviceBtn = QPushButton(self.deviceDetail)
-        self.d_deviceBtn.setText('删除')
-        self.d_deviceBtn.setGeometry(802 * self.width_scale, 703 * self.height_scale, 120 * self.width_scale,
-                                     50 * self.height_scale)
-        self.d_deviceBtn.setStyleSheet(
-            f"QPushButton{{color: #ffffff;background-color: #393939;border-radius: {24*self.height_scale}px;border: none;}}"
-            f"QPushButton:hover{{color: #ffffff;background-color: #DD5D5B;border-radius: {24*self.height_scale}px;border: none;}}"
-        )
-        self.d_deviceBtn.setFont(deviceBtnfont)
+        # self.d_deviceBtn = QPushButton(self.deviceDetail)
+        # self.d_deviceBtn.setText('删除')
+        # self.d_deviceBtn.setGeometry(802 * self.width_scale, 703 * self.height_scale, 120 * self.width_scale,
+        #                              50 * self.height_scale)
+        # self.d_deviceBtn.setStyleSheet(
+        #     f"QPushButton{{color: #ffffff;background-color: #393939;border-radius: {24 * self.height_scale}px;border: none;}}"
+        #     f"QPushButton:hover{{color: #ffffff;background-color: #DD5D5B;border-radius: {24 * self.height_scale}px;border: none;}}"
+        # )
+        # self.d_deviceBtn.setFont(deviceBtnfont)
         # self.d_deviceBtn.clicked.connect(self.onDelectMachinesClick)
 
         self.fh_deviceBtn = QPushButton(self.deviceDetail)
@@ -6497,35 +6616,38 @@ class ApplicationWindow(
         self.fh_deviceBtn.setGeometry(35 * self.width_scale, 24 * self.height_scale, 60 * self.width_scale,
                                       60 * self.height_scale)
         self.fh_deviceBtn.setStyleSheet(
-            f"QPushButton{{color: #A6AFB8;background-color: transparent;border-radius: {25*self.height_scale}px;border: none;}}"
+            f"QPushButton{{color: #A6AFB8;background-color: transparent;border-radius: {25 * self.height_scale}px;border: none;}}"
         )
         fh_deviceBtnfont = QFont(self.font_family4, 24 * self.width_scale)
         fh_deviceBtnfont.setBold(True)
         self.fh_deviceBtn.setFont(fh_deviceBtnfont)
         self.fh_deviceBtn.clicked.connect(self.fhMachinesClick)
 
-
         # 历史记录
         self.historyTabel = QWidget(self)
-        self.historyTabel.setStyleSheet(f'border-radius: {25*self.height_scale}px;background-color: #ffffff; border: 1px solid #DEE0E3; ')
-        self.historyTabel.setGeometry(226*self.width_scale, 196*self.height_scale, 1610*self.width_scale, 800*self.height_scale)
+        self.historyTabel.setStyleSheet(
+            f'border-radius: {25 * self.height_scale}px;background-color: #ffffff; border: 1px solid #DEE0E3; ')
+        self.historyTabel.setGeometry(226 * self.width_scale, 196 * self.height_scale, 1610 * self.width_scale,
+                                      800 * self.height_scale)
         self.historyTabel.setVisible(False)
 
         self.todayBtn = QPushButton(self.historyTabel)
         self.todayBtn.setText('今天')
-        self.todayBtn.setGeometry(20*self.width_scale, 18*self.height_scale, 56*self.width_scale, 33*self.height_scale)
+        self.todayBtn.setGeometry(20 * self.width_scale, 18 * self.height_scale, 56 * self.width_scale,
+                                  33 * self.height_scale)
         self.todayBtn.setStyleSheet(
-            f"QPushButton{{color: #090101;background-color: #DEE0E3;border-radius: {12*self.height_scale}px;border: none;}}"
+            f"QPushButton{{color: #090101;background-color: #DEE0E3;border-radius: {12 * self.height_scale}px;border: none;}}"
         )
-        todayBtnfont = QFont(self.font_family4, 10*self.width_scale)
+        todayBtnfont = QFont(self.font_family4, 10 * self.width_scale)
         self.todayBtn.setFont(todayBtnfont)
         self.todayBtn.clicked.connect(self.todayClick)
 
         self.fxBtn = QPushButton(self.historyTabel)
         self.fxBtn.setText('分析')
-        self.fxBtn.setGeometry(1523*self.width_scale, 18*self.height_scale, 56*self.width_scale, 33*self.height_scale)
+        self.fxBtn.setGeometry(1523 * self.width_scale, 18 * self.height_scale, 56 * self.width_scale,
+                               33 * self.height_scale)
         self.fxBtn.setStyleSheet(
-            f"QPushButton{{color: #ffffff;background-color: #393939;border-radius: {12*self.height_scale}px;border: none;}}"
+            f"QPushButton{{color: #ffffff;background-color: #393939;border-radius: {12 * self.height_scale}px;border: none;}}"
         )
         # todayBtnfont = QFont(self.font_family4, 10)
         self.fxBtn.setFont(todayBtnfont)
@@ -6577,8 +6699,7 @@ class ApplicationWindow(
             "Saturday": "星期六",
             "Sunday": "星期天"
         }
-
-        weekday = current_date.toString("dddd")  # 默认英文
+        weekday = current_date.toString("dddd")  # 获取星期几，例如 "周一"
         weekday = weekday_map.get(weekday, weekday)  # 转换为中文星期
         full_text = f"{formatted_date}  {weekday}"
 
@@ -6589,8 +6710,8 @@ class ApplicationWindow(
         self.date_edit.setReadOnly(True)
 
         self.date_edit_button = QPushButton(self.date_edit)
-        self.date_edit_button.setGeometry(215 * self.width_scale, 0, 30 * self.width_scale,
-                                       30 * self.width_scale)
+        self.date_edit_button.setGeometry(255 * self.width_scale, 0, 30 * self.width_scale,
+                                          30 * self.width_scale)
         self.date_edit_button.setCheckable(True)
         self.date_edit_button.setIcon(
             QIcon(self.normalized_path + '/includes/Icons/general/xiala.png'))
@@ -6598,7 +6719,6 @@ class ApplicationWindow(
         self.date_edit_button.setIconSize(QSize(30 * self.width_scale, 30 * self.width_scale))
         self.date_edit_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.date_edit_button.clicked.connect(self.show_calendar)
-
 
         # 创建 QDateEdit 日期选择器
         # 初始化QDateEdit控件
@@ -6652,78 +6772,78 @@ class ApplicationWindow(
 
         # 设置日历弹出窗口的大小
 
-#         calendar_widget = self.date_edit.calendarWidget()
-#         calendar_widget.setFixedSize(280 * self.width_scale, 320 * self.height_scale)
-#
-#         calendar_widget.setStyleSheet("""
-#                     QCalendarWidget QWidget {
-#                         background-color: #f0f0f0;
-#                     }
-#
-#                     QCalendarWidget QToolButton {
-#     height: 60px;
-#     width: 150px;
-#     color: white;
-#     font-size: 24px;
-#     icon-size: 56px, 56px;
-#     background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #cccccc, stop: 1 #333333);
-# }
-# QCalendarWidget QMenu {
-#     width: 150px;
-#     left: 20px;
-#     color: white;
-#     font-size: 18px;
-#     background-color: rgb(0, 0, 0);
-# }
-#                     QCalendarWidget QToolButton:hover {
-#                         background-color: #0088cc;
-#                     }
-#                     QCalendarWidget QToolButton::menu-indicator {
-#                         subcontrol-position: right center;
-#                         subcontrol-origin: padding;
-#                     }
-#                     QCalendarWidget QSpinBox {
-#     width: 150px;
-#     font-size:24px;
-#     color: white;
-#     background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #cccccc, stop: 1 #333333);
-#     selection-background-color: rgb(0, 0, 0);
-#     selection-color: rgb(255, 255, 255);
-# }
-#                     QCalendarWidget QSpinBox::up-button {
-#                         subcontrol-origin: border;
-#                         subcontrol-position: top right;
-#                         width: 16px;
-#                         border-width: 1px;
-#                     }
-#                     QCalendarWidget QSpinBox::down-button {
-#                         subcontrol-origin: border;
-#                         subcontrol-position: bottom right;
-#                         width: 16px;
-#                         border-width: 1px;
-#                     }
-#                     QCalendarWidget QSpinBox::up-arrow {
-#                         width: 10px;
-#                         height: 10px;
-#                     }
-#                     QCalendarWidget QSpinBox::down-arrow {
-#                         width: 10px;
-#                         height: 10px;
-#                     }
-#                     QCalendarWidget QAbstractItemView::item {
-#                          font-size: 16px;
-#                     }
-#                     QCalendarWidget QAbstractItemView::item:selected {
-#                         border-radius: 15px;
-#                     }
-#                 """)
-#         # 设置日期格式
-#         self.date_edit.setDisplayFormat("yyyy-MM-dd")
-#
-#         # 连接信号槽，当日期变化时调用函数
-#         self.date_edit.dateChanged.connect(self.update_display_with_weekday)
-#         # 初始化时手动更新文本框内容以显示星期几
-#         self.update_display_with_weekday(current_date)
+        #         calendar_widget = self.date_edit.calendarWidget()
+        #         calendar_widget.setFixedSize(280 * self.width_scale, 320 * self.height_scale)
+        #
+        #         calendar_widget.setStyleSheet("""
+        #                     QCalendarWidget QWidget {
+        #                         background-color: #f0f0f0;
+        #                     }
+        #
+        #                     QCalendarWidget QToolButton {
+        #     height: 60px;
+        #     width: 150px;
+        #     color: white;
+        #     font-size: 24px;
+        #     icon-size: 56px, 56px;
+        #     background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #cccccc, stop: 1 #333333);
+        # }
+        # QCalendarWidget QMenu {
+        #     width: 150px;
+        #     left: 20px;
+        #     color: white;
+        #     font-size: 18px;
+        #     background-color: rgb(0, 0, 0);
+        # }
+        #                     QCalendarWidget QToolButton:hover {
+        #                         background-color: #0088cc;
+        #                     }
+        #                     QCalendarWidget QToolButton::menu-indicator {
+        #                         subcontrol-position: right center;
+        #                         subcontrol-origin: padding;
+        #                     }
+        #                     QCalendarWidget QSpinBox {
+        #     width: 150px;
+        #     font-size:24px;
+        #     color: white;
+        #     background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #cccccc, stop: 1 #333333);
+        #     selection-background-color: rgb(0, 0, 0);
+        #     selection-color: rgb(255, 255, 255);
+        # }
+        #                     QCalendarWidget QSpinBox::up-button {
+        #                         subcontrol-origin: border;
+        #                         subcontrol-position: top right;
+        #                         width: 16px;
+        #                         border-width: 1px;
+        #                     }
+        #                     QCalendarWidget QSpinBox::down-button {
+        #                         subcontrol-origin: border;
+        #                         subcontrol-position: bottom right;
+        #                         width: 16px;
+        #                         border-width: 1px;
+        #                     }
+        #                     QCalendarWidget QSpinBox::up-arrow {
+        #                         width: 10px;
+        #                         height: 10px;
+        #                     }
+        #                     QCalendarWidget QSpinBox::down-arrow {
+        #                         width: 10px;
+        #                         height: 10px;
+        #                     }
+        #                     QCalendarWidget QAbstractItemView::item {
+        #                          font-size: 16px;
+        #                     }
+        #                     QCalendarWidget QAbstractItemView::item:selected {
+        #                         border-radius: 15px;
+        #                     }
+        #                 """)
+        #         # 设置日期格式
+        #         self.date_edit.setDisplayFormat("yyyy-MM-dd")
+        #
+        #         # 连接信号槽，当日期变化时调用函数
+        #         self.date_edit.dateChanged.connect(self.update_display_with_weekday)
+        #         # 初始化时手动更新文本框内容以显示星期几
+        #         self.update_display_with_weekday(current_date)
 
         # 布局
         layout = QVBoxLayout()
@@ -6736,16 +6856,18 @@ class ApplicationWindow(
         # 创建 QLabel 作为背景
         self.searchBack = QLabel(self.historyTabel)
         self.searchBack.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.searchBack.setGeometry(1284*self.width_scale, 16*self.height_scale, 220*self.width_scale, 32*self.height_scale)
+        self.searchBack.setGeometry(1284 * self.width_scale, 16 * self.height_scale, 220 * self.width_scale,
+                                    32 * self.height_scale)
         self.searchBack.setStyleSheet(
-            f"background-color: #393939; border-radius: {15*self.height_scale}px; border: none;"
+            f"background-color: #393939; border-radius: {15 * self.height_scale}px; border: none;"
         )
 
         self.comBoxLabel = QPushButton(self.searchBack)
-        self.comBoxLabel.setGeometry(4*self.width_scale, 3*self.height_scale, 94*self.width_scale, 26*self.height_scale)
+        self.comBoxLabel.setGeometry(4 * self.width_scale, 3 * self.height_scale, 94 * self.width_scale,
+                                     26 * self.height_scale)
         self.comBoxLabel.setText('任务名称')
         self.comBoxLabel.setStyleSheet(
-            f"QPushButton{{background-color: #393939;text-align: left; padding-left: {15*self.width_scale}px; border-radius: {12*self.height_scale}px; border: 1px solid #FAFBFD;color: #FCFCFC}}"
+            f"QPushButton{{background-color: #393939;text-align: left; padding-left: {15 * self.width_scale}px; border-radius: {12 * self.height_scale}px; border: 1px solid #FAFBFD;color: #FCFCFC}}"
         )
         comBoxLabelfont = QFont(self.font_family4, 9 * self.width_scale)
         self.comBoxLabel.setFont(comBoxLabelfont)
@@ -6755,7 +6877,7 @@ class ApplicationWindow(
         self.comBoxIMG.setStyleSheet(
             f'background-color: transparent; border: none; ')
         self.comBoxIMG.setGeometry(75 * self.width_scale, 8 * self.height_scale, 10 * self.width_scale,
-                                     10 * self.height_scale)
+                                   10 * self.height_scale)
         self.comBoxIMGImg = QPixmap(self.normalized_path + '/includes/Icons/general/xiala3.png')
         self.comBoxIMG.setPixmap(self.comBoxIMGImg)
         self.comBoxIMG.setScaledContents(True)
@@ -6765,78 +6887,30 @@ class ApplicationWindow(
         # self.searchEdit.setText()
         self.searchEdit.setPlaceholderText("请输入...")
         self.searchEdit.setGeometry(100 * self.width_scale, 3 * self.height_scale, 100 * self.width_scale,
-                                         26 * self.height_scale)
+                                    26 * self.height_scale)
         self.searchEdit.setStyleSheet(
             f"color: #ffffff;background-color: transparent;border: none;border-radius: {11 * self.height_scale}px;")
         searchEditfont = QFont(self.font_family4, 9 * self.width_scale)
         self.searchEdit.setFont(searchEditfont)
 
-
-
         self.tabelTitle = QLabel(self.historyTabel)
         # self.tabelTitle.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.tabelTitle.setGeometry(2*self.width_scale, 72*self.height_scale, 1607*self.width_scale, 54*self.height_scale)
+        self.tabelTitle.setGeometry(2 * self.width_scale, 72 * self.height_scale, 1607 * self.width_scale,
+                                    54 * self.height_scale)
         self.tabelTitle.setStyleSheet(
             "background-color: #FAFBFD;border: none;border-radius: 0px;"
         )
 
         self.tabelTitleLine1 = QLabel(self.historyTabel)
-        self.tabelTitleLine1.setGeometry(0, 71*self.height_scale, 1609*self.width_scale, 1)
+        self.tabelTitleLine1.setGeometry(0, 71 * self.height_scale, 1609 * self.width_scale, 1 * self.height_scale)
         self.tabelTitleLine1.setStyleSheet(
             "background-color: #DEE0E3;border: none;"
         )
         self.tabelTitleLine2 = QLabel(self.historyTabel)
-        self.tabelTitleLine2.setGeometry(0, 124*self.height_scale, 1609*self.width_scale, 1)
+        self.tabelTitleLine2.setGeometry(0, 124 * self.height_scale, 1609 * self.width_scale, 1 * self.height_scale)
         self.tabelTitleLine2.setStyleSheet(
             "background-color: #DEE0E3;border: none;"
         )
-
-        # coffee_recipe = ['铁皮卡', 'SL28']
-        # pickle_file = "regressor_BuhlerRM20_1.pkl"  # 替换为你的 pickle 文件路径
-        # resultText = self.get_prediction_from_pickle(pickle_file, 85.2, 180.5, coffee_recipe)
-        # print(f"预测结果: {resultText}")
-
-        # with open("pkl/regressor_BuhlerRM20_0.pkl", "rb") as f:
-        #     data = pickle.load(f)
-        # # 查看数据类型
-        # print(type(data))  # 确保它是 sklearn 的 LinearRegression
-        #
-        # bean_temp = 80.0  # 豆温
-        # wind_temp = 25.0  # 风温
-        # formula = 2  # 配方名称（假设是一个数值表示）
-        # bean_name = 1  # 豆子名称（假设是一个数值表示）
-        #
-        # # 将输入数据转换成一个包含这些特征的 NumPy 数组
-        # input_features = np.array([[bean_temp, wind_temp, formula, bean_name]])
-        #
-        # # 使用模型进行预测
-        # predicted_value = data.predict(input_features)
-        #
-        # # 输出预测结果
-        # print(f"预测的色值是: {predicted_value[0]}")
-        #
-        # # 解析模型参数
-        # if hasattr(data, "coef_"):
-        #     print("系数 (Coefficients):", data.coef_)  # 线性回归系数 (斜率)
-        # if hasattr(data, "intercept_"):
-        #     print("截距 (Intercept):", data.intercept_)  # 线性回归截距 (偏置)
-        # if hasattr(data, "n_features_in_"):
-        #     print("输入特征数量:", data.n_features_in_)
-        # if hasattr(data, "feature_names_in_"):
-        #     print("特征名称:", data.feature_names_in_)  # 需要 scikit-learn 1.0+
-        # if hasattr(data, "rank_"):
-        #     print("矩阵秩:", data.rank_)
-        # if hasattr(data, "singular_"):
-        #     print("奇异值:", data.singular_)
-        #
-        # # 检查训练时是否存储数据 (某些版本的 sklearn 可能没有)
-        # if hasattr(data, "X_train_"):
-        #     print("训练数据 (X_train):", data.X_train_)
-        # if hasattr(data, "y_train_"):
-        #     print("训练标签 (y_train):", data.y_train_)
-        #
-        # # 获取超参数
-        # print("超参数:", data.get_params())
 
         self.timeTitle = QLabel(self.tabelTitle)
         self.timeTitle.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
@@ -6851,7 +6925,7 @@ class ApplicationWindow(
         self.tabelTitle2 = QLabel(self.historyTabel)
         # self.tabelTitle.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.tabelTitle2.setGeometry(60 * self.width_scale, 72 * self.height_scale, 1607 * self.width_scale,
-                                    54 * self.height_scale)
+                                     54 * self.height_scale)
         self.tabelTitle2.setStyleSheet(
             "background-color: transparent;border: none;border-radius: 0px;"
         )
@@ -6859,17 +6933,17 @@ class ApplicationWindow(
         self.timeTitle = QLabel(self.tabelTitle2)
         self.timeTitle.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.timeTitle.setText('#')
-        self.timeTitle.setGeometry(47*self.width_scale, 0, 40*self.width_scale, 54*self.height_scale)
+        self.timeTitle.setGeometry(47 * self.width_scale, 0, 40 * self.width_scale, 54 * self.height_scale)
         self.timeTitle.setStyleSheet(
             "color: #8F9195;background-color: transparent; border: none"
         )
-        timeTitlefont2 = QFont(self.font_family4, 10*self.width_scale)
+        timeTitlefont2 = QFont(self.font_family4, 10 * self.width_scale)
         self.timeTitle.setFont(timeTitlefont2)
 
         self.timeTitle = QLabel(self.tabelTitle2)
         self.timeTitle.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.timeTitle.setText('反馈情况')
-        self.timeTitle.setGeometry(142*self.width_scale, 0, 90*self.width_scale, 54*self.height_scale)
+        self.timeTitle.setGeometry(142 * self.width_scale, 0, 90 * self.width_scale, 54 * self.height_scale)
         self.timeTitle.setStyleSheet(
             "color: #8F9195;background-color: transparent; border: none"
         )
@@ -6878,7 +6952,7 @@ class ApplicationWindow(
         self.timeTitle = QLabel(self.tabelTitle2)
         self.timeTitle.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.timeTitle.setText('任务编号')
-        self.timeTitle.setGeometry(278*self.width_scale, 0, 90*self.width_scale, 54*self.height_scale)
+        self.timeTitle.setGeometry(278 * self.width_scale, 0, 90 * self.width_scale, 54 * self.height_scale)
         self.timeTitle.setStyleSheet(
             "color: #8F9195;background-color: transparent; border: none"
         )
@@ -6887,7 +6961,7 @@ class ApplicationWindow(
         self.timeTitle = QLabel(self.tabelTitle2)
         self.timeTitle.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.timeTitle.setText('任务名称')
-        self.timeTitle.setGeometry(557*self.width_scale, 0, 90*self.width_scale, 54*self.height_scale)
+        self.timeTitle.setGeometry(557 * self.width_scale, 0, 90 * self.width_scale, 54 * self.height_scale)
         self.timeTitle.setStyleSheet(
             "color: #8F9195;background-color: transparent; border: none"
         )
@@ -6896,7 +6970,7 @@ class ApplicationWindow(
         self.timeTitle = QLabel(self.tabelTitle2)
         self.timeTitle.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.timeTitle.setText('任务时长')
-        self.timeTitle.setGeometry(787*self.width_scale, 0, 90*self.width_scale, 54*self.height_scale)
+        self.timeTitle.setGeometry(787 * self.width_scale, 0, 90 * self.width_scale, 54 * self.height_scale)
         self.timeTitle.setStyleSheet(
             "color: #8F9195;background-color: transparent; border: none"
         )
@@ -6905,7 +6979,7 @@ class ApplicationWindow(
         self.timeTitle = QLabel(self.tabelTitle2)
         self.timeTitle.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.timeTitle.setText('任务时段')
-        self.timeTitle.setGeometry(1055*self.width_scale, 0, 90*self.width_scale, 54*self.height_scale)
+        self.timeTitle.setGeometry(1055 * self.width_scale, 0, 90 * self.width_scale, 54 * self.height_scale)
         self.timeTitle.setStyleSheet(
             "color: #8F9195;background-color: transparent; border: none"
         )
@@ -6914,7 +6988,7 @@ class ApplicationWindow(
         self.timeTitle = QLabel(self.tabelTitle2)
         self.timeTitle.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.timeTitle.setText('Agtron值')
-        self.timeTitle.setGeometry(1300*self.width_scale, 0, 90*self.width_scale, 54*self.height_scale)
+        self.timeTitle.setGeometry(1300 * self.width_scale, 0, 90 * self.width_scale, 54 * self.height_scale)
         self.timeTitle.setStyleSheet(
             "color: #8F9195;background-color: transparent; border: none"
         )
@@ -6922,23 +6996,25 @@ class ApplicationWindow(
 
         # 创建 QListWidget
         self.list_widget2 = QListWidget(self.historyTabel)
-        self.list_widget2.setGeometry(13*self.width_scale, 180*self.height_scale, 1578*self.width_scale, 620*self.height_scale)
+        self.list_widget2.setGeometry(13 * self.width_scale, 180 * self.height_scale, 1578 * self.width_scale,
+                                      600 * self.height_scale)
         self.list_widget2.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.list_widget2.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.list_widget2.setStyleSheet("""
-                    QListWidget {
-                        background-color: transparent;
-                        border: none;
-                        color: #ABB0B7;
-                    }
-                    QListWidget::item:selected {
-                        background-color: transparent;   /* 设置选中背景颜色为半透明 */
-                        color: black;                     /* 保持文字颜色为黑色 */
-                    }
-                    QListWidget::item:selected:active {
-                        background-color: transparent;
-                    }
-                """)
+                            QListWidget {
+                                background-color: transparent;
+                                border: none;
+                                color: #ABB0B7;
+                                border-radius: 0;
+                            }
+                            QListWidget::item:selected {
+                                background-color: transparent;   /* 设置选中背景颜色为半透明 */
+                                color: black;                     /* 保持文字颜色为黑色 */
+                            }
+                            QListWidget::item:selected:active {
+                                background-color: transparent;
+                            }
+                        """)
 
         # 循环添加24小时的时间段
         # 以半小时为步长添加时间段
@@ -6959,10 +7035,9 @@ class ApplicationWindow(
         # # 将 QWidget 设置为 QScrollArea 的 widget
         # self.timeScroll.setWidget(self.orderWidget)
 
-
-
         self.list_widget = QListWidget(self.historyTabel)
-        self.list_widget.setGeometry(61*self.width_scale, 180*self.height_scale, 1546*self.width_scale, 620*self.height_scale)
+        self.list_widget.setGeometry(61 * self.width_scale, 180 * self.height_scale, 1547 * self.width_scale,
+                                     600 * self.height_scale)
 
         # 设置滚动条策略为始终隐藏
         self.list_widget.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
@@ -6973,6 +7048,7 @@ class ApplicationWindow(
                     QListWidget {
                         border: none;
                         font-size: 10px;
+                        height: 56px;
                         color: #ABB0B7;
                         background-color: transparent;
                     }
@@ -6988,16 +7064,14 @@ class ApplicationWindow(
         self.list_widget.verticalScrollBar().valueChanged.connect(self.syncScrollBar)
         self.list_widget2.verticalScrollBar().valueChanged.connect(self.syncScrollBar)
 
-
-
         self.painter = QPainter(self.historyTabel)
         pen = QPen(Qt.GlobalColor.black, 1)  # 设置画笔颜色和线条宽度
         self.painter.setPen(pen)
 
-        start_x = 60*self.width_scale  # 起始X坐标
-        start_y = 177*self.height_scale  # 起始Y坐标
-        line_length = 1550*self.width_scale  # 线条长度
-        spacing = 68*self.height_scale  # 每条线之间的间距
+        start_x = 60 * self.width_scale  # 起始X坐标
+        start_y = 177 * self.height_scale  # 起始Y坐标
+        line_length = 1550 * self.width_scale  # 线条长度
+        spacing = 68 * self.height_scale  # 每条线之间的间距
 
         for i in range(9):  # 画13条线
             # self.painter.drawLine(start_x, start_y + i * spacing, start_x + line_length, start_y + i * spacing)
@@ -7009,7 +7083,7 @@ class ApplicationWindow(
             )
 
         self.tabelTitleLine3 = QLabel(self.historyTabel)
-        self.tabelTitleLine3.setGeometry(60 * self.width_scale, 71 * self.height_scale, 1,
+        self.tabelTitleLine3.setGeometry(60 * self.width_scale, 71 * self.height_scale, 1 * self.width_scale,
                                          728 * self.height_scale)
         self.tabelTitleLine3.setStyleSheet(
             "background-color: #DEE0E3;border: none;"
@@ -7017,26 +7091,28 @@ class ApplicationWindow(
 
 
         self.historyInfo = QLabel(self)  # 历史记录-展开
-        self.historyInfo.setStyleSheet(f'border-radius: {25*self.height_scale}px;background-color: #ffffff; border: 1px solid #A7A8AC; ')
-        self.historyInfo.setGeometry(226*self.width_scale, 196*self.height_scale, 1610*self.width_scale, 800*self.height_scale)
+        self.historyInfo.setStyleSheet(
+            f'border-radius: {25 * self.height_scale}px;background-color: #ffffff; border: 1px solid #A7A8AC; ')
+        self.historyInfo.setGeometry(226 * self.width_scale, 196 * self.height_scale, 1610 * self.width_scale,
+                                     800 * self.height_scale)
         self.historyInfoImg = QPixmap(self.normalized_path + '/includes/Icons/history/back_L.png')
         self.historyInfo.setPixmap(self.historyInfoImg)
         self.historyInfo.setScaledContents(True)
         self.historyInfo.setVisible(False)
 
-
-
         self.historyDetail_sheibei = QLabel(self.historyInfo)
         self.historyDetail_sheibei.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.historyDetail_sheibei.setStyleSheet(f'border-radius: {19*self.height_scale}px;background-color: #D3C9C2; border: none; ')
-        self.historyDetail_sheibei.setGeometry(60*self.width_scale, 30*self.height_scale, 330*self.width_scale, 38*self.height_scale)
+        self.historyDetail_sheibei.setStyleSheet(
+            f'border-radius: {19 * self.height_scale}px;background-color: #D3C9C2; border: none; ')
+        self.historyDetail_sheibei.setGeometry(60 * self.width_scale, 30 * self.height_scale, 330 * self.width_scale,
+                                               38 * self.height_scale)
         self.historyDetail_sheibei.setText('-')
-        history_sheibeifont = QFont(self.font_family4, 12*self.width_scale)
+        history_sheibeifont = QFont(self.font_family4, 12 * self.width_scale)
         self.historyDetail_sheibei.setFont(history_sheibeifont)
 
-
         self.updateCloud = QPushButton(self.historyInfo)
-        self.updateCloud.setGeometry(1440*self.width_scale, 30*self.height_scale, 40*self.width_scale, 40*self.width_scale)
+        self.updateCloud.setGeometry(1440 * self.width_scale, 30 * self.height_scale, 40 * self.width_scale,
+                                     40 * self.width_scale)
         self.updateCloud.setCheckable(True)
         self.updateCloud.setStyleSheet(f"""
                                     QPushButton {{
@@ -7048,7 +7124,8 @@ class ApplicationWindow(
         self.updateCloud.clicked.connect(self.submitInfo)
 
         self.closeHistory = QPushButton(self.historyInfo)
-        self.closeHistory.setGeometry(1500*self.width_scale, 30*self.height_scale, 40*self.width_scale, 40*self.width_scale)
+        self.closeHistory.setGeometry(1500 * self.width_scale, 30 * self.height_scale, 40 * self.width_scale,
+                                      40 * self.width_scale)
         self.closeHistory.setCheckable(True)
         self.closeHistory.setStyleSheet(f"""
                                             QPushButton {{
@@ -7064,17 +7141,18 @@ class ApplicationWindow(
         self.scroll_area.setWidgetResizable(True)  # 自动调整内容大小
         # self.scroll_area.setWidget(self.historyInfo)
         self.scroll_area.setFrameStyle(QFrame.Shape.NoFrame)
-        self.scroll_area.setGeometry(226*self.width_scale, 196*self.height_scale, 1610*self.width_scale, 800*self.height_scale)
+        self.scroll_area.setGeometry(226 * self.width_scale, 196 * self.height_scale, 1610 * self.width_scale,
+                                     800 * self.height_scale)
         self.scroll_area.setStyleSheet(f"""
                     QScrollArea {{
                         background-color: rgba(255, 255, 255, 0);  /* 完全透明的背景 */
                         border: none;  /* 移除边框 */
-                        border-radius: {25*self.height_scale}px;  /* 圆角设置 */
+                        border-radius: {25 * self.height_scale}px;  /* 圆角设置 */
                     }}
                     QWidget {{
                         border: none;  # 去掉内部 QWidget 的边框
                         background-color: transparent;  # 可选，确保背景透明
-                        border-radius: {25*self.height_scale}px;
+                        border-radius: {25 * self.height_scale}px;
                     }}
                     QScrollBar:vertical, QScrollBar:horizontal {{
                         background: transparent;  /* 隐藏滚动条背景 */
@@ -7096,7 +7174,7 @@ class ApplicationWindow(
         # self.scroll_area2.setWidget(self.historyInfo)
         self.scroll_area2.setFrameStyle(QFrame.Shape.NoFrame)
         self.scroll_area2.setGeometry(226 * self.width_scale, 196 * self.height_scale, 1610 * self.width_scale,
-                                     800 * self.height_scale)
+                                      800 * self.height_scale)
         self.scroll_area2.setStyleSheet(f"""
                             QScrollArea {{
                                 background-color: rgba(255, 255, 255, 0);  /* 完全透明的背景 */
@@ -7121,7 +7199,7 @@ class ApplicationWindow(
 
         self.matplotlib_info = CustomPlotWidget(self.historyInfo)
         self.matplotlib_info.setGeometry(35 * self.width_scale, 94 * self.height_scale, 1541 * self.width_scale,
-                                           680 * self.height_scale)
+                                         680 * self.height_scale)
 
         self.matplotlib_info.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
 
@@ -7137,73 +7215,87 @@ class ApplicationWindow(
         self.chart_min_Info = QLabel(self.historyInfo)
         self.chart_min_Info.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.chart_min_Info.setText('min')
-        self.chart_min_Info.setGeometry(1480 * self.width_scale, 692 * self.height_scale, 40 * self.width_scale,
+        self.chart_min_Info.setGeometry(1510 * self.width_scale, 692 * self.height_scale, 40 * self.width_scale,
                                         22 * self.height_scale)
         self.chart_min_Info.setStyleSheet("color: #4D4B4A;border:none;background-color: transparent")
         self.chart_min_Info.setFont(ySSDfont2)
 
         self.hfChartKey = QLabel(self.historyInfo)
-        self.hfChartKey.setStyleSheet(f'border-radius: {28*self.height_scale}px;background-color: #D3C9C2;border: none')
-        self.hfChartKey.setGeometry(60*self.width_scale, 731*self.height_scale, 1481*self.width_scale, 56*self.height_scale)
+        self.hfChartKey.setStyleSheet(
+            f'border-radius: {28 * self.height_scale}px;background-color: #D3C9C2;border: none')
+        self.hfChartKey.setGeometry(60 * self.width_scale, 731 * self.height_scale, 1481 * self.width_scale,
+                                    56 * self.height_scale)
 
         self.hfChartKey_dw = QLabel(self.hfChartKey)
-        self.hfChartKey_dw.setStyleSheet(f'border-radius: {2*self.height_scale}px;background-color: #D18F65;')
-        self.hfChartKey_dw.setGeometry(256*self.width_scale, 18*self.height_scale, 11*self.width_scale, 19*self.height_scale)
+        self.hfChartKey_dw.setStyleSheet(f'border-radius: {2 * self.height_scale}px;background-color: #D18F65;')
+        self.hfChartKey_dw.setGeometry(256 * self.width_scale, 18 * self.height_scale, 11 * self.width_scale,
+                                       19 * self.height_scale)
         self.hfChartKey_dwText = QLabel(self.hfChartKey)
         self.hfChartKey_dwText.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignLeft)
         self.hfChartKey_dwText.setText('豆温')
-        self.hfChartKey_dwText.setGeometry(283*self.width_scale, 18*self.height_scale, 60*self.width_scale, 20*self.height_scale)
+        self.hfChartKey_dwText.setGeometry(283 * self.width_scale, 18 * self.height_scale, 60 * self.width_scale,
+                                           20 * self.height_scale)
         self.hfChartKey_dwText.setStyleSheet("color: #292827;border:none;")
-        hfChartKeyfont = QFont(self.font_family4, 14*self.width_scale)
+        hfChartKeyfont = QFont(self.font_family4, 14 * self.width_scale)
         self.hfChartKey_dwText.setFont(hfChartKeyfont)
 
         self.hfChartKey_dw = QLabel(self.hfChartKey)
-        self.hfChartKey_dw.setStyleSheet(f'border-radius: {2*self.height_scale}px;background-color: #AC3230;')
-        self.hfChartKey_dw.setGeometry(426*self.width_scale, 18*self.height_scale, 11*self.width_scale, 19*self.height_scale)
+        self.hfChartKey_dw.setStyleSheet(f'border-radius: {2 * self.height_scale}px;background-color: #AC3230;')
+        self.hfChartKey_dw.setGeometry(426 * self.width_scale, 18 * self.height_scale, 11 * self.width_scale,
+                                       19 * self.height_scale)
         self.hfChartKey_dwText = QLabel(self.hfChartKey)
         self.hfChartKey_dwText.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignLeft)
         self.hfChartKey_dwText.setText('风温')
-        self.hfChartKey_dwText.setGeometry(452*self.width_scale, 18*self.height_scale, 60*self.width_scale, 20*self.height_scale)
+        self.hfChartKey_dwText.setGeometry(452 * self.width_scale, 18 * self.height_scale, 60 * self.width_scale,
+                                           20 * self.height_scale)
         self.hfChartKey_dwText.setStyleSheet("color: #292827;border:none;")
         self.hfChartKey_dwText.setFont(hfChartKeyfont)
 
         self.hfChartKey_dw = QLabel(self.hfChartKey)
-        self.hfChartKey_dw.setStyleSheet(f'border-radius: {2*self.height_scale}px;background-color: #7864AA;')
-        self.hfChartKey_dw.setGeometry(596*self.width_scale, 18*self.height_scale, 11*self.width_scale, 19*self.height_scale)
+        self.hfChartKey_dw.setStyleSheet(f'border-radius: {2 * self.height_scale}px;background-color: #7864AA;')
+        self.hfChartKey_dw.setGeometry(596 * self.width_scale, 18 * self.height_scale, 11 * self.width_scale,
+                                       19 * self.height_scale)
         self.hfChartKey_dwText = QLabel(self.hfChartKey)
         self.hfChartKey_dwText.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignLeft)
         self.hfChartKey_dwText.setText('ROC')
-        self.hfChartKey_dwText.setGeometry(621*self.width_scale, 18*self.height_scale, 60*self.width_scale, 20*self.height_scale)
+        self.hfChartKey_dwText.setGeometry(621 * self.width_scale, 18 * self.height_scale, 60 * self.width_scale,
+                                           20 * self.height_scale)
         self.hfChartKey_dwText.setStyleSheet("color: #292827;border:none;")
         self.hfChartKey_dwText.setFont(hfChartKeyfont)
 
         self.hfChartKey_dw = QLabel(self.hfChartKey)
-        self.hfChartKey_dw.setStyleSheet(f'border-radius: {2*self.height_scale}px;background-color: #6BAE76;')
-        self.hfChartKey_dw.setGeometry(765*self.width_scale, 18*self.height_scale, 11*self.width_scale, 19*self.height_scale)
+        self.hfChartKey_dw.setStyleSheet(f'border-radius: {2 * self.height_scale}px;background-color: #6BAE76;')
+        self.hfChartKey_dw.setGeometry(765 * self.width_scale, 18 * self.height_scale, 11 * self.width_scale,
+                                       19 * self.height_scale)
         self.hfChartKey_dwText = QLabel(self.hfChartKey)
         self.hfChartKey_dwText.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignLeft)
         self.hfChartKey_dwText.setText('色值')
-        self.hfChartKey_dwText.setGeometry(791*self.width_scale, 18*self.height_scale, 60*self.width_scale, 20*self.height_scale)
+        self.hfChartKey_dwText.setGeometry(791 * self.width_scale, 18 * self.height_scale, 60 * self.width_scale,
+                                           20 * self.height_scale)
         self.hfChartKey_dwText.setStyleSheet("color: #292827;border:none;")
         self.hfChartKey_dwText.setFont(hfChartKeyfont)
 
         self.hfChartKey_dw = QLabel(self.hfChartKey)
-        self.hfChartKey_dw.setStyleSheet(f'border-radius: {2*self.height_scale}px;background-color: #1EA1A9;')
-        self.hfChartKey_dw.setGeometry(936*self.width_scale, 18*self.height_scale, 11*self.width_scale, 19*self.height_scale)
+        self.hfChartKey_dw.setStyleSheet(f'border-radius: {2 * self.height_scale}px;background-color: #1EA1A9;')
+        self.hfChartKey_dw.setGeometry(936 * self.width_scale, 18 * self.height_scale, 11 * self.width_scale,
+                                       19 * self.height_scale)
         self.hfChartKey_dwText = QLabel(self.hfChartKey)
         self.hfChartKey_dwText.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignLeft)
         self.hfChartKey_dwText.setText('排气湿度')
-        self.hfChartKey_dwText.setGeometry(966*self.width_scale, 18*self.height_scale, 90*self.width_scale, 20*self.height_scale)
+        self.hfChartKey_dwText.setGeometry(966 * self.width_scale, 18 * self.height_scale, 90 * self.width_scale,
+                                           20 * self.height_scale)
         self.hfChartKey_dwText.setStyleSheet("color: #292827;border:none;")
         self.hfChartKey_dwText.setFont(hfChartKeyfont)
 
         self.hfChartKey_dw = QLabel(self.hfChartKey)
-        self.hfChartKey_dw.setStyleSheet(f'border-radius: {2*self.height_scale}px;background-color: #D0B53F;')
-        self.hfChartKey_dw.setGeometry(1106*self.width_scale, 18*self.height_scale, 11*self.width_scale, 19*self.height_scale)
+        self.hfChartKey_dw.setStyleSheet(f'border-radius: {2 * self.height_scale}px;background-color: #D0B53F;')
+        self.hfChartKey_dw.setGeometry(1106 * self.width_scale, 18 * self.height_scale, 11 * self.width_scale,
+                                       19 * self.height_scale)
         self.hfChartKey_dwText = QLabel(self.hfChartKey)
         self.hfChartKey_dwText.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignLeft)
         self.hfChartKey_dwText.setText('排气温度')
-        self.hfChartKey_dwText.setGeometry(1135*self.width_scale, 18*self.height_scale, 90*self.width_scale, 20*self.height_scale)
+        self.hfChartKey_dwText.setGeometry(1135 * self.width_scale, 18 * self.height_scale, 90 * self.width_scale,
+                                           20 * self.height_scale)
         self.hfChartKey_dwText.setStyleSheet("color: #292827;border:none;")
         self.hfChartKey_dwText.setFont(hfChartKeyfont)
 
@@ -7211,16 +7303,18 @@ class ApplicationWindow(
         self.hongbeishichang = QLabel(self.historyInfo)
         self.hongbeishichang.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.hongbeishichang.setText('烘焙时长：' + self.hbscContent)
-        self.hongbeishichang.setGeometry(60*self.width_scale, 840*self.height_scale, 260*self.width_scale, 30*self.height_scale)
+        self.hongbeishichang.setGeometry(60 * self.width_scale, 840 * self.height_scale, 260 * self.width_scale,
+                                         30 * self.height_scale)
         self.hongbeishichang.setStyleSheet("background-color: transparent; border:none;color: #222222;")
-        hbscfont = QFont(self.font_family4, 16*self.width_scale)
+        hbscfont = QFont(self.font_family4, 16 * self.width_scale)
         self.hongbeishichang.setFont(hbscfont)
 
         self.rdwdContent = '162℃'
         self.rudouwendu = QLabel(self.historyInfo)
         self.rudouwendu.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.rudouwendu.setText('入豆温度：' + self.rdwdContent)
-        self.rudouwendu.setGeometry(379*self.width_scale, 840*self.height_scale, 240*self.width_scale, 30*self.height_scale)
+        self.rudouwendu.setGeometry(379 * self.width_scale, 840 * self.height_scale, 240 * self.width_scale,
+                                    30 * self.height_scale)
         self.rudouwendu.setStyleSheet("background-color: transparent; border:none;color: #222222;")
         self.rudouwendu.setFont(hbscfont)
 
@@ -7228,7 +7322,8 @@ class ApplicationWindow(
         self.huiwendian = QLabel(self.historyInfo)
         self.huiwendian.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.huiwendian.setText('回温点：' + self.hwdContent)
-        self.huiwendian.setGeometry(740*self.width_scale, 840*self.height_scale, 240*self.width_scale, 30*self.height_scale)
+        self.huiwendian.setGeometry(740 * self.width_scale, 840 * self.height_scale, 240 * self.width_scale,
+                                    30 * self.height_scale)
         self.huiwendian.setStyleSheet("background-color: transparent; border:none;color: #222222;")
         self.huiwendian.setFont(hbscfont)
 
@@ -7236,7 +7331,8 @@ class ApplicationWindow(
         self.zhuanhuangdian = QLabel(self.historyInfo)
         self.zhuanhuangdian.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.zhuanhuangdian.setText('转黄点：' + self.zhdContent)
-        self.zhuanhuangdian.setGeometry(1107*self.width_scale, 840*self.height_scale, 240*self.width_scale, 30*self.height_scale)
+        self.zhuanhuangdian.setGeometry(1107 * self.width_scale, 840 * self.height_scale, 240 * self.width_scale,
+                                        30 * self.height_scale)
         self.zhuanhuangdian.setStyleSheet("background-color: transparent; border:none;color: #222222;")
         self.zhuanhuangdian.setFont(hbscfont)
 
@@ -7244,7 +7340,8 @@ class ApplicationWindow(
         self.yibao = QLabel(self.historyInfo)
         self.yibao.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.yibao.setText('一爆：' + self.ybContent)
-        self.yibao.setGeometry(60*self.width_scale, 906*self.height_scale, 240*self.width_scale, 30*self.height_scale)
+        self.yibao.setGeometry(60 * self.width_scale, 906 * self.height_scale, 240 * self.width_scale,
+                               30 * self.height_scale)
         self.yibao.setStyleSheet("background-color: transparent; border:none;color: #222222;")
         self.yibao.setFont(hbscfont)
 
@@ -7252,7 +7349,8 @@ class ApplicationWindow(
         self.fazhanshichang = QLabel(self.historyInfo)
         self.fazhanshichang.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.fazhanshichang.setText('发展时长：' + self.fzscContent)
-        self.fazhanshichang.setGeometry(379*self.width_scale, 906*self.height_scale, 240*self.width_scale, 30*self.height_scale)
+        self.fazhanshichang.setGeometry(379 * self.width_scale, 906 * self.height_scale, 240 * self.width_scale,
+                                        30 * self.height_scale)
         self.fazhanshichang.setStyleSheet("background-color: transparent; border:none;color: #222222;")
         self.fazhanshichang.setFont(hbscfont)
 
@@ -7260,749 +7358,807 @@ class ApplicationWindow(
         self.dtrTxt = QLabel(self.historyInfo)
         self.dtrTxt.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.dtrTxt.setText('DTR：' + self.dtrContent)
-        self.dtrTxt.setGeometry(740*self.width_scale, 906*self.height_scale, 240*self.width_scale, 30*self.height_scale)
+        self.dtrTxt.setGeometry(740 * self.width_scale, 906 * self.height_scale, 240 * self.width_scale,
+                                30 * self.height_scale)
         self.dtrTxt.setStyleSheet("background-color: transparent; border:none;color: #222222;")
         self.dtrTxt.setFont(hbscfont)
 
         self.yuanliaopeibi = QLabel(self.historyInfo)
         self.yuanliaopeibi.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.yuanliaopeibi.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.yuanliaopeibi.setGeometry(60*self.width_scale, 978*self.height_scale, 1489*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.yuanliaopeibi.setGeometry(60 * self.width_scale, 978 * self.height_scale, 1489 * self.width_scale,
+                                       75 * self.height_scale)
         self.yuanliaopeibi.setText('原料配比')
-        yuanliaopeibifont = QFont(self.font_family4, 16*self.width_scale)
+        yuanliaopeibifont = QFont(self.font_family4, 16 * self.width_scale)
         self.yuanliaopeibi.setFont(yuanliaopeibifont)
 
         self.pfTitle = QLabel(self.yuanliaopeibi)
         self.pfTitle.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.pfTitle.setText('配方1')
-        self.pfTitle.setGeometry(1239*self.width_scale, 0, 240*self.width_scale, 75*self.height_scale)
+        self.pfTitle.setGeometry(1239 * self.width_scale, 0, 240 * self.width_scale, 75 * self.height_scale)
         self.pfTitle.setStyleSheet("background-color: transparent; border:none;color: #222222;padding-right: 20px;")
         self.pfTitle.setFont(hbscfont)
 
         self.zhongliang = QLabel(self.historyInfo)
         self.zhongliang.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.zhongliang.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.zhongliang.setGeometry(60*self.width_scale, 1059*self.height_scale, 239*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.zhongliang.setGeometry(60 * self.width_scale, 1059 * self.height_scale, 239 * self.width_scale,
+                                    75 * self.height_scale)
         self.zhongliang.setText('重量')
         self.zhongliang.setFont(yuanliaopeibifont)
 
         self.shengdou = QLabel(self.historyInfo)
         self.shengdou.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.shengdou.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.shengdou.setGeometry(303*self.width_scale, 1059*self.height_scale, 406*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.shengdou.setGeometry(303 * self.width_scale, 1059 * self.height_scale, 406 * self.width_scale,
+                                  75 * self.height_scale)
         self.shengdou.setText('生豆')
         self.shengdou.setFont(yuanliaopeibifont)
 
         self.sdzl = QLabel(self.shengdou)
         self.sdzl.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.sdzl.setText('600g')
-        self.sdzl.setGeometry(266*self.width_scale, 0, 140*self.width_scale, 75*self.height_scale)
+        self.sdzl.setGeometry(266 * self.width_scale, 0, 140 * self.width_scale, 75 * self.height_scale)
         self.sdzl.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.sdzl.setFont(hbscfont)
 
         self.hanshuiliang = QLabel(self.historyInfo)
         self.hanshuiliang.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.hanshuiliang.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.hanshuiliang.setGeometry(718*self.width_scale, 1059*self.height_scale, 406*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.hanshuiliang.setGeometry(718 * self.width_scale, 1059 * self.height_scale, 406 * self.width_scale,
+                                      75 * self.height_scale)
         self.hanshuiliang.setText('含水量')
         self.hanshuiliang.setFont(yuanliaopeibifont)
 
         self.hslTxt = QLabel(self.hanshuiliang)
         self.hslTxt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.hslTxt.setText('600g')
-        self.hslTxt.setGeometry(266*self.width_scale, 0, 140*self.width_scale, 75*self.height_scale)
+        self.hslTxt.setGeometry(266 * self.width_scale, 0, 140 * self.width_scale, 75 * self.height_scale)
         self.hslTxt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.hslTxt.setFont(hbscfont)
 
         self.midu = QLabel(self.historyInfo)
         self.midu.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.midu.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.midu.setGeometry(1132*self.width_scale, 1059*self.height_scale, 416*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.midu.setGeometry(1132 * self.width_scale, 1059 * self.height_scale, 416 * self.width_scale,
+                              75 * self.height_scale)
         self.midu.setText('密度')
         self.midu.setFont(yuanliaopeibifont)
 
         self.miduNUM = QLabel(self.midu)
         self.miduNUM.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.miduNUM.setText('150g/L')
-        self.miduNUM.setGeometry(266*self.width_scale, 0, 140*self.width_scale, 75*self.height_scale)
+        self.miduNUM.setGeometry(266 * self.width_scale, 0, 140 * self.width_scale, 75 * self.height_scale)
         self.miduNUM.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.miduNUM.setFont(hbscfont)
 
         self.mbzTxt = QLabel(self.historyInfo)
         self.mbzTxt.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.mbzTxt.setText('目标值')
-        self.mbzTxt.setGeometry(60*self.width_scale, 1160*self.height_scale, 240*self.width_scale, 30*self.height_scale)
+        self.mbzTxt.setGeometry(60 * self.width_scale, 1160 * self.height_scale, 240 * self.width_scale,
+                                30 * self.height_scale)
         self.mbzTxt.setStyleSheet("background-color: transparent; border:none;color: #222222;")
         self.mbzTxt.setFont(hbscfont)
 
         self.sjzTxt = QLabel(self.historyInfo)
         self.sjzTxt.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.sjzTxt.setText('实际值')
-        self.sjzTxt.setGeometry(721*self.width_scale, 1160*self.height_scale, 240*self.width_scale, 30*self.height_scale)
+        self.sjzTxt.setGeometry(721 * self.width_scale, 1160 * self.height_scale, 240 * self.width_scale,
+                                30 * self.height_scale)
         self.sjzTxt.setStyleSheet("background-color: transparent; border:none;color: #222222;")
         self.sjzTxt.setFont(hbscfont)
 
         self.stage1 = QLabel(self.historyInfo)
         self.stage1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.stage1.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.stage1.setGeometry(60*self.width_scale, 1208*self.height_scale, 135*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.stage1.setGeometry(60 * self.width_scale, 1208 * self.height_scale, 135 * self.width_scale,
+                                75 * self.height_scale)
         self.stage1.setText('阶段1')
         self.stage1.setFont(yuanliaopeibifont)
 
         self.wendu1 = QLabel(self.historyInfo)
         self.wendu1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.wendu1.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.wendu1.setGeometry(198*self.width_scale, 1208*self.height_scale, 253*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.wendu1.setGeometry(198 * self.width_scale, 1208 * self.height_scale, 253 * self.width_scale,
+                                75 * self.height_scale)
         self.wendu1.setText('温度')
         self.wendu1.setFont(yuanliaopeibifont)
 
         self.wendu1Txt = QLabel(self.wendu1)
         self.wendu1Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.wendu1Txt.setText('130℃')
-        self.wendu1Txt.setGeometry(133*self.width_scale, 0, 120*self.width_scale, 75*self.height_scale)
+        self.wendu1Txt.setGeometry(133 * self.width_scale, 0, 120 * self.width_scale, 75 * self.height_scale)
         self.wendu1Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.wendu1Txt.setFont(hbscfont)
 
         self.ckz1 = QLabel(self.historyInfo)
         self.ckz1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.ckz1.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.ckz1.setGeometry(457*self.width_scale, 1208*self.height_scale, 253*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.ckz1.setGeometry(457 * self.width_scale, 1208 * self.height_scale, 253 * self.width_scale,
+                              75 * self.height_scale)
         self.ckz1.setText('参考值')
         self.ckz1.setFont(yuanliaopeibifont)
 
         self.ckz1Txt = QLabel(self.ckz1)
         self.ckz1Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.ckz1Txt.setText('30RH%')
-        self.ckz1Txt.setGeometry(103*self.width_scale, 0, 150*self.width_scale, 75*self.height_scale)
+        self.ckz1Txt.setGeometry(103 * self.width_scale, 0, 150 * self.width_scale, 75 * self.height_scale)
         self.ckz1Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.ckz1Txt.setFont(hbscfont)
 
         self.stage2 = QLabel(self.historyInfo)
         self.stage2.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.stage2.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.stage2.setGeometry(60*self.width_scale, 1289*self.height_scale, 135*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.stage2.setGeometry(60 * self.width_scale, 1289 * self.height_scale, 135 * self.width_scale,
+                                75 * self.height_scale)
         self.stage2.setText('阶段2')
         self.stage2.setFont(yuanliaopeibifont)
 
         self.wendu2 = QLabel(self.historyInfo)
         self.wendu2.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.wendu2.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.wendu2.setGeometry(198*self.width_scale, 1289*self.height_scale, 253*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.wendu2.setGeometry(198 * self.width_scale, 1289 * self.height_scale, 253 * self.width_scale,
+                                75 * self.height_scale)
         self.wendu2.setText('温度')
         self.wendu2.setFont(yuanliaopeibifont)
 
         self.wendu2Txt = QLabel(self.wendu2)
         self.wendu2Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.wendu2Txt.setText('130℃')
-        self.wendu2Txt.setGeometry(133*self.width_scale, 0, 120*self.width_scale, 75*self.height_scale)
+        self.wendu2Txt.setGeometry(133 * self.width_scale, 0, 120 * self.width_scale, 75 * self.height_scale)
         self.wendu2Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.wendu2Txt.setFont(hbscfont)
 
         self.ckz2 = QLabel(self.historyInfo)
         self.ckz2.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.ckz2.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.ckz2.setGeometry(457*self.width_scale, 1289*self.height_scale, 253*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.ckz2.setGeometry(457 * self.width_scale, 1289 * self.height_scale, 253 * self.width_scale,
+                              75 * self.height_scale)
         self.ckz2.setText('参考值')
         self.ckz2.setFont(yuanliaopeibifont)
 
         self.ckz2Txt = QLabel(self.ckz2)
         self.ckz2Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.ckz2Txt.setText('30RH%')
-        self.ckz2Txt.setGeometry(103*self.width_scale, 0, 150*self.width_scale, 75*self.height_scale)
+        self.ckz2Txt.setGeometry(103 * self.width_scale, 0, 150 * self.width_scale, 75 * self.height_scale)
         self.ckz2Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.ckz2Txt.setFont(hbscfont)
 
         self.stage3 = QLabel(self.historyInfo)
         self.stage3.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.stage3.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.stage3.setGeometry(60*self.width_scale, 1370*self.height_scale, 135*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.stage3.setGeometry(60 * self.width_scale, 1370 * self.height_scale, 135 * self.width_scale,
+                                75 * self.height_scale)
         self.stage3.setText('阶段3')
         self.stage3.setFont(yuanliaopeibifont)
 
         self.wendu3 = QLabel(self.historyInfo)
         self.wendu3.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.wendu3.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.wendu3.setGeometry(198*self.width_scale, 1370*self.height_scale, 253*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.wendu3.setGeometry(198 * self.width_scale, 1370 * self.height_scale, 253 * self.width_scale,
+                                75 * self.height_scale)
         self.wendu3.setText('温度')
         self.wendu3.setFont(yuanliaopeibifont)
 
         self.wendu3Txt = QLabel(self.wendu3)
         self.wendu3Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.wendu3Txt.setText('130℃')
-        self.wendu3Txt.setGeometry(133*self.width_scale, 0, 120*self.width_scale, 75*self.height_scale)
+        self.wendu3Txt.setGeometry(133 * self.width_scale, 0, 120 * self.width_scale, 75 * self.height_scale)
         self.wendu3Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.wendu3Txt.setFont(hbscfont)
 
         self.ckz3 = QLabel(self.historyInfo)
         self.ckz3.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.ckz3.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.ckz3.setGeometry(457*self.width_scale, 1370*self.height_scale, 253*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.ckz3.setGeometry(457 * self.width_scale, 1370 * self.height_scale, 253 * self.width_scale,
+                              75 * self.height_scale)
         self.ckz3.setText('参考值')
         self.ckz3.setFont(yuanliaopeibifont)
 
         self.ckz3Txt = QLabel(self.ckz3)
         self.ckz3Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.ckz3Txt.setText('30RH%')
-        self.ckz3Txt.setGeometry(103*self.width_scale, 0, 150*self.width_scale, 75*self.height_scale)
+        self.ckz3Txt.setGeometry(103 * self.width_scale, 0, 150 * self.width_scale, 75 * self.height_scale)
         self.ckz3Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.ckz3Txt.setFont(hbscfont)
 
         self.stage4 = QLabel(self.historyInfo)
         self.stage4.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.stage4.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.stage4.setGeometry(60*self.width_scale, 1451*self.height_scale, 135*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.stage4.setGeometry(60 * self.width_scale, 1451 * self.height_scale, 135 * self.width_scale,
+                                75 * self.height_scale)
         self.stage4.setText('阶段4')
         self.stage4.setFont(yuanliaopeibifont)
 
         self.wendu4 = QLabel(self.historyInfo)
         self.wendu4.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.wendu4.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.wendu4.setGeometry(198*self.width_scale, 1451*self.height_scale, 253*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.wendu4.setGeometry(198 * self.width_scale, 1451 * self.height_scale, 253 * self.width_scale,
+                                75 * self.height_scale)
         self.wendu4.setText('温度')
         self.wendu4.setFont(yuanliaopeibifont)
 
         self.wendu4Txt = QLabel(self.wendu4)
         self.wendu4Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.wendu4Txt.setText('130℃')
-        self.wendu4Txt.setGeometry(133*self.width_scale, 0, 120*self.width_scale, 75*self.height_scale)
+        self.wendu4Txt.setGeometry(133 * self.width_scale, 0, 120 * self.width_scale, 75 * self.height_scale)
         self.wendu4Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.wendu4Txt.setFont(hbscfont)
 
         self.ckz4 = QLabel(self.historyInfo)
         self.ckz4.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.ckz4.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.ckz4.setGeometry(457*self.width_scale, 1451*self.height_scale, 253*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.ckz4.setGeometry(457 * self.width_scale, 1451 * self.height_scale, 253 * self.width_scale,
+                              75 * self.height_scale)
         self.ckz4.setText('参考值')
         self.ckz4.setFont(yuanliaopeibifont)
 
         self.ckz4Txt = QLabel(self.ckz4)
         self.ckz4Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.ckz4Txt.setText('30RH%')
-        self.ckz4Txt.setGeometry(103*self.width_scale, 0, 150*self.width_scale, 75*self.height_scale)
+        self.ckz4Txt.setGeometry(103 * self.width_scale, 0, 150 * self.width_scale, 75 * self.height_scale)
         self.ckz4Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.ckz4Txt.setFont(hbscfont)
 
         self.stage5 = QLabel(self.historyInfo)
         self.stage5.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.stage5.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.stage5.setGeometry(60*self.width_scale, 1532*self.height_scale, 135*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.stage5.setGeometry(60 * self.width_scale, 1532 * self.height_scale, 135 * self.width_scale,
+                                75 * self.height_scale)
         self.stage5.setText('阶段5')
         self.stage5.setFont(yuanliaopeibifont)
 
         self.wendu5 = QLabel(self.historyInfo)
         self.wendu5.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.wendu5.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.wendu5.setGeometry(198*self.width_scale, 1532*self.height_scale, 253*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.wendu5.setGeometry(198 * self.width_scale, 1532 * self.height_scale, 253 * self.width_scale,
+                                75 * self.height_scale)
         self.wendu5.setText('温度')
         self.wendu5.setFont(yuanliaopeibifont)
 
         self.wendu5Txt = QLabel(self.wendu5)
         self.wendu5Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.wendu5Txt.setText('130℃')
-        self.wendu5Txt.setGeometry(133*self.width_scale, 0, 120*self.width_scale, 75*self.height_scale)
+        self.wendu5Txt.setGeometry(133 * self.width_scale, 0, 120 * self.width_scale, 75 * self.height_scale)
         self.wendu5Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.wendu5Txt.setFont(hbscfont)
 
         self.ckz5 = QLabel(self.historyInfo)
         self.ckz5.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.ckz5.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.ckz5.setGeometry(457*self.width_scale, 1532*self.height_scale, 253*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.ckz5.setGeometry(457 * self.width_scale, 1532 * self.height_scale, 253 * self.width_scale,
+                              75 * self.height_scale)
         self.ckz5.setText('参考值')
         self.ckz5.setFont(yuanliaopeibifont)
 
         self.ckz5Txt = QLabel(self.ckz5)
         self.ckz5Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.ckz5Txt.setText('30RH%')
-        self.ckz5Txt.setGeometry(103*self.width_scale, 0, 150*self.width_scale, 75*self.height_scale)
+        self.ckz5Txt.setGeometry(103 * self.width_scale, 0, 150 * self.width_scale, 75 * self.height_scale)
         self.ckz5Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.ckz5Txt.setFont(hbscfont)
 
         self.stage6 = QLabel(self.historyInfo)
         self.stage6.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.stage6.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.stage6.setGeometry(60*self.width_scale, 1613*self.height_scale, 135*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.stage6.setGeometry(60 * self.width_scale, 1613 * self.height_scale, 135 * self.width_scale,
+                                75 * self.height_scale)
         self.stage6.setText('阶段6')
         self.stage6.setFont(yuanliaopeibifont)
 
         self.wendu6 = QLabel(self.historyInfo)
         self.wendu6.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.wendu6.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.wendu6.setGeometry(198*self.width_scale, 1613*self.height_scale, 253*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.wendu6.setGeometry(198 * self.width_scale, 1613 * self.height_scale, 253 * self.width_scale,
+                                75 * self.height_scale)
         self.wendu6.setText('温度')
         self.wendu6.setFont(yuanliaopeibifont)
 
         self.wendu6Txt = QLabel(self.wendu6)
         self.wendu6Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.wendu6Txt.setText('130℃')
-        self.wendu6Txt.setGeometry(133*self.width_scale, 0, 120*self.width_scale, 75*self.height_scale)
+        self.wendu6Txt.setGeometry(133 * self.width_scale, 0, 120 * self.width_scale, 75 * self.height_scale)
         self.wendu6Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.wendu6Txt.setFont(hbscfont)
 
         self.ckz6 = QLabel(self.historyInfo)
         self.ckz6.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.ckz6.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.ckz6.setGeometry(457*self.width_scale, 1613*self.height_scale, 253*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.ckz6.setGeometry(457 * self.width_scale, 1613 * self.height_scale, 253 * self.width_scale,
+                              75 * self.height_scale)
         self.ckz6.setText('参考值')
         self.ckz6.setFont(yuanliaopeibifont)
 
         self.ckz6Txt = QLabel(self.ckz6)
         self.ckz6Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.ckz6Txt.setText('30RH%')
-        self.ckz6Txt.setGeometry(103*self.width_scale, 0, 150*self.width_scale, 75*self.height_scale)
+        self.ckz6Txt.setGeometry(103 * self.width_scale, 0, 150 * self.width_scale, 75 * self.height_scale)
         self.ckz6Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.ckz6Txt.setFont(hbscfont)
 
         self.sjStage1 = QLabel(self.historyInfo)
         self.sjStage1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjStage1.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.sjStage1.setGeometry(718*self.width_scale, 1208*self.height_scale, 135*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.sjStage1.setGeometry(718 * self.width_scale, 1208 * self.height_scale, 135 * self.width_scale,
+                                  75 * self.height_scale)
         self.sjStage1.setText('阶段1')
         self.sjStage1.setFont(yuanliaopeibifont)
 
         self.sjwendu1 = QLabel(self.historyInfo)
         self.sjwendu1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjwendu1.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FBBE9A; color:#A8A8A8;padding-left: 20px;')
-        self.sjwendu1.setGeometry(857*self.width_scale, 1208*self.height_scale, 235*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FBBE9A; color:#A8A8A8;padding-left: 20px;')
+        self.sjwendu1.setGeometry(857 * self.width_scale, 1208 * self.height_scale, 235 * self.width_scale,
+                                  75 * self.height_scale)
         self.sjwendu1.setText('温度')
         self.sjwendu1.setFont(yuanliaopeibifont)
 
         self.sjwendu1Txt = QLabel(self.sjwendu1)
         self.sjwendu1Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.sjwendu1Txt.setText('130℃')
-        self.sjwendu1Txt.setGeometry(115*self.width_scale, 0, 120*self.width_scale, 75*self.height_scale)
+        self.sjwendu1Txt.setGeometry(115 * self.width_scale, 0, 120 * self.width_scale, 75 * self.height_scale)
         self.sjwendu1Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.sjwendu1Txt.setFont(hbscfont)
 
         self.sjckz1 = QLabel(self.historyInfo)
         self.sjckz1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjckz1.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #9AD8FB; color:#A8A8A8;padding-left: 20px;')
-        self.sjckz1.setGeometry(1098*self.width_scale, 1208*self.height_scale, 235*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #9AD8FB; color:#A8A8A8;padding-left: 20px;')
+        self.sjckz1.setGeometry(1098 * self.width_scale, 1208 * self.height_scale, 235 * self.width_scale,
+                                75 * self.height_scale)
         self.sjckz1.setText('参考值')
         self.sjckz1.setFont(yuanliaopeibifont)
 
         self.sjckz1Txt = QLabel(self.sjckz1)
         self.sjckz1Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.sjckz1Txt.setText('30RH%')
-        self.sjckz1Txt.setGeometry(85*self.width_scale, 0, 150*self.width_scale, 75*self.height_scale)
+        self.sjckz1Txt.setGeometry(85 * self.width_scale, 0, 150 * self.width_scale, 75 * self.height_scale)
         self.sjckz1Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.sjckz1Txt.setFont(hbscfont)
 
         self.sjpc1 = QLabel(self.historyInfo)
         self.sjpc1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjpc1.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FC958A; color:#A8A8A8;padding-left: 20px;')
-        self.sjpc1.setGeometry(1338*self.width_scale, 1208*self.height_scale, 210*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FC958A; color:#A8A8A8;padding-left: 20px;')
+        self.sjpc1.setGeometry(1338 * self.width_scale, 1208 * self.height_scale, 210 * self.width_scale,
+                               75 * self.height_scale)
         self.sjpc1.setText('偏差')
         self.sjpc1.setFont(yuanliaopeibifont)
 
         self.sjpc1Txt = QLabel(self.sjpc1)
         self.sjpc1Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.sjpc1Txt.setText('1%')
-        self.sjpc1Txt.setGeometry(50*self.width_scale, 0, 150*self.width_scale, 75*self.height_scale)
+        self.sjpc1Txt.setGeometry(50 * self.width_scale, 0, 150 * self.width_scale, 75 * self.height_scale)
         self.sjpc1Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.sjpc1Txt.setFont(hbscfont)
 
         self.sjStage2 = QLabel(self.historyInfo)
         self.sjStage2.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjStage2.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.sjStage2.setGeometry(718*self.width_scale, 1289*self.height_scale, 135*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.sjStage2.setGeometry(718 * self.width_scale, 1289 * self.height_scale, 135 * self.width_scale,
+                                  75 * self.height_scale)
         self.sjStage2.setText('阶段2')
         self.sjStage2.setFont(yuanliaopeibifont)
 
         self.sjwendu2 = QLabel(self.historyInfo)
         self.sjwendu2.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjwendu2.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FBBE9A; color:#A8A8A8;padding-left: 20px;')
-        self.sjwendu2.setGeometry(857*self.width_scale, 1289*self.height_scale, 235*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FBBE9A; color:#A8A8A8;padding-left: 20px;')
+        self.sjwendu2.setGeometry(857 * self.width_scale, 1289 * self.height_scale, 235 * self.width_scale,
+                                  75 * self.height_scale)
         self.sjwendu2.setText('温度')
         self.sjwendu2.setFont(yuanliaopeibifont)
 
         self.sjwendu2Txt = QLabel(self.sjwendu2)
         self.sjwendu2Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.sjwendu2Txt.setText('130℃')
-        self.sjwendu2Txt.setGeometry(115*self.width_scale, 0, 120*self.width_scale, 75*self.height_scale)
+        self.sjwendu2Txt.setGeometry(115 * self.width_scale, 0, 120 * self.width_scale, 75 * self.height_scale)
         self.sjwendu2Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.sjwendu2Txt.setFont(hbscfont)
 
         self.sjckz2 = QLabel(self.historyInfo)
         self.sjckz2.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjckz2.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #9AD8FB; color:#A8A8A8;padding-left: 20px;')
-        self.sjckz2.setGeometry(1098*self.width_scale, 1289*self.height_scale, 235*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #9AD8FB; color:#A8A8A8;padding-left: 20px;')
+        self.sjckz2.setGeometry(1098 * self.width_scale, 1289 * self.height_scale, 235 * self.width_scale,
+                                75 * self.height_scale)
         self.sjckz2.setText('参考值')
         self.sjckz2.setFont(yuanliaopeibifont)
 
         self.sjckz2Txt = QLabel(self.sjckz2)
         self.sjckz2Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.sjckz2Txt.setText('30RH%')
-        self.sjckz2Txt.setGeometry(85*self.width_scale, 0, 150*self.width_scale, 75*self.height_scale)
+        self.sjckz2Txt.setGeometry(85 * self.width_scale, 0, 150 * self.width_scale, 75 * self.height_scale)
         self.sjckz2Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.sjckz2Txt.setFont(hbscfont)
 
         self.sjpc2 = QLabel(self.historyInfo)
         self.sjpc2.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjpc2.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FC958A; color:#A8A8A8;padding-left: 20px;')
-        self.sjpc2.setGeometry(1338*self.width_scale, 1289*self.height_scale, 210*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FC958A; color:#A8A8A8;padding-left: 20px;')
+        self.sjpc2.setGeometry(1338 * self.width_scale, 1289 * self.height_scale, 210 * self.width_scale,
+                               75 * self.height_scale)
         self.sjpc2.setText('偏差')
         self.sjpc2.setFont(yuanliaopeibifont)
 
         self.sjpc2Txt = QLabel(self.sjpc2)
         self.sjpc2Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.sjpc2Txt.setText('1%')
-        self.sjpc2Txt.setGeometry(50*self.width_scale, 0, 150*self.width_scale, 75*self.height_scale)
+        self.sjpc2Txt.setGeometry(50 * self.width_scale, 0, 150 * self.width_scale, 75 * self.height_scale)
         self.sjpc2Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.sjpc2Txt.setFont(hbscfont)
 
         self.sjStage3 = QLabel(self.historyInfo)
         self.sjStage3.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjStage3.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.sjStage3.setGeometry(718*self.width_scale, 1370*self.height_scale, 135*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.sjStage3.setGeometry(718 * self.width_scale, 1370 * self.height_scale, 135 * self.width_scale,
+                                  75 * self.height_scale)
         self.sjStage3.setText('阶段3')
         self.sjStage3.setFont(yuanliaopeibifont)
 
         self.sjwendu3 = QLabel(self.historyInfo)
         self.sjwendu3.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjwendu3.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FBBE9A; color:#A8A8A8;padding-left: 20px;')
-        self.sjwendu3.setGeometry(857*self.width_scale, 1370*self.height_scale, 235*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FBBE9A; color:#A8A8A8;padding-left: 20px;')
+        self.sjwendu3.setGeometry(857 * self.width_scale, 1370 * self.height_scale, 235 * self.width_scale,
+                                  75 * self.height_scale)
         self.sjwendu3.setText('温度')
         self.sjwendu3.setFont(yuanliaopeibifont)
 
         self.sjwendu3Txt = QLabel(self.sjwendu3)
         self.sjwendu3Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.sjwendu3Txt.setText('130℃')
-        self.sjwendu3Txt.setGeometry(115*self.width_scale, 0, 120*self.width_scale, 75*self.height_scale)
+        self.sjwendu3Txt.setGeometry(115 * self.width_scale, 0, 120 * self.width_scale, 75 * self.height_scale)
         self.sjwendu3Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.sjwendu3Txt.setFont(hbscfont)
 
         self.sjckz3 = QLabel(self.historyInfo)
         self.sjckz3.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjckz3.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #9AD8FB; color:#A8A8A8;padding-left: 20px;')
-        self.sjckz3.setGeometry(1098*self.width_scale, 1370*self.height_scale, 235*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #9AD8FB; color:#A8A8A8;padding-left: 20px;')
+        self.sjckz3.setGeometry(1098 * self.width_scale, 1370 * self.height_scale, 235 * self.width_scale,
+                                75 * self.height_scale)
         self.sjckz3.setText('参考值')
         self.sjckz3.setFont(yuanliaopeibifont)
 
         self.sjckz3Txt = QLabel(self.sjckz3)
         self.sjckz3Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.sjckz3Txt.setText('30RH%')
-        self.sjckz3Txt.setGeometry(85*self.width_scale, 0, 150*self.width_scale, 75*self.height_scale)
+        self.sjckz3Txt.setGeometry(85 * self.width_scale, 0, 150 * self.width_scale, 75 * self.height_scale)
         self.sjckz3Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.sjckz3Txt.setFont(hbscfont)
 
         self.sjpc3 = QLabel(self.historyInfo)
         self.sjpc3.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjpc3.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FC958A; color:#A8A8A8;padding-left: 20px;')
-        self.sjpc3.setGeometry(1338*self.width_scale, 1370*self.height_scale, 210*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FC958A; color:#A8A8A8;padding-left: 20px;')
+        self.sjpc3.setGeometry(1338 * self.width_scale, 1370 * self.height_scale, 210 * self.width_scale,
+                               75 * self.height_scale)
         self.sjpc3.setText('偏差')
         self.sjpc3.setFont(yuanliaopeibifont)
 
         self.sjpc3Txt = QLabel(self.sjpc3)
         self.sjpc3Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.sjpc3Txt.setText('1%')
-        self.sjpc3Txt.setGeometry(50*self.width_scale, 0, 150*self.width_scale, 75*self.height_scale)
+        self.sjpc3Txt.setGeometry(50 * self.width_scale, 0, 150 * self.width_scale, 75 * self.height_scale)
         self.sjpc3Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.sjpc3Txt.setFont(hbscfont)
 
         self.sjStage4 = QLabel(self.historyInfo)
         self.sjStage4.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjStage4.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.sjStage4.setGeometry(718*self.width_scale, 1451*self.height_scale, 135*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.sjStage4.setGeometry(718 * self.width_scale, 1451 * self.height_scale, 135 * self.width_scale,
+                                  75 * self.height_scale)
         self.sjStage4.setText('阶段4')
         self.sjStage4.setFont(yuanliaopeibifont)
 
         self.sjwendu4 = QLabel(self.historyInfo)
         self.sjwendu4.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjwendu4.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FBBE9A; color:#A8A8A8;padding-left: 20px;')
-        self.sjwendu4.setGeometry(857*self.width_scale, 1451*self.height_scale, 235*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FBBE9A; color:#A8A8A8;padding-left: 20px;')
+        self.sjwendu4.setGeometry(857 * self.width_scale, 1451 * self.height_scale, 235 * self.width_scale,
+                                  75 * self.height_scale)
         self.sjwendu4.setText('温度')
         self.sjwendu4.setFont(yuanliaopeibifont)
 
         self.sjwendu4Txt = QLabel(self.sjwendu4)
         self.sjwendu4Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.sjwendu4Txt.setText('130℃')
-        self.sjwendu4Txt.setGeometry(115*self.width_scale, 0, 120*self.width_scale, 75*self.height_scale)
+        self.sjwendu4Txt.setGeometry(115 * self.width_scale, 0, 120 * self.width_scale, 75 * self.height_scale)
         self.sjwendu4Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.sjwendu4Txt.setFont(hbscfont)
 
         self.sjckz4 = QLabel(self.historyInfo)
         self.sjckz4.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjckz4.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #9AD8FB; color:#A8A8A8;padding-left: 20px;')
-        self.sjckz4.setGeometry(1098*self.width_scale, 1451*self.height_scale, 235*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #9AD8FB; color:#A8A8A8;padding-left: 20px;')
+        self.sjckz4.setGeometry(1098 * self.width_scale, 1451 * self.height_scale, 235 * self.width_scale,
+                                75 * self.height_scale)
         self.sjckz4.setText('参考值')
         self.sjckz4.setFont(yuanliaopeibifont)
 
         self.sjckz4Txt = QLabel(self.sjckz4)
         self.sjckz4Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.sjckz4Txt.setText('30RH%')
-        self.sjckz4Txt.setGeometry(85*self.width_scale, 0, 150*self.width_scale, 75*self.height_scale)
+        self.sjckz4Txt.setGeometry(85 * self.width_scale, 0, 150 * self.width_scale, 75 * self.height_scale)
         self.sjckz4Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.sjckz4Txt.setFont(hbscfont)
 
         self.sjpc4 = QLabel(self.historyInfo)
         self.sjpc4.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjpc4.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FC958A; color:#A8A8A8;padding-left: 20px;')
-        self.sjpc4.setGeometry(1338*self.width_scale, 1451*self.height_scale, 210*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FC958A; color:#A8A8A8;padding-left: 20px;')
+        self.sjpc4.setGeometry(1338 * self.width_scale, 1451 * self.height_scale, 210 * self.width_scale,
+                               75 * self.height_scale)
         self.sjpc4.setText('偏差')
         self.sjpc4.setFont(yuanliaopeibifont)
 
         self.sjpc4Txt = QLabel(self.sjpc4)
         self.sjpc4Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.sjpc4Txt.setText('1%')
-        self.sjpc4Txt.setGeometry(50*self.width_scale, 0, 150*self.width_scale, 75*self.height_scale)
+        self.sjpc4Txt.setGeometry(50 * self.width_scale, 0, 150 * self.width_scale, 75 * self.height_scale)
         self.sjpc4Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.sjpc4Txt.setFont(hbscfont)
 
         self.sjStage5 = QLabel(self.historyInfo)
         self.sjStage5.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjStage5.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.sjStage5.setGeometry(718*self.width_scale, 1532*self.height_scale, 135*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.sjStage5.setGeometry(718 * self.width_scale, 1532 * self.height_scale, 135 * self.width_scale,
+                                  75 * self.height_scale)
         self.sjStage5.setText('阶段5')
         self.sjStage5.setFont(yuanliaopeibifont)
 
         self.sjwendu5 = QLabel(self.historyInfo)
         self.sjwendu5.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjwendu5.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FBBE9A; color:#A8A8A8;padding-left: 20px;')
-        self.sjwendu5.setGeometry(857*self.width_scale, 1532*self.height_scale, 235*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FBBE9A; color:#A8A8A8;padding-left: 20px;')
+        self.sjwendu5.setGeometry(857 * self.width_scale, 1532 * self.height_scale, 235 * self.width_scale,
+                                  75 * self.height_scale)
         self.sjwendu5.setText('温度')
         self.sjwendu5.setFont(yuanliaopeibifont)
 
         self.sjwendu5Txt = QLabel(self.sjwendu5)
         self.sjwendu5Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.sjwendu5Txt.setText('130℃')
-        self.sjwendu5Txt.setGeometry(115*self.width_scale, 0, 120*self.width_scale, 75*self.height_scale)
+        self.sjwendu5Txt.setGeometry(115 * self.width_scale, 0, 120 * self.width_scale, 75 * self.height_scale)
         self.sjwendu5Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.sjwendu5Txt.setFont(hbscfont)
 
         self.sjckz5 = QLabel(self.historyInfo)
         self.sjckz5.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjckz5.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #9AD8FB; color:#A8A8A8;padding-left: 20px;')
-        self.sjckz5.setGeometry(1098*self.width_scale, 1532*self.height_scale, 235*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #9AD8FB; color:#A8A8A8;padding-left: 20px;')
+        self.sjckz5.setGeometry(1098 * self.width_scale, 1532 * self.height_scale, 235 * self.width_scale,
+                                75 * self.height_scale)
         self.sjckz5.setText('参考值')
         self.sjckz5.setFont(yuanliaopeibifont)
 
         self.sjckz5Txt = QLabel(self.sjckz5)
         self.sjckz5Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.sjckz5Txt.setText('30RH%')
-        self.sjckz5Txt.setGeometry(85*self.width_scale, 0, 150*self.width_scale, 75*self.height_scale)
+        self.sjckz5Txt.setGeometry(85 * self.width_scale, 0, 150 * self.width_scale, 75 * self.height_scale)
         self.sjckz5Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.sjckz5Txt.setFont(hbscfont)
 
         self.sjpc5 = QLabel(self.historyInfo)
         self.sjpc5.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjpc5.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FC958A; color:#A8A8A8;padding-left: 20px;')
-        self.sjpc5.setGeometry(1338*self.width_scale, 1532*self.height_scale, 210*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FC958A; color:#A8A8A8;padding-left: 20px;')
+        self.sjpc5.setGeometry(1338 * self.width_scale, 1532 * self.height_scale, 210 * self.width_scale,
+                               75 * self.height_scale)
         self.sjpc5.setText('偏差')
         self.sjpc5.setFont(yuanliaopeibifont)
 
         self.sjpc5Txt = QLabel(self.sjpc5)
         self.sjpc5Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.sjpc5Txt.setText('1%')
-        self.sjpc5Txt.setGeometry(50*self.width_scale, 0, 150*self.width_scale, 75*self.height_scale)
+        self.sjpc5Txt.setGeometry(50 * self.width_scale, 0, 150 * self.width_scale, 75 * self.height_scale)
         self.sjpc5Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.sjpc5Txt.setFont(hbscfont)
 
         self.sjStage6 = QLabel(self.historyInfo)
         self.sjStage6.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjStage6.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.sjStage6.setGeometry(718*self.width_scale, 1613*self.height_scale, 135*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.sjStage6.setGeometry(718 * self.width_scale, 1613 * self.height_scale, 135 * self.width_scale,
+                                  75 * self.height_scale)
         self.sjStage6.setText('阶段6')
         self.sjStage6.setFont(yuanliaopeibifont)
 
         self.sjwendu6 = QLabel(self.historyInfo)
         self.sjwendu6.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjwendu6.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FBBE9A; color:#A8A8A8;padding-left: 20px;')
-        self.sjwendu6.setGeometry(857*self.width_scale, 1613*self.height_scale, 235*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FBBE9A; color:#A8A8A8;padding-left: 20px;')
+        self.sjwendu6.setGeometry(857 * self.width_scale, 1613 * self.height_scale, 235 * self.width_scale,
+                                  75 * self.height_scale)
         self.sjwendu6.setText('温度')
         self.sjwendu6.setFont(yuanliaopeibifont)
 
         self.sjwendu6Txt = QLabel(self.sjwendu6)
         self.sjwendu6Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.sjwendu6Txt.setText('130℃')
-        self.sjwendu6Txt.setGeometry(115*self.width_scale, 0, 120*self.width_scale, 75*self.height_scale)
+        self.sjwendu6Txt.setGeometry(115 * self.width_scale, 0, 120 * self.width_scale, 75 * self.height_scale)
         self.sjwendu6Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.sjwendu6Txt.setFont(hbscfont)
 
         self.sjckz6 = QLabel(self.historyInfo)
         self.sjckz6.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjckz6.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #9AD8FB; color:#A8A8A8;padding-left: 20px;')
-        self.sjckz6.setGeometry(1098*self.width_scale, 1613*self.height_scale, 235*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #9AD8FB; color:#A8A8A8;padding-left: 20px;')
+        self.sjckz6.setGeometry(1098 * self.width_scale, 1613 * self.height_scale, 235 * self.width_scale,
+                                75 * self.height_scale)
         self.sjckz6.setText('参考值')
         self.sjckz6.setFont(yuanliaopeibifont)
 
         self.sjckz6Txt = QLabel(self.sjckz6)
         self.sjckz6Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.sjckz6Txt.setText('30RH%')
-        self.sjckz6Txt.setGeometry(85*self.width_scale, 0, 150*self.width_scale, 75*self.height_scale)
+        self.sjckz6Txt.setGeometry(85 * self.width_scale, 0, 150 * self.width_scale, 75 * self.height_scale)
         self.sjckz6Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.sjckz6Txt.setFont(hbscfont)
 
         self.sjpc6 = QLabel(self.historyInfo)
         self.sjpc6.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.sjpc6.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FC958A; color:#A8A8A8;padding-left: 20px;')
-        self.sjpc6.setGeometry(1338*self.width_scale, 1613*self.height_scale, 210*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #FC958A; color:#A8A8A8;padding-left: 20px;')
+        self.sjpc6.setGeometry(1338 * self.width_scale, 1613 * self.height_scale, 210 * self.width_scale,
+                               75 * self.height_scale)
         self.sjpc6.setText('偏差')
         self.sjpc6.setFont(yuanliaopeibifont)
 
         self.sjpc6Txt = QLabel(self.sjpc6)
         self.sjpc6Txt.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.sjpc6Txt.setText('1%')
-        self.sjpc6Txt.setGeometry(50*self.width_scale, 0, 150*self.width_scale, 75*self.height_scale)
+        self.sjpc6Txt.setGeometry(50 * self.width_scale, 0, 150 * self.width_scale, 75 * self.height_scale)
         self.sjpc6Txt.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.sjpc6Txt.setFont(hbscfont)
 
         self.qingkaungfankui = QLabel(self.historyInfo)
         self.qingkaungfankui.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.qingkaungfankui.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.qingkaungfankui.setGeometry(60*self.width_scale, 1713*self.height_scale, 1489*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.qingkaungfankui.setGeometry(60 * self.width_scale, 1713 * self.height_scale, 1489 * self.width_scale,
+                                         75 * self.height_scale)
         self.qingkaungfankui.setText('情况反馈')
         self.qingkaungfankui.setFont(yuanliaopeibifont)
 
         self.qkfkContent = QLabel(self.qingkaungfankui)
         self.qkfkContent.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.qkfkContent.setText('配方1')
-        self.qkfkContent.setGeometry(1239*self.width_scale, 0, 240*self.width_scale, 75*self.height_scale)
+        self.qkfkContent.setGeometry(1239 * self.width_scale, 0, 240 * self.width_scale, 75 * self.height_scale)
         self.qkfkContent.setStyleSheet("background-color: transparent; border:none;color: #222222;padding-right: 20px;")
         self.qkfkContent.setFont(hbscfont)
 
         self.zhongliang = QLabel(self.historyInfo)
         self.zhongliang.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.zhongliang.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.zhongliang.setGeometry(60*self.width_scale, 1794*self.height_scale, 239*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.zhongliang.setGeometry(60 * self.width_scale, 1794 * self.height_scale, 239 * self.width_scale,
+                                    75 * self.height_scale)
         self.zhongliang.setText('重量')
         self.zhongliang.setFont(yuanliaopeibifont)
 
         self.shoudou = QLabel(self.historyInfo)
         self.shoudou.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.shoudou.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.shoudou.setGeometry(303*self.width_scale, 1794*self.height_scale, 356*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.shoudou.setGeometry(303 * self.width_scale, 1794 * self.height_scale, 356 * self.width_scale,
+                                 75 * self.height_scale)
         self.shoudou.setText('熟豆')
         self.shoudou.setFont(yuanliaopeibifont)
 
         self.shoudouNum = QLabel(self.shoudou)
         self.shoudouNum.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.shoudouNum.setText('600g')
-        self.shoudouNum.setGeometry(216*self.width_scale, 0, 140*self.width_scale, 75*self.height_scale)
+        self.shoudouNum.setGeometry(216 * self.width_scale, 0, 140 * self.width_scale, 75 * self.height_scale)
         self.shoudouNum.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.shoudouNum.setFont(hbscfont)
 
         self.hbssl = QLabel(self.historyInfo)
         self.hbssl.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.hbssl.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.hbssl.setGeometry(666*self.width_scale, 1794*self.height_scale, 356*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.hbssl.setGeometry(666 * self.width_scale, 1794 * self.height_scale, 356 * self.width_scale,
+                               75 * self.height_scale)
         self.hbssl.setText('烘焙损失率')
         self.hbssl.setFont(yuanliaopeibifont)
 
         self.hbsslNum = QLabel(self.hbssl)
         self.hbsslNum.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.hbsslNum.setText('600g')
-        self.hbsslNum.setGeometry(216*self.width_scale, 0, 140*self.width_scale, 75*self.height_scale)
+        self.hbsslNum.setGeometry(216 * self.width_scale, 0, 140 * self.width_scale, 75 * self.height_scale)
         self.hbsslNum.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.hbsslNum.setFont(hbscfont)
 
         self.hbrq = QLabel(self.historyInfo)
         self.hbrq.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.hbrq.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.hbrq.setGeometry(1028*self.width_scale, 1794*self.height_scale, 520*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.hbrq.setGeometry(1028 * self.width_scale, 1794 * self.height_scale, 520 * self.width_scale,
+                              75 * self.height_scale)
         self.hbrq.setText('烘焙日期')
         self.hbrq.setFont(yuanliaopeibifont)
 
         self.hbrqNum = QLabel(self.hbrq)
         self.hbrqNum.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.hbrqNum.setText('-')
-        self.hbrqNum.setGeometry(200*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.hbrqNum.setGeometry(200 * self.width_scale, 0, 310 * self.width_scale, 75 * self.height_scale)
         self.hbrqNum.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.hbrqNum.setFont(hbscfont)
 
         self.bcpf = QLabel(self.historyInfo)
         self.bcpf.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.bcpf.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.bcpf.setGeometry(60*self.width_scale, 1896*self.height_scale, 739*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.bcpf.setGeometry(60 * self.width_scale, 1896 * self.height_scale, 739 * self.width_scale,
+                              75 * self.height_scale)
         self.bcpf.setText('杯测评分')
         self.bcpf.setFont(yuanliaopeibifont)
 
         self.bcpfNum = QLabel(self.bcpf)
         self.bcpfNum.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.bcpfNum.setText('80分')
-        self.bcpfNum.setGeometry(534*self.width_scale, 0, 210*self.width_scale, 75*self.height_scale)
+        self.bcpfNum.setGeometry(534 * self.width_scale, 0, 210 * self.width_scale, 75 * self.height_scale)
         self.bcpfNum.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.bcpfNum.setFont(hbscfont)
 
         self.hbpf = QLabel(self.historyInfo)
         self.hbpf.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.hbpf.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.hbpf.setGeometry(809*self.width_scale, 1896*self.height_scale, 739*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.hbpf.setGeometry(809 * self.width_scale, 1896 * self.height_scale, 739 * self.width_scale,
+                              75 * self.height_scale)
         self.hbpf.setText('烘焙评分')
         self.hbpf.setFont(yuanliaopeibifont)
 
         self.hbpfNum = QLabel(self.hbpf)
         self.hbpfNum.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.hbpfNum.setText('80分')
-        self.hbpfNum.setGeometry(534*self.width_scale, 0, 210*self.width_scale, 75*self.height_scale)
+        self.hbpfNum.setGeometry(534 * self.width_scale, 0, 210 * self.width_scale, 75 * self.height_scale)
         self.hbpfNum.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.hbpfNum.setFont(hbscfont)
 
         self.agtronzhi = QLabel(self.historyInfo)
         self.agtronzhi.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.agtronzhi.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.agtronzhi.setGeometry(60*self.width_scale, 1977*self.height_scale, 739*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.agtronzhi.setGeometry(60 * self.width_scale, 1977 * self.height_scale, 739 * self.width_scale,
+                                   75 * self.height_scale)
         self.agtronzhi.setText('Agtron值')
         self.agtronzhi.setFont(yuanliaopeibifont)
 
         self.agtronzhiNum = QLabel(self.agtronzhi)
         self.agtronzhiNum.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.agtronzhiNum.setText('80分')
-        self.agtronzhiNum.setGeometry(534*self.width_scale, 0, 210*self.width_scale, 75*self.height_scale)
+        self.agtronzhiNum.setGeometry(534 * self.width_scale, 0, 210 * self.width_scale, 75 * self.height_scale)
         self.agtronzhiNum.setStyleSheet(
             "background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.agtronzhiNum.setFont(hbscfont)
@@ -8010,15 +8166,16 @@ class ApplicationWindow(
         self.bcrq = QLabel(self.historyInfo)
         self.bcrq.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.bcrq.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.bcrq.setGeometry(809*self.width_scale, 1977*self.height_scale, 739*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.bcrq.setGeometry(809 * self.width_scale, 1977 * self.height_scale, 739 * self.width_scale,
+                              75 * self.height_scale)
         self.bcrq.setText('杯测日期')
         self.bcrq.setFont(yuanliaopeibifont)
 
         self.bcrqNum = QLabel(self.bcrq)
         self.bcrqNum.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.bcrqNum.setText('80分')
-        self.bcrqNum.setGeometry(434*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.bcrqNum.setGeometry(434 * self.width_scale, 0, 310 * self.width_scale, 75 * self.height_scale)
         self.bcrqNum.setStyleSheet(
             "background-color: transparent; border:none;color: #A8A8A8;padding-right: 20px;")
         self.bcrqNum.setFont(hbscfont)
@@ -8026,8 +8183,9 @@ class ApplicationWindow(
         self.pkfk = QLabel(self.historyInfo)
         self.pkfk.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.pkfk.setStyleSheet(
-            f'border-radius: {10*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
-        self.pkfk.setGeometry(60*self.width_scale, 2058*self.height_scale, 1489*self.width_scale, 75*self.height_scale)
+            f'border-radius: {10 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #DAD6D3; color:#A8A8A8;padding-left: 20px;')
+        self.pkfk.setGeometry(60 * self.width_scale, 2058 * self.height_scale, 1489 * self.width_scale,
+                              75 * self.height_scale)
         self.pkfk.setText('品控反馈')
         self.pkfk.setFont(yuanliaopeibifont)
 
@@ -8039,34 +8197,39 @@ class ApplicationWindow(
         self.pkfkTxt.setFont(hbscfont)
 
         self.zhezhaoLabel = QLabel(self.historyInfo)
-        self.zhezhaoLabel.setGeometry(0, 0, 1610*self.width_scale, 2739*self.height_scale)
-        self.zhezhaoLabel.setStyleSheet(f"background-color: rgba(0, 0, 0, 0);border-radius: {25*self.height_scale}px;")
+        self.zhezhaoLabel.setGeometry(0, 0, 1610 * self.width_scale, 2739 * self.height_scale)
+        self.zhezhaoLabel.setStyleSheet(
+            f"background-color: rgba(0, 0, 0, 0);border-radius: {25 * self.height_scale}px;")
         self.zhezhao = QPixmap(self.normalized_path + '/includes/Icons/history/back_L2.png')
         self.zhezhaoLabel.setPixmap(self.zhezhao)
         self.zhezhaoLabel.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
         self.zhezhaoLabel.setScaledContents(True)
 
-
         self.historyAnalyse = QLabel(self)  # 历史记录-分析
-        self.historyAnalyse.setStyleSheet(f'border-radius: {25*self.height_scale}px;background-color: #ffffff; border: 1px solid #A7A8AC; ')
-        self.historyAnalyse.setGeometry(226*self.width_scale, 196*self.height_scale, 1610*self.width_scale, 800*self.height_scale)
+        self.historyAnalyse.setStyleSheet(
+            f'border-radius: {25 * self.height_scale}px;background-color: #ffffff; border: 1px solid #A7A8AC; ')
+        self.historyAnalyse.setGeometry(226 * self.width_scale, 196 * self.height_scale, 1610 * self.width_scale,
+                                        800 * self.height_scale)
         self.historyAnalyseImg = QPixmap(self.normalized_path + '/includes/Icons/history/back_L.png')
         self.historyAnalyse.setScaledContents(True)
         self.historyAnalyse.setPixmap(self.historyAnalyseImg)
-        self.historyAnalyse.setMinimumSize(1610*self.width_scale, 2739*self.height_scale)
+        self.historyAnalyse.setMinimumSize(1610 * self.width_scale, 2739 * self.height_scale)
         self.historyAnalyse.setVisible(False)
 
         self.history_sheibei1 = QLabel(self.historyAnalyse)
         self.history_sheibei1.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.history_sheibei1.setStyleSheet(f'border-radius: {19*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #C8402C; ')
-        self.history_sheibei1.setGeometry(60*self.width_scale, 30*self.height_scale, 265*self.width_scale, 38*self.height_scale)
+        self.history_sheibei1.setStyleSheet(
+            f'border-radius: {19 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #C8402C; ')
+        self.history_sheibei1.setGeometry(60 * self.width_scale, 30 * self.height_scale, 265 * self.width_scale,
+                                          38 * self.height_scale)
         self.history_sheibei1.setText('-')
-        history_sheibeifont = QFont(self.font_family4, 10*self.width_scale)
+        history_sheibeifont = QFont(self.font_family4, 10 * self.width_scale)
         self.history_sheibei1.setFont(history_sheibeifont)
 
         self.history_sheibei2 = QLabel(self.historyAnalyse)
         self.history_sheibei2.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.history_sheibei2.setStyleSheet(f'border-radius: {19*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #E5B547; ')
+        self.history_sheibei2.setStyleSheet(
+            f'border-radius: {19 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #E5B547; ')
         self.history_sheibei2.setGeometry(340 * self.width_scale, 30 * self.height_scale, 265 * self.width_scale,
                                           38 * self.height_scale)
         self.history_sheibei2.setText('-')
@@ -8074,7 +8237,8 @@ class ApplicationWindow(
 
         self.history_sheibei3 = QLabel(self.historyAnalyse)
         self.history_sheibei3.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.history_sheibei3.setStyleSheet(f'border-radius: {19*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #44AB6B; ')
+        self.history_sheibei3.setStyleSheet(
+            f'border-radius: {19 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #44AB6B; ')
         self.history_sheibei3.setGeometry(621 * self.width_scale, 30 * self.height_scale, 265 * self.width_scale,
                                           38 * self.height_scale)
         self.history_sheibei3.setText('-')
@@ -8082,14 +8246,16 @@ class ApplicationWindow(
 
         self.history_sheibei4 = QLabel(self.historyAnalyse)
         self.history_sheibei4.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.history_sheibei4.setStyleSheet(f'border-radius: {19*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #258B96; ')
+        self.history_sheibei4.setStyleSheet(
+            f'border-radius: {19 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #258B96; ')
         self.history_sheibei4.setGeometry(902 * self.width_scale, 30 * self.height_scale, 265 * self.width_scale,
                                           38 * self.height_scale)
         self.history_sheibei4.setText('-')
         self.history_sheibei4.setFont(history_sheibeifont)
 
         self.updateCloud = QPushButton(self.historyAnalyse)
-        self.updateCloud.setGeometry(1440*self.width_scale, 30*self.height_scale, 40*self.width_scale, 40*self.width_scale)
+        self.updateCloud.setGeometry(1440 * self.width_scale, 30 * self.height_scale, 40 * self.width_scale,
+                                     40 * self.width_scale)
         self.updateCloud.setCheckable(True)
         self.updateCloud.setStyleSheet(f"""
                                             QPushButton {{
@@ -8099,9 +8265,9 @@ class ApplicationWindow(
                                         """)
         # self.updateCloud.clicked.connect(self.toggle_password_visibility)
 
-
         self.closeAnalyse = QPushButton(self.historyAnalyse)
-        self.closeAnalyse.setGeometry(1500*self.width_scale, 30*self.height_scale, 40*self.width_scale, 40*self.width_scale)
+        self.closeAnalyse.setGeometry(1500 * self.width_scale, 30 * self.height_scale, 40 * self.width_scale,
+                                      40 * self.width_scale)
         self.closeAnalyse.setCheckable(True)
         self.closeAnalyse.setStyleSheet(f"""
                                                     QPushButton {{
@@ -8112,29 +8278,15 @@ class ApplicationWindow(
         self.closeAnalyse.clicked.connect(self.closeAnalyseClick)
 
         self.hfChartKey2 = QLabel(self.historyAnalyse)
-        self.hfChartKey2.setStyleSheet(f'border-radius: {27*self.height_scale}px;background-color: #D3C9C2;border: none')
-        self.hfChartKey2.setGeometry(60*self.width_scale, 731*self.height_scale, 1481*self.width_scale, 56*self.height_scale)
+        self.hfChartKey2.setStyleSheet(
+            f'border-radius: {27 * self.height_scale}px;background-color: #D3C9C2;border: none')
+        self.hfChartKey2.setGeometry(60 * self.width_scale, 731 * self.height_scale, 1481 * self.width_scale,
+                                     56 * self.height_scale)
 
         self.matplotlib_widget = MatplotlibWidget(self.historyAnalyse)
-        self.matplotlib_widget.setGeometry(35*self.width_scale, 104*self.height_scale, 1541*self.width_scale, 600*self.height_scale)
+        self.matplotlib_widget.setGeometry(35 * self.width_scale, 104 * self.height_scale, 1541 * self.width_scale,
+                                           600 * self.height_scale)
         self.matplotlib_widget.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
-
-        self.ySSD_Analyse = QLabel(self.historyAnalyse)
-        self.ySSD_Analyse.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
-        self.ySSD_Analyse.setText('℃')
-        self.ySSD_Analyse.setGeometry(87 * self.width_scale, 90 * self.height_scale, 28 * self.width_scale,
-                                      22 * self.height_scale)
-        self.ySSD_Analyse.setStyleSheet("color: #7D7A79;border:none;background-color: transparent")
-        ySSDfont2 = QFont(self.font_family4, 14 * self.width_scale)
-        self.ySSD_Analyse.setFont(ySSDfont2)
-
-        self.chart_min_Analyse = QLabel(self.historyAnalyse)
-        self.chart_min_Analyse.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
-        self.chart_min_Analyse.setText('min')
-        self.chart_min_Analyse.setGeometry(1510 * self.width_scale, 668 * self.height_scale, 40 * self.width_scale,
-                                           22 * self.height_scale)
-        self.chart_min_Analyse.setStyleSheet("color: #7D7A79;border:none;background-color: transparent")
-        self.chart_min_Analyse.setFont(ySSDfont2)
 
         # self.timex_dw = [[], [], [], []]  # 存储豆温的 timex 数据
         # self.temp_dw = [[], [], [], []]  # 存储豆温的温度数据
@@ -8142,25 +8294,27 @@ class ApplicationWindow(
         # self.temp_fw = [[], [], [], []]  # 存储风温的温度数据
 
         self.analyse_dw = QPushButton(self.hfChartKey2)
-        self.analyse_dw.setStyleSheet(f'border-radius: {15*self.height_scale}px;background-color: #FBF8F5;border: 2px solid #D18F65')
-        self.analyse_dw.setGeometry(271*self.width_scale, 13*self.height_scale, 64*self.width_scale, 32*self.height_scale)
+        self.analyse_dw.setStyleSheet(
+            f'border-radius: {15 * self.height_scale}px;background-color: #FBF8F5;border: 2px solid #D18F65')
+        self.analyse_dw.setGeometry(271 * self.width_scale, 13 * self.height_scale, 64 * self.width_scale,
+                                    32 * self.height_scale)
         self.analyse_dw.setText("豆温")
         analyse_dwfont = QFont(self.font_family4, 14 * self.width_scale)
         self.analyse_dw.setFont(analyse_dwfont)
         self.analyse_dw.clicked.connect(self.toggle_analyse_dw)
 
         self.analyse_fw = QPushButton(self.hfChartKey2)
-        self.analyse_fw.setStyleSheet(f'border-radius: {15*self.height_scale}px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
+        self.analyse_fw.setStyleSheet(
+            f'border-radius: {15 * self.height_scale}px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
         self.analyse_fw.setGeometry(441 * self.width_scale, 13 * self.height_scale, 64 * self.width_scale,
                                     32 * self.height_scale)
         self.analyse_fw.setText("风温")
         self.analyse_fw.setFont(analyse_dwfont)
         self.analyse_fw.clicked.connect(self.toggle_analyse_fw)
 
-
-
         self.analyse_ROR = QPushButton(self.hfChartKey2)
-        self.analyse_ROR.setStyleSheet(f'border-radius: {15*self.height_scale}px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
+        self.analyse_ROR.setStyleSheet(
+            f'border-radius: {15 * self.height_scale}px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
         self.analyse_ROR.setGeometry(610 * self.width_scale, 13 * self.height_scale, 64 * self.width_scale,
                                      32 * self.height_scale)
         self.analyse_ROR.setText("ROR")
@@ -8168,7 +8322,8 @@ class ApplicationWindow(
         # self.analyse_ROR.clicked.connect(self.toggle_analyse_ROR)
 
         self.analyse_Agtron = QPushButton(self.hfChartKey2)
-        self.analyse_Agtron.setStyleSheet(f'border-radius: {15*self.height_scale}px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
+        self.analyse_Agtron.setStyleSheet(
+            f'border-radius: {15 * self.height_scale}px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
         self.analyse_Agtron.setGeometry(780 * self.width_scale, 13 * self.height_scale, 64 * self.width_scale,
                                         32 * self.height_scale)
         self.analyse_Agtron.setText("色值")
@@ -8176,7 +8331,8 @@ class ApplicationWindow(
         # self.analyse_Agtron.clicked.connect(self.toggle_analyse_Agtron)
 
         self.analyse_pqsd = QPushButton(self.hfChartKey2)
-        self.analyse_pqsd.setStyleSheet(f'border-radius: {15*self.height_scale}px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
+        self.analyse_pqsd.setStyleSheet(
+            f'border-radius: {15 * self.height_scale}px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
         self.analyse_pqsd.setGeometry(957 * self.width_scale, 13 * self.height_scale, 100 * self.width_scale,
                                       32 * self.height_scale)
         self.analyse_pqsd.setText("排气湿度")
@@ -8184,213 +8340,257 @@ class ApplicationWindow(
         # self.analyse_pqsd.clicked.connect(self.toggle_analyse_pqsd)
 
         self.analyse_pqwd = QPushButton(self.hfChartKey2)
-        self.analyse_pqwd.setStyleSheet(f'border-radius: {15*self.height_scale}px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
+        self.analyse_pqwd.setStyleSheet(
+            f'border-radius: {15 * self.height_scale}px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
         self.analyse_pqwd.setGeometry(1126 * self.width_scale, 13 * self.height_scale, 100 * self.width_scale,
                                       32 * self.height_scale)
         self.analyse_pqwd.setText("排气温度")
         self.analyse_pqwd.setFont(analyse_dwfont)
         # self.analyse_pqwd.clicked.connect(self.toggle_analyse_pqwd)
 
-
         self.kstTxt = QLabel(self.historyAnalyse)
         self.kstTxt.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.kstTxt.setText('可视图')
-        self.kstTxt.setGeometry(60*self.width_scale, 868*self.height_scale, 240*self.width_scale, 30*self.height_scale)
+        self.kstTxt.setGeometry(60 * self.width_scale, 868 * self.height_scale, 240 * self.width_scale,
+                                30 * self.height_scale)
         self.kstTxt.setStyleSheet("background-color: transparent; border:none;color: #222222;")
         self.kstTxt.setFont(hbscfont)
 
         self.kstTxt = QLabel(self.historyAnalyse)
         self.kstTxt.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.kstTxt.setText('AI值')
-        self.kstTxt.setGeometry(58*self.width_scale, 930*self.height_scale, 90*self.width_scale, 66*self.height_scale)
+        self.kstTxt.setGeometry(58 * self.width_scale, 930 * self.height_scale, 90 * self.width_scale,
+                                66 * self.height_scale)
         self.kstTxt.setStyleSheet("background-color: transparent; border:none;color: #2187F9;")
         self.kstTxt.setFont(hbscfont)
 
         self.aikst = QLabel(self.historyAnalyse)
-        self.aikst.setGeometry(136*self.width_scale, 930*self.height_scale, 1403*self.width_scale, 66*self.height_scale)
-        self.aikst.setStyleSheet(f"background-color: transparent; border:1px solid #DAD6D3; border-radius: {10*self.height_scale}px;")
+        self.aikst.setGeometry(136 * self.width_scale, 930 * self.height_scale, 1403 * self.width_scale,
+                               66 * self.height_scale)
+        self.aikst.setStyleSheet(
+            f"background-color: transparent; border:1px solid #DAD6D3; border-radius: {10 * self.height_scale}px;")
 
         self.aikstColor = QLabel(self.aikst)
-        self.aikstColor.setGeometry(5*self.width_scale, 15*self.height_scale, 10*self.width_scale, 36*self.height_scale)
-        self.aikstColor.setStyleSheet(f"background-color: #2187F9; border:none;border-radius: {5*self.height_scale}px;")
+        self.aikstColor.setGeometry(5 * self.width_scale, 15 * self.height_scale, 10 * self.width_scale,
+                                    36 * self.height_scale)
+        self.aikstColor.setStyleSheet(
+            f"background-color: #2187F9; border:none;border-radius: {5 * self.height_scale}px;")
 
         self.aikstTxt1 = QLabel(self.aikst)
         self.aikstTxt1.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.aikstTxt1.setText('入豆温度: 165℃   回温点: 80℃/01:30')
-        self.aikstTxt1.setGeometry(16*self.width_scale, 3*self.height_scale, 647*self.width_scale, 60*self.height_scale)
-        self.aikstTxt1.setStyleSheet(f"background-color: #DFD6C9; border:none;color: #9C6D4E;border-radiu: {8*self.height_scale}px;padding-left:{9*self.height_scale}px")
-        kstTxtFont = QFont(self.font_family4, 14*self.width_scale)
+        self.aikstTxt1.setGeometry(16 * self.width_scale, 3 * self.height_scale, 647 * self.width_scale,
+                                   60 * self.height_scale)
+        self.aikstTxt1.setStyleSheet(
+            f"background-color: #DFD6C9; border:none;color: #9C6D4E;border-radiu: {8 * self.height_scale}px;padding-left:{9 * self.height_scale}px")
+        kstTxtFont = QFont(self.font_family4, 14 * self.width_scale)
         self.aikstTxt1.setFont(kstTxtFont)
 
         self.aikstTxt2 = QLabel(self.aikst)
         self.aikstTxt2.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.aikstTxt2.setText('转黄点: 150℃/05:30')
-        self.aikstTxt2.setGeometry(664*self.width_scale, 3*self.height_scale, 378*self.width_scale, 60*self.height_scale)
-        self.aikstTxt2.setStyleSheet(f"background-color: #D6C590; border:none;color: #B97A0A;border-radius: {8*self.height_scale}px;px;padding-left:9px")
+        self.aikstTxt2.setGeometry(664 * self.width_scale, 3 * self.height_scale, 378 * self.width_scale,
+                                   60 * self.height_scale)
+        self.aikstTxt2.setStyleSheet(
+            f"background-color: #D6C590; border:none;color: #B97A0A;border-radius: {8 * self.height_scale}px;px;padding-left:9px")
         self.aikstTxt2.setFont(kstTxtFont)
 
         self.aikstTxt3 = QLabel(self.aikst)
         self.aikstTxt3.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.aikstTxt3.setText('一爆: 220℃/12:00')
-        self.aikstTxt3.setGeometry(1043*self.width_scale, 3*self.height_scale, 357*self.width_scale, 60*self.height_scale)
-        self.aikstTxt3.setStyleSheet(f"background-color: #BFA585; border:none;color: #945726;border-radius: {8*self.height_scale}px;padding-left:{9*self.height_scale}px")
+        self.aikstTxt3.setGeometry(1043 * self.width_scale, 3 * self.height_scale, 357 * self.width_scale,
+                                   60 * self.height_scale)
+        self.aikstTxt3.setStyleSheet(
+            f"background-color: #BFA585; border:none;color: #945726;border-radius: {8 * self.height_scale}px;padding-left:{9 * self.height_scale}px")
         self.aikstTxt3.setFont(kstTxtFont)
 
         self.kstTxt1 = QLabel(self.historyAnalyse)
         self.kstTxt1.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.kstTxt1.setText('No.1')
-        self.kstTxt1.setGeometry(58*self.width_scale, 1000*self.height_scale, 90*self.width_scale, 60*self.height_scale)
+        self.kstTxt1.setGeometry(58 * self.width_scale, 1000 * self.height_scale, 90 * self.width_scale,
+                                 60 * self.height_scale)
         self.kstTxt1.setStyleSheet("background-color: transparent; border:none;color: #C8402C;")
         self.kstTxt1.setFont(hbscfont)
 
         self.oneKST = QLabel(self.historyAnalyse)
-        self.oneKST.setGeometry(136*self.width_scale, 999*self.height_scale, 1403*self.width_scale, 66*self.height_scale)
-        self.oneKST.setStyleSheet(f"background-color: transparent; border:1px solid #DAD6D3; border-radius: {10*self.height_scale}px;")
+        self.oneKST.setGeometry(136 * self.width_scale, 999 * self.height_scale, 1403 * self.width_scale,
+                                66 * self.height_scale)
+        self.oneKST.setStyleSheet(
+            f"background-color: transparent; border:1px solid #DAD6D3; border-radius: {10 * self.height_scale}px;")
 
         self.oneKSTColor = QLabel(self.oneKST)
-        self.oneKSTColor.setGeometry(5*self.width_scale, 15*self.height_scale, 10*self.width_scale, 36*self.height_scale)
-        self.oneKSTColor.setStyleSheet(f"background-color: #C8402C; border:none;border-radius: {5*self.height_scale}px;")
+        self.oneKSTColor.setGeometry(5 * self.width_scale, 15 * self.height_scale, 10 * self.width_scale,
+                                     36 * self.height_scale)
+        self.oneKSTColor.setStyleSheet(
+            f"background-color: #C8402C; border:none;border-radius: {5 * self.height_scale}px;")
 
         self.onekstTxt1 = QLabel(self.oneKST)
         self.onekstTxt1.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.onekstTxt1.setText('入豆温度: 168℃   回温点: 80℃/01:30')
-        self.onekstTxt1.setGeometry(16*self.width_scale, 3*self.height_scale, 647*self.width_scale, 60*self.height_scale)
+        self.onekstTxt1.setGeometry(16 * self.width_scale, 3 * self.height_scale, 647 * self.width_scale,
+                                    60 * self.height_scale)
         self.onekstTxt1.setStyleSheet(
-            f"background-color: #DFD6C9; border:none;color: #9C6D4E;border-radius: 8px;padding-left:{9*self.height_scale}px")
-        kstTxtFont = QFont(self.font_family4, 14*self.width_scale)
+            f"background-color: #DFD6C9; border:none;color: #9C6D4E;border-radius: 8px;padding-left:{9 * self.height_scale}px")
+        kstTxtFont = QFont(self.font_family4, 14 * self.width_scale)
         self.onekstTxt1.setFont(kstTxtFont)
 
         self.onekstTxt2 = QLabel(self.oneKST)
         self.onekstTxt2.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.onekstTxt2.setText('转黄点: 150℃/05:30')
-        self.onekstTxt2.setGeometry(664*self.width_scale, 3*self.height_scale, 378*self.width_scale, 60*self.height_scale)
+        self.onekstTxt2.setGeometry(664 * self.width_scale, 3 * self.height_scale, 378 * self.width_scale,
+                                    60 * self.height_scale)
         self.onekstTxt2.setStyleSheet(
-            f"background-color: #D6C590; border:none;color: #B97A0A;border-radius: {8*self.height_scale}px;padding-left:{9*self.height_scale}px")
+            f"background-color: #D6C590; border:none;color: #B97A0A;border-radius: {8 * self.height_scale}px;padding-left:{9 * self.height_scale}px")
         self.onekstTxt2.setFont(kstTxtFont)
 
         self.onekstTxt3 = QLabel(self.oneKST)
         self.onekstTxt3.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.onekstTxt3.setText('一爆: 220℃/12:00')
-        self.onekstTxt3.setGeometry(1043*self.width_scale, 3*self.height_scale, 357*self.width_scale, 60*self.height_scale)
+        self.onekstTxt3.setGeometry(1043 * self.width_scale, 3 * self.height_scale, 357 * self.width_scale,
+                                    60 * self.height_scale)
         self.onekstTxt3.setStyleSheet(
-            f"background-color: #BFA585; border:none;color: #945726;border-radius: {8*self.height_scale}px;padding-left:{9*self.height_scale}px")
+            f"background-color: #BFA585; border:none;color: #945726;border-radius: {8 * self.height_scale}px;padding-left:{9 * self.height_scale}px")
         self.onekstTxt3.setFont(kstTxtFont)
 
         self.kstTxt2 = QLabel(self.historyAnalyse)
         self.kstTxt2.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.kstTxt2.setText('No.2')
-        self.kstTxt2.setGeometry(58*self.width_scale, 1070*self.height_scale, 90*self.width_scale, 60*self.height_scale)
+        self.kstTxt2.setGeometry(58 * self.width_scale, 1070 * self.height_scale, 90 * self.width_scale,
+                                 60 * self.height_scale)
         self.kstTxt2.setStyleSheet("background-color: transparent; border:none;color: #E5B547;")
         self.kstTxt2.setFont(hbscfont)
 
         self.twoKST = QLabel(self.historyAnalyse)
-        self.twoKST.setGeometry(136*self.width_scale, 1068*self.height_scale, 1403*self.width_scale, 66*self.height_scale)
-        self.twoKST.setStyleSheet(f"background-color: transparent; border:1px solid #DAD6D3; border-radius: {10*self.height_scale}px;")
+        self.twoKST.setGeometry(136 * self.width_scale, 1068 * self.height_scale, 1403 * self.width_scale,
+                                66 * self.height_scale)
+        self.twoKST.setStyleSheet(
+            f"background-color: transparent; border:1px solid #DAD6D3; border-radius: {10 * self.height_scale}px;")
 
         self.twoKSTColor = QLabel(self.twoKST)
-        self.twoKSTColor.setGeometry(5*self.width_scale, 15*self.height_scale, 10*self.width_scale, 36*self.height_scale)
-        self.twoKSTColor.setStyleSheet(f"background-color: #E5B547; border:none;border-radius: {5*self.height_scale}px")
+        self.twoKSTColor.setGeometry(5 * self.width_scale, 15 * self.height_scale, 10 * self.width_scale,
+                                     36 * self.height_scale)
+        self.twoKSTColor.setStyleSheet(
+            f"background-color: #E5B547; border:none;border-radius: {5 * self.height_scale}px")
 
         self.twokstTxt1 = QLabel(self.twoKST)
         self.twokstTxt1.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.twokstTxt1.setText('入豆温度: 168℃   回温点: 80℃/01:30')
-        self.twokstTxt1.setGeometry(16*self.width_scale, 3*self.height_scale, 647*self.width_scale, 60*self.height_scale)
+        self.twokstTxt1.setGeometry(16 * self.width_scale, 3 * self.height_scale, 647 * self.width_scale,
+                                    60 * self.height_scale)
         self.twokstTxt1.setStyleSheet(
-            f"background-color: #DFD6C9; border:none;color: #9C6D4E;border-radius: {8*self.height_scale}px;padding-left:{9*self.height_scale}px")
+            f"background-color: #DFD6C9; border:none;color: #9C6D4E;border-radius: {8 * self.height_scale}px;padding-left:{9 * self.height_scale}px")
         self.twokstTxt1.setFont(kstTxtFont)
 
         self.twokstTxt2 = QLabel(self.twoKST)
         self.twokstTxt2.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.twokstTxt2.setText('转黄点: 150℃/05:30')
-        self.twokstTxt2.setGeometry(664*self.width_scale, 3*self.height_scale, 378*self.width_scale, 60*self.height_scale)
+        self.twokstTxt2.setGeometry(664 * self.width_scale, 3 * self.height_scale, 378 * self.width_scale,
+                                    60 * self.height_scale)
         self.twokstTxt2.setStyleSheet(
-            f"background-color: #D6C590; border:none;color: #B97A0A;border-radius: {8*self.height_scale}px;padding-left:{9*self.height_scale}px")
+            f"background-color: #D6C590; border:none;color: #B97A0A;border-radius: {8 * self.height_scale}px;padding-left:{9 * self.height_scale}px")
         self.twokstTxt2.setFont(kstTxtFont)
 
         self.twokstTxt3 = QLabel(self.twoKST)
         self.twokstTxt3.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.twokstTxt3.setText('一爆: 220℃/12:00')
-        self.twokstTxt3.setGeometry(1043*self.width_scale, 3*self.height_scale, 357*self.width_scale, 60*self.height_scale)
+        self.twokstTxt3.setGeometry(1043 * self.width_scale, 3 * self.height_scale, 357 * self.width_scale,
+                                    60 * self.height_scale)
         self.twokstTxt3.setStyleSheet(
-            f"background-color: #BFA585; border:none;color: #945726;border-radius: {8*self.height_scale}px;padding-left:{9*self.height_scale}px")
+            f"background-color: #BFA585; border:none;color: #945726;border-radius: {8 * self.height_scale}px;padding-left:{9 * self.height_scale}px")
         self.twokstTxt3.setFont(kstTxtFont)
 
         self.kstTxt3 = QLabel(self.historyAnalyse)
         self.kstTxt3.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.kstTxt3.setText('No.3')
-        self.kstTxt3.setGeometry(58*self.width_scale, 1140*self.height_scale, 90*self.width_scale, 60*self.height_scale)
+        self.kstTxt3.setGeometry(58 * self.width_scale, 1140 * self.height_scale, 90 * self.width_scale,
+                                 60 * self.height_scale)
         self.kstTxt3.setStyleSheet("background-color: transparent; border:none;color: #44AB6B;")
         self.kstTxt3.setFont(hbscfont)
 
         self.threeKST = QLabel(self.historyAnalyse)
-        self.threeKST.setGeometry(136*self.width_scale, 1137*self.height_scale, 1403*self.width_scale, 66*self.height_scale)
-        self.threeKST.setStyleSheet(f"background-color: transparent; border:1px solid #DAD6D3; border-radius: {10*self.height_scale}px;")
+        self.threeKST.setGeometry(136 * self.width_scale, 1137 * self.height_scale, 1403 * self.width_scale,
+                                  66 * self.height_scale)
+        self.threeKST.setStyleSheet(
+            f"background-color: transparent; border:1px solid #DAD6D3; border-radius: {10 * self.height_scale}px;")
 
         self.threeKSTColor = QLabel(self.threeKST)
-        self.threeKSTColor.setGeometry(5*self.width_scale, 15*self.height_scale, 10*self.width_scale, 36*self.height_scale)
-        self.threeKSTColor.setStyleSheet(f"background-color: #44AB6B; border:none;border-radius: {5*self.height_scale}px")
+        self.threeKSTColor.setGeometry(5 * self.width_scale, 15 * self.height_scale, 10 * self.width_scale,
+                                       36 * self.height_scale)
+        self.threeKSTColor.setStyleSheet(
+            f"background-color: #44AB6B; border:none;border-radius: {5 * self.height_scale}px")
 
         self.threekstTxt1 = QLabel(self.threeKST)
         self.threekstTxt1.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.threekstTxt1.setText('入豆温度: 168℃   回温点: 80℃/01:30')
-        self.threekstTxt1.setGeometry(16*self.width_scale, 3*self.height_scale, 647*self.width_scale, 60*self.height_scale)
+        self.threekstTxt1.setGeometry(16 * self.width_scale, 3 * self.height_scale, 647 * self.width_scale,
+                                      60 * self.height_scale)
         self.threekstTxt1.setStyleSheet(
-            f"background-color: #DFD6C9; border:none;color: #9C6D4E;border-radius: {8*self.height_scale}px;padding-left:{9*self.height_scale}px")
+            f"background-color: #DFD6C9; border:none;color: #9C6D4E;border-radius: {8 * self.height_scale}px;padding-left:{9 * self.height_scale}px")
         self.threekstTxt1.setFont(kstTxtFont)
 
         self.threekstTxt2 = QLabel(self.threeKST)
         self.threekstTxt2.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.threekstTxt2.setText('转黄点: 150℃/05:30')
-        self.threekstTxt2.setGeometry(664*self.width_scale, 3*self.height_scale, 378*self.width_scale, 60*self.height_scale)
+        self.threekstTxt2.setGeometry(664 * self.width_scale, 3 * self.height_scale, 378 * self.width_scale,
+                                      60 * self.height_scale)
         self.threekstTxt2.setStyleSheet(
-            f"background-color: #D6C590; border:none;color: #B97A0A;border-radius: {8*self.height_scale}px;padding-left:{9*self.height_scale}px")
+            f"background-color: #D6C590; border:none;color: #B97A0A;border-radius: {8 * self.height_scale}px;padding-left:{9 * self.height_scale}px")
         self.threekstTxt2.setFont(kstTxtFont)
 
         self.threekstTxt3 = QLabel(self.threeKST)
         self.threekstTxt3.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.threekstTxt3.setText('一爆: 220℃/12:00')
-        self.threekstTxt3.setGeometry(1043*self.width_scale, 3*self.height_scale, 357*self.width_scale, 60*self.height_scale)
+        self.threekstTxt3.setGeometry(1043 * self.width_scale, 3 * self.height_scale, 357 * self.width_scale,
+                                      60 * self.height_scale)
         self.threekstTxt3.setStyleSheet(
-            f"background-color: #BFA585; border:none;color: #945726;border-radius: {8*self.height_scale}px;padding-left:{9*self.height_scale}px")
+            f"background-color: #BFA585; border:none;color: #945726;border-radius: {8 * self.height_scale}px;padding-left:{9 * self.height_scale}px")
         self.threekstTxt3.setFont(kstTxtFont)
 
         self.kstTxt4 = QLabel(self.historyAnalyse)
         self.kstTxt4.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.kstTxt4.setText('No.4')
-        self.kstTxt4.setGeometry(58*self.width_scale, 1210*self.height_scale, 90*self.width_scale, 60*self.height_scale)
+        self.kstTxt4.setGeometry(58 * self.width_scale, 1210 * self.height_scale, 90 * self.width_scale,
+                                 60 * self.height_scale)
         self.kstTxt4.setStyleSheet("background-color: transparent; border:none;color: #258B96;")
         self.kstTxt4.setFont(hbscfont)
 
         self.fourKST = QLabel(self.historyAnalyse)
-        self.fourKST.setGeometry(136*self.width_scale, 1206*self.height_scale, 1403*self.width_scale, 66*self.height_scale)
-        self.fourKST.setStyleSheet(f"background-color: transparent; border:1px solid #DAD6D3; border-radius: {10*self.height_scale}px;")
+        self.fourKST.setGeometry(136 * self.width_scale, 1206 * self.height_scale, 1403 * self.width_scale,
+                                 66 * self.height_scale)
+        self.fourKST.setStyleSheet(
+            f"background-color: transparent; border:1px solid #DAD6D3; border-radius: {10 * self.height_scale}px;")
 
         self.fourKSTColor = QLabel(self.fourKST)
-        self.fourKSTColor.setGeometry(5*self.width_scale, 15*self.height_scale, 10*self.width_scale, 36*self.height_scale)
-        self.fourKSTColor.setStyleSheet(f"background-color: #258B96; border:none;border-radius: {5*self.height_scale}")
+        self.fourKSTColor.setGeometry(5 * self.width_scale, 15 * self.height_scale, 10 * self.width_scale,
+                                      36 * self.height_scale)
+        self.fourKSTColor.setStyleSheet(
+            f"background-color: #258B96; border:none;border-radius: {5 * self.height_scale}")
 
         self.fourkstTxt1 = QLabel(self.fourKST)
         self.fourkstTxt1.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.fourkstTxt1.setText('入豆温度: 168℃   回温点: 80℃/01:30')
-        self.fourkstTxt1.setGeometry(16*self.width_scale, 3*self.height_scale, 647*self.width_scale, 60*self.height_scale)
+        self.fourkstTxt1.setGeometry(16 * self.width_scale, 3 * self.height_scale, 647 * self.width_scale,
+                                     60 * self.height_scale)
         self.fourkstTxt1.setStyleSheet(
-            f"background-color: #DFD6C9; border:none;color: #9C6D4E;border-radius: {8*self.height_scale}px;padding-left:{9*self.height_scale}px")
+            f"background-color: #DFD6C9; border:none;color: #9C6D4E;border-radius: {8 * self.height_scale}px;padding-left:{9 * self.height_scale}px")
         self.fourkstTxt1.setFont(kstTxtFont)
 
         self.fourkstTxt2 = QLabel(self.fourKST)
         self.fourkstTxt2.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.fourkstTxt2.setText('转黄点: 150℃/05:30')
-        self.fourkstTxt2.setGeometry(664*self.width_scale, 3*self.height_scale, 378*self.width_scale, 60*self.height_scale)
+        self.fourkstTxt2.setGeometry(664 * self.width_scale, 3 * self.height_scale, 378 * self.width_scale,
+                                     60 * self.height_scale)
         self.fourkstTxt2.setStyleSheet(
-            f"background-color: #D6C590; border:none;color: #B97A0A;border-radius: {8*self.height_scale}px;padding-left:{9*self.height_scale}px")
+            f"background-color: #D6C590; border:none;color: #B97A0A;border-radius: {8 * self.height_scale}px;padding-left:{9 * self.height_scale}px")
         self.fourkstTxt2.setFont(kstTxtFont)
 
         self.fourkstTxt3 = QLabel(self.fourKST)
         self.fourkstTxt3.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
         self.fourkstTxt3.setText('一爆: 220℃/12:00')
-        self.fourkstTxt3.setGeometry(1043*self.width_scale, 3*self.height_scale, 357*self.width_scale, 60*self.height_scale)
+        self.fourkstTxt3.setGeometry(1043 * self.width_scale, 3 * self.height_scale, 357 * self.width_scale,
+                                     60 * self.height_scale)
         self.fourkstTxt3.setStyleSheet(
-            f"background-color: #BFA585; border:none;color: #945726;border-radius: {8*self.height_scale}px;padding-left:{9*self.height_scale}px")
+            f"background-color: #BFA585; border:none;color: #945726;border-radius: {8 * self.height_scale}px;padding-left:{9 * self.height_scale}px")
         self.fourkstTxt3.setFont(kstTxtFont)
 
         # self.analyseTimeNum = QLabel(self.historyAnalyse)
@@ -8402,110 +8602,126 @@ class ApplicationWindow(
         # self.analyseTimeNum.setFont(analyseTimeNumfont)
 
         self.tsqColor1 = QLabel(self.historyAnalyse)
-        self.tsqColor1.setGeometry(409*self.width_scale, 1371*self.height_scale, 20*self.width_scale, 20*self.height_scale)
-        self.tsqColor1.setStyleSheet(f"background-color: #DFD6C9; border:none;border-radius: {10*self.height_scale}px;")
+        self.tsqColor1.setGeometry(409 * self.width_scale, 1371 * self.height_scale, 20 * self.width_scale,
+                                   20 * self.height_scale)
+        self.tsqColor1.setStyleSheet(
+            f"background-color: #DFD6C9; border:none;border-radius: {10 * self.height_scale}px;")
 
         self.tsqText1 = QLabel(self.historyAnalyse)
         self.tsqText1.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.tsqText1.setText('脱水期')
-        self.tsqText1.setGeometry(439*self.width_scale, 1369*self.height_scale, 60*self.width_scale, 24*self.height_scale)
+        self.tsqText1.setGeometry(439 * self.width_scale, 1369 * self.height_scale, 60 * self.width_scale,
+                                  24 * self.height_scale)
         self.tsqText1.setStyleSheet("background-color: transparent; border:none;color: #222222;")
-        tsqText1font = QFont(self.font_family4, 14*self.width_scale)
+        tsqText1font = QFont(self.font_family4, 14 * self.width_scale)
         self.tsqText1.setFont(tsqText1font)
 
         self.tsqColor2 = QLabel(self.historyAnalyse)
-        self.tsqColor2.setGeometry(727*self.width_scale, 1371*self.height_scale, 20*self.width_scale, 20*self.height_scale)
-        self.tsqColor2.setStyleSheet(f"background-color: #D4C28B; border:none;border-radius: {10*self.height_scale}px;")
+        self.tsqColor2.setGeometry(727 * self.width_scale, 1371 * self.height_scale, 20 * self.width_scale,
+                                   20 * self.height_scale)
+        self.tsqColor2.setStyleSheet(
+            f"background-color: #D4C28B; border:none;border-radius: {10 * self.height_scale}px;")
 
         self.tsqText2 = QLabel(self.historyAnalyse)
         self.tsqText2.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.tsqText2.setText('转黄点')
-        self.tsqText2.setGeometry(757*self.width_scale, 1369*self.height_scale, 60*self.width_scale, 24*self.height_scale)
+        self.tsqText2.setGeometry(757 * self.width_scale, 1369 * self.height_scale, 60 * self.width_scale,
+                                  24 * self.height_scale)
         self.tsqText2.setStyleSheet("background-color: transparent; border:none;color: #222222;")
-        tsqText2font = QFont(self.font_family4, 14*self.width_scale)
+        tsqText2font = QFont(self.font_family4, 14 * self.width_scale)
         self.tsqText2.setFont(tsqText2font)
 
         self.tsqColor3 = QLabel(self.historyAnalyse)
-        self.tsqColor3.setGeometry(1044*self.width_scale, 1371*self.height_scale, 20*self.width_scale, 20*self.height_scale)
-        self.tsqColor3.setStyleSheet(f"background-color: #C9AA8E; border:none;border-radius: {10*self.height_scale}px;")
+        self.tsqColor3.setGeometry(1044 * self.width_scale, 1371 * self.height_scale, 20 * self.width_scale,
+                                   20 * self.height_scale)
+        self.tsqColor3.setStyleSheet(
+            f"background-color: #C9AA8E; border:none;border-radius: {10 * self.height_scale}px;")
 
         self.tsqText3 = QLabel(self.historyAnalyse)
         self.tsqText3.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.tsqText3.setText('发展期')
-        self.tsqText3.setGeometry(1074*self.width_scale, 1369*self.height_scale, 60*self.width_scale, 24*self.height_scale)
+        self.tsqText3.setGeometry(1074 * self.width_scale, 1369 * self.height_scale, 60 * self.width_scale,
+                                  24 * self.height_scale)
         self.tsqText3.setStyleSheet("background-color: transparent; border:none;color: #222222;")
-        tsqText2font = QFont(self.font_family4, 14*self.width_scale)
+        tsqText2font = QFont(self.font_family4, 14 * self.width_scale)
         self.tsqText3.setFont(tsqText2font)
-
-
 
         self.historyOrder1 = QLabel(self.historyAnalyse)
         self.historyOrder1.setStyleSheet(
-            f'border-radius: {25*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #C8402C;')
-        self.historyOrder1.setGeometry(60*self.width_scale, 1436*self.height_scale, 724*self.width_scale, 495*self.height_scale)
+            f'border-radius: {25 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #C8402C;')
+        self.historyOrder1.setGeometry(60 * self.width_scale, 1436 * self.height_scale, 724 * self.width_scale,
+                                       495 * self.height_scale)
         # self.historyOrder1.setGeometry(60*self.width_scale, 1436, 724, 495)
 
         self.historyOrder1_Num = QLabel(self.historyOrder1)
         self.historyOrder1_Num.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.historyOrder1_Num.setText('No.1')
-        self.historyOrder1_Num.setGeometry(52*self.width_scale, 55*self.height_scale, 65*self.width_scale, 35*self.height_scale)
+        self.historyOrder1_Num.setGeometry(52 * self.width_scale, 55 * self.height_scale, 65 * self.width_scale,
+                                           35 * self.height_scale)
         self.historyOrder1_Num.setStyleSheet("background-color: transparent; border:none;color: #C8402C;")
-        historyOrder1_Numfont = QFont(self.font_family4, 24*self.width_scale)
+        historyOrder1_Numfont = QFont(self.font_family4, 24 * self.width_scale)
         self.historyOrder1_Num.setFont(historyOrder1_Numfont)
 
         self.fengedian = QLabel(self.historyOrder1)
         self.fengedian.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.fengedian.setText('·')
-        self.fengedian.setGeometry(126*self.width_scale, 55*self.height_scale, 5*self.width_scale, 35*self.height_scale)
+        self.fengedian.setGeometry(126 * self.width_scale, 55 * self.height_scale, 5 * self.width_scale,
+                                   35 * self.height_scale)
         self.fengedian.setStyleSheet("background-color: transparent; border:none;color: #222222;")
-        fengedianfont = QFont(self.font_family4, 24*self.width_scale)
+        fengedianfont = QFont(self.font_family4, 24 * self.width_scale)
         self.fengedian.setFont(fengedianfont)
 
         self.historyOrder1_Title = QLabel(self.historyOrder1)
         self.historyOrder1_Title.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder1_Title.setText('-')
-        self.historyOrder1_Title.setGeometry(140*self.width_scale, 55*self.height_scale, 450*self.width_scale, 35*self.height_scale)
+        self.historyOrder1_Title.setGeometry(140 * self.width_scale, 55 * self.height_scale, 450 * self.width_scale,
+                                             35 * self.height_scale)
         self.historyOrder1_Title.setStyleSheet("background-color: transparent; border:none;color: #090101;")
-        historyOrder1_Titlefont = QFont(self.font_family4, 18*self.width_scale)
+        historyOrder1_Titlefont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder1_Title.setFont(historyOrder1_Titlefont)
 
         self.historyOrder1_Time = QLabel(self.historyOrder1)
         self.historyOrder1_Time.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder1_Time.setText('16:20')
-        self.historyOrder1_Time.setGeometry(574*self.width_scale, 55*self.height_scale, 100*self.width_scale, 35*self.height_scale)
+        self.historyOrder1_Time.setGeometry(574 * self.width_scale, 55 * self.height_scale, 100 * self.width_scale,
+                                            35 * self.height_scale)
         self.historyOrder1_Time.setStyleSheet("background-color: transparent; border:none;color: #222222;")
-        historyOrder1_Timefont = QFont(self.font_family4, 18*self.width_scale)
+        historyOrder1_Timefont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder1_Time.setFont(historyOrder1_Timefont)
 
         self.historyOrder1_pl1 = QLabel(self.historyOrder1)
         self.historyOrder1_pl1.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder1_pl1.setText('-')
-        self.historyOrder1_pl1.setGeometry(378*self.width_scale, 100*self.height_scale, 100*self.width_scale, 25*self.height_scale)
+        self.historyOrder1_pl1.setGeometry(378 * self.width_scale, 100 * self.height_scale, 100 * self.width_scale,
+                                           25 * self.height_scale)
         self.historyOrder1_pl1.setStyleSheet("background-color: transparent; border:none;color: #090101;")
-        historyOrder1_pl1font = QFont(self.font_family4, 14*self.width_scale)
+        historyOrder1_pl1font = QFont(self.font_family4, 14 * self.width_scale)
         self.historyOrder1_pl1.setFont(historyOrder1_pl1font)
 
         self.historyOrder1_pl2 = QLabel(self.historyOrder1)
         self.historyOrder1_pl2.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder1_pl2.setText('')
-        self.historyOrder1_pl2.setGeometry(485*self.width_scale, 100*self.height_scale, 180*self.width_scale, 25*self.height_scale)
+        self.historyOrder1_pl2.setGeometry(485 * self.width_scale, 100 * self.height_scale, 180 * self.width_scale,
+                                           25 * self.height_scale)
         self.historyOrder1_pl2.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;")
-        historyOrder1_pl2font = QFont(self.font_family4, 14*self.width_scale)
+        historyOrder1_pl2font = QFont(self.font_family4, 14 * self.width_scale)
         self.historyOrder1_pl2.setFont(historyOrder1_pl2font)
 
         self.historyOrder_hbrq1 = QLabel(self.historyOrder1)
         self.historyOrder_hbrq1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbrq1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_hbrq1.setGeometry(57*self.width_scale, 142*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbrq1.setGeometry(57 * self.width_scale, 142 * self.height_scale, 610 * self.width_scale,
+                                            75 * self.height_scale)
         self.historyOrder_hbrq1.setText('烘焙日期:')
-        bcrqfont = QFont(self.font_family4, 18*self.width_scale)
+        bcrqfont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder_hbrq1.setFont(bcrqfont)
 
         self.historyOrder_hbrq1_Data = QLabel(self.historyOrder_hbrq1)
         self.historyOrder_hbrq1_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbrq1_Data.setText('-')
-        self.historyOrder_hbrq1_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbrq1_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                 75 * self.height_scale)
         self.historyOrder_hbrq1_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #A8A8A8;")
         self.historyOrder_hbrq1_Data.setFont(bcrqfont)
@@ -8514,15 +8730,17 @@ class ApplicationWindow(
         self.historyOrder_hbssl1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbssl1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_hbssl1.setGeometry(57*self.width_scale, 190*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbssl1.setGeometry(57 * self.width_scale, 190 * self.height_scale, 610 * self.width_scale,
+                                             75 * self.height_scale)
         self.historyOrder_hbssl1.setText('烘焙损失率:')
-        bcrqfont = QFont(self.font_family4, 18*self.width_scale)
+        bcrqfont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder_hbssl1.setFont(bcrqfont)
 
         self.historyOrder_hbssl1_Data = QLabel(self.historyOrder_hbssl1)
         self.historyOrder_hbssl1_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbssl1_Data.setText('-')
-        self.historyOrder_hbssl1_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbssl1_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                  75 * self.height_scale)
         self.historyOrder_hbssl1_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #393939;")
         self.historyOrder_hbssl1_Data.setFont(bcrqfont)
@@ -8531,15 +8749,17 @@ class ApplicationWindow(
         self.historyOrder_hbpf1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbpf1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_hbpf1.setGeometry(57*self.width_scale, 238*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbpf1.setGeometry(57 * self.width_scale, 238 * self.height_scale, 610 * self.width_scale,
+                                            75 * self.height_scale)
         self.historyOrder_hbpf1.setText('烘焙评分：')
-        bcrqfont = QFont(self.font_family4, 18*self.width_scale)
+        bcrqfont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder_hbpf1.setFont(bcrqfont)
 
         self.historyOrder_hbpf1_Data = QLabel(self.historyOrder_hbpf1)
         self.historyOrder_hbpf1_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbpf1_Data.setText('-')
-        self.historyOrder_hbpf1_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbpf1_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                 75 * self.height_scale)
         self.historyOrder_hbpf1_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #393939;")
         self.historyOrder_hbpf1_Data.setFont(bcrqfont)
@@ -8548,15 +8768,17 @@ class ApplicationWindow(
         self.historyOrder_Agtron1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_Agtron1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_Agtron1.setGeometry(57*self.width_scale, 286*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_Agtron1.setGeometry(57 * self.width_scale, 286 * self.height_scale, 610 * self.width_scale,
+                                              75 * self.height_scale)
         self.historyOrder_Agtron1.setText('Agtron值：')
-        bcrqfont = QFont(self.font_family4, 18*self.width_scale)
+        bcrqfont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder_Agtron1.setFont(bcrqfont)
 
         self.historyOrder_Agtron1_Data = QLabel(self.historyOrder_Agtron1)
         self.historyOrder_Agtron1_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_Agtron1_Data.setText('-')
-        self.historyOrder_Agtron1_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_Agtron1_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                   75 * self.height_scale)
         self.historyOrder_Agtron1_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #393939;")
         self.historyOrder_Agtron1_Data.setFont(bcrqfont)
@@ -8565,15 +8787,17 @@ class ApplicationWindow(
         self.historyOrder_bcpf1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_bcpf1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_bcpf1.setGeometry(57*self.width_scale, 334*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_bcpf1.setGeometry(57 * self.width_scale, 334 * self.height_scale, 610 * self.width_scale,
+                                            75 * self.height_scale)
         self.historyOrder_bcpf1.setText('杯测评分：')
-        bcrqfont = QFont(self.font_family4, 18*self.width_scale)
+        bcrqfont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder_bcpf1.setFont(bcrqfont)
 
         self.historyOrder_bcpf1_Data = QLabel(self.historyOrder_bcpf1)
         self.historyOrder_bcpf1_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_bcpf1_Data.setText('-')
-        self.historyOrder_bcpf1_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_bcpf1_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                 75 * self.height_scale)
         self.historyOrder_bcpf1_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #393939;")
         self.historyOrder_bcpf1_Data.setFont(bcrqfont)
@@ -8582,7 +8806,8 @@ class ApplicationWindow(
         self.historyOrder_bcrq1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_bcrq1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_bcrq1.setGeometry(57*self.width_scale, 385*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_bcrq1.setGeometry(57 * self.width_scale, 385 * self.height_scale, 610 * self.width_scale,
+                                            75 * self.height_scale)
         self.historyOrder_bcrq1.setText('杯测日期：')
         bcrqfont = QFont(self.font_family4, 18)
         self.historyOrder_bcrq1.setFont(bcrqfont)
@@ -8590,82 +8815,87 @@ class ApplicationWindow(
         self.historyOrder_bcrq1_Data = QLabel(self.historyOrder_bcrq1)
         self.historyOrder_bcrq1_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_bcrq1_Data.setText('-')
-        self.historyOrder_bcrq1_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_bcrq1_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                 75 * self.height_scale)
         self.historyOrder_bcrq1_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #A8A8A8;")
         self.historyOrder_bcrq1_Data.setFont(bcrqfont)
 
-
-
-
-
-
         self.historyOrder2 = QLabel(self.historyAnalyse)
         self.historyOrder2.setStyleSheet(
-            f'border-radius: {25*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #E5B547;')
-        self.historyOrder2.setGeometry(814*self.width_scale, 1436*self.height_scale, 724*self.width_scale, 495*self.height_scale)
+            f'border-radius: {25 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #E5B547;')
+        self.historyOrder2.setGeometry(814 * self.width_scale, 1436 * self.height_scale, 724 * self.width_scale,
+                                       495 * self.height_scale)
 
         self.historyOrder1_Num = QLabel(self.historyOrder2)
         self.historyOrder1_Num.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.historyOrder1_Num.setText('No.2')
-        self.historyOrder1_Num.setGeometry(52*self.width_scale, 55*self.height_scale, 70*self.width_scale, 35*self.height_scale)
+        self.historyOrder1_Num.setGeometry(52 * self.width_scale, 55 * self.height_scale, 70 * self.width_scale,
+                                           35 * self.height_scale)
         self.historyOrder1_Num.setStyleSheet("background-color: transparent; border:none;color: #C8402C;")
-        historyOrder1_Numfont = QFont(self.font_family4, 24*self.width_scale)
+        historyOrder1_Numfont = QFont(self.font_family4, 24 * self.width_scale)
         self.historyOrder1_Num.setFont(historyOrder1_Numfont)
 
         self.fengedian = QLabel(self.historyOrder2)
         self.fengedian.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.fengedian.setText('·')
-        self.fengedian.setGeometry(126*self.width_scale, 55*self.height_scale, 5*self.width_scale, 35*self.height_scale)
+        self.fengedian.setGeometry(126 * self.width_scale, 55 * self.height_scale, 5 * self.width_scale,
+                                   35 * self.height_scale)
         self.fengedian.setStyleSheet("background-color: transparent; border:none;color: #222222;")
-        fengedianfont = QFont(self.font_family4, 24*self.width_scale)
+        fengedianfont = QFont(self.font_family4, 24 * self.width_scale)
         self.fengedian.setFont(fengedianfont)
 
         self.historyOrder2_Title = QLabel(self.historyOrder2)
         self.historyOrder2_Title.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder2_Title.setText('-')
-        self.historyOrder2_Title.setGeometry(140*self.width_scale, 55*self.height_scale, 450*self.width_scale, 35*self.height_scale)
+        self.historyOrder2_Title.setGeometry(140 * self.width_scale, 55 * self.height_scale, 450 * self.width_scale,
+                                             35 * self.height_scale)
         self.historyOrder2_Title.setStyleSheet("background-color: transparent; border:none;color: #090101;")
-        historyOrder1_Titlefont = QFont(self.font_family4, 18*self.width_scale)
+        historyOrder1_Titlefont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder2_Title.setFont(historyOrder1_Titlefont)
 
         self.historyOrder2_Time = QLabel(self.historyOrder2)
         self.historyOrder2_Time.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder2_Time.setText('16:20')
-        self.historyOrder2_Time.setGeometry(574*self.width_scale, 55*self.height_scale, 100*self.width_scale, 35*self.height_scale)
+        self.historyOrder2_Time.setGeometry(574 * self.width_scale, 55 * self.height_scale, 100 * self.width_scale,
+                                            35 * self.height_scale)
         self.historyOrder2_Time.setStyleSheet("background-color: transparent; border:none;color: #222222;")
-        historyOrder1_Timefont = QFont(self.font_family4, 18*self.width_scale)
+        historyOrder1_Timefont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder2_Time.setFont(historyOrder1_Timefont)
 
         self.historyOrder2_pl1 = QLabel(self.historyOrder2)
         self.historyOrder2_pl1.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder2_pl1.setText('-')
-        self.historyOrder2_pl1.setGeometry(378*self.width_scale, 100*self.height_scale, 100*self.width_scale, 25*self.height_scale)
+        self.historyOrder2_pl1.setGeometry(378 * self.width_scale, 100 * self.height_scale, 100 * self.width_scale,
+                                           25 * self.height_scale)
         self.historyOrder2_pl1.setStyleSheet("background-color: transparent; border:none;color: #090101;")
-        historyOrder1_pl1font = QFont(self.font_family4, 14*self.width_scale)
+        historyOrder1_pl1font = QFont(self.font_family4, 14 * self.width_scale)
         self.historyOrder2_pl1.setFont(historyOrder1_pl1font)
 
         self.historyOrder2_pl2 = QLabel(self.historyOrder2)
         self.historyOrder2_pl2.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder2_pl2.setText('')
-        self.historyOrder2_pl2.setGeometry(485*self.width_scale, 100*self.height_scale, 180*self.width_scale, 25*self.height_scale)
+        self.historyOrder2_pl2.setGeometry(485 * self.width_scale, 100 * self.height_scale, 180 * self.width_scale,
+                                           25 * self.height_scale)
         self.historyOrder2_pl2.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;")
-        historyOrder1_pl2font = QFont(self.font_family4, 14*self.width_scale)
+        historyOrder1_pl2font = QFont(self.font_family4, 14 * self.width_scale)
         self.historyOrder2_pl2.setFont(historyOrder1_pl2font)
 
         self.historyOrder_hbrq1 = QLabel(self.historyOrder2)
         self.historyOrder_hbrq1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbrq1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_hbrq1.setGeometry(57*self.width_scale, 142*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbrq1.setGeometry(57 * self.width_scale, 142 * self.height_scale, 610 * self.width_scale,
+                                            75 * self.height_scale)
         self.historyOrder_hbrq1.setText('烘焙日期:')
-        bcrqfont = QFont(self.font_family4, 18*self.width_scale)
+        bcrqfont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder_hbrq1.setFont(bcrqfont)
 
         self.historyOrder_hbrq2_Data = QLabel(self.historyOrder_hbrq1)
         self.historyOrder_hbrq2_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbrq2_Data.setText('-')
-        self.historyOrder_hbrq2_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbrq2_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                 75 * self.height_scale)
         self.historyOrder_hbrq2_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #A8A8A8;")
         self.historyOrder_hbrq2_Data.setFont(bcrqfont)
@@ -8674,15 +8904,17 @@ class ApplicationWindow(
         self.historyOrder_hbssl1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbssl1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_hbssl1.setGeometry(57*self.width_scale, 190*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbssl1.setGeometry(57 * self.width_scale, 190 * self.height_scale, 610 * self.width_scale,
+                                             75 * self.height_scale)
         self.historyOrder_hbssl1.setText('烘焙损失率:')
-        bcrqfont = QFont(self.font_family4, 18*self.width_scale)
+        bcrqfont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder_hbssl1.setFont(bcrqfont)
 
         self.historyOrder_hbssl2_Data = QLabel(self.historyOrder_hbssl1)
         self.historyOrder_hbssl2_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbssl2_Data.setText('-')
-        self.historyOrder_hbssl2_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbssl2_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                  75 * self.height_scale)
         self.historyOrder_hbssl2_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #393939;")
         self.historyOrder_hbssl2_Data.setFont(bcrqfont)
@@ -8691,15 +8923,17 @@ class ApplicationWindow(
         self.historyOrder_hbpf1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbpf1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_hbpf1.setGeometry(57*self.width_scale, 238*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbpf1.setGeometry(57 * self.width_scale, 238 * self.height_scale, 610 * self.width_scale,
+                                            75 * self.height_scale)
         self.historyOrder_hbpf1.setText('烘焙评分：')
-        bcrqfont = QFont(self.font_family4, 18*self.width_scale)
+        bcrqfont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder_hbpf1.setFont(bcrqfont)
 
         self.historyOrder_hbpf2_Data = QLabel(self.historyOrder_hbpf1)
         self.historyOrder_hbpf2_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbpf2_Data.setText('-')
-        self.historyOrder_hbpf2_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbpf2_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                 75 * self.height_scale)
         self.historyOrder_hbpf2_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #393939;")
         self.historyOrder_hbpf2_Data.setFont(bcrqfont)
@@ -8708,15 +8942,17 @@ class ApplicationWindow(
         self.historyOrder_Agtron1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_Agtron1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_Agtron1.setGeometry(57*self.width_scale, 286*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_Agtron1.setGeometry(57 * self.width_scale, 286 * self.height_scale, 610 * self.width_scale,
+                                              75 * self.height_scale)
         self.historyOrder_Agtron1.setText('Agtron值：')
-        bcrqfont = QFont(self.font_family4, 18*self.width_scale)
+        bcrqfont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder_Agtron1.setFont(bcrqfont)
 
         self.historyOrder_Agtron2_Data = QLabel(self.historyOrder_Agtron1)
         self.historyOrder_Agtron2_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_Agtron2_Data.setText('-')
-        self.historyOrder_Agtron2_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_Agtron2_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                   75 * self.height_scale)
         self.historyOrder_Agtron2_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #393939;")
         self.historyOrder_Agtron2_Data.setFont(bcrqfont)
@@ -8725,15 +8961,17 @@ class ApplicationWindow(
         self.historyOrder_bcpf1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_bcpf1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_bcpf1.setGeometry(57*self.width_scale, 334*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_bcpf1.setGeometry(57 * self.width_scale, 334 * self.height_scale, 610 * self.width_scale,
+                                            75 * self.height_scale)
         self.historyOrder_bcpf1.setText('杯测评分：')
-        bcrqfont = QFont(self.font_family4, 18*self.width_scale)
+        bcrqfont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder_bcpf1.setFont(bcrqfont)
 
         self.historyOrder_bcpf2_Data = QLabel(self.historyOrder_bcpf1)
         self.historyOrder_bcpf2_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_bcpf2_Data.setText('-')
-        self.historyOrder_bcpf2_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_bcpf2_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                 75 * self.height_scale)
         self.historyOrder_bcpf2_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #393939;")
         self.historyOrder_bcpf2_Data.setFont(bcrqfont)
@@ -8742,85 +8980,96 @@ class ApplicationWindow(
         self.historyOrder_bcrq1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_bcrq1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_bcrq1.setGeometry(57*self.width_scale, 385*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_bcrq1.setGeometry(57 * self.width_scale, 385 * self.height_scale, 610 * self.width_scale,
+                                            75 * self.height_scale)
         self.historyOrder_bcrq1.setText('杯测日期：')
-        bcrqfont = QFont(self.font_family4, 18*self.width_scale)
+        bcrqfont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder_bcrq1.setFont(bcrqfont)
 
         self.historyOrder_bcrq2_Data = QLabel(self.historyOrder_bcrq1)
         self.historyOrder_bcrq2_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_bcrq2_Data.setText('-')
-        self.historyOrder_bcrq2_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_bcrq2_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                 75 * self.height_scale)
         self.historyOrder_bcrq2_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #A8A8A8;")
         self.historyOrder_bcrq2_Data.setFont(bcrqfont)
 
         self.historyOrder3 = QLabel(self.historyAnalyse)
         self.historyOrder3.setStyleSheet(
-            f'border-radius: {25*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #44AB6B;')
-        self.historyOrder3.setGeometry(60*self.width_scale, 1962*self.height_scale, 724*self.width_scale, 495*self.height_scale)
+            f'border-radius: {25 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #44AB6B;')
+        self.historyOrder3.setGeometry(60 * self.width_scale, 1962 * self.height_scale, 724 * self.width_scale,
+                                       495 * self.height_scale)
 
         self.historyOrder1_Num = QLabel(self.historyOrder3)
         self.historyOrder1_Num.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.historyOrder1_Num.setText('No.3')
-        self.historyOrder1_Num.setGeometry(52*self.width_scale, 55*self.height_scale, 70*self.width_scale, 35*self.height_scale)
+        self.historyOrder1_Num.setGeometry(52 * self.width_scale, 55 * self.height_scale, 70 * self.width_scale,
+                                           35 * self.height_scale)
         self.historyOrder1_Num.setStyleSheet("background-color: transparent; border:none;color: #C8402C;")
-        historyOrder1_Numfont = QFont(self.font_family4, 24*self.width_scale)
+        historyOrder1_Numfont = QFont(self.font_family4, 24 * self.width_scale)
         self.historyOrder1_Num.setFont(historyOrder1_Numfont)
 
         self.fengedian = QLabel(self.historyOrder3)
         self.fengedian.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.fengedian.setText('·')
-        self.fengedian.setGeometry(126*self.width_scale, 55*self.height_scale, 5*self.width_scale, 35*self.height_scale)
+        self.fengedian.setGeometry(126 * self.width_scale, 55 * self.height_scale, 5 * self.width_scale,
+                                   35 * self.height_scale)
         self.fengedian.setStyleSheet("background-color: transparent; border:none;color: #222222;")
-        fengedianfont = QFont(self.font_family4, 24*self.width_scale)
+        fengedianfont = QFont(self.font_family4, 24 * self.width_scale)
         self.fengedian.setFont(fengedianfont)
 
         self.historyOrder3_Title = QLabel(self.historyOrder3)
         self.historyOrder3_Title.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder3_Title.setText('-')
-        self.historyOrder3_Title.setGeometry(140*self.width_scale, 55*self.height_scale, 450*self.width_scale, 35*self.height_scale)
+        self.historyOrder3_Title.setGeometry(140 * self.width_scale, 55 * self.height_scale, 450 * self.width_scale,
+                                             35 * self.height_scale)
         self.historyOrder3_Title.setStyleSheet("background-color: transparent; border:none;color: #090101;")
-        historyOrder1_Titlefont = QFont(self.font_family4, 18*self.width_scale)
+        historyOrder1_Titlefont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder3_Title.setFont(historyOrder1_Titlefont)
 
         self.historyOrder3_Time = QLabel(self.historyOrder3)
         self.historyOrder3_Time.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder3_Time.setText('16:20')
-        self.historyOrder3_Time.setGeometry(574*self.width_scale, 55*self.height_scale, 100*self.width_scale, 35*self.height_scale)
+        self.historyOrder3_Time.setGeometry(574 * self.width_scale, 55 * self.height_scale, 100 * self.width_scale,
+                                            35 * self.height_scale)
         self.historyOrder3_Time.setStyleSheet("background-color: transparent; border:none;color: #222222;")
-        historyOrder1_Timefont = QFont(self.font_family4, 18*self.width_scale)
+        historyOrder1_Timefont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder3_Time.setFont(historyOrder1_Timefont)
 
         self.historyOrder3_pl1 = QLabel(self.historyOrder3)
         self.historyOrder3_pl1.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder3_pl1.setText('-')
-        self.historyOrder3_pl1.setGeometry(378*self.width_scale, 100*self.height_scale, 100*self.width_scale, 25*self.height_scale)
+        self.historyOrder3_pl1.setGeometry(378 * self.width_scale, 100 * self.height_scale, 100 * self.width_scale,
+                                           25 * self.height_scale)
         self.historyOrder3_pl1.setStyleSheet("background-color: transparent; border:none;color: #090101;")
-        historyOrder1_pl1font = QFont(self.font_family4, 14*self.width_scale)
+        historyOrder1_pl1font = QFont(self.font_family4, 14 * self.width_scale)
         self.historyOrder3_pl1.setFont(historyOrder1_pl1font)
 
         self.historyOrder3_pl2 = QLabel(self.historyOrder3)
         self.historyOrder3_pl2.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder3_pl2.setText('')
-        self.historyOrder3_pl2.setGeometry(485*self.width_scale, 100*self.height_scale, 180*self.width_scale, 25*self.height_scale)
+        self.historyOrder3_pl2.setGeometry(485 * self.width_scale, 100 * self.height_scale, 180 * self.width_scale,
+                                           25 * self.height_scale)
         self.historyOrder3_pl2.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;")
-        historyOrder1_pl2font = QFont(self.font_family4, 14*self.width_scale)
+        historyOrder1_pl2font = QFont(self.font_family4, 14 * self.width_scale)
         self.historyOrder3_pl2.setFont(historyOrder1_pl2font)
 
         self.historyOrder_hbrq1 = QLabel(self.historyOrder3)
         self.historyOrder_hbrq1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbrq1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_hbrq1.setGeometry(57*self.width_scale, 142*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbrq1.setGeometry(57 * self.width_scale, 142 * self.height_scale, 610 * self.width_scale,
+                                            75 * self.height_scale)
         self.historyOrder_hbrq1.setText('烘焙日期:')
-        bcrqfont = QFont(self.font_family4, 18*self.width_scale)
+        bcrqfont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder_hbrq1.setFont(bcrqfont)
 
         self.historyOrder_hbrq3_Data = QLabel(self.historyOrder_hbrq1)
         self.historyOrder_hbrq3_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbrq3_Data.setText('-')
-        self.historyOrder_hbrq3_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbrq3_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                 75 * self.height_scale)
         self.historyOrder_hbrq3_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #A8A8A8;")
         self.historyOrder_hbrq3_Data.setFont(bcrqfont)
@@ -8829,15 +9078,17 @@ class ApplicationWindow(
         self.historyOrder_hbssl1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbssl1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_hbssl1.setGeometry(57*self.width_scale, 190*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbssl1.setGeometry(57 * self.width_scale, 190 * self.height_scale, 610 * self.width_scale,
+                                             75 * self.height_scale)
         self.historyOrder_hbssl1.setText('烘焙损失率:')
-        bcrqfont = QFont(self.font_family4, 18*self.width_scale)
+        bcrqfont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder_hbssl1.setFont(bcrqfont)
 
         self.historyOrder_hbssl3_Data = QLabel(self.historyOrder_hbssl1)
         self.historyOrder_hbssl3_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbssl3_Data.setText('-')
-        self.historyOrder_hbssl3_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbssl3_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                  75 * self.height_scale)
         self.historyOrder_hbssl3_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #393939;")
         self.historyOrder_hbssl3_Data.setFont(bcrqfont)
@@ -8846,15 +9097,17 @@ class ApplicationWindow(
         self.historyOrder_hbpf1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbpf1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_hbpf1.setGeometry(57*self.width_scale, 238*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbpf1.setGeometry(57 * self.width_scale, 238 * self.height_scale, 610 * self.width_scale,
+                                            75 * self.height_scale)
         self.historyOrder_hbpf1.setText('烘焙评分：')
-        bcrqfont = QFont(self.font_family4, 18*self.width_scale)
+        bcrqfont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder_hbpf1.setFont(bcrqfont)
 
         self.historyOrder_hbpf3_Data = QLabel(self.historyOrder_hbpf1)
         self.historyOrder_hbpf3_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbpf3_Data.setText('-')
-        self.historyOrder_hbpf3_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbpf3_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                 75 * self.height_scale)
         self.historyOrder_hbpf3_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #393939;")
         self.historyOrder_hbpf3_Data.setFont(bcrqfont)
@@ -8863,15 +9116,17 @@ class ApplicationWindow(
         self.historyOrder_Agtron1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_Agtron1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_Agtron1.setGeometry(57*self.width_scale, 286*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_Agtron1.setGeometry(57 * self.width_scale, 286 * self.height_scale, 610 * self.width_scale,
+                                              75 * self.height_scale)
         self.historyOrder_Agtron1.setText('Agtron值：')
-        bcrqfont = QFont(self.font_family4, 18*self.width_scale)
+        bcrqfont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder_Agtron1.setFont(bcrqfont)
 
         self.historyOrder_Agtron3_Data = QLabel(self.historyOrder_Agtron1)
         self.historyOrder_Agtron3_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_Agtron3_Data.setText('-')
-        self.historyOrder_Agtron3_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_Agtron3_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                   75 * self.height_scale)
         self.historyOrder_Agtron3_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #393939;")
         self.historyOrder_Agtron3_Data.setFont(bcrqfont)
@@ -8880,15 +9135,17 @@ class ApplicationWindow(
         self.historyOrder_bcpf1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_bcpf1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_bcpf1.setGeometry(57*self.width_scale, 334*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_bcpf1.setGeometry(57 * self.width_scale, 334 * self.height_scale, 610 * self.width_scale,
+                                            75 * self.height_scale)
         self.historyOrder_bcpf1.setText('杯测评分：')
-        bcrqfont = QFont(self.font_family4, 18*self.width_scale)
+        bcrqfont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder_bcpf1.setFont(bcrqfont)
 
         self.historyOrder_bcpf3_Data = QLabel(self.historyOrder_bcpf1)
         self.historyOrder_bcpf3_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_bcpf3_Data.setText('-')
-        self.historyOrder_bcpf3_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_bcpf3_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                 75 * self.height_scale)
         self.historyOrder_bcpf3_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #393939;")
         self.historyOrder_bcpf3_Data.setFont(bcrqfont)
@@ -8897,85 +9154,96 @@ class ApplicationWindow(
         self.historyOrder_bcrq1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_bcrq1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_bcrq1.setGeometry(57*self.width_scale, 385*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_bcrq1.setGeometry(57 * self.width_scale, 385 * self.height_scale, 610 * self.width_scale,
+                                            75 * self.height_scale)
         self.historyOrder_bcrq1.setText('杯测日期：')
-        bcrqfont = QFont(self.font_family4, 18*self.width_scale)
+        bcrqfont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder_bcrq1.setFont(bcrqfont)
 
         self.historyOrder_bcrq3_Data = QLabel(self.historyOrder_bcrq1)
         self.historyOrder_bcrq3_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_bcrq3_Data.setText('-')
-        self.historyOrder_bcrq3_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_bcrq3_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                 75 * self.height_scale)
         self.historyOrder_bcrq3_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #A8A8A8;")
         self.historyOrder_bcrq3_Data.setFont(bcrqfont)
 
         self.historyOrder4 = QLabel(self.historyAnalyse)
         self.historyOrder4.setStyleSheet(
-            f'border-radius: {25*self.height_scale}px;background-color: #FFFFFF; border: 1px solid #258B96;')
-        self.historyOrder4.setGeometry(814*self.width_scale, 1962*self.height_scale, 724*self.width_scale, 495*self.height_scale)
+            f'border-radius: {25 * self.height_scale}px;background-color: #FFFFFF; border: 1px solid #258B96;')
+        self.historyOrder4.setGeometry(814 * self.width_scale, 1962 * self.height_scale, 724 * self.width_scale,
+                                       495 * self.height_scale)
 
         self.historyOrder1_Num = QLabel(self.historyOrder4)
         self.historyOrder1_Num.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.historyOrder1_Num.setText('No.4')
-        self.historyOrder1_Num.setGeometry(52*self.width_scale, 55*self.height_scale, 70*self.width_scale, 35*self.height_scale)
+        self.historyOrder1_Num.setGeometry(52 * self.width_scale, 55 * self.height_scale, 70 * self.width_scale,
+                                           35 * self.height_scale)
         self.historyOrder1_Num.setStyleSheet("background-color: transparent; border:none;color: #C8402C;")
-        historyOrder1_Numfont = QFont(self.font_family4, 24*self.width_scale)
+        historyOrder1_Numfont = QFont(self.font_family4, 24 * self.width_scale)
         self.historyOrder1_Num.setFont(historyOrder1_Numfont)
 
         self.fengedian = QLabel(self.historyOrder4)
         self.fengedian.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.fengedian.setText('·')
-        self.fengedian.setGeometry(126*self.width_scale, 55*self.height_scale, 5*self.width_scale, 35*self.height_scale)
+        self.fengedian.setGeometry(126 * self.width_scale, 55 * self.height_scale, 5 * self.width_scale,
+                                   35 * self.height_scale)
         self.fengedian.setStyleSheet("background-color: transparent; border:none;color: #222222;")
-        fengedianfont = QFont(self.font_family4, 24*self.width_scale)
+        fengedianfont = QFont(self.font_family4, 24 * self.width_scale)
         self.fengedian.setFont(fengedianfont)
 
         self.historyOrder4_Title = QLabel(self.historyOrder4)
         self.historyOrder4_Title.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder4_Title.setText('-')
-        self.historyOrder4_Title.setGeometry(140*self.width_scale, 55*self.height_scale, 450*self.width_scale, 35*self.height_scale)
+        self.historyOrder4_Title.setGeometry(140 * self.width_scale, 55 * self.height_scale, 450 * self.width_scale,
+                                             35 * self.height_scale)
         self.historyOrder4_Title.setStyleSheet("background-color: transparent; border:none;color: #090101;")
-        historyOrder1_Titlefont = QFont(self.font_family4, 18*self.width_scale)
+        historyOrder1_Titlefont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder4_Title.setFont(historyOrder1_Titlefont)
 
         self.historyOrder4_Time = QLabel(self.historyOrder4)
         self.historyOrder4_Time.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder4_Time.setText('16:20')
-        self.historyOrder4_Time.setGeometry(574*self.width_scale, 55*self.height_scale, 100*self.width_scale, 35*self.height_scale)
+        self.historyOrder4_Time.setGeometry(574 * self.width_scale, 55 * self.height_scale, 100 * self.width_scale,
+                                            35 * self.height_scale)
         self.historyOrder4_Time.setStyleSheet("background-color: transparent; border:none;color: #222222;")
-        historyOrder1_Timefont = QFont(self.font_family4, 18*self.width_scale)
+        historyOrder1_Timefont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder4_Time.setFont(historyOrder1_Timefont)
 
         self.historyOrder4_pl1 = QLabel(self.historyOrder4)
         self.historyOrder4_pl1.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
-        self.historyOrder4_pl1.setText('-') # -玫瑰山谷| 蔓越莓·黑巧·玫瑰花
-        self.historyOrder4_pl1.setGeometry(378*self.width_scale, 100*self.height_scale, 100*self.width_scale, 25*self.height_scale)
+        self.historyOrder4_pl1.setText('-')  # -玫瑰山谷| 蔓越莓·黑巧·玫瑰花
+        self.historyOrder4_pl1.setGeometry(378 * self.width_scale, 100 * self.height_scale, 100 * self.width_scale,
+                                           25 * self.height_scale)
         self.historyOrder4_pl1.setStyleSheet("background-color: transparent; border:none;color: #090101;")
-        historyOrder1_pl1font = QFont(self.font_family4, 14*self.width_scale)
+        historyOrder1_pl1font = QFont(self.font_family4, 14 * self.width_scale)
         self.historyOrder4_pl1.setFont(historyOrder1_pl1font)
 
         self.historyOrder4_pl2 = QLabel(self.historyOrder4)
         self.historyOrder4_pl2.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder4_pl2.setText('')
-        self.historyOrder4_pl2.setGeometry(485*self.width_scale, 100*self.height_scale, 180*self.width_scale, 25*self.height_scale)
+        self.historyOrder4_pl2.setGeometry(485 * self.width_scale, 100 * self.height_scale, 180 * self.width_scale,
+                                           25 * self.height_scale)
         self.historyOrder4_pl2.setStyleSheet("background-color: transparent; border:none;color: #A8A8A8;")
-        historyOrder1_pl2font = QFont(self.font_family4, 14*self.width_scale)
+        historyOrder1_pl2font = QFont(self.font_family4, 14 * self.width_scale)
         self.historyOrder4_pl2.setFont(historyOrder1_pl2font)
 
         self.historyOrder_hbrq1 = QLabel(self.historyOrder4)
         self.historyOrder_hbrq1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbrq1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_hbrq1.setGeometry(57*self.width_scale, 142*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbrq1.setGeometry(57 * self.width_scale, 142 * self.height_scale, 610 * self.width_scale,
+                                            75 * self.height_scale)
         self.historyOrder_hbrq1.setText('烘焙日期:')
-        bcrqfont = QFont(self.font_family4, 18*self.width_scale)
+        bcrqfont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder_hbrq1.setFont(bcrqfont)
 
         self.historyOrder_hbrq4_Data = QLabel(self.historyOrder_hbrq1)
         self.historyOrder_hbrq4_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbrq4_Data.setText('-')
-        self.historyOrder_hbrq4_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbrq4_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                 75 * self.height_scale)
         self.historyOrder_hbrq4_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #A8A8A8;")
         self.historyOrder_hbrq4_Data.setFont(bcrqfont)
@@ -8984,15 +9252,17 @@ class ApplicationWindow(
         self.historyOrder_hbssl1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbssl1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_hbssl1.setGeometry(57*self.width_scale, 190*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbssl1.setGeometry(57 * self.width_scale, 190 * self.height_scale, 610 * self.width_scale,
+                                             75 * self.height_scale)
         self.historyOrder_hbssl1.setText('烘焙损失率:')
-        bcrqfont = QFont(self.font_family4, 18*self.width_scale)
+        bcrqfont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder_hbssl1.setFont(bcrqfont)
 
         self.historyOrder_hbssl4_Data = QLabel(self.historyOrder_hbssl1)
         self.historyOrder_hbssl4_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbssl4_Data.setText('-')
-        self.historyOrder_hbssl4_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbssl4_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                  75 * self.height_scale)
         self.historyOrder_hbssl4_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #393939;")
         self.historyOrder_hbssl4_Data.setFont(bcrqfont)
@@ -9001,15 +9271,17 @@ class ApplicationWindow(
         self.historyOrder_hbpf1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbpf1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_hbpf1.setGeometry(57*self.width_scale, 238*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbpf1.setGeometry(57 * self.width_scale, 238 * self.height_scale, 610 * self.width_scale,
+                                            75 * self.height_scale)
         self.historyOrder_hbpf1.setText('烘焙评分：')
-        bcrqfont = QFont(self.font_family4, 18*self.width_scale)
+        bcrqfont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder_hbpf1.setFont(bcrqfont)
 
         self.historyOrder_hbpf4_Data = QLabel(self.historyOrder_hbpf1)
         self.historyOrder_hbpf4_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_hbpf4_Data.setText('-')
-        self.historyOrder_hbpf4_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_hbpf4_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                 75 * self.height_scale)
         self.historyOrder_hbpf4_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #393939;")
         self.historyOrder_hbpf4_Data.setFont(bcrqfont)
@@ -9018,15 +9290,17 @@ class ApplicationWindow(
         self.historyOrder_Agtron1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_Agtron1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_Agtron1.setGeometry(57*self.width_scale, 286*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_Agtron1.setGeometry(57 * self.width_scale, 286 * self.height_scale, 610 * self.width_scale,
+                                              75 * self.height_scale)
         self.historyOrder_Agtron1.setText('Agtron值：')
-        bcrqfont = QFont(self.font_family4, 18*self.width_scale)
+        bcrqfont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder_Agtron1.setFont(bcrqfont)
 
         self.historyOrder_Agtron4_Data = QLabel(self.historyOrder_Agtron1)
         self.historyOrder_Agtron4_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_Agtron4_Data.setText('-')
-        self.historyOrder_Agtron4_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_Agtron4_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                   75 * self.height_scale)
         self.historyOrder_Agtron4_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #393939;")
         self.historyOrder_Agtron4_Data.setFont(bcrqfont)
@@ -9035,15 +9309,17 @@ class ApplicationWindow(
         self.historyOrder_bcpf1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_bcpf1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_bcpf1.setGeometry(57*self.width_scale, 334*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_bcpf1.setGeometry(57 * self.width_scale, 334 * self.height_scale, 610 * self.width_scale,
+                                            75 * self.height_scale)
         self.historyOrder_bcpf1.setText('杯测评分：')
-        bcrqfont = QFont(self.font_family4, 18*self.width_scale)
+        bcrqfont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder_bcpf1.setFont(bcrqfont)
 
         self.historyOrder_bcpf4_Data = QLabel(self.historyOrder_bcpf1)
         self.historyOrder_bcpf4_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_bcpf4_Data.setText('-')
-        self.historyOrder_bcpf4_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_bcpf4_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                 75 * self.height_scale)
         self.historyOrder_bcpf4_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #393939;")
         self.historyOrder_bcpf4_Data.setFont(bcrqfont)
@@ -9052,22 +9328,25 @@ class ApplicationWindow(
         self.historyOrder_bcrq1.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_bcrq1.setStyleSheet(
             'background-color: transparent; border: none; color:#A8A8A8;')
-        self.historyOrder_bcrq1.setGeometry(57*self.width_scale, 385*self.height_scale, 610*self.width_scale, 75*self.height_scale)
+        self.historyOrder_bcrq1.setGeometry(57 * self.width_scale, 385 * self.height_scale, 610 * self.width_scale,
+                                            75 * self.height_scale)
         self.historyOrder_bcrq1.setText('杯测日期：')
-        bcrqfont = QFont(self.font_family4, 18*self.width_scale)
+        bcrqfont = QFont(self.font_family4, 18 * self.width_scale)
         self.historyOrder_bcrq1.setFont(bcrqfont)
 
         self.historyOrder_bcrq4_Data = QLabel(self.historyOrder_bcrq1)
         self.historyOrder_bcrq4_Data.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historyOrder_bcrq4_Data.setText('-')
-        self.historyOrder_bcrq4_Data.setGeometry(300*self.width_scale, 0, 310*self.width_scale, 75*self.height_scale)
+        self.historyOrder_bcrq4_Data.setGeometry(300 * self.width_scale, 0, 310 * self.width_scale,
+                                                 75 * self.height_scale)
         self.historyOrder_bcrq4_Data.setStyleSheet(
             "background-color: transparent; border:none;color: #A8A8A8;")
         self.historyOrder_bcrq4_Data.setFont(bcrqfont)
 
         self.zhezhaoLabel2 = QLabel(self.historyAnalyse)
-        self.zhezhaoLabel2.setGeometry(0, 0, 1610*self.width_scale, 2739*self.height_scale)
-        self.zhezhaoLabel2.setStyleSheet(f"background-color: rgba(0, 0, 0, 0);border-radius: {25*self.height_scale}px;")
+        self.zhezhaoLabel2.setGeometry(0, 0, 1610 * self.width_scale, 2739 * self.height_scale)
+        self.zhezhaoLabel2.setStyleSheet(
+            f"background-color: rgba(0, 0, 0, 0);border-radius: {25 * self.height_scale}px;")
         self.zhezhao2 = QPixmap(self.normalized_path + '/includes/Icons/history/back_L2.png')
         self.zhezhaoLabel2.setPixmap(self.zhezhao2)
         self.zhezhaoLabel2.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
@@ -9137,25 +9416,25 @@ class ApplicationWindow(
 
         self.diologRect2Zhezhao = QPushButton(self)  # 出仓报错弹窗
         self.diologRect2Zhezhao.setStyleSheet('border: none;background-color: rgba(0, 0, 0, 128);')
-        self.diologRect2Zhezhao.setGeometry(0,0 , 1920 * self.width_scale,
+        self.diologRect2Zhezhao.setGeometry(0, 0, 1920 * self.width_scale,
                                             1080 * self.width_scale)
         self.diologRect2Zhezhao.clicked.connect(self.closeDiolog)
         self.diologRect2Zhezhao.setVisible(False)
 
-
         self.diologRect2 = QLabel(self.diologRect2Zhezhao)  # 出仓报错弹窗
-        self.diologRect2.setStyleSheet(f'border-radius: {25*self.height_scale}px;background-color: #ffffff;')
+        self.diologRect2.setStyleSheet(f'border-radius: {25 * self.height_scale}px;background-color: #ffffff;')
         self.diologRect2.setGeometry(775 * self.width_scale, 455 * self.height_scale, 370 * self.width_scale,
                                      170 * self.width_scale)
         # self.rdtcImg = QPixmap(self.normalized_path + '/includes/Icons/yrzb/diolog.png')
         # self.diologRect2.setPixmap(self.rdtcImg)
 
-
         self.jbLbel2 = QLabel(self.diologRect2)
         self.jbLbel2.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
-        self.jbLbel2.setGeometry(15 * self.width_scale, 15 * self.height_scale, 340 * self.width_scale, 36 * self.height_scale)
+        self.jbLbel2.setGeometry(15 * self.width_scale, 15 * self.height_scale, 340 * self.width_scale,
+                                 36 * self.height_scale)
         self.jbLbel2.setText('警 报')
-        self.jbLbel2.setStyleSheet(f"background-color: #DC630C;border-radius: {18*self.height_scale}px; border:none;color: #ffffff")
+        self.jbLbel2.setStyleSheet(
+            f"background-color: #DC630C;border-radius: {18 * self.height_scale}px; border:none;color: #ffffff")
         jbLbelfont = QFont(self.font_family3, 16 * self.width_scale)
         self.jbLbel2.setFont(jbLbelfont)
 
@@ -9220,7 +9499,7 @@ class ApplicationWindow(
         self.issueCard = QLabel(self.ai_widget)
         self.issueCard.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.issueCard.setGeometry(20 * self.width_scale, 103 * self.height_scale, 242 * self.width_scale,
-                             265 * self.height_scale)
+                                   265 * self.height_scale)
         self.issueCard.setStyleSheet("""
                                                     color: #222222;
                                                     border: none;  /* 去掉按钮的边框 */
@@ -9231,7 +9510,7 @@ class ApplicationWindow(
         self.helloTxt = QLabel(self.issueCard)
         self.helloTxt.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.helloTxt.setGeometry(17 * self.width_scale, 19 * self.height_scale, 200 * self.width_scale,
-                             28 * self.height_scale)
+                                  28 * self.height_scale)
         self.helloTxt.setStyleSheet("""
                                                     color: #222222;
                                                     border: none;  /* 去掉按钮的边框 */
@@ -9244,7 +9523,7 @@ class ApplicationWindow(
         self.helloTxt2 = QLabel(self.issueCard)
         self.helloTxt2.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.helloTxt2.setGeometry(17 * self.width_scale, 46 * self.height_scale, 200 * self.width_scale,
-                                  25 * self.height_scale)
+                                   25 * self.height_scale)
         self.helloTxt2.setStyleSheet("""
                                                             color: #222222;
                                                             border: none;  /* 去掉按钮的边框 */
@@ -9270,7 +9549,7 @@ class ApplicationWindow(
         self.helloTxtLine1 = QLabel(self.issueCard)
         self.helloTxtLine1.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.helloTxtLine1.setGeometry(17 * self.width_scale, 123 * self.height_scale, 209 * self.width_scale,
-                                   1 * self.height_scale)
+                                       1 * self.height_scale)
         self.helloTxtLine1.setStyleSheet("""
                                                                             border: none;  /* 去掉按钮的边框 */
                                                                             background-color: #F4EFEC;  /* 设置背景为透明 */
@@ -9313,7 +9592,7 @@ class ApplicationWindow(
 
         self.ai_star1 = QPushButton(self.issueCard)
         self.ai_star1.setGeometry(190 * self.width_scale, 78 * self.height_scale, 36 * self.width_scale,
-                                       25 * self.width_scale)
+                                  25 * self.width_scale)
         self.ai_star1.setCheckable(True)
         self.ai_star1.setIcon(
             QIcon(self.normalized_path + '/includes/Icons/general/Ai/clickStar.png'))
@@ -9340,21 +9619,21 @@ class ApplicationWindow(
 
         self.huanyihuan = QPushButton("换一换", self.ai_widget)
         self.huanyihuan.setGeometry(20 * self.width_scale, 374 * self.height_scale, 80 * self.width_scale,
-                                  33 * self.width_scale)
+                                    33 * self.width_scale)
         self.huanyihuan.setIcon(QIcon(self.normalized_path + '/includes/Icons/general/Ai/shuaxin.png'))  # 使用本地的图标文件
         self.huanyihuan.setIconSize(self.huanyihuan.size())  # 设置图标大小与按钮大小相同
         self.huanyihuan.setStyleSheet('text-align: left; padding-left: 10px;')  # 文字和图标间距
-        self.huanyihuan.setStyleSheet('QPushButton { padding-left: 10px; padding-right: 10px; border-radius:16px;background-color: #ffffff}')
+        self.huanyihuan.setStyleSheet(
+            'QPushButton { padding-left: 10px; padding-right: 10px; border-radius:16px;background-color: #ffffff}')
 
         self.robot = QPushButton(self.ai_widget)
         self.robot.setGeometry(19 * self.width_scale, 880 * self.height_scale, 105 * self.width_scale,
-                                  123 * self.width_scale)
+                               123 * self.width_scale)
         self.robot.setCheckable(True)
         self.robot.setIcon(
             QIcon(self.normalized_path + '/includes/Icons/general/Ai/robot.png'))
         self.robot.setStyleSheet("border: none;background-color:transparent")
         self.robot.setIconSize(QSize(105 * self.width_scale, 123 * self.width_scale))
-
 
         self.sendAiInfo: QLineEdit = QLineEdit(self.ai_widget)
         self.sendAiInfo.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignLeft)
@@ -9385,10 +9664,8 @@ class ApplicationWindow(
         self.sendAi_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         # self.sendAi_button.clicked.connect(self.toggle_password_visibility)
 
-
-        # self.loginUI()  # 登录
+        self.loginUI()  # 登录
         self.closeSystemUI()  # 关机
-
 
         # self.computedData = self.computedProfileInformation()
         # # if 'AUCbegin' in self.computedData:
@@ -9556,7 +9833,8 @@ class ApplicationWindow(
         self.eventslidervisibilities: List[int] = [0] * self.eventsliders
         self.eventsliderKeyboardControl: bool = True  # 如果使用向上/向下键无法移动错误滑块
         self.eventsliderAlternativeLayout: bool = False  # 如果为True，则组合滑块1+4和2+3，而不是滑块1+2和3+4
-        self.eventslideractions: List[int] = [0] * self.eventsliders  # 0:无，1:串行命令，2: Modbus命令，3: DTA命令，4:调用程序，5:热顶加热器，6:热顶风扇
+        self.eventslideractions: List[int] = [
+                                                 0] * self.eventsliders  # 0:无，1:串行命令，2: Modbus命令，3: DTA命令，4:调用程序，5:热顶加热器，6:热顶风扇
         self.eventslidercommands: List[str] = [''] * self.eventsliders
         self.eventslideroffsets: List[float] = [0] * self.eventsliders
         self.eventsliderfactors: List[float] = [1.0] * self.eventsliders
@@ -9641,7 +9919,7 @@ class ApplicationWindow(
         self.viewMenu: Optional[QMenu] = None
         self.helpMenu: Optional[QMenu] = None
 
-        menuBar.setVisible(False) #隐藏导航栏
+        menuBar.setVisible(False)  # 隐藏导航栏
         self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
 
         if menuBar is not None:
@@ -10473,7 +10751,7 @@ class ApplicationWindow(
         #            self.small_button_min_width_px = 60
         #            self.tiny_button_min_width_px = 50
 
-        border_modern = f'border-style:solid; border-radius:{4*self.height_scale}px;border-color:grey; border-width:0;'  # modernize
+        border_modern = f'border-style:solid; border-radius:{4 * self.height_scale}px;border-color:grey; border-width:0;'  # modernize
         # 自定义按钮的样式
         self.pushbuttonstyles_simulator: dict[str, str] = {
             'OFF': """
@@ -11890,11 +12168,11 @@ class ApplicationWindow(
 
         self.loginBack = QWidget(self)  # 登录
         self.loginBack.setStyleSheet('background-color: #ffffff;')
-        self.loginBack.setGeometry(0, 0, 1920*self.width_scale, 1080*self.height_scale)
+        self.loginBack.setGeometry(0, 0, 1920 * self.width_scale, 1080 * self.height_scale)
         # self.loginBack.setVisible(False)
 
         self.loginImg = QLabel(self.loginBack)
-        self.loginImg.setGeometry(673*self.width_scale, 0, 1247*self.width_scale, 1080*self.height_scale)
+        self.loginImg.setGeometry(673 * self.width_scale, 0, 1247 * self.width_scale, 1080 * self.height_scale)
         # self.loginImgpixmap = QPixmap(self.normalized_path + '/includes/Icons/login/back.png')  # 背景图
         # self.loginImg.setPixmap(self.loginImgpixmap)
         # self.loginImg.setScaledContents(True)
@@ -11915,7 +12193,8 @@ class ApplicationWindow(
         self.imgtimer.start(20000)  # 20 秒 (20,000 毫秒)
 
         self.loginLogo = QLabel(self.loginBack)
-        self.loginLogo.setGeometry(313*self.width_scale, 170*self.height_scale, 46*self.width_scale, 60*self.width_scale)
+        self.loginLogo.setGeometry(313 * self.width_scale, 170 * self.height_scale, 46 * self.width_scale,
+                                   60 * self.width_scale)
         self.loginLogopixmap = QPixmap(self.normalized_path + '/includes/Icons/login/LOGO.png')  # 背景图
         self.loginLogo.setPixmap(self.loginLogopixmap)
         self.loginLogo.setScaledContents(True)
@@ -11926,17 +12205,19 @@ class ApplicationWindow(
         self.logoTXT = QLabel(self.loginBack)
         self.logoTXT.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.logoTXT.setText('风味科学')
-        self.logoTXT.setGeometry(272*self.width_scale, 267*self.height_scale, 128*self.width_scale, 30*self.height_scale)
+        self.logoTXT.setGeometry(272 * self.width_scale, 267 * self.height_scale, 128 * self.width_scale,
+                                 30 * self.height_scale)
         self.logoTXT.setStyleSheet("background-color: transparent; border:none;color: #252525; font-weight: bold;")
-        logoTXTfont = QFont(douyinSansBoldFamily, 22*self.width_scale)
+        logoTXTfont = QFont(douyinSansBoldFamily, 22 * self.width_scale)
         self.logoTXT.setFont(logoTXTfont)
 
         self.userText = QLabel(self.loginBack)
         self.userText.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
         self.userText.setText('用户名')
-        self.userText.setGeometry(132*self.width_scale, 380*self.height_scale, 170*self.width_scale, 22*self.height_scale)
+        self.userText.setGeometry(132 * self.width_scale, 380 * self.height_scale, 170 * self.width_scale,
+                                  22 * self.height_scale)
         self.userText.setStyleSheet("background-color: transparent; border:none;color: #959595; ")
-        userTextfont = QFont(self.font_family6, 14*self.width_scale)
+        userTextfont = QFont(self.font_family6, 14 * self.width_scale)
         self.userText.setFont(userTextfont)
         padding_left = int(38 * self.width_scale)
         self.userContent = QLineEdit(self.loginBack)
@@ -11949,25 +12230,28 @@ class ApplicationWindow(
                                         padding-left: {padding_left}px;         /* 设置文字左边距 */
                                         font-size: 16px;            /* 设置字体大小 */
                                         border: none;               /* 移除边框 */
-                                        border-radius: {30*self.height_scale}px;
+                                        border-radius: {30 * self.height_scale}px;
                                     }}
                                 """)
-        userContentfont = QFont(self.font_family4, 14*self.width_scale)
+        userContentfont = QFont(self.font_family4, 14 * self.width_scale)
         self.userContent.setFont(userContentfont)
-        self.userContent.setGeometry(111*self.width_scale, 413*self.height_scale, 451*self.width_scale, 60*self.height_scale)  # 设置控件的固定大小为56x24px
+        self.userContent.setGeometry(111 * self.width_scale, 413 * self.height_scale, 451 * self.width_scale,
+                                     60 * self.height_scale)  # 设置控件的固定大小为56x24px
 
         self.passwordText = QLabel(self.loginBack)
         self.passwordText.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
         self.passwordText.setText('密码')
-        self.passwordText.setGeometry(132*self.width_scale, 501*self.height_scale, 40*self.width_scale, 22*self.height_scale)
+        self.passwordText.setGeometry(132 * self.width_scale, 501 * self.height_scale, 40 * self.width_scale,
+                                      22 * self.height_scale)
         self.passwordText.setStyleSheet("background-color: transparent; border:none;color: #959595; ")
-        passwordTextfont = QFont(self.font_family6, 14*self.width_scale)
+        passwordTextfont = QFont(self.font_family6, 14 * self.width_scale)
         self.passwordText.setFont(passwordTextfont)
 
         self.wjmm = QPushButton(self.loginBack)
         # self.wjmm.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
         self.wjmm.setText('忘记密码？')
-        self.wjmm.setGeometry(453*self.width_scale, 501*self.height_scale, 98*self.width_scale, 22*self.height_scale)
+        self.wjmm.setGeometry(453 * self.width_scale, 501 * self.height_scale, 98 * self.width_scale,
+                              22 * self.height_scale)
         self.wjmm.setStyleSheet("""
                                             QPushButton {
                                                 background-color: transparent; border:none;color: #525252; 
@@ -11976,7 +12260,7 @@ class ApplicationWindow(
                                                 background-color: transparent; border:none;color: #252525; text-decoration: underline;
                                             }
                                         """)
-        wjmmfont = QFont(self.font_family6, 14*self.width_scale)
+        wjmmfont = QFont(self.font_family6, 14 * self.width_scale)
         self.wjmm.setFont(wjmmfont)
         self.wjmm.setCursor(Qt.CursorShape.PointingHandCursor)
 
@@ -11991,15 +12275,17 @@ class ApplicationWindow(
                                                 padding-left: {padding_left}px;         /* 设置文字左边距 */
                                                 font-size: 16px;            /* 设置字体大小 */
                                                 border: none;               /* 移除边框 */
-                                                border-radius: {30*self.height_scale}px;
+                                                border-radius: {30 * self.height_scale}px;
                                             }}
                                 """)
-        passwordContentfont = QFont(self.font_family4, 14*self.width_scale)
+        passwordContentfont = QFont(self.font_family4, 14 * self.width_scale)
         self.passwordContent.setFont(passwordContentfont)
-        self.passwordContent.setGeometry(111*self.width_scale, 534*self.height_scale, 451*self.width_scale, 60*self.height_scale)  # 设置控件的固定大小为56x24px
+        self.passwordContent.setGeometry(111 * self.width_scale, 534 * self.height_scale, 451 * self.width_scale,
+                                         60 * self.height_scale)  # 设置控件的固定大小为56x24px
 
         self.toggle_button = QPushButton(self.passwordContent)
-        self.toggle_button.setGeometry(391*self.width_scale, 20*self.height_scale, 20*self.width_scale, 20*self.width_scale)
+        self.toggle_button.setGeometry(391 * self.width_scale, 20 * self.height_scale, 20 * self.width_scale,
+                                       20 * self.width_scale)
         self.toggle_button.setCheckable(True)
         self.toggle_button.setIcon(
             QIcon(self.normalized_path + '/includes/Icons/login/eyeFalse.png'))  # 使用图标作为按钮，需替换为实际路径
@@ -12008,15 +12294,17 @@ class ApplicationWindow(
         self.toggle_button.clicked.connect(self.toggle_password_visibility)
 
         self.loginBtn = QPushButton(self.loginBack)
+        # self.rdBtn.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.loginBtn.setText('登录')
-        self.loginBtn.setGeometry(111*self.width_scale, 656*self.height_scale, 451*self.width_scale, 60*self.height_scale)
+        self.loginBtn.setGeometry(111 * self.width_scale, 656 * self.height_scale, 451 * self.width_scale,
+                                  60 * self.height_scale)
         self.loginBtn.setStyleSheet(
-            f"QPushButton{{color: #121212;background-color: transparent;border-radius: {30*self.height_scale}px;border: 1px solid #8C6348}}"
-            f"QPushButton:hover{{color: #ffffff;background-color: #8C6348;border-radius: {30*self.height_scale}px;}}"
+            f"QPushButton{{color: #121212;background-color: transparent;border-radius: {30 * self.height_scale}px;border: 1px solid #8C6348}}"
+            f"QPushButton:hover{{color: #ffffff;background-color: #8C6348;border-radius: {30 * self.height_scale}px;}}"
         )
-        loginBtnfont = QFont(self.font_family4, 14*self.width_scale)
+        loginBtnfont = QFont(self.font_family4, 14 * self.width_scale)
         self.loginBtn.setFont(loginBtnfont)
-        # self.loginBtn.clicked.connect(self.loginClicked)
+        self.loginBtn.clicked.connect(self.loginClicked)
 
         # self.myzhzc = QLabel(self.loginBack)
         # self.myzhzc.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
@@ -12041,7 +12329,8 @@ class ApplicationWindow(
         locale = QLocale(QLocale.Language.Chinese)
 
         # 格式化时间并显示中文星期
-        formatted_time = current_time.toString("yyyy年M月d日 ") + locale.dayName(current_time.date().dayOfWeek()) + current_time.toString(" HH:mm:ss")
+        formatted_time = current_time.toString("yyyy年M月d日 ") + locale.dayName(
+            current_time.date().dayOfWeek()) + current_time.toString(" HH:mm:ss")
         # 更新标签显示
         self.todayTime.setText(formatted_time)
 
@@ -12062,7 +12351,7 @@ class ApplicationWindow(
     def closeSystemUI(self):
         self.closeBack = QLabel(self)  # 关机
         self.closeBack.setStyleSheet('background-color: #ffffff')
-        self.closeBack.setGeometry(0, 0, 1920*self.width_scale, 1080*self.height_scale)
+        self.closeBack.setGeometry(0, 0, 1920 * self.width_scale, 1080 * self.height_scale)
         self.closeBack.setVisible(False)
 
         self.movie = QMovie(self.normalized_path + '/includes/Icons/close/SceneEdit.gif')  # 替换为你的 GIF 文件路径
@@ -12072,7 +12361,8 @@ class ApplicationWindow(
         self.movie.start()
 
         self.closeTask = QLabel(self.closeBack)
-        self.closeTask.setGeometry(428*self.width_scale, 201*self.height_scale, 1064*self.width_scale, 702*self.height_scale)
+        self.closeTask.setGeometry(428 * self.width_scale, 201 * self.height_scale, 1064 * self.width_scale,
+                                   702 * self.height_scale)
         self.closeTaskpixmap = QPixmap(self.normalized_path + '/includes/Icons/close/closeBack.png')  # 背景图
         self.closeTask.setStyleSheet('background-color: transparent')
         self.closeTask.setPixmap(self.closeTaskpixmap)
@@ -12081,34 +12371,39 @@ class ApplicationWindow(
         self.closeTitle = QLabel(self.closeTask)
         self.closeTitle.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.closeTitle.setText('关 机 前 请 确 认 以 下 任 务 是 否 完 成')
-        self.closeTitle.setGeometry(200*self.width_scale, 90*self.height_scale, 676*self.width_scale, 36*self.height_scale)
+        self.closeTitle.setGeometry(200 * self.width_scale, 90 * self.height_scale, 676 * self.width_scale,
+                                    36 * self.height_scale)
         self.closeTitle.setStyleSheet("background-color: transparent; border:none;color: #313030; ")
-        closeTitlefont = QFont(self.font_family3, 28*self.width_scale)
+        closeTitlefont = QFont(self.font_family3, 28 * self.width_scale)
         self.closeTitle.setFont(closeTitlefont)
 
         self.xingxing = QLabel(self.closeTask)
-        self.xingxing.setGeometry(334*self.width_scale, 247*self.height_scale, 19*self.width_scale, 22*self.width_scale)
+        self.xingxing.setGeometry(334 * self.width_scale, 247 * self.height_scale, 19 * self.width_scale,
+                                  22 * self.width_scale)
         self.xingxing.setStyleSheet("background-color: transparent; border:none; ")
         self.xingxingpixmap = QPixmap(self.normalized_path + '/includes/Icons/close/tag.png')
         self.xingxing.setPixmap(self.xingxingpixmap)
         self.xingxing.setScaledContents(True)
 
         self.xingxing = QLabel(self.closeTask)
-        self.xingxing.setGeometry(334*self.width_scale, 313*self.height_scale, 19*self.width_scale, 22*self.width_scale)
+        self.xingxing.setGeometry(334 * self.width_scale, 313 * self.height_scale, 19 * self.width_scale,
+                                  22 * self.width_scale)
         self.xingxing.setStyleSheet("background-color: transparent; border:none; ")
         self.xingxingpixmap = QPixmap(self.normalized_path + '/includes/Icons/close/tag.png')
         self.xingxing.setPixmap(self.xingxingpixmap)
         self.xingxing.setScaledContents(True)
 
         self.xingxing = QLabel(self.closeTask)
-        self.xingxing.setGeometry(334*self.width_scale, 379*self.height_scale, 19*self.width_scale, 22*self.width_scale)
+        self.xingxing.setGeometry(334 * self.width_scale, 379 * self.height_scale, 19 * self.width_scale,
+                                  22 * self.width_scale)
         self.xingxing.setStyleSheet("background-color: transparent; border:none; ")
         self.xingxingpixmap = QPixmap(self.normalized_path + '/includes/Icons/close/tag.png')
         self.xingxing.setPixmap(self.xingxingpixmap)
         self.xingxing.setScaledContents(True)
 
         self.xingxing = QLabel(self.closeTask)
-        self.xingxing.setGeometry(334*self.width_scale, 445*self.height_scale, 19*self.width_scale, 22*self.width_scale)
+        self.xingxing.setGeometry(334 * self.width_scale, 445 * self.height_scale, 19 * self.width_scale,
+                                  22 * self.width_scale)
         self.xingxing.setStyleSheet("background-color: transparent; border:none; ")
         self.xingxingpixmap = QPixmap(self.normalized_path + '/includes/Icons/close/tag.png')
         self.xingxing.setPixmap(self.xingxingpixmap)
@@ -12117,58 +12412,68 @@ class ApplicationWindow(
         self.xingxingText = QLabel(self.closeTask)
         self.xingxingText.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
         self.xingxingText.setText('设 备 是 否 异 常')
-        self.xingxingText.setGeometry(374*self.width_scale, 244*self.height_scale, 180*self.width_scale, 24*self.height_scale)
+        self.xingxingText.setGeometry(374 * self.width_scale, 244 * self.height_scale, 180 * self.width_scale,
+                                      24 * self.height_scale)
         self.xingxingText.setStyleSheet("background-color: transparent; border:none;color: #313030; ")
-        xingxingTextfont = QFont(self.font_family3, 16*self.width_scale)
+        xingxingTextfont = QFont(self.font_family3, 16 * self.width_scale)
         self.xingxingText.setFont(xingxingTextfont)
 
         self.xingxingText = QLabel(self.closeTask)
         self.xingxingText.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
         self.xingxingText.setText('炉 温 100℃ 以 下')
-        self.xingxingText.setGeometry(374*self.width_scale, 310*self.height_scale, 180*self.width_scale, 24*self.height_scale)
+        self.xingxingText.setGeometry(374 * self.width_scale, 310 * self.height_scale, 180 * self.width_scale,
+                                      24 * self.height_scale)
         self.xingxingText.setStyleSheet("background-color: transparent; border:none;color: #313030; ")
-        xingxingTextfont = QFont(self.font_family3, 16*self.width_scale)
+        xingxingTextfont = QFont(self.font_family3, 16 * self.width_scale)
         self.xingxingText.setFont(xingxingTextfont)
 
         self.xingxingText = QLabel(self.closeTask)
         self.xingxingText.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
         self.xingxingText.setText('检 查 所 有 电 源')
-        self.xingxingText.setGeometry(374*self.width_scale, 376*self.height_scale, 180*self.width_scale, 24*self.height_scale)
+        self.xingxingText.setGeometry(374 * self.width_scale, 376 * self.height_scale, 180 * self.width_scale,
+                                      24 * self.height_scale)
         self.xingxingText.setStyleSheet("background-color: transparent; border:none;color: #313030; ")
-        xingxingTextfont = QFont(self.font_family3, 16*self.width_scale)
+        xingxingTextfont = QFont(self.font_family3, 16 * self.width_scale)
         self.xingxingText.setFont(xingxingTextfont)
 
         self.xingxingText = QLabel(self.closeTask)
         self.xingxingText.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
         self.xingxingText.setText('清 理 银 皮 桶')
-        self.xingxingText.setGeometry(374*self.width_scale, 442*self.height_scale, 180*self.width_scale, 24*self.height_scale)
+        self.xingxingText.setGeometry(374 * self.width_scale, 442 * self.height_scale, 180 * self.width_scale,
+                                      24 * self.height_scale)
         self.xingxingText.setStyleSheet("background-color: transparent; border:none;color: #313030; ")
-        xingxingTextfont = QFont(self.font_family3, 16*self.width_scale)
+        xingxingTextfont = QFont(self.font_family3, 16 * self.width_scale)
         self.xingxingText.setFont(xingxingTextfont)
 
         self.sbsfycBtn = QPushButton(self.closeTask)
-        self.sbsfycBtn.setStyleSheet(f"background-color: #313030; color: #ffffff; border: none;border-radius:{10*self.height_scale}px;")
-        self.sbsfycBtn.setGeometry(664*self.width_scale, 243*self.height_scale, 80*self.width_scale, 30*self.height_scale)
+        self.sbsfycBtn.setStyleSheet(
+            f"background-color: #313030; color: #ffffff; border: none;border-radius:{10 * self.height_scale}px;")
+        self.sbsfycBtn.setGeometry(664 * self.width_scale, 243 * self.height_scale, 80 * self.width_scale,
+                                   30 * self.height_scale)
         self.sbsfycBtn.setCheckable(True)  # 设置为可选中
         self.sbsfycBtn.setChecked(False)  # 默认选中“否”
         self.sbsfycBtn.clicked.connect(self.device_issueClick)  # 连接点击事件
 
         self.huakuaiRect = QLabel(self.sbsfycBtn)
-        self.huakuaiRect.setGeometry(39*self.width_scale, 4*self.height_scale, 37*self.width_scale, 22*self.height_scale)
-        self.huakuaiRect.setStyleSheet(f"background-color: #ffffff; border:none;border-radius:{6*self.height_scale}px;")
+        self.huakuaiRect.setGeometry(39 * self.width_scale, 4 * self.height_scale, 37 * self.width_scale,
+                                     22 * self.height_scale)
+        self.huakuaiRect.setStyleSheet(
+            f"background-color: #ffffff; border:none;border-radius:{6 * self.height_scale}px;")
 
         self.shiTxt = QLabel(self.sbsfycBtn)
         self.shiTxt.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
         self.shiTxt.setText('是')
-        self.shiTxt.setGeometry(15*self.width_scale, 5*self.height_scale, 20*self.width_scale, 20*self.height_scale)
+        self.shiTxt.setGeometry(15 * self.width_scale, 5 * self.height_scale, 20 * self.width_scale,
+                                20 * self.height_scale)
         self.shiTxt.setStyleSheet("background-color: transparent; border:none;color: #FFFFFF; ")
-        shiTxtfont = QFont(self.font_family4, 12*self.width_scale)
+        shiTxtfont = QFont(self.font_family4, 12 * self.width_scale)
         self.shiTxt.setFont(shiTxtfont)
 
         self.fouTxt = QLabel(self.sbsfycBtn)
         self.fouTxt.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
         self.fouTxt.setText('否')
-        self.fouTxt.setGeometry(50*self.width_scale, 5*self.height_scale, 20*self.width_scale, 20*self.height_scale)
+        self.fouTxt.setGeometry(50 * self.width_scale, 5 * self.height_scale, 20 * self.width_scale,
+                                20 * self.height_scale)
         self.fouTxt.setStyleSheet("background-color: transparent; border:none;color: #393939; ")
         self.fouTxt.setFont(shiTxtfont)
 
@@ -12212,13 +12517,15 @@ class ApplicationWindow(
         self.check_checkbox_states()
 
         self.quxiaoBtn = QPushButton(self.closeTask)
+        # self.rdBtn.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignCenter)
         self.quxiaoBtn.setText('取消')
-        self.quxiaoBtn.setGeometry(460*self.width_scale, 577*self.height_scale, 110*self.width_scale, 40*self.height_scale)
+        self.quxiaoBtn.setGeometry(460 * self.width_scale, 577 * self.height_scale, 110 * self.width_scale,
+                                   40 * self.height_scale)
         self.quxiaoBtn.setStyleSheet(
-            f"QPushButton{{color: #313030;background-color: #ffffff;border-radius: {19*self.height_scale}px;border: 1px solid #313030}}"
-            f"QPushButton:hover{{color: #ffffff;background-color: #313030;border-radius: {19*self.height_scale}px;}}"
+            f"QPushButton{{color: #313030;background-color: #ffffff;border-radius: {19 * self.height_scale}px;border: 1px solid #313030}}"
+            f"QPushButton:hover{{color: #ffffff;background-color: #313030;border-radius: {19 * self.height_scale}px;}}"
         )
-        quxiaoBtnfont = QFont(self.font_family4, 14*self.width_scale)
+        quxiaoBtnfont = QFont(self.font_family4, 14 * self.width_scale)
         self.quxiaoBtn.setFont(quxiaoBtnfont)
         self.quxiaoBtn.clicked.connect(self.controlClose)
 
@@ -12242,85 +12549,43 @@ class ApplicationWindow(
         self.sblb.show()
         self.toumingZheZhao.setVisible(True)
 
-        # 获取 localJson/Machines 目录路径
-        machines_path = os.path.join(ytycwdpath,"localJson","Machines")
-
-        # 确保目录存在
-        if not os.path.exists(machines_path):
-            print(f"Error: {machines_path} does not exist.")
-            return
-
-        # 清空当前设备列表
-        self.sblbList.clear()
-
-        # 设置每一项的间距
-        self.sblbList.setSpacing(10)  # 设置项之间的间距为 10
-
-        # 遍历 Machines 目录，获取文件名
-        for root, dirs, files in os.walk(machines_path):
-            # 只处理文件（不包括子目录）
-            for file in files:
-                # 去掉文件后缀名
-                device_name = os.path.splitext(file)[0]
-
-                # 创建列表项并设置设备名称
-                list_item = QListWidgetItem(device_name)
-                list_item.setData(Qt.ItemDataRole.UserRole, os.path.join(root, file))  # 将完整路径存储在 UserRole 中
-
-                # 设置项的样式
-                # list_item.setFont()  # 例如设置字体（需要先定义一个 QFont）
-                list_item.setTextAlignment(Qt.AlignmentFlag.AlignLeft)  # 设置左对齐
-
-                # 设置下划线样式
-                label = QLabel(f"{device_name}")  # 添加下划线
-                label.setAlignment(Qt.AlignmentFlag.AlignLeft)  # 设置左对齐
-                label.setStyleSheet(f"""
-                                QLabel {{
-                                    color: #393939;
-                                    padding-left: 10px;
-                                    text-decoration: underline;
-                                    border: 1px solid #222222;
-                                    border-radius:{24*self.width_scale}px
-                                }}
-                            """)
-
-                # 将列表项添加到 QListWidget
-                self.sblbList.addItem(list_item)
-
     def on_item_clicked(self, item):
         # 隐藏 QListWidget
+        item_id = item.data(Qt.ItemDataRole.UserRole)
+        self.sheibeiId = item_id
         self.toumingZheZhao.setVisible(False)
         self.sblb.hide()
 
-        # 将点击的项目内容显示到 QLabel
-        # self.shebeiLabel.setText(item.text())
+        # 更新 QLabel 显示设备名称
+        device_name = item.text()
+        self.shebeiLabel.setText(device_name)
+        self.xinghaoLabel.setText('')
+
         shebeifont = QFont(self.font_family, 24 * self.width_scale)
         shebeifont.setBold(True)
         self.shebeiLabel.setFont(shebeifont)
-        # 获取点击的项的文件路径
-        file_path = item.data(Qt.ItemDataRole.UserRole)
 
-        print('file_path', file_path)
+        # **获取设备对应的文件路径**
+        base_dir = "/Machines/"  # 根目录
+        file_path = os.path.join(base_dir, device_name)
 
-        # 创建一个 QAction，并设置相应的属性
-        action = QAction(self)
-        action.setText(item.text())  # 设定文本
-        action.setData(file_path)  # 设定文件路径为数据
+        if os.path.exists(file_path):  # 确保文件存在
+            # 创建一个 QAction 并设置文件路径
+            action = QAction(self)
+            action.setText(device_name)  # 设定文本
+            action.setData(file_path)  # 设定文件路径为数据
 
-        # 连接动作到相应的槽函数
-        action.triggered.connect(lambda: self.openMachineSettings(file_path))
-        # action.triggered.connect(self.openMachineSettings)
+            # 连接 QAction 到 openMachineSettings，并传递文件路径
+            action.triggered.connect(lambda: self.openMachineSettings(file_path))
 
-        # 模拟触发动作（这里可以传递 action 给 openMachineSettings）
-        action.trigger()  # 触发 action，这样就会进入 openMachineSettings 函数
-        self.ksyrBtn.setEnabled(True)
-        self.rdBtn.setEnabled(True)
-        self.ccBtn.setEnabled(True)
-        self.zhdImg.setEnabled(True)
-        self.yibaoImg.setEnabled(True)
-        
+            # 触发 action，调用 openMachineSettings
+            action.trigger()
+        else:
+            print(f"设备文件未找到: {file_path}")
+
+        # 其他已有操作
         self.qmc.ToggleRecorder()
-
+        self.getHonbeiList(self.sheibeiId)
 
     # def startProgress(self):
     #     # 重置状态并启动定时器
@@ -12371,10 +12636,9 @@ class ApplicationWindow(
         if not self.user_interacted:  # 仅在没有点击的情况下改变颜色
             last_bar = self.progress_bars[-1]
             last_bar.setStyleSheet(
-                f"QProgressBar {{border-radius: {3*self.height_scale}px; background-color: #cccccc; text-align: center; font-size: 0px; color: transparent}}"
+                f"QProgressBar {{border-radius: {3 * self.height_scale}px; background-color: #cccccc; text-align: center; font-size: 0px; color: transparent}}"
                 f"QProgressBar::chunk {{ background-color: red; }}"
             )
-
 
     def blink_text(self):
         # 切换标签的可见状态
@@ -12404,7 +12668,7 @@ class ApplicationWindow(
         # 更新标签显示的时间
         self.gjxyTimeTxt.setText(self.intoTime3.toString("mm:ss"))
 
-    def orderMoreClicked(self,first_Value):
+    def orderMoreClicked(self, first_Value):
         self.ordersRect_More.setVisible(True)
         stage1 = first_Value[5]
         stage2 = first_Value[6]
@@ -12416,42 +12680,42 @@ class ApplicationWindow(
 
         # 赋值 Stage 1
         self.showjd1_mbwd.setText(str(stage1[0]))
-        # self.showjd1_ckz.setText(str(stage1[0]))
+        self.showjd1_ckz.setText(str(stage1[0]))
         self.showjd1_hl.setText(str(stage1[1]))
         self.showjd1_fm.setText(str(stage1[2]))
         self.showjd1_zs.setText(str(stage1[3]))
 
         # 赋值 Stage 2
         self.showjd2_mbwd.setText(str(stage2[0]))
-        # self.showjd2_ckz.setText(str(stage2[0]))
+        self.showjd2_ckz.setText(str(stage2[0]))
         self.showjd2_hl.setText(str(stage2[1]))
         self.showjd2_fm.setText(str(stage2[2]))
         self.showjd2_zs.setText(str(stage2[3]))
 
         # 赋值 Stage 3
         self.showjd3_mbwd.setText(str(stage3[0]))
-        # self.showjd3_ckz.setText(str(stage3[0]))
+        self.showjd3_ckz.setText(str(stage3[0]))
         self.showjd3_hl.setText(str(stage3[1]))
         self.showjd3_fm.setText(str(stage3[2]))
         self.showjd3_zs.setText(str(stage3[3]))
 
         # 赋值 Stage 4
         self.showjd4_mbwd.setText(str(stage4[0]))
-        # self.showjd4_ckz.setText(str(stage4[0]))
+        self.showjd4_ckz.setText(str(stage4[0]))
         self.showjd4_hl.setText(str(stage4[1]))
         self.showjd4_fm.setText(str(stage4[2]))
         self.showjd4_zs.setText(str(stage4[3]))
 
         # 赋值 Stage 5
         self.showjd5_mbwd.setText(str(stage5[0]))
-        # self.showjd5_ckz.setText(str(stage5[0]))
+        self.showjd5_ckz.setText(str(stage5[0]))
         self.showjd5_hl.setText(str(stage5[1]))
         self.showjd5_fm.setText(str(stage5[2]))
         self.showjd5_zs.setText(str(stage5[3]))
 
         # 赋值 Stage 6
         self.showjd6_mbwd.setText(str(stage6[0]))
-        # self.showjd6_ckz.setText(str(stage6[0]))
+        self.showjd6_ckz.setText(str(stage6[0]))
         self.showjd6_hl.setText(str(stage6[1]))
         self.showjd6_fm.setText(str(stage6[2]))
         self.showjd6_zs.setText(str(stage6[3]))
@@ -12525,13 +12789,8 @@ class ApplicationWindow(
 
             self.list_widget_typeList.show()
 
-
-
     def orderShouqiClicked(self):
         self.ordersRect_More.setVisible(False)
-
-    # def taskMoreSetClicked(self):
-    #     self.ordersRect_More.setVisible(True)
 
     def delectTaskClicked(self, order):
         # 通过 order['bakingBatch'] 查找对应的订单并删除
@@ -12544,22 +12803,11 @@ class ApplicationWindow(
 
         # 更新本地的 order.json 文件，删除对应的订单
         self.updateOrderJsonFile(order_id_to_remove)
-        self.load_order_json()
+        # self.load_order_json()
 
-    def load_orders_from_json(self):
-        """
-        读取本地 order.json 文件并解析订单数据
-        """
-        try:
-            with open("localJson/order.json", "r", encoding="utf-8") as f:
-                self.orders_list = json.load(f)  # 解析 JSON 数据
-            print("订单数据加载成功")
-        except Exception as e:
-            print(f"加载订单数据失败: {e}")
-            self.orders_list = []  # 失败时，设置为空列表
 
     def taskMoreSetClicked(self, order):
-        baking_batch = order.get("bakingBatch")  # 获取 bakingBatch
+        baking_batch = order['bakingBatch']  # 获取 bakingBatch
         order_info = self.get_order_by_batch(baking_batch)  # 查找订单信息
 
         if order_info:
@@ -12572,62 +12820,65 @@ class ApplicationWindow(
         """
         根据 bakingBatch 获取订单信息
         """
+        # 将 baking_batch 转为字符串，确保数据类型一致
+        baking_batch = str(baking_batch)
+
         for order in self.orders_list:  # 遍历 orders_list
-            if order.get("bakingBatch") == baking_batch:
+            if str(order.get("bakingBatch")) == baking_batch:  # 确保两者类型一致
                 return order  # 返回匹配的订单数据
-        return None  # 未找到订单
+        return None
 
     def show_order_details(self, order_info):
         """
         显示订单详情（更新 UI 或弹出窗口）
         """
         # 获取各个阶段的参数，并确保数据存在
-        stage1 = order_info.get("stage1", ["", "", "", ""])
-        stage2 = order_info.get("stage2", ["", "", "", ""])
-        stage3 = order_info.get("stage3", ["", "", "", ""])
-        stage4 = order_info.get("stage4", ["", "", "", ""])
-        stage5 = order_info.get("stage5", ["", "", "", ""])
-        stage6 = order_info.get("stage6", ["", "", "", ""])
+        stage1 = order_info.get("stage1", ["108", "30", "62", "20"])
+        stage2 = order_info.get("stage2", ["148", "30", "62", "10"])
+        stage3 = order_info.get("stage3", ["170", "30", "62", "15"])
+        stage4 = order_info.get("stage4", ["173", "30", "62", "15"])
+        stage5 = order_info.get("stage5", ["188", "30", "62", "1"])
+        stage6 = order_info.get("stage6", ["196", "30", "62", "1"])
         self.more_bakingBatch.setText(order_info.get("taskName"))
 
         # 赋值 Stage 1
         self.showjd1_mbwd.setText(str(stage1[0]))
-        # self.showjd1_ckz.setText(str(stage1[0]))
+        self.showjd1_ckz.setText(str(stage1[0]))
         self.showjd1_hl.setText(str(stage1[1]))
         self.showjd1_fm.setText(str(stage1[2]))
         self.showjd1_zs.setText(str(stage1[3]))
 
         # 赋值 Stage 2
         self.showjd2_mbwd.setText(str(stage2[0]))
-        # self.showjd2_ckz.setText(str(stage2[0]))
+        self.showjd2_ckz.setText(str(stage2[0]))
         self.showjd2_hl.setText(str(stage2[1]))
         self.showjd2_fm.setText(str(stage2[2]))
         self.showjd2_zs.setText(str(stage2[3]))
 
         # 赋值 Stage 3
         self.showjd3_mbwd.setText(str(stage3[0]))
-        # self.showjd3_ckz.setText(str(stage3[0]))
+        self.showjd3_ckz.setText(str(stage3[0]))
         self.showjd3_hl.setText(str(stage3[1]))
         self.showjd3_fm.setText(str(stage3[2]))
         self.showjd3_zs.setText(str(stage3[3]))
 
         # 赋值 Stage 4
         self.showjd4_mbwd.setText(str(stage4[0]))
-        # self.showjd4_ckz.setText(str(stage4[0]))
+        self.showjd4_ckz.setText(str(stage4[0]))
         self.showjd4_hl.setText(str(stage4[1]))
         self.showjd4_fm.setText(str(stage4[2]))
         self.showjd4_zs.setText(str(stage4[3]))
 
         # 赋值 Stage 5
         self.showjd5_mbwd.setText(str(stage5[0]))
-        # self.showjd5_ckz.setText(str(stage5[0]))
+        self.showjd5_ckz.setText(str(stage5[0]))
         self.showjd5_hl.setText(str(stage5[1]))
         self.showjd5_fm.setText(str(stage5[2]))
         self.showjd5_zs.setText(str(stage5[3]))
 
         # 赋值 Stage 6
         self.showjd6_mbwd.setText(str(stage6[0]))
-        # self.showjd6_ckz.setText(str(stage6[0]))
+        self.showjd6_ckz.setText(str(stage6[0]))
         self.showjd6_hl.setText(str(stage6[1]))
         self.showjd6_fm.setText(str(stage6[2]))
         self.showjd6_zs.setText(str(stage6[3]))
@@ -12654,27 +12905,31 @@ class ApplicationWindow(
             self.list_widget_typeList.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         # 获取豆类信息
-        bean_types = order_info.get("beanTypes", {})  # 获取 "beanTypes" 字典
+        bean_types = order_info.get("formulaDetail", {})  # 获取 "beanTypes" 字典
         if not bean_types:  # 如果 bean_types 为空，直接返回
             print("No bean types found.")
         else:
             self.list_widget_typeList.clear()  # 先清空旧数据，防止重复添加
             for key, bean in bean_types.items():
-                name = bean.get('name', '未知')
-                number = bean.get('number', '0')
+                beanOther = bean.get('formulaOther', '未知')
+                name = bean.get('sample', '未知')
+                sampleName = name.get('sampleName', '未知')
+                number = beanOther.get('proportion', '0') # 豆子比例
+                number2 = order_info.get("number")  # 总重量
+                number3 = number*number2
 
                 # 创建一个 QWidget 和 QHBoxLayout 来管理布局
                 widget = QWidget()
                 layout = QHBoxLayout(widget)
 
                 # 创建品种的 QLabel，设置为占三分之二的长度
-                label_name = QLabel(f"品种：{name}")
+                label_name = QLabel(f"品种：{sampleName}")
                 label_name.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
                 label_name.setFixedWidth(int(2 / 3 * 250 * self.width_scale))  # 设置宽度为总宽度的三分之二
                 label_name.setStyleSheet("border:none")
 
                 # 创建重量的 QLabel，设置为占三分之一的长度
-                label_number = QLabel(f"重量：{number} kg")
+                label_number = QLabel(f"重量：{number3} kg")
                 label_number.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
                 label_number.setFixedWidth(int(1 / 3 * 250 * self.width_scale))  # 设置宽度为总宽度的三分之一
                 label_number.setStyleSheet("border:none")
@@ -12713,7 +12968,6 @@ class ApplicationWindow(
             # 将修改后的订单数据写回到 order.json 文件
             with open('localJson/order.json', 'w', encoding='utf-8') as f:
                 json.dump(updated_order_data, f, ensure_ascii=False, indent=4)
-                
 
             print("订单数据已成功更新到 order.json 文件中")
 
@@ -12727,42 +12981,42 @@ class ApplicationWindow(
         # self.qmc.ToggleRecorder()
         self.ksyrBtn.setEnabled(False)
 
-        self.oneStage = []
-        try:
-            with open(ytycwdpath + "/localJson/order.json", "r", encoding="utf-8") as file:
-                data = json.load(file)
-                self.orderList_data = data
-
-                # 遍历订单数据并生成控件
-                for order in self.orderList_data:
-                    if order.get("bakingDeviceId") == 2 and order.get("bakingStatue") == 1:
-                        # 使用 .get() 取值，若不存在某字段则提供默认值 [0, 0, 0, 0]
-                        stage1 = order.get("stage1", [0, 0, 0, 0])
-
-                        # 将数据追加到 oneStage
-                        self.oneStage.append([
-                            stage1
-                        ])
-                        first_Value = self.oneStage[0]
-                        self.jieduanNum.setText('1')
-                        self.mbwdNum.setText(str(first_Value[0][0]))
-                        # self.ckzNumR.setText('1')
-                        self.hlNumR.setText(str(first_Value[0][1]))
-                        self.fmNumR.setText(str(first_Value[0][2]))
-                        self.zsNumR.setText(str(first_Value[0][3]))
-
-                        self.setHl.setText(str(first_Value[0][1]))
-                        self.slider4.setValue(first_Value[0][1])
-                        self.slider4released()
-                        self.setFm.setText(str(first_Value[0][2]))
-                        self.slider1.setValue(first_Value[0][2])
-                        self.slider1released()
-                        self.setZs.setText(str(first_Value[0][3]))
-                        self.slider2.setValue(first_Value[0][3])
-                        self.slider2released()
-
-        except FileNotFoundError:
-            QMessageBox.warning(self, "警告", "JSON 文件不存在")
+        # self.oneStage = []
+        # try:
+        #     with open(ytycwdpath + "/localJson/order.json", "r", encoding="utf-8") as file:
+        #         data = json.load(file)
+        #         self.orderList_data = data
+        #
+        #         # 遍历订单数据并生成控件
+        #         for order in self.orderList_data:
+        #             if order.get("bakingDeviceId") == 2 and order.get("bakingStatue") == 1:
+        #                 # 使用 .get() 取值，若不存在某字段则提供默认值 [0, 0, 0, 0]
+        #                 stage1 = order.get("stage1", [0, 0, 0, 0])
+        #
+        #                 # 将数据追加到 oneStage
+        #                 self.oneStage.append([
+        #                     stage1
+        #                 ])
+        #                 first_Value = self.oneStage[0]
+        #                 self.jieduanNum.setText('1')
+        #                 self.mbwdNum.setText(str(first_Value[0][0]))
+        #                 # self.ckzNumR.setText('1')
+        #                 self.hlNumR.setText(str(first_Value[0][1]))
+        #                 self.fmNumR.setText(str(first_Value[0][2]))
+        #                 self.zsNumR.setText(str(first_Value[0][3]))
+        #
+        #                 self.setHl.setText(str(first_Value[0][1]))
+        #                 self.slider4.setValue(first_Value[0][1])
+        #                 self.slider4released()
+        #                 self.setFm.setText(str(first_Value[0][2]))
+        #                 self.slider1.setValue(first_Value[0][2])
+        #                 self.slider1released()
+        #                 self.setZs.setText(str(first_Value[0][3]))
+        #                 self.slider2.setValue(first_Value[0][3])
+        #                 self.slider2released()
+        #
+        # except FileNotFoundError:
+        #     QMessageBox.warning(self, "警告", "JSON 文件不存在")
 
         if self.jdtTimer.isActive():
             self.jdtTimer.stop()
@@ -12819,13 +13073,53 @@ class ApplicationWindow(
 
     def checkTextChanged(self):
         """定时检测 QLabel 的文本变化"""
-        current_text = self.processInfoLabel.text()
-        if current_text != self.previous_text:  # 检测到文本改变
-            self.previous_text = current_text
-            self.onProcessInfoLabelChanged()
-
+        try:
+            # 检查processInfoLabel是否存在
+            if not hasattr(self, 'processInfoLabel') or self.processInfoLabel is None:
+                return
+                
+            # 尝试获取文本前确保方法存在
+            if not hasattr(self.processInfoLabel, 'text'):
+                print("processInfoLabel没有text方法")
+                return
+                
+            try:
+                current_text = self.processInfoLabel.text()
+            except Exception as e:
+                print(f"获取processInfoLabel文本时出错: {str(e)}")
+                return
+                
+            # 检查previous_text属性是否存在
+            if not hasattr(self, 'previous_text'):
+                self.previous_text = ""
+                
+            if current_text != self.previous_text:  # 检测到文本改变
+                self.previous_text = current_text
+                
+                # 使用try-except包装方法调用
+                try:
+                    # 检查方法是否存在
+                    if hasattr(self, 'onProcessInfoLabelChanged') and callable(self.onProcessInfoLabelChanged):
+                        self.onProcessInfoLabelChanged()
+                    else:
+                        print("onProcessInfoLabelChanged方法不存在或不可调用")
+                except Exception as e:
+                    print(f"调用onProcessInfoLabelChanged时出错: {str(e)}")
+                    
+        except Exception as e:
+            print(f"检测文本变化时出错: {str(e)}")
+            
     def onProcessInfoLabelChanged(self):
-        self.jieduanInfo(self.getTPMark)  # 调用阶段信息更新函数
+        """处理文本变化事件"""
+        try:
+            # 检查getTPMark是否存在
+            if not hasattr(self, 'getTPMark') or self.getTPMark is None:
+                print("getTPMark不存在或为None，无法更新阶段信息")
+                return
+                
+            self.jieduanInfo(self.getTPMark)  # 调用阶段信息更新函数
+        except Exception as e:
+            print(f"处理文本变化事件时出错: {str(e)}")
 
     def jieduanInfo(self, first_Value):
         """阶段信息处理函数"""
@@ -12847,7 +13141,7 @@ class ApplicationWindow(
 
         if self.qmc.tpChangeBool:
             for i in range(5, 11):
-                if i == 10 and current_temp>first_Value[i-1][0]:
+                if i == 10 and current_temp > first_Value[i - 1][0]:
                     new_phase = i - 4
                     if new_phase > self.current_phase:  # 只有当新阶段大于当前阶段时才更新
                         self.current_phase = new_phase
@@ -12864,14 +13158,14 @@ class ApplicationWindow(
                     new_phase = i - 4
                     if new_phase > self.current_phase:  # 只有当新阶段大于当前阶段时才更新
                         self.current_phase = new_phase
-                        self.jieduanNum.setText(str(self.current_phase+1))
-                        self.mbwdNum.setText(str(first_Value[i+1][0]))
+                        self.jieduanNum.setText(str(self.current_phase + 1))
+                        self.mbwdNum.setText(str(first_Value[i + 1][0]))
                         # self.ckzNumR.setText(str(new_phase - 1))
-                        self.hlNumR.setText(str(first_Value[i+1][1]))
-                        self.fmNumR.setText(str(first_Value[i+1][2]))
-                        self.zsNumR.setText(str(first_Value[i+1][3]))
+                        self.hlNumR.setText(str(first_Value[i + 1][1]))
+                        self.fmNumR.setText(str(first_Value[i + 1][2]))
+                        self.zsNumR.setText(str(first_Value[i + 1][3]))
                         print(f"阶段 {self.current_phase}")
-                        self.updateSliders(first_Value[i+1])
+                        self.updateSliders(first_Value[i + 1])
                         break
         else:
             # 如果 tpChangeBool 为 False，保持在第一阶段
@@ -12926,10 +13220,10 @@ class ApplicationWindow(
 
     def huoli_jian_clicked(self):
         self.setHuoli = int(self.setHl.text())
-        if self.setHuoli > 1:
+        if self.setHuoli > 0:
             self.setHuoli -= 5
         else:
-            self.setHuoli = 1  # 设置最小值为 1
+            self.setHuoli = 0  # 设置最小值为 0
 
         print(self.setHuoli)
 
@@ -12962,10 +13256,10 @@ class ApplicationWindow(
 
     def fengmen_jian_clicked(self):
         self.setFengmen = int(self.setFm.text())
-        if self.setFengmen > 30:
+        if self.setFengmen > 0:
             self.setFengmen -= 1
         else:
-            self.setFengmen = 30  # 设置最小值为 30
+            self.setFengmen = 0  # 设置最小值为 0
 
         print(self.setFengmen)
 
@@ -12998,10 +13292,10 @@ class ApplicationWindow(
 
     def zhuansu_jian_clicked(self):
         self.setZhuansu = int(self.setZs.text())
-        if self.setZhuansu > 30:
+        if self.setZhuansu > 0:
             self.setZhuansu -= 1
         else:
-            self.setZhuansu = 30  # 设置最小值为 30
+            self.setZhuansu = 0  # 设置最小值为 0
 
         print(self.setZhuansu)
 
@@ -13093,176 +13387,6 @@ class ApplicationWindow(
             self.rudouTimer.stop()  # 停止计时器
 
 
-    # def markChargeClick(self):
-    # print(self.time_left)
-    # self.qmc.markCharge()
-    # self.statusLabel.setText("烘焙中...")
-    # self.start_countdown()
-    #
-    # self.ordering.setVisible(True)
-    #
-    # self.yrqk.setVisible(False)
-    # self.jdqk.setVisible(True)
-    # self.gjxy.setVisible(False)
-    #
-    # # self.ordersRect2.setGeometry(231, 591, 290, 185)
-    # self.statusCard.setVisible(False)
-    #
-    # self.diologRect.setVisible(False)
-    #
-    # # self.rudouPixmap2 = QPixmap(self.normalized_path + '/includes/Icons/yrzb/rd-hover.png')
-    # self.rudouImg.setPixmap(QPixmap(self.normalized_path + '/includes/Icons/yrzb/rd-hover.png'))
-    #
-    # # first_order_item = self.orderList.item(0)
-    # # if first_order_item:
-    # #     # 将第一个订单移除，并在标签中显示它
-    # #     removed_order = first_order_item.text()
-    # #     self.orderList.takeItem(0)  # 从列表中移除
-    # #     # self.moved_order_label.setText(f"订单已移出:\n{removed_order}")
-    # first_Value = self.id_value[0]
-    # global token
-    # url = "http://inner4.mjytech.com:22104/admin/task/startBakingTaskStatus"  # 开始烘焙
-    # payload = json.dumps({'id': first_Value[0]})
-    # headers = {
-    #     'token': f'{token}',
-    #     'Content-Type': 'application/json'
-    # }
-    # if token:
-    #     response = requests.post(url, payload, headers=headers)
-    #     if response.status_code == 200:
-    #         data = response.json()
-    #         textCode = data['code']
-    #         if textCode == 0 or textCode == 200:
-    #             print('连接成功')
-    #             self.task_name_label2.setText(first_Value[1])
-    #             new_text = f"任务订单: {first_Value[2]}"
-    #             self.task_no_label2.original_text = new_text  # 更新原始文本
-    #             self.task_no_label2.setText(new_text)  # 更新标签的显示文本
-    #             # self.task_no_label2.update_text_dimensions()  # 更新宽度
-    #             if self.task_no_label2.text_width > self.task_no_label2.label_width:
-    #                 self.task_no_label2.timer.start(100)  # 如果文本宽度大于标签宽度，开始滚动
-    #             self.deadline_label2.setText(f"截止日期: {first_Value[3]}")
-    #         else:
-    #             print('连接失败')
-    #     else:
-    #         print('连接失败')
-    #
-    # if self.rudouTimer.isActive():
-    #     self.rudouTimer.stop()
-    # else:
-    #     self.rudouTimer.start(100, self)
-    #
-    # # 重置状态并启动定时器
-    # self.current_progress = 0
-    # self.current_bar_index = 0
-    # for bar in self.progress_bars:
-    #     bar.setValue(0)  # 重置所有进度条
-    #
-    # # 启动定时器
-    # self.fourTimer.start(self.fourInterval)
-
-    # def markDropClick(self):
-    #     self.zhezhaoWidget.setVisible(True)
-    #     self.ccjlWidget.setVisible(True)
-    #     self.yrqk.setVisible(False)
-    #     self.jdqk.setVisible(False)
-    #     self.gjxy.setVisible(True)
-    #     self.status_label2.setText('已完成')
-    #     self.statusLabel.setText("锅间协议")
-    #     self.chukuImg.setStyleSheet("""
-    #                                                         QPushButton {
-    #                                                             border-image: url('src/includes/Icons/yrzb/rd-hover.png');
-    #                                                         }
-    #                                                     """)
-    #     self.qmc.markDrop()
-    #
-    #     self.user_interacted = True  # 用户进行了交互
-    #
-    #     self.gjxytimer.start(1000)  # 每隔 1 秒触发一次
-    #
-    #     if self.jdtGJXYTimer.isActive():
-    #         self.jdtGJXYTimer.stop()
-    #     else:
-    #         self.jdtGJXYTimer.start(100, self)
-
-    # def submitCCJL(self):
-    #     self.zhezhaoWidget.setVisible(False)
-    #     self.ccjlWidget.setVisible(False)
-    #     # baking_batch_1, task_id_1 = self.chucangValue[0]
-    #     self.toggle_updateCloud()
-    #     if self.id_value:
-    #         # 删除第一组数据
-    #         self.id_value.pop(0)
-    #     # sys.stdout = open("outputttttttttttt.log", "w")
-    #     print(self.id_value)
-    # self.getHonbeiList()
-    # global token
-    # url = "http://inner4.mjytech.com:22104/admin/storeroom/saveInventoryMiddle"  # 熟豆入仓
-    # payload = json.dumps({
-    #     "bakingBatch": self.chucangValue[0],
-    #     "cacheTime": self.hcsjContent.text(),
-    #     "defectiveRate": self.xclContent.text(),#
-    #     "dehydrationRate": self.tslContent.text(),#
-    #     "num": self.slContent.text(),#
-    #     "taskId": self.chucangValue[1],
-    #     "type": 3
-    # })
-    # headers = {
-    #     'token': f'{token}',
-    #     'Content-Type': 'application/json'
-    # }
-    # if token:
-    #     response = requests.post(url, payload, headers=headers)
-    #     if response.status_code == 200:
-    #         # dataJson = response.json()
-    #         print('连接成功')
-    #         self.toggle_updateCloud()
-    #     else:
-    #         print('连接失败')
-
-    # def load_model_from_pickle(self,pickle_file):
-    #     """ 从 pickle 文件加载回归模型 """
-    #     try:
-    #         with open(pickle_file, 'rb') as file:
-    #             model = pickle.load(file)
-    #         return model
-    #     except Exception as e:
-    #         print(f"❌ 读取模型文件失败: {e}")
-    #         return None
-    #
-    # def get_prediction_from_pickle(self, pickle_file, Bean_temp, Air_temp, Coffee_recipe):
-    #     """
-    #     读取 pickle 文件中的回归模型，并使用输入特征进行预测。
-    #
-    #     :param pickle_file: pickle 文件路径
-    #     :param Bean_temp: 豆温 (double 类型的数字)
-    #     :param Air_temp: 风温 (double 类型的数字)
-    #     :param Coffee_recipe: 咖啡豆配方 (数组)
-    #     :return: 预测结果（四舍五入到1位小数的数组）
-    #     """
-    #     model = self.load_model_from_pickle(pickle_file)
-    #     if model is None:
-    #         return None  # 读取失败时返回 None
-    #
-    #     try:
-    #         # 构造输入特征，每个 Coffee_recipe 对应相同的 Bean_temp 和 Air_temp
-    #         num_samples = len(Coffee_recipe)
-    #         Bean_temp_array = np.full((num_samples, 1), Bean_temp)  # 生成相同值的列
-    #         Air_temp_array = np.full((num_samples, 1), Air_temp)  # 生成相同值的列
-    #         Coffee_recipe_array = np.array(Coffee_recipe).reshape(-1, 1)  # 转换为列向量
-    #
-    #         # 组合成 (n_samples, n_features) 形状的特征矩阵
-    #         X = np.hstack((Bean_temp_array, Air_temp_array, Coffee_recipe_array))
-    #
-    #         # 进行预测
-    #         y_pred = model.predict(X)
-    #
-    #         # 返回四舍五入后的结果（NumPy 数组）
-    #         return np.round(y_pred, 1).tolist()
-    #     except Exception as e:
-    #         print(f"❌ 预测时出错: {e}")
-    #         return None
-
     def toggle_BTline_visibility(self):
         """切换曲线的可见性（隐藏/显示）"""
         if self.qmc.l_temp2 is not None:
@@ -13340,10 +13464,9 @@ class ApplicationWindow(
             self.addMonitorWidget.setVisible(False)
 
         print("Data saved successfully!")
-    
+
     def onMonitorBtn_cancel(self):
         self.addMonitorWidget.setVisible(False)
-
 
     def markDryEndClick(self):
         # self.qmc.markDryEnd()
@@ -13364,7 +13487,6 @@ class ApplicationWindow(
     def start_countdown(self):
         # 设置定时器间隔为1000毫秒（1秒）
         self.jieduanTimer.start(1000)
-
 
     def update_countdown(self):
         # 更新倒计时时间
@@ -13428,719 +13550,599 @@ class ApplicationWindow(
         self.selectList.setVisible(False)
         self.comBoxLabel.setText('反馈情况')
 
+    def analyseClick(self):
+        order_ids_str = ','.join(self.orderID)
+        url = "http://inner4.mjytech.com:22104/admin/device/lookFormulaCurve"
+        params = {'bakingBatchList': order_ids_str}
+        response = requests.get(url, params)
+        if response.status_code == 200:
+            data = response.json()
+            textCode = data['code']
+            if textCode == 0 or textCode == 200:
+                self.historyAnalyse.setVisible(True)
+                self.scroll_area.setVisible(True)
+                self.scroll_area.setWidget(self.historyAnalyse)
+                dataJson = response.json()
+                data = dataJson['data']
+                # bakingBatchList1 = data[0].get('bakingBatch')
+                historyOrder_count = len(self.orderDetail)
+                dataJson2 = self.orderDetail
+                # 历史分析数据
+                if historyOrder_count == 1:
+                    self.history_sheibei1.setText(str(dataJson2[0].get('bakingBatch')))
+                    self.historyOrder1_Title.setText(str(dataJson2[0].get('bakingBatch')))
+                    self.historyOrder1_Time.setText(str(int(dataJson2[0].get('taskTime')) // 60) + ':' + str(
+                        int(dataJson2[0].get('taskTime')) % 60))
+                    self.historyOrder_hbrq1_Data.setText(str(dataJson2[0].get('createTime')))
+                    self.historyOrder_hbssl1_Data.setText(str(dataJson2[0].get('dehydrationRate')))
+                    self.historyOrder_hbpf1_Data.setText(str(dataJson2[0].get('bakingScore')))
+                    self.historyOrder_Agtron1_Data.setText(str(dataJson2[0].get('agtronValue')))
+                    if dataJson2[0]['cuppingDetail'] not in dataJson2:
+                        self.historyOrder_bcpf1_Data.setText("-")
+                        self.historyOrder_bcrq1_Data.setText("-")
+                    else:
+                        self.historyOrder_bcpf1_Data.setText(str(dataJson2[0]['cuppingDetail']['score']))
+                        self.historyOrder_bcrq1_Data.setText(str(dataJson2[0]['cuppingDetail']['createTime']))
 
-    # def analyseClick(self):
-    #     order_ids_str = ','.join(self.orderID)
-    #     url = "http://inner4.mjytech.com:22104/admin/device/lookFormulaCurve"
-    #     params = {'bakingBatchList': order_ids_str}
-    #     response = requests.get(url, params)
-    #     if response.status_code == 200:
-    #         data = response.json()
-    #         textCode = data['code']
-    #         if textCode == 0 or textCode == 200:
-    #             self.historyAnalyse.setVisible(True)
-    #             self.scroll_area.setVisible(True)
-    #             self.scroll_area.setWidget(self.historyAnalyse)
-    #             dataJson = response.json()
-    #             data = dataJson['data']
-    #             # bakingBatchList1 = data[0].get('bakingBatch')
-    #             historyOrder_count = len(self.orderDetail)
-    #             dataJson2 = self.orderDetail
-    #             # 历史分析数据
-    #             if historyOrder_count == 1:
-    #                 self.history_sheibei.setText(str(dataJson2[0].get('bakingBatch')))
-    #                 self.historyOrder1_Title.setText(str(dataJson2[0].get('bakingBatch')))
-    #                 self.historyOrder1_Time.setText(str(int(dataJson2[0].get('taskTime')) // 60) + ':' + str(
-    #                     int(dataJson2[0].get('taskTime')) % 60))
-    #                 self.historyOrder_hbrq1_Data.setText(str(dataJson2[0].get('createTime')))
-    #                 self.historyOrder_hbssl1_Data.setText(str(dataJson2[0].get('dehydrationRate')))
-    #                 self.historyOrder_hbpf1_Data.setText(str(dataJson2[0].get('bakingScore')))
-    #                 self.historyOrder_Agtron1_Data.setText(str(dataJson2[0].get('agtronValue')))
-    #                 if dataJson2[0]['cuppingDetail'] not in dataJson2:
-    #                     self.historyOrder_bcpf1_Data.setText("-")
-    #                     self.historyOrder_bcrq1_Data.setText("-")
-    #                 else:
-    #                     self.historyOrder_bcpf1_Data.setText(str(dataJson2[0]['cuppingDetail']['score']))
-    #                     self.historyOrder_bcrq1_Data.setText(str(dataJson2[0]['cuppingDetail']['createTime']))
-    #
-    #             elif historyOrder_count == 2:
-    #                 self.history_sheibei.setText(str(dataJson2[0].get('bakingBatch')))
-    #                 self.historyOrder1_Title.setText(str(dataJson2[0].get('bakingBatch')))
-    #                 self.historyOrder1_Time.setText(str(int(dataJson2[0].get('taskTime')) // 60) + ':' + str(
-    #                     int(dataJson2[0].get('taskTime')) % 60))
-    #                 self.historyOrder_hbrq1_Data.setText(str(dataJson2[0].get('createTime')))
-    #                 self.historyOrder_hbssl1_Data.setText(str(dataJson2[0].get('dehydrationRate')))
-    #                 self.historyOrder_hbpf1_Data.setText(str(dataJson2[0].get('bakingScore')))
-    #                 self.historyOrder_Agtron1_Data.setText(str(dataJson2[0].get('agtronValue')))
-    #                 if dataJson2[0]['cuppingDetail'] not in dataJson2:
-    #                     self.historyOrder_bcpf1_Data.setText("-")
-    #                     self.historyOrder_bcrq1_Data.setText("-")
-    #                 else:
-    #                     self.historyOrder_bcpf1_Data.setText(str(dataJson2[0]['cuppingDetail']['score']))
-    #                     self.historyOrder_bcrq1_Data.setText(str(dataJson2[0]['cuppingDetail']['createTime']))
-    #
-    #                 self.history_sheibei2.setText(str(dataJson2[1].get('bakingBatch')))
-    #                 self.historyOrder2_Title.setText(str(dataJson2[1].get('bakingBatch')))
-    #                 self.historyOrder2_Time.setText(str(int(dataJson2[1].get('taskTime')) // 60) + ':' + str(
-    #                     int(dataJson2[1].get('taskTime')) % 60))
-    #                 self.historyOrder_hbrq2_Data.setText(str(dataJson2[1].get('createTime')))
-    #                 self.historyOrder_hbssl2_Data.setText(str(dataJson2[1].get('dehydrationRate')))
-    #                 self.historyOrder_hbpf2_Data.setText(str(dataJson2[1].get('bakingScore')))
-    #                 self.historyOrder_Agtron2_Data.setText(str(dataJson2[1].get('agtronValue')))
-    #                 if dataJson2[1]['cuppingDetail'] not in dataJson2:
-    #                     self.historyOrder_bcpf2_Data.setText("-")
-    #                     self.historyOrder_bcrq2_Data.setText("-")
-    #                 else:
-    #                     self.historyOrder_bcpf2_Data.setText(str(dataJson2[1]['cuppingDetail']['score']))
-    #                     self.historyOrder_bcrq2_Data.setText(str(dataJson2[1]['cuppingDetail']['createTime']))
-    #             elif historyOrder_count == 3:
-    #                 self.history_sheibei.setText(str(dataJson2[0].get('bakingBatch')))
-    #                 self.historyOrder1_Title.setText(str(dataJson2[0].get('bakingBatch')))
-    #                 self.historyOrder1_Time.setText(str(int(dataJson2[0].get('taskTime')) // 60) + ':' + str(
-    #                     int(dataJson2[0].get('taskTime')) % 60))
-    #                 self.historyOrder_hbrq1_Data.setText(str(dataJson2[0].get('createTime')))
-    #                 self.historyOrder_hbssl1_Data.setText(str(dataJson2[0].get('dehydrationRate')))
-    #                 self.historyOrder_hbpf1_Data.setText(str(dataJson2[0].get('bakingScore')))
-    #                 self.historyOrder_Agtron1_Data.setText(str(dataJson2[0].get('agtronValue')))
-    #                 if dataJson2[0]['cuppingDetail'] not in dataJson2:
-    #                     self.historyOrder_bcpf1_Data.setText("-")
-    #                     self.historyOrder_bcrq1_Data.setText("-")
-    #                 else:
-    #                     self.historyOrder_bcpf1_Data.setText(str(dataJson2[0]['cuppingDetail']['score']))
-    #                     self.historyOrder_bcrq1_Data.setText(str(dataJson2[0]['cuppingDetail']['createTime']))
-    #
-    #                 self.history_sheibei2.setText(str(dataJson2[1].get('bakingBatch')))
-    #                 self.historyOrder2_Title.setText(str(dataJson2[1].get('bakingBatch')))
-    #                 self.historyOrder2_Time.setText(str(int(dataJson2[1].get('taskTime')) // 60) + ':' + str(
-    #                     int(dataJson2[1].get('taskTime')) % 60))
-    #                 self.historyOrder_hbrq2_Data.setText(str(dataJson2[1].get('createTime')))
-    #                 self.historyOrder_hbssl2_Data.setText(str(dataJson2[1].get('dehydrationRate')))
-    #                 self.historyOrder_hbpf2_Data.setText(str(dataJson2[1].get('bakingScore')))
-    #                 self.historyOrder_Agtron2_Data.setText(str(dataJson2[1].get('agtronValue')))
-    #                 if dataJson2[1]['cuppingDetail'] not in dataJson2:
-    #                     self.historyOrder_bcpf2_Data.setText("-")
-    #                     self.historyOrder_bcrq2_Data.setText("-")
-    #                 else:
-    #                     self.historyOrder_bcpf2_Data.setText(str(dataJson2[1]['cuppingDetail']['score']))
-    #                     self.historyOrder_bcrq2_Data.setText(str(dataJson2[1]['cuppingDetail']['createTime']))
-    #
-    #                 self.history_sheibei3.setText(str(dataJson2[2].get('bakingBatch')))
-    #                 self.historyOrder3_Title.setText(str(dataJson2[2].get('bakingBatch')))
-    #                 self.historyOrder3_Time.setText(str(int(dataJson2[2].get('taskTime')) // 60) + ':' + str(
-    #                     int(dataJson2[2].get('taskTime')) % 60))
-    #                 self.historyOrder_hbrq3_Data.setText(str(dataJson2[2].get('createTime')))
-    #                 self.historyOrder_hbssl3_Data.setText(str(dataJson2[2].get('dehydrationRate')))
-    #                 self.historyOrder_hbpf3_Data.setText(str(dataJson2[2].get('bakingScore')))
-    #                 self.historyOrder_Agtron3_Data.setText(str(dataJson2[2].get('agtronValue')))
-    #                 if dataJson2[2]['cuppingDetail'] not in dataJson2:
-    #                     self.historyOrder_bcpf3_Data.setText("-")
-    #                     self.historyOrder_bcrq3_Data.setText("-")
-    #                 else:
-    #                     self.historyOrder_bcpf3_Data.setText(str(dataJson2[2]['cuppingDetail']['score']))
-    #                     self.historyOrder_bcrq3_Data.setText(str(dataJson2[2]['cuppingDetail']['createTime']))
-    #             elif historyOrder_count == 4:
-    #                 self.history_sheibei.setText(str(dataJson2[0].get('bakingBatch')))
-    #                 self.historyOrder1_Title.setText(str(dataJson2[0].get('bakingBatch')))
-    #                 self.historyOrder1_Time.setText(str(int(dataJson2[0].get('taskTime')) // 60) + ':' + str(
-    #                     int(dataJson2[0].get('taskTime')) % 60))
-    #                 self.historyOrder_hbrq1_Data.setText(str(dataJson2[0].get('createTime')))
-    #                 self.historyOrder_hbssl1_Data.setText(str(dataJson2[0].get('dehydrationRate')))
-    #                 self.historyOrder_hbpf1_Data.setText(str(dataJson2[0].get('bakingScore')))
-    #                 self.historyOrder_Agtron1_Data.setText(str(dataJson2[0].get('agtronValue')))
-    #                 if dataJson2[0]['cuppingDetail'] not in dataJson2:
-    #                     self.historyOrder_bcpf1_Data.setText("-")
-    #                     self.historyOrder_bcrq1_Data.setText("-")
-    #                 else:
-    #                     self.historyOrder_bcpf1_Data.setText(str(dataJson2[1]['cuppingDetail']['score']))
-    #                     self.historyOrder_bcrq1_Data.setText(str(dataJson2[1]['cuppingDetail']['createTime']))
-    #
-    #                 self.history_sheibei2.setText(str(dataJson2[1].get('bakingBatch')))
-    #                 self.historyOrder2_Title.setText(str(dataJson2[1].get('bakingBatch')))
-    #                 self.historyOrder2_Time.setText(str(int(dataJson2[1].get('taskTime')) // 60) + ':' + str(
-    #                     int(dataJson2[1].get('taskTime')) % 60))
-    #                 self.historyOrder_hbrq2_Data.setText(str(dataJson2[1].get('createTime')))
-    #                 self.historyOrder_hbssl2_Data.setText(str(dataJson2[1].get('dehydrationRate')))
-    #                 self.historyOrder_hbpf2_Data.setText(str(dataJson2[1].get('bakingScore')))
-    #                 self.historyOrder_Agtron2_Data.setText(str(dataJson2[1].get('agtronValue')))
-    #                 if dataJson2[1]['cuppingDetail'] not in dataJson2:
-    #                     self.historyOrder_bcpf2_Data.setText("-")
-    #                     self.historyOrder_bcrq2_Data.setText("-")
-    #                 else:
-    #                     self.historyOrder_bcpf2_Data.setText(str(dataJson2[1]['cuppingDetail']['score']))
-    #                     self.historyOrder_bcrq2_Data.setText(str(dataJson2[1]['cuppingDetail']['createTime']))
-    #
-    #                 self.history_sheibei3.setText(str(dataJson2[2].get('bakingBatch')))
-    #                 self.historyOrder3_Title.setText(str(dataJson2[2].get('bakingBatch')))
-    #                 self.historyOrder3_Time.setText(str(int(dataJson2[2].get('taskTime')) // 60) + ':' + str(
-    #                     int(dataJson2[2].get('taskTime')) % 60))
-    #                 self.historyOrder_hbrq3_Data.setText(str(dataJson2[2].get('createTime')))
-    #                 self.historyOrder_hbssl3_Data.setText(str(dataJson2[2].get('dehydrationRate')))
-    #                 self.historyOrder_hbpf3_Data.setText(str(dataJson2[2].get('bakingScore')))
-    #                 self.historyOrder_Agtron3_Data.setText(str(dataJson2[2].get('agtronValue')))
-    #                 if dataJson2[2]['cuppingDetail'] not in dataJson2:
-    #                     self.historyOrder_bcpf3_Data.setText("-")
-    #                     self.historyOrder_bcrq3_Data.setText("-")
-    #                 else:
-    #                     self.historyOrder_bcpf3_Data.setText(str(dataJson2[2]['cuppingDetail']['score']))
-    #                     self.historyOrder_bcrq3_Data.setText(str(dataJson2[2]['cuppingDetail']['createTime']))
-    #
-    #                 self.history_sheibei4.setText(str(dataJson2[3].get('bakingBatch')))
-    #                 self.historyOrder4_Title.setText(str(dataJson2[3].get('bakingBatch')))
-    #                 self.historyOrder4_Time.setText(str(int(dataJson2[3].get('taskTime')) // 60) + ':' + str(
-    #                     int(dataJson2[3].get('taskTime')) % 60))
-    #                 self.historyOrder_hbrq4_Data.setText(str(dataJson2[3].get('createTime')))
-    #                 self.historyOrder_hbssl4_Data.setText(str(dataJson2[3].get('dehydrationRate')))
-    #                 self.historyOrder_hbpf4_Data.setText(str(dataJson2[3].get('bakingScore')))
-    #                 self.historyOrder_Agtron4_Data.setText(str(dataJson2[3].get('agtronValue')))
-    #                 if dataJson2[3]['cuppingDetail'] not in dataJson2:
-    #                     self.historyOrder_bcpf4_Data.setText("-")
-    #                     self.historyOrder_bcrq4_Data.setText("-")
-    #                 else:
-    #                     self.historyOrder_bcpf4_Data.setText(str(dataJson2[3]['cuppingDetail']['score']))
-    #                     self.historyOrder_bcrq4_Data.setText(str(dataJson2[3]['cuppingDetail']['createTime']))
-    #
-    #             order_count = len(data)
-    #             totaltimeList = []
-    #             for i in range(order_count):
-    #                 totaltimeList.append(data[i]['jsonMessage']['totaltime'])
-    #
-    #             max_time_in_seconds = max(totaltimeList)
-    #             max_time_in_minutes = int(max_time_in_seconds) // 60
-    #
-    #             # 创建时间数量小部件
-    #             timeNumWidget = QWidget(self.historyAnalyse)
-    #             timeNumWidget.setStyleSheet("background-color: transparent; border:none; color: #222222;")
-    #
-    #             # 创建横向布局并添加到小部件
-    #             timeNumLayout = QHBoxLayout(timeNumWidget)
-    #
-    #             # 初始化并设置时间标签
-    #             # self.analyseTimeNum = QLabel(f"{max_time_in_minutes:.2f}", self.historyAnalyse)
-    #             # self.analyseTimeNum.setStyleSheet("color: white;")  # 设置字体颜色为白色
-    #             for minute in range(max_time_in_minutes):  # +1 包含最大分钟数
-    #                 self.analyseTimeNum = QLabel(f"{minute}", self.historyAnalyse)
-    #                 self.analyseTimeNum.setFixedHeight(30)
-    #                 self.analyseTimeNum.setStyleSheet("background-color: transparent; border:none;color: #292827;")
-    #                 analyseTimeNumfont = QFont(self.font_family4, 18 * self.width_scale)
-    #                 self.analyseTimeNum.setFont(analyseTimeNumfont)
-    #
-    #                 timeNumLayout.addWidget(self.analyseTimeNum)
-    #
-    #             timeNumLayout.addWidget(self.analyseTimeNum)
-    #
-    #             # 将小部件添加到布局中（确保设置大小）
-    #             timeNumWidget.setFixedHeight(34 * self.height_scale)  # 设置高度
-    #             timeNumWidget.setGeometry(148 * self.width_scale, 1290 * self.height_scale, 1384 * self.width_scale,
-    #                                       34 * self.height_scale)  # 如果必要，可以设置几何形状
-    #             timeNumWidget.show()  # 确保小部件可见
-    #
-    #             # 获取不同的 timex 数组
-    #             try:
-    #                 timex1 = data[0]['jsonMessage']['alogJson']['timex']
-    #             except (IndexError, KeyError, TypeError):
-    #                 timex1 = []
-    #
-    #             try:
-    #                 timex2 = data[1]['jsonMessage']['alogJson']['timex']
-    #             except (IndexError, KeyError, TypeError):
-    #                 timex2 = []
-    #
-    #             try:
-    #                 timex3 = data[2]['jsonMessage']['alogJson']['timex']
-    #             except (IndexError, KeyError, TypeError):
-    #                 timex3 = []
-    #
-    #             try:
-    #                 timex4 = data[3]['jsonMessage']['alogJson']['timex']
-    #             except (IndexError, KeyError, TypeError):
-    #                 timex4 = []
-    #
-    #             # 找到最长的 timex
-    #             timex_lengths = [len(timex1), len(timex2), len(timex3), len(timex4)]
-    #             max_len_index = timex_lengths.index(max(timex_lengths))  # 获取最长 timex 的索引
-    #
-    #             # 使用最长的 timex
-    #             timex = [timex1, timex2, timex3, timex4][max_len_index]
-    #
-    #             # 获取四个温度数据
-    #             try:
-    #                 temp1 = data[0]['jsonMessage']['alogJson']['temp1']
-    #             except (IndexError, KeyError, TypeError):
-    #                 temp1 = []
-    #
-    #             try:
-    #                 temp2 = data[1]['jsonMessage']['alogJson']['temp1']
-    #             except (IndexError, KeyError, TypeError):
-    #                 temp2 = []
-    #
-    #             try:
-    #                 temp3 = data[2]['jsonMessage']['alogJson']['temp1']
-    #             except (IndexError, KeyError, TypeError):
-    #                 temp3 = []
-    #
-    #             try:
-    #                 temp4 = data[3]['jsonMessage']['alogJson']['temp1']
-    #             except (IndexError, KeyError, TypeError):
-    #                 temp4 = []
-    #
-    #             # 更新图表
-    #             self.matplotlib_widget.update_plot(timex, temp1, temp2, temp3, temp4)
-    #
-    #             msgdata = data[0].get('jsonMessage')
-    #             self.onekstTxt1.setText(
-    #                 f"入豆温度: {msgdata['CHARGE_BT']}℃   回温点: {msgdata['TP_BT']}℃/{msgdata['TP_time']}")
-    #             self.onekstTxt1.setGeometry(16 * self.width_scale, 3 * self.height_scale, (((int(
-    #                 msgdata['totaltime']) - int(msgdata['Maillard_time']) - int(msgdata['FCs_time'])) / int(
-    #                 msgdata['totaltime'])) * 1385 * (int(msgdata['totaltime']) / int(
-    #                 max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
-    #
-    #             self.onekstTxt2.setText(f"转黄点: {msgdata['Maillard']}℃/{msgdata['Maillard_time']}")
-    #             self.onekstTxt2.setGeometry((int(self.onekstTxt1.geometry().width() + 17)) * self.width_scale,
-    #                                         3 * self.height_scale, ((int(msgdata['Maillard_time']) / int(
-    #                     msgdata['totaltime'])) * 1385 * (int(msgdata['totaltime']) / int(
-    #                     max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
-    #
-    #             self.onekstTxt3.setText(f"一爆: {msgdata['FCs_BT']}℃/{msgdata['FCs_time']}")
-    #             self.onekstTxt3.setGeometry((
-    #                                             int(self.onekstTxt1.geometry().width() + 18 + self.onekstTxt2.geometry().width())) * self.width_scale,
-    #                                         3 * self.height_scale, ((int(msgdata['FCs_time']) / int(
-    #                     msgdata['totaltime'])) * 1385 * (int(msgdata['totaltime']) / int(
-    #                     max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
-    #             if(len(data) == 2):
-    #                 msgdata2 = data[1].get('jsonMessage')
-    #                 self.twokstTxt1.setText(
-    #                     f"入豆温度: {msgdata2['CHARGE_BT']}℃   回温点: {msgdata2['TP_BT']}℃/{msgdata2['TP_time']}")
-    #                 self.twokstTxt1.setGeometry(16 * self.width_scale, 3 * self.height_scale, (((int(
-    #                     msgdata2['totaltime']) - int(msgdata2['Maillard_time']) - int(msgdata2['FCs_time'])) / int(
-    #                     msgdata2['totaltime'])) * 1385 * (int(msgdata2['totaltime']) / int(
-    #                     max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
-    #
-    #                 self.twokstTxt2.setText(f"转黄点: {msgdata2['Maillard']}℃/{msgdata2['Maillard_time']}")
-    #                 self.twokstTxt2.setGeometry((int(self.onekstTxt1.geometry().width() + 17)) * self.width_scale,
-    #                                             3 * self.height_scale, ((int(msgdata2['Maillard_time']) / int(
-    #                         msgdata2['totaltime'])) * 1385 * (int(msgdata2['totaltime']) / int(
-    #                         max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
-    #
-    #                 self.twokstTxt3.setText(f"一爆: {msgdata2['FCs_BT']}℃/{msgdata2['FCs_time']}")
-    #                 self.twokstTxt3.setGeometry((
-    #                                                 int(self.onekstTxt1.geometry().width() + 18 + self.onekstTxt2.geometry().width())) * self.width_scale,
-    #                                             3 * self.height_scale, ((int(msgdata2['FCs_time']) / int(
-    #                         msgdata2['totaltime'])) * 1385 * (int(msgdata2['totaltime']) / int(
-    #                         max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
-    #             elif(len(data) == 3):
-    #                 msgdata2 = data[1].get('jsonMessage')
-    #                 msgdata3 = data[2].get('jsonMessage')
-    #                 self.twokstTxt1.setText(
-    #                     f"入豆温度: {msgdata2['CHARGE_BT']}℃   回温点: {msgdata2['TP_BT']}℃/{msgdata2['TP_time']}")
-    #                 self.twokstTxt1.setGeometry(16 * self.width_scale, 3 * self.height_scale, (((int(
-    #                     msgdata2['totaltime']) - int(msgdata2['Maillard_time']) - int(msgdata2['FCs_time'])) / int(
-    #                     msgdata2['totaltime'])) * 1385 * (int(msgdata2['totaltime']) / int(
-    #                     max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
-    #
-    #                 self.twokstTxt2.setText(f"转黄点: {msgdata2['Maillard']}℃/{msgdata2['Maillard_time']}")
-    #                 self.twokstTxt2.setGeometry((int(self.onekstTxt1.geometry().width() + 17)) * self.width_scale,
-    #                                             3 * self.height_scale, ((int(msgdata2['Maillard_time']) / int(
-    #                         msgdata2['totaltime'])) * 1385 * (int(msgdata2['totaltime']) / int(
-    #                         max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
-    #
-    #                 self.twokstTxt3.setText(f"一爆: {msgdata2['FCs_BT']}℃/{msgdata2['FCs_time']}")
-    #                 self.twokstTxt3.setGeometry((
-    #                                                 int(self.onekstTxt1.geometry().width() + 18 + self.onekstTxt2.geometry().width())) * self.width_scale,
-    #                                             3 * self.height_scale, ((int(msgdata2['FCs_time']) / int(
-    #                         msgdata2['totaltime'])) * 1385 * (int(msgdata2['totaltime']) / int(
-    #                         max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
-    #
-    #                 self.threekstTxt1.setText(
-    #                 f"入豆温度: {msgdata3['CHARGE_BT']}℃   回温点: {msgdata3['TP_BT']}℃/{msgdata3['TP_time']}")
-    #                 self.threekstTxt1.setGeometry(16 * self.width_scale, 3 * self.height_scale, (((int(
-    #                 msgdata3['totaltime']) - int(msgdata3['Maillard_time']) - int(msgdata3['FCs_time'])) / int(
-    #                 msgdata3['totaltime'])) * 1385 * (int(msgdata3['totaltime']) / int(
-    #                 max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
-    #
-    #                 self.threekstTxt2.setText(f"转黄点: {msgdata3['Maillard']}℃/{msgdata3['Maillard_time']}")
-    #                 self.threekstTxt2.setGeometry((int(self.onekstTxt1.geometry().width() + 17)) * self.width_scale,
-    #                                           3 * self.height_scale, ((int(msgdata3['Maillard_time']) / int(
-    #                     msgdata3['totaltime'])) * 1385 * (int(msgdata3['totaltime']) / int(
-    #                     max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
-    #
-    #                 self.threekstTxt3.setText(f"一爆: {msgdata3['FCs_BT']}℃/{msgdata3['FCs_time']}")
-    #                 self.threekstTxt3.setGeometry((
-    #                                               int(self.onekstTxt1.geometry().width() + 18 + self.onekstTxt2.geometry().width())) * self.width_scale,
-    #                                           3 * self.height_scale, ((int(msgdata3['FCs_time']) / int(
-    #                     msgdata3['totaltime'])) * 1385 * (int(msgdata3['totaltime']) / int(
-    #                     max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
-    #             elif(len(data) == 4):
-    #                 msgdata2 = data[1].get('jsonMessage')
-    #                 msgdata3 = data[2].get('jsonMessage')
-    #                 msgdata4 = data[3].get('jsonMessage')
-    #                 self.twokstTxt1.setText(
-    #                     f"入豆温度: {msgdata2['CHARGE_BT']}℃   回温点: {msgdata2['TP_BT']}℃/{msgdata2['TP_time']}")
-    #                 self.twokstTxt1.setGeometry(16 * self.width_scale, 3 * self.height_scale, (((int(
-    #                     msgdata2['totaltime']) - int(msgdata2['Maillard_time']) - int(msgdata2['FCs_time'])) / int(
-    #                     msgdata2['totaltime'])) * 1385 * (int(msgdata2['totaltime']) / int(
-    #                     max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
-    #
-    #                 self.twokstTxt2.setText(f"转黄点: {msgdata2['Maillard']}℃/{msgdata2['Maillard_time']}")
-    #                 self.twokstTxt2.setGeometry((int(self.onekstTxt1.geometry().width() + 17)) * self.width_scale,
-    #                                             3 * self.height_scale, ((int(msgdata2['Maillard_time']) / int(
-    #                         msgdata2['totaltime'])) * 1385 * (int(msgdata2['totaltime']) / int(
-    #                         max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
-    #
-    #                 self.twokstTxt3.setText(f"一爆: {msgdata2['FCs_BT']}℃/{msgdata2['FCs_time']}")
-    #                 self.twokstTxt3.setGeometry((
-    #                                                 int(self.onekstTxt1.geometry().width() + 18 + self.onekstTxt2.geometry().width())) * self.width_scale,
-    #                                             3 * self.height_scale, ((int(msgdata2['FCs_time']) / int(
-    #                         msgdata2['totaltime'])) * 1385 * (int(msgdata2['totaltime']) / int(
-    #                         max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
-    #
-    #                 self.threekstTxt1.setText(
-    #                     f"入豆温度: {msgdata3['CHARGE_BT']}℃   回温点: {msgdata3['TP_BT']}℃/{msgdata3['TP_time']}")
-    #                 self.threekstTxt1.setGeometry(16 * self.width_scale, 3 * self.height_scale, (((int(
-    #                     msgdata3['totaltime']) - int(msgdata3['Maillard_time']) - int(msgdata3['FCs_time'])) / int(
-    #                     msgdata3['totaltime'])) * 1385 * (int(msgdata3['totaltime']) / int(
-    #                     max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
-    #
-    #                 self.threekstTxt2.setText(f"转黄点: {msgdata3['Maillard']}℃/{msgdata3['Maillard_time']}")
-    #                 self.threekstTxt2.setGeometry((int(self.onekstTxt1.geometry().width() + 17)) * self.width_scale,
-    #                                               3 * self.height_scale, ((int(msgdata3['Maillard_time']) / int(
-    #                         msgdata3['totaltime'])) * 1385 * (int(msgdata3['totaltime']) / int(
-    #                         max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
-    #
-    #                 self.threekstTxt3.setText(f"一爆: {msgdata3['FCs_BT']}℃/{msgdata3['FCs_time']}")
-    #                 self.threekstTxt3.setGeometry((
-    #                                                   int(self.onekstTxt1.geometry().width() + 18 + self.onekstTxt2.geometry().width())) * self.width_scale,
-    #                                               3 * self.height_scale, ((int(msgdata3['FCs_time']) / int(
-    #                         msgdata3['totaltime'])) * 1385 * (int(msgdata3['totaltime']) / int(
-    #                         max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
-    #
-    #                 self.fourkstTxt1.setText(
-    #                     f"入豆温度: {msgdata4['CHARGE_BT']}℃   回温点: {msgdata4['TP_BT']}℃/{msgdata4['TP_time']}")
-    #                 self.fourkstTxt1.setGeometry(16 * self.width_scale, 3 * self.height_scale, (((int(
-    #                     msgdata4['totaltime']) - int(msgdata4['Maillard_time']) - int(msgdata4['FCs_time'])) / int(
-    #                     msgdata4['totaltime'])) * 1385 * (int(msgdata4['totaltime']) / int(
-    #                     max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
-    #
-    #                 self.fourkstTxt2.setText(f"转黄点: {msgdata4['Maillard']}℃/{msgdata4['Maillard_time']}")
-    #                 self.fourkstTxt2.setGeometry((int(self.onekstTxt1.geometry().width() + 17)) * self.width_scale,
-    #                                              3 * self.height_scale, ((int(msgdata4['Maillard_time']) / int(
-    #                         msgdata4['totaltime'])) * 1385 * (int(msgdata4['totaltime']) / int(
-    #                         max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
-    #
-    #                 self.fourkstTxt3.setText(f"一爆: {msgdata4['FCs_BT']}℃/{msgdata4['FCs_time']}")
-    #                 self.fourkstTxt3.setGeometry((
-    #                                                  int(self.onekstTxt1.geometry().width() + 18 + self.onekstTxt2.geometry().width())) * self.width_scale,
-    #                                              3 * self.height_scale, ((int(msgdata4['FCs_time']) / int(
-    #                         msgdata4['totaltime'])) * 1385 * (int(msgdata4['totaltime']) / int(
-    #                         max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
-    #         else:
-    #             print('连接失败')
-    #
-    # def toggle_analyse_dw(self):
-    #
-    #     order_ids_str = ','.join(self.orderID)
-    #     url = "http://inner4.mjytech.com:22104/admin/device/lookFormulaCurve"
-    #     params = {'bakingBatchList': order_ids_str}
-    #     response = requests.get(url, params)
-    #     if response.status_code == 200:
-    #         data = response.json()
-    #         textCode = data['code']
-    #         if textCode == 0 or textCode == 200:
-    #             self.historyAnalyse.setVisible(True)
-    #             self.scroll_area.setVisible(True)
-    #             self.scroll_area.setWidget(self.historyAnalyse)
-    #             dataJson = response.json()
-    #             data = dataJson['data']
-    #
-    #             # 获取不同的 timex 数组
-    #             try:
-    #                 timex1 = data[0]['jsonMessage']['alogJson']['timex']
-    #             except (IndexError, KeyError, TypeError):
-    #                 timex1 = []
-    #
-    #             try:
-    #                 timex2 = data[1]['jsonMessage']['alogJson']['timex']
-    #             except (IndexError, KeyError, TypeError):
-    #                 timex2 = []
-    #
-    #             try:
-    #                 timex3 = data[2]['jsonMessage']['alogJson']['timex']
-    #             except (IndexError, KeyError, TypeError):
-    #                 timex3 = []
-    #
-    #             try:
-    #                 timex4 = data[3]['jsonMessage']['alogJson']['timex']
-    #             except (IndexError, KeyError, TypeError):
-    #                 timex4 = []
-    #
-    #             # 找到最长的 timex
-    #             timex_lengths = [len(timex1), len(timex2), len(timex3), len(timex4)]
-    #             max_len_index = timex_lengths.index(max(timex_lengths))  # 获取最长 timex 的索引
-    #
-    #             # 使用最长的 timex
-    #             timex = [timex1, timex2, timex3, timex4][max_len_index]
-    #
-    #             # 获取四个温度数据
-    #             try:
-    #                 temp1 = data[0]['jsonMessage']['alogJson']['temp1']
-    #             except (IndexError, KeyError, TypeError):
-    #                 temp1 = []
-    #
-    #             try:
-    #                 temp2 = data[1]['jsonMessage']['alogJson']['temp1']
-    #             except (IndexError, KeyError, TypeError):
-    #                 temp2 = []
-    #
-    #             try:
-    #                 temp3 = data[2]['jsonMessage']['alogJson']['temp1']
-    #             except (IndexError, KeyError, TypeError):
-    #                 temp3 = []
-    #
-    #             try:
-    #                 temp4 = data[3]['jsonMessage']['alogJson']['temp1']
-    #             except (IndexError, KeyError, TypeError):
-    #                 temp4 = []
-    #
-    #             # 更新图表
-    #             self.matplotlib_widget.update_plot(timex, temp1, temp2, temp3, temp4)
-    #
-    #             self.analyse_dw.setStyleSheet('border-radius: 16px;background-color: #FBF8F5;border: 2px solid #D18F65')
-    #             self.analyse_fw.setStyleSheet('border-radius: 16px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
-    #             self.analyse_ROR.setStyleSheet('border-radius: 16px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
-    #             self.analyse_Agtron.setStyleSheet('border-radius: 16px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
-    #             self.analyse_pqsd.setStyleSheet('border-radius: 16px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
-    #             self.analyse_pqwd.setStyleSheet('border-radius: 16px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
-    #
-    # def toggle_analyse_fw(self):
-    #     order_ids_str = ','.join(self.orderID)
-    #     url = "http://inner4.mjytech.com:22104/admin/device/lookFormulaCurve"
-    #     params = {'bakingBatchList': order_ids_str}
-    #     response = requests.get(url, params)
-    #     if response.status_code == 200:
-    #         data = response.json()
-    #         textCode = data['code']
-    #         if textCode == 0 or textCode == 200:
-    #             self.historyAnalyse.setVisible(True)
-    #             self.scroll_area.setVisible(True)
-    #             self.scroll_area.setWidget(self.historyAnalyse)
-    #             dataJson = response.json()
-    #             data = dataJson['data']
-    #
-    #             # 获取不同的 timex 数组
-    #             try:
-    #                 timex1 = data[0]['jsonMessage']['alogJson']['timex']
-    #             except (IndexError, KeyError, TypeError):
-    #                 timex1 = []
-    #
-    #             try:
-    #                 timex2 = data[1]['jsonMessage']['alogJson']['timex']
-    #             except (IndexError, KeyError, TypeError):
-    #                 timex2 = []
-    #
-    #             try:
-    #                 timex3 = data[2]['jsonMessage']['alogJson']['timex']
-    #             except (IndexError, KeyError, TypeError):
-    #                 timex3 = []
-    #
-    #             try:
-    #                 timex4 = data[3]['jsonMessage']['alogJson']['timex']
-    #             except (IndexError, KeyError, TypeError):
-    #                 timex4 = []
-    #
-    #             # 找到最长的 timex
-    #             timex_lengths = [len(timex1), len(timex2), len(timex3), len(timex4)]
-    #             max_len_index = timex_lengths.index(max(timex_lengths))  # 获取最长 timex 的索引
-    #
-    #             # 使用最长的 timex
-    #             timex = [timex1, timex2, timex3, timex4][max_len_index]
-    #
-    #             # 获取四个温度数据
-    #             try:
-    #                 temp1 = data[0]['jsonMessage']['alogJson']['temp2']
-    #             except (IndexError, KeyError, TypeError):
-    #                 temp1 = []
-    #
-    #             try:
-    #                 temp2 = data[1]['jsonMessage']['alogJson']['temp2']
-    #             except (IndexError, KeyError, TypeError):
-    #                 temp2 = []
-    #
-    #             try:
-    #                 temp3 = data[2]['jsonMessage']['alogJson']['temp2']
-    #             except (IndexError, KeyError, TypeError):
-    #                 temp3 = []
-    #
-    #             try:
-    #                 temp4 = data[3]['jsonMessage']['alogJson']['temp2']
-    #             except (IndexError, KeyError, TypeError):
-    #                 temp4 = []
-    #
-    #             # 更新图表
-    #             self.matplotlib_widget.update_plot(timex, temp1, temp2, temp3, temp4)
-    #
-    #             self.analyse_dw.setStyleSheet('border-radius: 16px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
-    #             self.analyse_fw.setStyleSheet('border-radius: 16px;background-color: #FBF8F5;border: 2px solid #AC3230')
-    #             self.analyse_ROR.setStyleSheet(
-    #                 'border-radius: 16px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
-    #             self.analyse_Agtron.setStyleSheet(
-    #                 'border-radius: 16px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
-    #             self.analyse_pqsd.setStyleSheet(
-    #                 'border-radius: 16px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
-    #             self.analyse_pqwd.setStyleSheet(
-    #                 'border-radius: 16px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
+                elif historyOrder_count == 2:
+                    self.history_sheibei1.setText(str(dataJson2[0].get('bakingBatch')))
+                    self.historyOrder1_Title.setText(str(dataJson2[0].get('bakingBatch')))
+                    self.historyOrder1_Time.setText(str(int(dataJson2[0].get('taskTime')) // 60) + ':' + str(
+                        int(dataJson2[0].get('taskTime')) % 60))
+                    self.historyOrder_hbrq1_Data.setText(str(dataJson2[0].get('createTime')))
+                    self.historyOrder_hbssl1_Data.setText(str(dataJson2[0].get('dehydrationRate')))
+                    self.historyOrder_hbpf1_Data.setText(str(dataJson2[0].get('bakingScore')))
+                    self.historyOrder_Agtron1_Data.setText(str(dataJson2[0].get('agtronValue')))
+                    if dataJson2[0]['cuppingDetail'] not in dataJson2:
+                        self.historyOrder_bcpf1_Data.setText("-")
+                        self.historyOrder_bcrq1_Data.setText("-")
+                    else:
+                        self.historyOrder_bcpf1_Data.setText(str(dataJson2[0]['cuppingDetail']['score']))
+                        self.historyOrder_bcrq1_Data.setText(str(dataJson2[0]['cuppingDetail']['createTime']))
+
+                    self.history_sheibei2.setText(str(dataJson2[1].get('bakingBatch')))
+                    self.historyOrder2_Title.setText(str(dataJson2[1].get('bakingBatch')))
+                    self.historyOrder2_Time.setText(str(int(dataJson2[1].get('taskTime')) // 60) + ':' + str(
+                        int(dataJson2[1].get('taskTime')) % 60))
+                    self.historyOrder_hbrq2_Data.setText(str(dataJson2[1].get('createTime')))
+                    self.historyOrder_hbssl2_Data.setText(str(dataJson2[1].get('dehydrationRate')))
+                    self.historyOrder_hbpf2_Data.setText(str(dataJson2[1].get('bakingScore')))
+                    self.historyOrder_Agtron2_Data.setText(str(dataJson2[1].get('agtronValue')))
+                    if dataJson2[1]['cuppingDetail'] not in dataJson2:
+                        self.historyOrder_bcpf2_Data.setText("-")
+                        self.historyOrder_bcrq2_Data.setText("-")
+                    else:
+                        self.historyOrder_bcpf2_Data.setText(str(dataJson2[1]['cuppingDetail']['score']))
+                        self.historyOrder_bcrq2_Data.setText(str(dataJson2[1]['cuppingDetail']['createTime']))
+                elif historyOrder_count == 3:
+                    self.history_sheibei1.setText(str(dataJson2[0].get('bakingBatch')))
+                    self.historyOrder1_Title.setText(str(dataJson2[0].get('bakingBatch')))
+                    self.historyOrder1_Time.setText(str(int(dataJson2[0].get('taskTime')) // 60) + ':' + str(
+                        int(dataJson2[0].get('taskTime')) % 60))
+                    self.historyOrder_hbrq1_Data.setText(str(dataJson2[0].get('createTime')))
+                    self.historyOrder_hbssl1_Data.setText(str(dataJson2[0].get('dehydrationRate')))
+                    self.historyOrder_hbpf1_Data.setText(str(dataJson2[0].get('bakingScore')))
+                    self.historyOrder_Agtron1_Data.setText(str(dataJson2[0].get('agtronValue')))
+                    if dataJson2[0]['cuppingDetail'] not in dataJson2:
+                        self.historyOrder_bcpf1_Data.setText("-")
+                        self.historyOrder_bcrq1_Data.setText("-")
+                    else:
+                        self.historyOrder_bcpf1_Data.setText(str(dataJson2[0]['cuppingDetail']['score']))
+                        self.historyOrder_bcrq1_Data.setText(str(dataJson2[0]['cuppingDetail']['createTime']))
+
+                    self.history_sheibei2.setText(str(dataJson2[1].get('bakingBatch')))
+                    self.historyOrder2_Title.setText(str(dataJson2[1].get('bakingBatch')))
+                    self.historyOrder2_Time.setText(str(int(dataJson2[1].get('taskTime')) // 60) + ':' + str(
+                        int(dataJson2[1].get('taskTime')) % 60))
+                    self.historyOrder_hbrq2_Data.setText(str(dataJson2[1].get('createTime')))
+                    self.historyOrder_hbssl2_Data.setText(str(dataJson2[1].get('dehydrationRate')))
+                    self.historyOrder_hbpf2_Data.setText(str(dataJson2[1].get('bakingScore')))
+                    self.historyOrder_Agtron2_Data.setText(str(dataJson2[1].get('agtronValue')))
+                    if dataJson2[1]['cuppingDetail'] not in dataJson2:
+                        self.historyOrder_bcpf2_Data.setText("-")
+                        self.historyOrder_bcrq2_Data.setText("-")
+                    else:
+                        self.historyOrder_bcpf2_Data.setText(str(dataJson2[1]['cuppingDetail']['score']))
+                        self.historyOrder_bcrq2_Data.setText(str(dataJson2[1]['cuppingDetail']['createTime']))
+
+                    self.history_sheibei3.setText(str(dataJson2[2].get('bakingBatch')))
+                    self.historyOrder3_Title.setText(str(dataJson2[2].get('bakingBatch')))
+                    self.historyOrder3_Time.setText(str(int(dataJson2[2].get('taskTime')) // 60) + ':' + str(
+                        int(dataJson2[2].get('taskTime')) % 60))
+                    self.historyOrder_hbrq3_Data.setText(str(dataJson2[2].get('createTime')))
+                    self.historyOrder_hbssl3_Data.setText(str(dataJson2[2].get('dehydrationRate')))
+                    self.historyOrder_hbpf3_Data.setText(str(dataJson2[2].get('bakingScore')))
+                    self.historyOrder_Agtron3_Data.setText(str(dataJson2[2].get('agtronValue')))
+                    if dataJson2[2]['cuppingDetail'] not in dataJson2:
+                        self.historyOrder_bcpf3_Data.setText("-")
+                        self.historyOrder_bcrq3_Data.setText("-")
+                    else:
+                        self.historyOrder_bcpf3_Data.setText(str(dataJson2[2]['cuppingDetail']['score']))
+                        self.historyOrder_bcrq3_Data.setText(str(dataJson2[2]['cuppingDetail']['createTime']))
+                elif historyOrder_count == 4:
+                    self.history_sheibei1.setText(str(dataJson2[0].get('bakingBatch')))
+                    self.historyOrder1_Title.setText(str(dataJson2[0].get('bakingBatch')))
+                    self.historyOrder1_Time.setText(str(int(dataJson2[0].get('taskTime')) // 60) + ':' + str(
+                        int(dataJson2[0].get('taskTime')) % 60))
+                    self.historyOrder_hbrq1_Data.setText(str(dataJson2[0].get('createTime')))
+                    self.historyOrder_hbssl1_Data.setText(str(dataJson2[0].get('dehydrationRate')))
+                    self.historyOrder_hbpf1_Data.setText(str(dataJson2[0].get('bakingScore')))
+                    self.historyOrder_Agtron1_Data.setText(str(dataJson2[0].get('agtronValue')))
+                    if dataJson2[0]['cuppingDetail'] not in dataJson2:
+                        self.historyOrder_bcpf1_Data.setText("-")
+                        self.historyOrder_bcrq1_Data.setText("-")
+                    else:
+                        self.historyOrder_bcpf1_Data.setText(str(dataJson2[1]['cuppingDetail']['score']))
+                        self.historyOrder_bcrq1_Data.setText(str(dataJson2[1]['cuppingDetail']['createTime']))
+
+                    self.history_sheibei2.setText(str(dataJson2[1].get('bakingBatch')))
+                    self.historyOrder2_Title.setText(str(dataJson2[1].get('bakingBatch')))
+                    self.historyOrder2_Time.setText(str(int(dataJson2[1].get('taskTime')) // 60) + ':' + str(
+                        int(dataJson2[1].get('taskTime')) % 60))
+                    self.historyOrder_hbrq2_Data.setText(str(dataJson2[1].get('createTime')))
+                    self.historyOrder_hbssl2_Data.setText(str(dataJson2[1].get('dehydrationRate')))
+                    self.historyOrder_hbpf2_Data.setText(str(dataJson2[1].get('bakingScore')))
+                    self.historyOrder_Agtron2_Data.setText(str(dataJson2[1].get('agtronValue')))
+                    if dataJson2[1]['cuppingDetail'] not in dataJson2:
+                        self.historyOrder_bcpf2_Data.setText("-")
+                        self.historyOrder_bcrq2_Data.setText("-")
+                    else:
+                        self.historyOrder_bcpf2_Data.setText(str(dataJson2[1]['cuppingDetail']['score']))
+                        self.historyOrder_bcrq2_Data.setText(str(dataJson2[1]['cuppingDetail']['createTime']))
+
+                    self.history_sheibei3.setText(str(dataJson2[2].get('bakingBatch')))
+                    self.historyOrder3_Title.setText(str(dataJson2[2].get('bakingBatch')))
+                    self.historyOrder3_Time.setText(str(int(dataJson2[2].get('taskTime')) // 60) + ':' + str(
+                        int(dataJson2[2].get('taskTime')) % 60))
+                    self.historyOrder_hbrq3_Data.setText(str(dataJson2[2].get('createTime')))
+                    self.historyOrder_hbssl3_Data.setText(str(dataJson2[2].get('dehydrationRate')))
+                    self.historyOrder_hbpf3_Data.setText(str(dataJson2[2].get('bakingScore')))
+                    self.historyOrder_Agtron3_Data.setText(str(dataJson2[2].get('agtronValue')))
+                    if dataJson2[2]['cuppingDetail'] not in dataJson2:
+                        self.historyOrder_bcpf3_Data.setText("-")
+                        self.historyOrder_bcrq3_Data.setText("-")
+                    else:
+                        self.historyOrder_bcpf3_Data.setText(str(dataJson2[2]['cuppingDetail']['score']))
+                        self.historyOrder_bcrq3_Data.setText(str(dataJson2[2]['cuppingDetail']['createTime']))
+
+                    self.history_sheibei4.setText(str(dataJson2[3].get('bakingBatch')))
+                    self.historyOrder4_Title.setText(str(dataJson2[3].get('bakingBatch')))
+                    self.historyOrder4_Time.setText(str(int(dataJson2[3].get('taskTime')) // 60) + ':' + str(
+                        int(dataJson2[3].get('taskTime')) % 60))
+                    self.historyOrder_hbrq4_Data.setText(str(dataJson2[3].get('createTime')))
+                    self.historyOrder_hbssl4_Data.setText(str(dataJson2[3].get('dehydrationRate')))
+                    self.historyOrder_hbpf4_Data.setText(str(dataJson2[3].get('bakingScore')))
+                    self.historyOrder_Agtron4_Data.setText(str(dataJson2[3].get('agtronValue')))
+                    if dataJson2[3]['cuppingDetail'] not in dataJson2:
+                        self.historyOrder_bcpf4_Data.setText("-")
+                        self.historyOrder_bcrq4_Data.setText("-")
+                    else:
+                        self.historyOrder_bcpf4_Data.setText(str(dataJson2[3]['cuppingDetail']['score']))
+                        self.historyOrder_bcrq4_Data.setText(str(dataJson2[3]['cuppingDetail']['createTime']))
+
+                order_count = len(data)
+                totaltimeList = []
+                for i in range(order_count):
+                    totaltimeList.append(data[i]['jsonMessage']['totaltime'])
+
+                max_time_in_seconds = max(totaltimeList)
+                max_time_in_minutes = int(max_time_in_seconds) // 60
+
+                # 创建时间数量小部件
+                timeNumWidget = QWidget(self.historyAnalyse)
+                timeNumWidget.setStyleSheet("background-color: transparent; border:none; color: #222222;")
+
+                # 创建横向布局并添加到小部件
+                timeNumLayout = QHBoxLayout(timeNumWidget)
+
+                # 初始化并设置时间标签
+                # self.analyseTimeNum = QLabel(f"{max_time_in_minutes:.2f}", self.historyAnalyse)
+                # self.analyseTimeNum.setStyleSheet("color: white;")  # 设置字体颜色为白色
+                for minute in range(max_time_in_minutes):  # +1 包含最大分钟数
+                    analyseTimeNum = QLabel(f"{minute}", self.historyAnalyse)
+                    analyseTimeNum.setFixedHeight(30)
+                    analyseTimeNum.setStyleSheet("background-color: transparent; border:none;color: #292827;")
+                    analyseTimeNumfont = QFont(self.font_family4, 18 * self.width_scale)
+                    analyseTimeNum.setFont(analyseTimeNumfont)
+
+                    timeNumLayout.addWidget(analyseTimeNum)
+
+                # 将小部件添加到布局中（确保设置大小）
+                timeNumWidget.setFixedHeight(34 * self.height_scale)  # 设置高度
+                timeNumWidget.setGeometry(148 * self.width_scale, 1290 * self.height_scale, 1384 * self.width_scale,
+                                          34 * self.height_scale)  # 如果必要，可以设置几何形状
+                timeNumWidget.show()  # 确保小部件可见
+
+                # 获取不同的 timex 数组
+                try:
+                    timex1 = data[0]['jsonMessage']['alogJson']['timex']
+                except (IndexError, KeyError, TypeError):
+                    timex1 = []
+
+                try:
+                    timex2 = data[1]['jsonMessage']['alogJson']['timex']
+                except (IndexError, KeyError, TypeError):
+                    timex2 = []
+
+                try:
+                    timex3 = data[2]['jsonMessage']['alogJson']['timex']
+                except (IndexError, KeyError, TypeError):
+                    timex3 = []
+
+                try:
+                    timex4 = data[3]['jsonMessage']['alogJson']['timex']
+                except (IndexError, KeyError, TypeError):
+                    timex4 = []
+
+                # 找到最长的 timex
+                timex_lengths = [len(timex1), len(timex2), len(timex3), len(timex4)]
+                max_len_index = timex_lengths.index(max(timex_lengths))  # 获取最长 timex 的索引
+
+                # 使用最长的 timex
+                timex = [timex1, timex2, timex3, timex4][max_len_index]
+
+                # 获取四个温度数据
+                try:
+                    temp1 = data[0]['jsonMessage']['alogJson']['temp1']
+                except (IndexError, KeyError, TypeError):
+                    temp1 = []
+
+                try:
+                    temp2 = data[1]['jsonMessage']['alogJson']['temp1']
+                except (IndexError, KeyError, TypeError):
+                    temp2 = []
+
+                try:
+                    temp3 = data[2]['jsonMessage']['alogJson']['temp1']
+                except (IndexError, KeyError, TypeError):
+                    temp3 = []
+
+                try:
+                    temp4 = data[3]['jsonMessage']['alogJson']['temp1']
+                except (IndexError, KeyError, TypeError):
+                    temp4 = []
+
+                # 更新图表
+                self.matplotlib_widget.update_plot(timex, temp1, temp2, temp3, temp4)
+
+                msgdata = data[0].get('jsonMessage')
+                totaltimeInt = int(msgdata['totaltime'])
+                if totaltimeInt == 0:
+                    totaltimeInt = 1  # 避免除零错误
+                self.onekstTxt1.setText(
+                    f"入豆温度: {msgdata['CHARGE_BT']}℃   回温点: {msgdata['TP_BT']}℃/{msgdata['TP_time']}")
+                self.onekstTxt1.setGeometry(16 * self.width_scale, 3 * self.height_scale, (((int(
+                    msgdata['totaltime']) - int(msgdata['Maillard_time']) - int(msgdata['FCs_time'])) / int(
+                    msgdata['totaltime'])) * 1385 * (int(msgdata['totaltime']) / int(
+                    max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
+
+                self.onekstTxt2.setText(f"转黄点: {msgdata['Maillard']}℃/{msgdata['Maillard_time']}")
+                self.onekstTxt2.setGeometry((int(self.onekstTxt1.geometry().width() + 17)) * self.width_scale,
+                                            3 * self.height_scale, ((int(msgdata['Maillard_time']) / int(
+                        msgdata['totaltime'])) * 1385 * (int(msgdata['totaltime']) / int(
+                        max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
+
+                self.onekstTxt3.setText(f"一爆: {msgdata['FCs_BT']}℃/{msgdata['FCs_time']}")
+                self.onekstTxt3.setGeometry((
+                                                int(self.onekstTxt1.geometry().width() + 18 + self.onekstTxt2.geometry().width())) * self.width_scale,
+                                            3 * self.height_scale, ((int(msgdata['FCs_time']) / int(
+                        msgdata['totaltime'])) * 1385 * (int(msgdata['totaltime']) / int(
+                        max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
+                if(len(data) == 2):
+                    msgdata2 = data[1].get('jsonMessage')
+                    self.twokstTxt1.setText(
+                        f"入豆温度: {msgdata2['CHARGE_BT']}℃   回温点: {msgdata2['TP_BT']}℃/{msgdata2['TP_time']}")
+                    self.twokstTxt1.setGeometry(16 * self.width_scale, 3 * self.height_scale, (((int(
+                        msgdata2['totaltime']) - int(msgdata2['Maillard_time']) - int(msgdata2['FCs_time'])) / int(
+                        msgdata2['totaltime'])) * 1385 * (int(msgdata2['totaltime']) / int(
+                        max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
+
+                    self.twokstTxt2.setText(f"转黄点: {msgdata2['Maillard']}℃/{msgdata2['Maillard_time']}")
+                    self.twokstTxt2.setGeometry((int(self.onekstTxt1.geometry().width() + 17)) * self.width_scale,
+                                                3 * self.height_scale, ((int(msgdata2['Maillard_time']) / int(
+                            msgdata2['totaltime'])) * 1385 * (int(msgdata2['totaltime']) / int(
+                            max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
+
+                    self.twokstTxt3.setText(f"一爆: {msgdata2['FCs_BT']}℃/{msgdata2['FCs_time']}")
+                    self.twokstTxt3.setGeometry((
+                                                    int(self.onekstTxt1.geometry().width() + 18 + self.onekstTxt2.geometry().width())) * self.width_scale,
+                                                3 * self.height_scale, ((int(msgdata2['FCs_time']) / int(
+                            msgdata2['totaltime'])) * 1385 * (int(msgdata2['totaltime']) / int(
+                            max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
+                elif(len(data) == 3):
+                    msgdata2 = data[1].get('jsonMessage')
+                    msgdata3 = data[2].get('jsonMessage')
+                    self.twokstTxt1.setText(
+                        f"入豆温度: {msgdata2['CHARGE_BT']}℃   回温点: {msgdata2['TP_BT']}℃/{msgdata2['TP_time']}")
+                    self.twokstTxt1.setGeometry(16 * self.width_scale, 3 * self.height_scale, (((int(
+                        msgdata2['totaltime']) - int(msgdata2['Maillard_time']) - int(msgdata2['FCs_time'])) / int(
+                        msgdata2['totaltime'])) * 1385 * (int(msgdata2['totaltime']) / int(
+                        max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
+
+                    self.twokstTxt2.setText(f"转黄点: {msgdata2['Maillard']}℃/{msgdata2['Maillard_time']}")
+                    self.twokstTxt2.setGeometry((int(self.onekstTxt1.geometry().width() + 17)) * self.width_scale,
+                                                3 * self.height_scale, ((int(msgdata2['Maillard_time']) / int(
+                            msgdata2['totaltime'])) * 1385 * (int(msgdata2['totaltime']) / int(
+                            max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
+
+                    self.twokstTxt3.setText(f"一爆: {msgdata2['FCs_BT']}℃/{msgdata2['FCs_time']}")
+                    self.twokstTxt3.setGeometry((
+                                                    int(self.onekstTxt1.geometry().width() + 18 + self.onekstTxt2.geometry().width())) * self.width_scale,
+                                                3 * self.height_scale, ((int(msgdata2['FCs_time']) / int(
+                            msgdata2['totaltime'])) * 1385 * (int(msgdata2['totaltime']) / int(
+                            max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
+
+                    self.threekstTxt1.setText(
+                    f"入豆温度: {msgdata3['CHARGE_BT']}℃   回温点: {msgdata3['TP_BT']}℃/{msgdata3['TP_time']}")
+                    self.threekstTxt1.setGeometry(16 * self.width_scale, 3 * self.height_scale, (((int(
+                    msgdata3['totaltime']) - int(msgdata3['Maillard_time']) - int(msgdata3['FCs_time'])) / int(
+                    msgdata3['totaltime'])) * 1385 * (int(msgdata3['totaltime']) / int(
+                    max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
+
+                    self.threekstTxt2.setText(f"转黄点: {msgdata3['Maillard']}℃/{msgdata3['Maillard_time']}")
+                    self.threekstTxt2.setGeometry((int(self.onekstTxt1.geometry().width() + 17)) * self.width_scale,
+                                              3 * self.height_scale, ((int(msgdata3['Maillard_time']) / int(
+                        msgdata3['totaltime'])) * 1385 * (int(msgdata3['totaltime']) / int(
+                        max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
+
+                    self.threekstTxt3.setText(f"一爆: {msgdata3['FCs_BT']}℃/{msgdata3['FCs_time']}")
+                    self.threekstTxt3.setGeometry((
+                                                  int(self.onekstTxt1.geometry().width() + 18 + self.onekstTxt2.geometry().width())) * self.width_scale,
+                                              3 * self.height_scale, ((int(msgdata3['FCs_time']) / int(
+                        msgdata3['totaltime'])) * 1385 * (int(msgdata3['totaltime']) / int(
+                        max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
+                elif(len(data) == 4):
+                    msgdata2 = data[1].get('jsonMessage')
+                    msgdata3 = data[2].get('jsonMessage')
+                    msgdata4 = data[3].get('jsonMessage')
+                    self.twokstTxt1.setText(
+                        f"入豆温度: {msgdata2['CHARGE_BT']}℃   回温点: {msgdata2['TP_BT']}℃/{msgdata2['TP_time']}")
+                    self.twokstTxt1.setGeometry(16 * self.width_scale, 3 * self.height_scale, (((int(
+                        msgdata2['totaltime']) - int(msgdata2['Maillard_time']) - int(msgdata2['FCs_time'])) / int(
+                        msgdata2['totaltime'])) * 1385 * (int(msgdata2['totaltime']) / int(
+                        max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
+
+                    self.twokstTxt2.setText(f"转黄点: {msgdata2['Maillard']}℃/{msgdata2['Maillard_time']}")
+                    self.twokstTxt2.setGeometry((int(self.onekstTxt1.geometry().width() + 17)) * self.width_scale,
+                                                3 * self.height_scale, ((int(msgdata2['Maillard_time']) / int(
+                            msgdata2['totaltime'])) * 1385 * (int(msgdata2['totaltime']) / int(
+                            max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
+
+                    self.twokstTxt3.setText(f"一爆: {msgdata2['FCs_BT']}℃/{msgdata2['FCs_time']}")
+                    self.twokstTxt3.setGeometry((
+                                                    int(self.onekstTxt1.geometry().width() + 18 + self.onekstTxt2.geometry().width())) * self.width_scale,
+                                                3 * self.height_scale, ((int(msgdata2['FCs_time']) / int(
+                            msgdata2['totaltime'])) * 1385 * (int(msgdata2['totaltime']) / int(
+                            max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
+
+                    self.threekstTxt1.setText(
+                        f"入豆温度: {msgdata3['CHARGE_BT']}℃   回温点: {msgdata3['TP_BT']}℃/{msgdata3['TP_time']}")
+                    self.threekstTxt1.setGeometry(16 * self.width_scale, 3 * self.height_scale, (((int(
+                        msgdata3['totaltime']) - int(msgdata3['Maillard_time']) - int(msgdata3['FCs_time'])) / int(
+                        msgdata3['totaltime'])) * 1385 * (int(msgdata3['totaltime']) / int(
+                        max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
+
+                    self.threekstTxt2.setText(f"转黄点: {msgdata3['Maillard']}℃/{msgdata3['Maillard_time']}")
+                    self.threekstTxt2.setGeometry((int(self.onekstTxt1.geometry().width() + 17)) * self.width_scale,
+                                                  3 * self.height_scale, ((int(msgdata3['Maillard_time']) / int(
+                            msgdata3['totaltime'])) * 1385 * (int(msgdata3['totaltime']) / int(
+                            max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
+
+                    self.threekstTxt3.setText(f"一爆: {msgdata3['FCs_BT']}℃/{msgdata3['FCs_time']}")
+                    self.threekstTxt3.setGeometry((
+                                                      int(self.onekstTxt1.geometry().width() + 18 + self.onekstTxt2.geometry().width())) * self.width_scale,
+                                                  3 * self.height_scale, ((int(msgdata3['FCs_time']) / int(
+                            msgdata3['totaltime'])) * 1385 * (int(msgdata3['totaltime']) / int(
+                            max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
+
+                    self.fourkstTxt1.setText(
+                        f"入豆温度: {msgdata4['CHARGE_BT']}℃   回温点: {msgdata4['TP_BT']}℃/{msgdata4['TP_time']}")
+                    self.fourkstTxt1.setGeometry(16 * self.width_scale, 3 * self.height_scale, (((int(
+                        msgdata4['totaltime']) - int(msgdata4['Maillard_time']) - int(msgdata4['FCs_time'])) / int(
+                        msgdata4['totaltime'])) * 1385 * (int(msgdata4['totaltime']) / int(
+                        max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
+
+                    self.fourkstTxt2.setText(f"转黄点: {msgdata4['Maillard']}℃/{msgdata4['Maillard_time']}")
+                    self.fourkstTxt2.setGeometry((int(self.onekstTxt1.geometry().width() + 17)) * self.width_scale,
+                                                 3 * self.height_scale, ((int(msgdata4['Maillard_time']) / int(
+                            msgdata4['totaltime'])) * 1385 * (int(msgdata4['totaltime']) / int(
+                            max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
+
+                    self.fourkstTxt3.setText(f"一爆: {msgdata4['FCs_BT']}℃/{msgdata4['FCs_time']}")
+                    self.fourkstTxt3.setGeometry((
+                                                     int(self.onekstTxt1.geometry().width() + 18 + self.onekstTxt2.geometry().width())) * self.width_scale,
+                                                 3 * self.height_scale, ((int(msgdata4['FCs_time']) / int(
+                            msgdata4['totaltime'])) * 1385 * (int(msgdata4['totaltime']) / int(
+                            max_time_in_seconds))) * self.width_scale, 60 * self.height_scale)
+            else:
+                print('连接失败')
+
+    def toggle_analyse_dw(self):
+        """切换豆温曲线的显示状态"""
+        is_visible = self.analyse_dw.styleSheet() == f'border-radius: {16 * self.height_scale}px;background-color: #FBF8F5;border: 2px solid #D18F65'
+
+        data_list = self.orderDetail
+
+        if is_visible:
+            # 隐藏豆温曲线
+            self.analyse_dw.setStyleSheet(
+                f'border-radius: {16 * self.height_scale}px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
+            self.matplotlib_widget.update_plot([], [], [], [], [])  # 清空图表
+        else:
+            # 显示豆温曲线
+            self.analyse_dw.setStyleSheet(
+                f'border-radius: {16 * self.height_scale}px;background-color: #FBF8F5;border: 2px solid #D18F65')
+
+            # 获取不同的 timex 数组
+            timex_list = []
+            temp_list = []
+            for index in range(4):  # 假设我们有 4 个可能的条目（下标 0 到 3）
+                try:
+                    # 获取 timex 数据，如果为空字符串或不存在，使用空列表
+                    timex_data = data_list[index]['jsonMessage']['alogJson'].get('timex', "")
+                    if timex_data == "":  # 判断为空字符串的情况
+                        timex_list.append([])
+                    else:
+                        timex_list.append(timex_data)
+                except (IndexError, KeyError, TypeError):
+                    timex_list.append([])
+
+                try:
+                    # 获取 temp1 数据，如果为空字符串或不存在，使用空列表
+                    temp_data = data_list[index]['jsonMessage']['alogJson'].get('temp1', "")
+                    if temp_data == "":  # 判断为空字符串的情况
+                        temp_list.append([])
+                    else:
+                        temp_list.append(temp_data)
+                except (IndexError, KeyError, TypeError):
+                    temp_list.append([])
+
+            # 找到最长的 timex
+            timex_lengths = [len(timex) for timex in timex_list]
+            max_len_index = timex_lengths.index(max(timex_lengths))  # 获取最长 timex 的索引
+
+            # 使用最长的 timex
+            timex = timex_list[max_len_index]
+
+            # 获取四个温度数据
+            temp1, temp2, temp3, temp4 = temp_list[0], temp_list[1], temp_list[2], temp_list[3]
+
+            # 更新图表
+            self.matplotlib_widget.update_plot(timex, temp1, temp2, temp3, temp4)
+
+    def toggle_analyse_fw(self):
+        """切换风温曲线的显示状态"""
+        is_visible = self.analyse_fw.styleSheet() == f'border-radius: {16 * self.height_scale}px;background-color: #FBF8F5;border: 2px solid #AC3230'
+        data_list = self.orderDetail
+
+        if is_visible:
+            # 隐藏风温曲线
+            self.analyse_fw.setStyleSheet(
+                f'border-radius: {16 * self.height_scale}px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
+            self.matplotlib_widget.update_plot([], [], [], [], [])  # 清空图表
+        else:
+            # 显示风温曲线
+            self.analyse_fw.setStyleSheet(
+                f'border-radius: {16 * self.height_scale}px;background-color: #FBF8F5;border: 2px solid #AC3230')
+
+            # 获取不同的 timex 数组
+            timex_list = []
+            temp_list = []
+            for index in range(4):  # 假设我们有 4 个可能的条目（下标 0 到 3）
+                try:
+                    # 获取 timex 数据，如果为空字符串或不存在，使用空列表
+                    timex_data = data_list[index]['jsonMessage']['alogJson'].get('timex', "")
+                    if timex_data == "":  # 判断为空字符串的情况
+                        timex_list.append([])
+                    else:
+                        timex_list.append(timex_data)
+                except (IndexError, KeyError, TypeError):
+                    timex_list.append([])
+
+                try:
+                    # 获取 temp1 数据，如果为空字符串或不存在，使用空列表
+                    temp_data = data_list[index]['jsonMessage']['alogJson'].get('temp2', "")
+                    if temp_data == "":  # 判断为空字符串的情况
+                        temp_list.append([])
+                    else:
+                        temp_list.append(temp_data)
+                except (IndexError, KeyError, TypeError):
+                    temp_list.append([])
+
+            # 找到最长的 timex
+            timex_lengths = [len(timex) for timex in timex_list]
+            max_len_index = timex_lengths.index(max(timex_lengths))  # 获取最长 timex 的索引
+
+            # 使用最长的 timex
+            timex = timex_list[max_len_index]
+
+            # 获取四个温度数据
+            temp1, temp2, temp3, temp4 = temp_list[0], temp_list[1], temp_list[2], temp_list[3]
+
+            # 更新图表
+            self.matplotlib_widget.update_plot(timex, temp1, temp2, temp3, temp4)
+
+    def toggle_analyse_fw(self):
+        order_ids_str = ','.join(self.orderID)
+        url = "http://inner4.mjytech.com:22104/admin/device/lookFormulaCurve"
+        params = {'bakingBatchList': order_ids_str}
+        response = requests.get(url, params)
+        if response.status_code == 200:
+            data = response.json()
+            textCode = data['code']
+            if textCode == 0 or textCode == 200:
+                self.historyAnalyse.setVisible(True)
+                self.scroll_area.setVisible(True)
+                self.scroll_area.setWidget(self.historyAnalyse)
+                dataJson = response.json()
+                data = dataJson['data']
+
+                # 获取不同的 timex 数组
+                try:
+                    timex1 = data[0]['jsonMessage']['alogJson']['timex']
+                except (IndexError, KeyError, TypeError):
+                    timex1 = []
+
+                try:
+                    timex2 = data[1]['jsonMessage']['alogJson']['timex']
+                except (IndexError, KeyError, TypeError):
+                    timex2 = []
+
+                try:
+                    timex3 = data[2]['jsonMessage']['alogJson']['timex']
+                except (IndexError, KeyError, TypeError):
+                    timex3 = []
+
+                try:
+                    timex4 = data[3]['jsonMessage']['alogJson']['timex']
+                except (IndexError, KeyError, TypeError):
+                    timex4 = []
+
+                # 找到最长的 timex
+                timex_lengths = [len(timex1), len(timex2), len(timex3), len(timex4)]
+                max_len_index = timex_lengths.index(max(timex_lengths))  # 获取最长 timex 的索引
+
+                # 使用最长的 timex
+                timex = [timex1, timex2, timex3, timex4][max_len_index]
+
+                # 获取四个温度数据
+                try:
+                    temp1 = data[0]['jsonMessage']['alogJson']['temp2']
+                except (IndexError, KeyError, TypeError):
+                    temp1 = []
+
+                try:
+                    temp2 = data[1]['jsonMessage']['alogJson']['temp2']
+                except (IndexError, KeyError, TypeError):
+                    temp2 = []
+
+                try:
+                    temp3 = data[2]['jsonMessage']['alogJson']['temp2']
+                except (IndexError, KeyError, TypeError):
+                    temp3 = []
+
+                try:
+                    temp4 = data[3]['jsonMessage']['alogJson']['temp2']
+                except (IndexError, KeyError, TypeError):
+                    temp4 = []
+
+                # 更新图表
+                self.matplotlib_widget.update_plot(timex, temp1, temp2, temp3, temp4)
+
+                self.analyse_dw.setStyleSheet('border-radius: 16px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
+                self.analyse_fw.setStyleSheet('border-radius: 16px;background-color: #FBF8F5;border: 2px solid #AC3230')
+                self.analyse_ROR.setStyleSheet(
+                    'border-radius: 16px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
+                self.analyse_Agtron.setStyleSheet(
+                    'border-radius: 16px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
+                self.analyse_pqsd.setStyleSheet(
+                    'border-radius: 16px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
+                self.analyse_pqwd.setStyleSheet(
+                    'border-radius: 16px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
 
     def submitInfo(self):
         print('000')
 
-
-    # def date_changed(self, date):
-    #
-    #     midnight2 = QDateTime(date, QTime(0, 0))
-    #     end_of_day2 = QDateTime(date, QTime(23, 59))
-    #
-    #     global token
-    #     url = 'http://inner4.mjytech.com:22104/admin/device/getPadBakinglist'  # 获取历史任务列表
-    #     params = {'bakingDeviceId': "2", 'startTime': midnight2.toString('yyyy-MM-dd HH:mm'),
-    #               'endTime': end_of_day2.toString('yyyy-MM-dd HH:mm')}
-    #     headers = {
-    #         'token': f'{token}',
-    #         'Content-Type': 'application/json'
-    #     }
-    #     if token:
-    #         response = requests.get(url, params, headers=headers)
-    #         if response.status_code == 200:
-    #             dataJson = response.json()
-    #             dataJson2 = dataJson['bakingTaskList']
-    #
-    #             textCode = dataJson['code']
-    #             if textCode == 0 or textCode == 200:
-    #                 # list_widget 历史列表
-    #                 self.list_widget.clear()
-    #                 for data in dataJson2:
-    #                     historyListBack = QWidget()
-    #                     historyListBack.setStyleSheet(
-    #                         'border-radius: 12px; background-color: transparent; border: 1px solid #378AF6;')
-    #
-    #                     # 使用布局管理器
-    #                     item_layout \
-    #                         = QHBoxLayout(historyListBack)
-    #                     item_layout.setContentsMargins(0 * self.width_scale, 5 * self.height_scale,
-    #                                                    10 * self.width_scale, 5 * self.height_scale)  # 设置边距
-    #                     item_layout.setSpacing(0 * self.height_scale)  # 设置控件之间的间距
-    #
-    #                     # 创建标签并添加到布局
-    #                     checkbox = QCheckBox(historyListBack)
-    #                     checkbox.setStyleSheet("color: #222222; border:none; padding: 2px;background-color: #ffffff")
-    #                     # item_layout.addWidget(checkbox)
-    #                     checkbox.setGeometry(45 * self.width_scale, 9 * self.height_scale, 18 * self.height_scale,
-    #                                          18 * self.height_scale)
-    #                     checkbox.setFixedWidth(18 * self.width_scale)
-    #                     checkbox.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-    #                     # checkbox.bakingBatch = data['bakingBatch']
-    #                     checkbox.setProperty("bakingBatch", data.get("bakingBatch"))
-    #                     checkbox.setProperty("orderDetailJson", data)
-    #                     checkbox.stateChanged.connect(self.handle_checkbox)
-    #
-    #                     fkqkImg = QLabel(historyListBack)
-    #                     fkqkImg.setGeometry(140 * self.width_scale, 8 * self.height_scale, 20 * self.width_scale,
-    #                                         20 * self.height_scale)
-    #                     # fkqkImg.setFixedSize(20, 20)
-    #                     fkqkImg.setStyleSheet("color: #222222; border:none; padding: 2px;background-color: transparent")
-    #                     if data['desncription'] != '':
-    #                         fkqkImgPixmap = QPixmap(self.normalized_path + '/includes/Icons/history/pingfen2.png')
-    #                     else:
-    #                         fkqkImgPixmap = QPixmap(self.normalized_path + '/includes/Icons/history/pingfen.png')
-    #                     fkqkImg.setPixmap(fkqkImgPixmap)
-    #                     fkqkImg.setScaledContents(True)
-    #                     # item_layout.addWidget(fkqkImg)
-    #                     # fkqkImg.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-    #
-    #                     bakingBatch_label = QLabel(historyListBack)
-    #                     bakingBatch_label.setStyleSheet(
-    #                         "color: #222222; border:none; padding: 2px;background-color: transparent")
-    #                     bakingBatch_label.setText(data['bakingBatch'])
-    #                     bakingBatch_label.setGeometry(261 * self.width_scale, 0, 250 * self.width_scale,
-    #                                                   36 * self.height_scale)
-    #                     # bakingBatch_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignCenter)
-    #                     # item_layout.addWidget(bakingBatch_label)
-    #                     # bakingBatch_label.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-    #
-    #                     taskName_label = QLabel(historyListBack)
-    #                     taskName_label.setStyleSheet(
-    #                         "color: #222222; border:none; padding: 2px;background-color: transparent")
-    #                     taskName_label.setText(data['taskName'])
-    #                     taskName_label.setGeometry(507 * self.width_scale, 0, 120 * self.width_scale,
-    #                                                36 * self.height_scale)
-    #                     taskName_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignCenter)
-    #                     # item_layout.addWidget(taskName_label)
-    #                     taskName_label.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-    #
-    #                     taskTime_label = QLabel(historyListBack)  # 将时间换算为分钟
-    #                     taskTime_label.setStyleSheet(
-    #                         "color: #222222; border:none; padding: 2px;background-color: transparent")
-    #                     taskTime_label.setText(str(data['taskTime'] / 60))
-    #                     taskTime_label.setGeometry(787 * self.width_scale, 0, 120 * self.width_scale,
-    #                                                36 * self.height_scale)
-    #                     taskTime_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignCenter)
-    #                     taskTime_label.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-    #
-    #                     create_time = data.get('createTime')
-    #                     baking_finish_time = data.get('bakingFinishTime')
-    #                     createTime_label = QLabel(historyListBack)
-    #                     if create_time is None or baking_finish_time is None:
-    #                         createTime_label.setText('-')  # 显示时间段
-    #                     else:
-    #                         createTime_label.setText(
-    #                             str(create_time[11:16]) + '-' + str(baking_finish_time[11:16]))  # 显示时间段
-    #                     createTime_label.setStyleSheet("color: #222222; border:none; padding: 2px;")
-    #                     createTime_label.setGeometry(1045 * self.width_scale, 0, 120 * self.width_scale,
-    #                                                  36 * self.height_scale)
-    #                     createTime_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignCenter)
-    #                     # item_layout.addWidget(createTime_label)
-    #                     createTime_label.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-    #
-    #                     agtronValue_label = QLabel(historyListBack)
-    #                     agtronValue_label.setStyleSheet("color: #222222; border:none; padding: 2px;")
-    #                     # item_layout.addWidget(agtronValue_label)
-    #                     agtronValue_label.setText(str(data['agtronValue']))
-    #                     agtronValue_label.setGeometry(1265 * self.width_scale, 0, 120 * self.width_scale,
-    #                                                   36 * self.height_scale)
-    #                     agtronValue_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignCenter)
-    #                     agtronValue_label.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-    #
-    #                     # 添加间距项
-    #                     spacer = QSpacerItem(0, 40 * self.height_scale)
-    #                     item_layout.addItem(spacer)
-    #
-    #                     # 设置 QWidget 的大小
-    #                     historyListBack.setFixedHeight(36 * self.height_scale)
-    #
-    #
-    #                     # 创建 QListWidgetItem
-    #                     list_item = QListWidgetItem(self.list_widget)
-    #                     list_item.setSizeHint(historyListBack.sizeHint())  # 设置项的大小提示
-    #                     list_item.setData(12, data['numberOfBeans'])  # 含水量
-    #                     list_item.setData(11, data['number'])  # 生豆重量
-    #                     list_item.setData(22, data['bakingBatch'])  # 任务编号
-    #                     list_item.setData(3, data['numberOfBeans'])  # 熟豆重量
-    #                     list_item.setData(4, data['dehydrationRate'])  # 烘焙损失率
-    #                     list_item.setData(5, data['bakingFinishTime'])  # 烘焙日期
-    #                     list_item.setData(7, data['bakingScore'])  # 烘焙评分
-    #
-    #                     if data['cuppingDetail'] not in dataJson2:
-    #                         list_item.setData(6, '-')  # 杯测评分
-    #                         list_item.setData(8, '-')  # 杯测日期
-    #                         list_item.setData(9, '-')  # 品控反馈
-    #                     else:
-    #                         list_item.setData(6, data['cuppingDetail']['score'])  # 杯测评分
-    #                         list_item.setData(8, data['cuppingDetail']['createTime'])  # 杯测日期
-    #                         list_item.setData(9, data['cuppingDetail']['descn'])  # 品控反馈
-    #
-    #                     self.list_widget.addItem(list_item)  # 添加项到 QListWidget
-    #                     self.list_widget.setItemWidget(list_item, historyListBack)
-    #             else:
-    #                 print('连接失败', response.text)
-    #         else:
-    #             print('连接失败', response.text)
 
     # def handle_checkbox(self, state):
     #     checkbox = self.sender()  # 获取信号发送者（即复选框）
@@ -14211,138 +14213,6 @@ class ApplicationWindow(
             with open("outputttttttttttt.log", "a") as f:
                 print('orderId=' + str(self.orderDetail), file=f)
 
-    # def showHistorydetail(self, item):
-    #     item_id = item.data(22)
-    #
-    #     self.qmc: tgraphcanvas = tgraphcanvas(self.historyInfo, self.dpi, self.locale_str, self)
-    #     self.qmc.setGeometry(65*self.width_scale, 104*self.height_scale, 1481*self.width_scale, 600*self.height_scale)
-    #     self.qmc.setVisible(True)
-    #     self.qmc.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)#鼠标穿透
-    #
-    #     self.sdzl.setText(str(item.data(12))+'kg')
-    #     self.hslTxt.setText(str(item.data(11))+'kg')
-    #     self.hbrqNum.setText(str(item.data(5)))
-    #     self.bcpfNum.setText(str(item.data(6))+'分')
-    #     self.hbpfNum.setText(str(item.data(7))+'分')
-    #     self.bcrqNum.setText(str(item.data(8)))
-    #     self.pkfkTxt.setText(str(item.data(9)))
-    #
-    #     # order_id = "ORDER-2202409111052390111_2-0,ORDER-2202409111052390111_2-1"
-    #     url = "http://inner4.mjytech.com:22104/admin/device/lookFormulaCurve" # 查看烘焙详情
-    #     params = {'bakingBatchList': item_id}
-    #     response = requests.get(url, params)
-    #     if response.status_code == 200:
-    #         self.historyInfo.setVisible(True)
-    #         self.scroll_area.setVisible(True)
-    #         self.scroll_area.setWidget(self.historyInfo)
-    #         dataJson = response.json()
-    #         data = dataJson['data']
-    #         textCode = dataJson['code']
-    #         if textCode == 0 or textCode == 200:
-    #             self.historyDetail_sheibei.setText(item_id)
-    #
-    #             # self.fileLoad()
-    #             obj = data[0]['jsonMessage']['alogJson']
-    #             res = self.setProfile(obj) # 打开烘焙曲线
-    #             if res:
-    #                 # update etypes combo box
-    #                 self.etypeComboBox.clear()
-    #                 self.etypeComboBox.addItems(self.qmc.etypes)
-    #                 self.qmc.fileDirtySignal.emit()
-    #                 self.autoAdjustAxis()
-    #                 self.qmc.redraw()
-    #
-    #             self.hbscContent = str(int(data[0]['jsonMessage']['totaltime']) // 60) + ':' + str(
-    #                 int(data[0]['jsonMessage']['totaltime']) % 60)
-    #             self.hongbeishichang.setText('烘焙时长：' + str(self.hbscContent))
-    #
-    #             self.rdwdContent = data[0]['jsonMessage']['CHARGE_BT']
-    #             self.rudouwendu.setText('入豆温度：' + str(self.rdwdContent) + '℃')
-    #
-    #             self.hwdContent = str(data[0]['jsonMessage']['TP_BT']) + '/' + str(
-    #                 int(data[0]['jsonMessage']['TP_time']) // 60) + ':' + str(
-    #                 int(data[0]['jsonMessage']['TP_time']) % 60)
-    #             self.huiwendian.setText('回温点：' + str(self.hwdContent))
-    #
-    #             self.zhdContent = str(data[0]['jsonMessage']['Maillard']) + '/' + str(
-    #                 int(data[0]['jsonMessage']['Maillard_time']) // 60) + ':' + str(
-    #                 int(data[0]['jsonMessage']['Maillard_time']) % 60)
-    #             self.zhuanhuangdian.setText('转黄点：' + self.zhdContent)
-    #
-    #             self.ybContent = str(data[0]['jsonMessage']['FCs_BT']) + '/' + str(
-    #                 int(data[0]['jsonMessage']['FCs_time']) // 60) + ':' + str(
-    #                 int(data[0]['jsonMessage']['FCs_time']) % 60)
-    #             self.yibao.setText('一爆：' + self.ybContent)
-    #
-    #             self.fzscContent = str(int(data[0]['jsonMessage']['finishphasetime']) // 60) + ':' + str(
-    #                 int(data[0]['jsonMessage']['finishphasetime']) % 60)
-    #             self.fazhanshichang.setText('发展时长：' + self.fzscContent)
-    #
-    #             self.dtrContent = data[0]['jsonMessage']['DTR']
-    #             self.dtrTxt.setText('DTR：' + str(self.dtrContent) + '%')
-    #
-    #             self.wendu1Txt.setText(str(data[0]['jsonMessage']['target_temperature'][0]) + '℃')
-    #             self.ckz1Txt.setText(str(data[0]['jsonMessage']['target_values'][0]) + 'RH%')
-    #
-    #             self.wendu2Txt.setText(str(data[0]['jsonMessage']['target_temperature'][1]) + '℃')
-    #             self.ckz2Txt.setText(str(data[0]['jsonMessage']['target_values'][1]) + 'RH%')
-    #
-    #             self.wendu3Txt.setText(str(data[0]['jsonMessage']['target_temperature'][2]) + '℃')
-    #             self.ckz3Txt.setText(str(data[0]['jsonMessage']['target_values'][2]) + 'RH%')
-    #
-    #             self.wendu4Txt.setText(str(data[0]['jsonMessage']['target_temperature'][3]) + '℃')
-    #             self.ckz4Txt.setText(str(data[0]['jsonMessage']['target_values'][3]) + '%')
-    #
-    #             self.wendu5Txt.setText(str(data[0]['jsonMessage']['target_temperature'][4]) + '℃')
-    #             self.ckz5Txt.setText(str(data[0]['jsonMessage']['target_values'][4]) + '%')
-    #
-    #             self.wendu6Txt.setText(str(data[0]['jsonMessage']['target_temperature'][5]) + '℃')
-    #             self.ckz6Txt.setText(str(data[0]['jsonMessage']['target_values'][5]) + '%')
-    #
-    #             self.sjwendu1Txt.setText(str(data[0]['jsonMessage']['actual_temperature'][0]) + '℃')
-    #             self.sjckz1Txt.setText(str(data[0]['jsonMessage']['actual_values'][0]) + 'RH%')
-    #
-    #             self.sjwendu2Txt.setText(str(data[0]['jsonMessage']['actual_temperature'][1]) + '℃')
-    #             self.sjckz2Txt.setText(str(data[0]['jsonMessage']['actual_values'][1]) + 'RH%')
-    #
-    #             self.sjwendu3Txt.setText(str(data[0]['jsonMessage']['actual_temperature'][2]) + '℃')
-    #             self.sjckz3Txt.setText(str(data[0]['jsonMessage']['actual_values'][2]) + 'RH%')
-    #
-    #             self.sjwendu4Txt.setText(str(data[0]['jsonMessage']['actual_temperature'][3]) + '℃')
-    #             self.sjckz4Txt.setText(str(data[0]['jsonMessage']['actual_values'][3]) + '%')
-    #
-    #             self.sjwendu5Txt.setText(str(data[0]['jsonMessage']['actual_temperature'][4]) + '℃')
-    #             self.sjckz5Txt.setText(str(data[0]['jsonMessage']['actual_values'][4]) + '%')
-    #
-    #             self.sjwendu6Txt.setText(str(data[0]['jsonMessage']['actual_temperature'][5]) + '℃')
-    #             self.sjckz6Txt.setText(str(data[0]['jsonMessage']['actual_values'][5]) + '%')
-    #
-    #             self.sjpc1Txt.setText(str(round(
-    #                 (data[0]['jsonMessage']['actual_values'][0] - data[0]['jsonMessage']['target_values'][0]) /
-    #                 data[0]['jsonMessage']['actual_values'][0] * 100)) + '%')
-    #             self.sjpc2Txt.setText(str(round(
-    #                 (data[0]['jsonMessage']['actual_values'][1] - data[0]['jsonMessage']['target_values'][1]) /
-    #                 data[0]['jsonMessage']['actual_values'][1] * 100)) + '%')
-    #             self.sjpc3Txt.setText(str(round(
-    #                 (data[0]['jsonMessage']['actual_values'][2] - data[0]['jsonMessage']['target_values'][2]) /
-    #                 data[0]['jsonMessage']['actual_values'][2] * 100)) + '%')
-    #             self.sjpc4Txt.setText(str(round(
-    #                 (data[0]['jsonMessage']['actual_values'][3] - data[0]['jsonMessage']['target_values'][3]) /
-    #                 data[0]['jsonMessage']['actual_values'][3] * 100)) + '%')
-    #             self.sjpc5Txt.setText(str(round(
-    #                 (data[0]['jsonMessage']['actual_values'][4] - data[0]['jsonMessage']['target_values'][4]) /
-    #                 data[0]['jsonMessage']['actual_values'][4] * 100)) + '%')
-    #             self.sjpc6Txt.setText(str(round(
-    #                 (data[0]['jsonMessage']['actual_values'][5] - data[0]['jsonMessage']['target_values'][5]) /
-    #                 data[0]['jsonMessage']['actual_values'][5] * 100)) + '%')
-    #
-    #             self.qkfkContent.setText(data[0].get('desncription'))
-    #             self.agtronzhiNum.setText('#' + str(data[0].get('agtronValue')))
-    #
-    #         else:
-    #             print('连接失败')
-    #     else:
-    #         print('连接失败')
 
     def syncScrollBar(self, value):
         # 同步两个 QListWidget 的滚动条
@@ -14352,7 +14222,6 @@ class ApplicationWindow(
         elif sender == self.list_widget2.verticalScrollBar():
             self.list_widget.verticalScrollBar().setValue(value)
 
-
     def toggle_password_visibility(self):
         if self.toggle_button.isChecked():
             self.passwordContent.setEchoMode(QLineEdit.EchoMode.Normal)  # 显示密码
@@ -14361,159 +14230,167 @@ class ApplicationWindow(
             self.passwordContent.setEchoMode(QLineEdit.EchoMode.Password)  # 隐藏密码
             self.toggle_button.setIcon(QIcon(self.normalized_path + '/includes/Icons/login/eyeFalse.png'))
 
-    # def loginClicked(self):
-    #     self.blink_timer.start(200)  # 启动定时器，间隔 500 毫秒（0.5 秒）
-    #     # 创建计时器，用于停止闪烁
-    #     self.stop_timer = QTimer(self)
-    #     self.stop_timer.timeout.connect(self.stop_blinking)  # 当计时器超时时，停止闪烁
-    #     self.stop_timer.setSingleShot(True)  # 设置为单次触发
-    #     self.stop_timer.start(3000)  # 启动计时器，5秒后触发
-    #     # self.loginBack.setVisible(False)passwordContent userContent
-    #     url = 'http://inner4.mjytech.com:22104/sys/login'  # 示例 URL
-    #     list_url = "http://inner4.mjytech.com:22104/admin/device/selectBakingDeviceList"
-    #     self.getHonbeiList()
-    #     global token
-    #     payload = {
-    #         "username": self.userContent.text(),
-    #         "password": self.passwordContent.text()
-    #     }
-    #     try:
-    #         response = requests.post(url, json=payload)
-    #         if response.status_code == 200:
-    #             try:
-    #                 data = response.json()
-    #                 token = data.get('token')
-    #                 textCode = data['code']
-    #                 if textCode == 0 or textCode == 200:
-    #                     if token:
-    #                         self.loginBack.setVisible(False)
-    #                         headers = {
-    #                             'token': f'{token}',
-    #                             'Content-Type': 'application/json'
-    #                         }
-    #                         # 获取设备列表
-    #                         list_response = requests.get(list_url, headers=headers)
-    #                         if list_response.status_code == 200:
-    #                             data2 = list_response.json()  # 解析返回的 JSON 数据
-    #                             dataJson = data2['deviceList']
-    #                             textCode = data2['code']
-    #                             if textCode == 0 or textCode == 200:
-    #                                 # bakingBatchList = data[0].get('bakingBatch')
-    #
-    #                                 self.sblbList.clear()
-    #                                 for item_text in dataJson:
-    #                                     list_item = QListWidgetItem(item_text['deviceModel'])
-    #                                     list_item.setData(Qt.ItemDataRole.UserRole, item_text['id'])
-    #                                     self.sblbList.addItem(list_item)
-    #
-    #                                 self.getHonbeiList()  # 获取烘焙订单列表
-    #
-    #                         else:
-    #                             print(f"获取列表失败，状态码")
-    #                             print("服务器响应:")
-    #
-    #                     else:
-    #                         print("Login successful, but token not found in response.", flush=True)
-    #             except ValueError:
-    #                 print("Login successful, but response is not JSON:", flush=True)
-    #                 print(response.text, flush=True)
-    #         else:
-    #             print(f"Login failed with status", flush=True)
-    #
-    #     except requests.RequestException as e:
-    #         print(f"Request failed: {e}", flush=True)
+    def loginClicked(self):
+        self.blink_timer.start(200)  # 启动定时器，间隔 500 毫秒（0.5 秒）
+        # 创建计时器，用于停止闪烁
+        self.stop_timer = QTimer(self)
+        self.stop_timer.timeout.connect(self.stop_blinking)  # 当计时器超时时，停止闪烁
+        self.stop_timer.setSingleShot(True)  # 设置为单次触发
+        self.stop_timer.start(3000)  # 启动计时器，5秒后触发
+        # self.loginBack.setVisible(False)passwordContent userContent
+        url = 'http://inner4.mjytech.com:22104/sys/login'  # 示例 URL
+        list_url = "http://inner4.mjytech.com:22104/admin/device/selectBakingDeviceList"
+        # self.getHonbeiList()
+        global token
+        payload = {
+            "username": self.userContent.text(),
+            "password": self.passwordContent.text()
+        }
+        try:
+            response = requests.post(url, json=payload)
+            if response.status_code == 200:
+                try:
+                    data = response.json()
+                    token = data.get('token')
+                    textCode = data['code']
+                    if textCode == 0 or textCode == 200:
+                        if token:
+                            self.loginBack.setVisible(False)
+                            headers = {
+                                'token': f'{token}',
+                                'Content-Type': 'application/json'
+                            }
+                            # 获取设备列表
+                            list_response = requests.get(list_url, headers=headers)
+                            if list_response.status_code == 200:
+                                data2 = list_response.json()  # 解析返回的 JSON 数据
+                                dataJson = data2['deviceList']
+                                textCode = data2['code']
+                                if textCode == 0 or textCode == 200:
+                                    # bakingBatchList = data[0].get('bakingBatch')
 
-    # def getHonbeiList(self):
-    #     global token
-    #     listurl = "http://inner4.mjytech.com:22104//admin/task/getBakingTask"  # 获取进行中列表
-    #     # params = {'bakingDeviceId': "2"}
-    #     headers = {
-    #         'token': f'{token}',
-    #         'Content-Type': 'application/json'
-    #     }
-    #
-    #     if token:
-    #         params = {'bakingDeviceId': "2"}
-    #         list_response2 = requests.get(listurl, params, headers=headers)
-    #         if list_response2.status_code == 200:
-    #             data3 = list_response2.json()
-    #             textCode = data3['code']
-    #             if textCode == 0 or textCode == 200:
-    #                 self.orderList_data = data3['data']
-    #                 if data3['data']:
-    #                     # 清除布局中的旧部件
-    #                     for i in reversed(range(self.orderLayout.count())):
-    #                         widget = self.orderLayout.itemAt(i).widget()
-    #                         if widget is not None:
-    #                             widget.deleteLater()
-    #                             self.orderLayout.removeItem(self.orderLayout.itemAt(i))
-    #                     for order in self.orderList_data:
-    #                         ordersRect2 = QLabel()
-    #                         ordersRect2.setStyleSheet(
-    #                             'border-radius: 25px; background-color: #f5f8fb; border: 1px solid #e1f0fe;'
-    #                         )
-    #                         ordersRect2.setFixedSize(288 * self.width_scale, 185 * self.height_scale)
-    #                         # self.id_value.append(order['id'])
-    #                         # self.id_value.append(order['taskName'])
-    #                         # self.id_value.append(order['bakingBatch'])
-    #                         # self.id_value.append(order['bakingFinishTime'])
-    #                         self.add_data(
-    #                             [order['id'], order['taskName'], order['bakingBatch'], order['bakingFinishTime'], order['taskId']])
-    #                         self.chucangValue.append(self.orderList_data[0]['bakingBatch'])
-    #                         self.chucangValue.append(self.orderList_data[0]['taskId'])
-    #
-    #                         task_name_label = QLabel(ordersRect2)
-    #                         task_name_label.setStyleSheet("color: #222222;border:none;background-color:transparent")
-    #                         task_name_label.setGeometry(26 * self.width_scale, 26 * self.height_scale,
-    #                                                     183 * self.width_scale, 24 * self.height_scale)
-    #                         font = QFont(self.font_family3, 14 * self.width_scale)
-    #                         task_name_label.setFont(font)
-    #                         task_name_label.setText(order['taskName'])
-    #
-    #                         taskTxt_label = QLabel(ordersRect2)
-    #                         taskTxt_label.setStyleSheet("color: #222222;border:none;")
-    #                         taskTxt_label.setGeometry(26 * self.width_scale, 68 * self.height_scale,
-    #                                                    60 * self.width_scale, 24 * self.height_scale)
-    #                         font2 = QFont(self.font_family4, 10 * self.width_scale)
-    #                         taskTxt_label.setFont(font2)
-    #                         taskTxt_label.setText(f"任务订单:")
-    #
-    #                         self.task_no_label = ScrollingLabel(f"{order['bakingBatch']}", ordersRect2)
-    #                         self.task_no_label.setGeometry(86 * self.width_scale, 68 * self.height_scale,
-    #                                                        170 * self.width_scale, 24 * self.height_scale)
-    #
-    #                         self.task_no_label.setFont(font2)
-    #
-    #                         deadline_label = QLabel(ordersRect2)
-    #                         deadline_label.setStyleSheet("color: #222222;border:none;")
-    #                         deadline_label.setGeometry(26 * self.width_scale, 103 * self.height_scale,
-    #                                                    210 * self.width_scale, 24 * self.height_scale)
-    #                         deadline_label.setFont(font2)
-    #                         deadline_label.setText(f"截止日期: {order['bakingFinishTime']}")
-    #
-    #                         order_id_label = QLabel(ordersRect2)
-    #                         order_id_label.setStyleSheet("color: #222222;border:none;")
-    #                         order_id_label.setGeometry(26 * self.width_scale, 138 * self.height_scale,
-    #                                                    210 * self.width_scale, 24 * self.height_scale)
-    #                         order_id_label.setFont(font2)
-    #                         order_id_label.setText(f"订单数量: {order['id']}")
-    #                         # self.order_id_label2.setText(f"订单数量: {self.orderList_data[0]['id']}")
-    #
-    #                         spacer_widget = QWidget()
-    #                         spacer_widget.setFixedHeight(24)  # 设置为 36 像素高
-    #
-    #                         self.orderLayout.addWidget(ordersRect2)
-    #                         self.orderLayout.setAlignment(ordersRect2, Qt.AlignmentFlag.AlignTop)
-    #
-    #                         self.orderLayout.addWidget(spacer_widget)
-    #                         # self.orderLayout.setAlignment(spacer_widget, Qt.AlignmentFlag.AlignTop)
-    #             else:
-    #                 print("连接失败")
+                                    self.sblbList.clear()
+                                    for item_text in dataJson:
+                                        list_item = QListWidgetItem(item_text['deviceModel'])
+                                        list_item.setData(Qt.ItemDataRole.UserRole, item_text['id'])
+                                        self.sblbList.addItem(list_item)
 
-    def get_serial_ports(self):
-        """获取本机所有可用的串口号"""
-        ports = serial.tools.list_ports.comports()
-        return [port.device for port in ports]
+                                    # self.getHonbeiList()  # 获取烘焙订单列表
+
+                            else:
+                                print(f"获取列表失败，状态码")
+                                print("服务器响应:")
+
+                        else:
+                            print("Login successful, but token not found in response.", flush=True)
+                except ValueError:
+                    print("Login successful, but response is not JSON:", flush=True)
+                    print(response.text, flush=True)
+            else:
+                print(f"Login failed with status", flush=True)
+
+        except requests.RequestException as e:
+            print(f"Request failed: {e}", flush=True)
+
+    def getHonbeiList(self, machineID):
+        global token
+        listurl = "http://inner4.mjytech.com:22104//admin/task/getBakingTask"  # 获取进行中列表
+        headers = {
+            'token': f'{token}',
+            'Content-Type': 'application/json'
+        }
+
+        if token:
+            params = {'bakingDeviceId': machineID}
+            list_response2 = requests.get(listurl, params, headers=headers)
+            if list_response2.status_code == 200:
+                data3 = list_response2.json()
+                textCode = data3['code']
+                if textCode == 0 or textCode == 200:
+                    self.orderList_data = data3['data']
+                    self.orders_list = data3['data']  # 初始化空列表
+
+                    if data3['data']:
+                        # 清除布局中的旧部件
+                        for i in reversed(range(self.orderLayout.count())):
+                            widget = self.orderLayout.itemAt(i).widget()
+                            if widget is not None:
+                                widget.deleteLater()
+                                self.orderLayout.removeItem(self.orderLayout.itemAt(i))
+                        for order in self.orderList_data:
+                            ordersRect2 = QLabel()
+                            ordersRect2.setStyleSheet(
+                                'border-radius: 25px; background-color: #f5f8fb; border: 1px solid #e1f0fe;'
+                            )
+                            ordersRect2.setFixedSize(288 * self.width_scale, 185 * self.height_scale)
+                            # self.id_value.append(order['id'])
+                            # self.id_value.append(order['taskName'])
+                            # self.id_value.append(order['bakingBatch'])
+                            # self.id_value.append(order['bakingFinishTime'])
+                            # self.add_data(
+                            #     [order['id'], order['taskName'], order['bakingBatch'], order['bakingFinishTime'], order['taskId']])
+                            # self.chucangValue.append(self.orderList_data[0]['bakingBatch'])
+                            # self.chucangValue.append(self.orderList_data[0]['taskId'])
+
+                            task_name_label = QLabel(ordersRect2)
+                            task_name_label.setStyleSheet("color: #222222;border:none;background-color:transparent")
+                            task_name_label.setGeometry(26 * self.width_scale, 26 * self.height_scale,
+                                                        183 * self.width_scale, 24 * self.height_scale)
+                            font = QFont(self.font_family3, 14 * self.width_scale)
+                            task_name_label.setFont(font)
+                            task_name_label.setText(order['taskName'])
+
+                            taskMoreSet = QPushButton(ordersRect2)
+                            taskMoreSet.setGeometry(260 * self.width_scale, 25 * self.height_scale,
+                                                    9 * self.width_scale,
+                                                    23 * self.height_scale)
+                            taskMoreSet.setStyleSheet(f"""
+                                                                QPushButton {{
+                                                                    border-image: url('{self.normalized_path}/includes/Icons/yrzb/more.png');
+                                                                    border: none;
+                                                                }}
+                                                            """)
+                            taskMoreSet.clicked.connect(lambda checked, order=order: self.taskMoreSetClicked(order))
+
+                            taskTxt_label = QLabel(ordersRect2)
+                            taskTxt_label.setStyleSheet("color: #222222;border:none;")
+                            taskTxt_label.setGeometry(26 * self.width_scale, 68 * self.height_scale,
+                                                       80 * self.width_scale, 24 * self.height_scale)
+                            font2 = QFont(self.font_family4, 12 * self.width_scale)
+                            taskTxt_label.setFont(font2)
+                            taskTxt_label.setText(f"任务订单:")
+
+                            self.task_no_label = ScrollingLabel(f"{order['bakingBatch']}", ordersRect2)
+                            self.task_no_label.setGeometry(99 * self.width_scale, 68 * self.height_scale,
+                                                           170 * self.width_scale, 24 * self.height_scale)
+
+                            self.task_no_label.setFont(font2)
+
+                            deadline_label = QLabel(ordersRect2)
+                            deadline_label.setStyleSheet("color: #222222;border:none;")
+                            deadline_label.setGeometry(26 * self.width_scale, 103 * self.height_scale,
+                                                       210 * self.width_scale, 24 * self.height_scale)
+                            deadline_label.setFont(font2)
+                            deadline_label.setText(f"截止日期: {order['bakingFinishTime']}")
+
+                            order_id_label = QLabel(ordersRect2)
+                            order_id_label.setStyleSheet("color: #222222;border:none;")
+                            order_id_label.setGeometry(26 * self.width_scale, 138 * self.height_scale,
+                                                       210 * self.width_scale, 24 * self.height_scale)
+                            order_id_label.setFont(font2)
+                            order_id_label.setText(f"订单数量: {order['id']}")
+                            # self.order_id_label2.setText(f"订单数量: {self.orderList_data[0]['id']}")
+
+                            spacer_widget = QWidget()
+                            spacer_widget.setFixedHeight(24)  # 设置为 36 像素高
+
+                            self.orderLayout.addWidget(ordersRect2)
+                            self.orderLayout.setAlignment(ordersRect2, Qt.AlignmentFlag.AlignTop)
+
+                            self.orderLayout.addWidget(spacer_widget)
+                            # self.orderLayout.setAlignment(spacer_widget, Qt.AlignmentFlag.AlignTop)
+                else:
+                    print("连接失败")
 
     def zuoyeClicked(self):
         # 工作台显示
@@ -14522,10 +14399,9 @@ class ApplicationWindow(
         self.shebeiLabel.setVisible(True)
         self.xinghaoLabel.setVisible(True)
         self.statusLabel.setVisible(True)
-        self.shuxian.setGeometry(2*self.width_scale, 361*self.height_scale, 3*self.width_scale, 60*self.height_scale)
+        self.shuxian.setGeometry(2 * self.width_scale, 361 * self.height_scale, 3 * self.width_scale,
+                                 60 * self.height_scale)
         self.ai_widget.setVisible(False)
-        self.orderWidget.setVisible(True)
-        self.shadow_label.setVisible(True)
 
         # 流转显示
         # self.lzPixmap = QIcon(self.normalized_path + '/includes/Icons/general/zuoye.png')
@@ -14555,7 +14431,7 @@ class ApplicationWindow(
         self.deviceScroll.setVisible(False)
         self.deviceDetail.setVisible(False)
 
-        # self.getHonbeiList()
+        self.getHonbeiList(self.sheibeiId)
 
     def lzDetailClick(self):
         # 工作台显示
@@ -14584,7 +14460,6 @@ class ApplicationWindow(
         # 监控情况
         self.monitorPixmap = QIcon(self.normalized_path + '/includes/Icons/general/monitor.png')
         self.monitorLabel.setIcon(self.monitorPixmap)
-
 
         # 设备管理
         self.setLabelPixmap = QIcon(self.normalized_path + '/includes/Icons/general/set.png')
@@ -14720,7 +14595,8 @@ class ApplicationWindow(
         # 创建弹窗
         popup = QDialog(self)
         popup.setWindowTitle("选择窗口")
-        popup.setGeometry(100*self.width_scale, 100*self.height_scale, 400*self.width_scale, 300*self.height_scale)  # 设置弹窗大小
+        popup.setGeometry(100 * self.width_scale, 100 * self.height_scale, 400 * self.width_scale,
+                          300 * self.height_scale)  # 设置弹窗大小
 
         layout = QVBoxLayout()
 
@@ -14839,8 +14715,6 @@ class ApplicationWindow(
         #     else:
         #         print('连接失败')
 
-
-
     def historyClicked(self):
         global token
         # 工作台显示
@@ -14856,8 +14730,6 @@ class ApplicationWindow(
         # self.lzLabel.setIcon(self.lzPixmap)
         self.lzTabel.setVisible(False)
         self.lzScroll.setVisible(False)
-        self.orderWidget.setVisible(False)
-        self.shadow_label.setVisible(False)
 
         # 历史显示-烘焙记录
         self.historyLabelPixmap = QIcon(self.normalized_path + '/includes/Icons/general/historyHover.png')
@@ -14866,7 +14738,8 @@ class ApplicationWindow(
         self.shebeiLabel2.setText("烘焙记录")
         self.todayTime.setVisible(True)
         self.historyTabel.setVisible(True)
-        self.shuxian.setGeometry(2*self.width_scale, 463*self.height_scale, 3*self.width_scale, 60*self.height_scale)
+        self.shuxian.setGeometry(2 * self.width_scale, 463 * self.height_scale, 3 * self.width_scale,
+                                 60 * self.height_scale)
 
         self.historyList_Json()
 
@@ -14886,8 +14759,6 @@ class ApplicationWindow(
         self.deviceScroll.setVisible(False)
         self.deviceDetail.setVisible(False)
 
-
-
     def monitorClicked(self):
         # 工作台显示
         self.zuoyePixmap = QIcon(self.normalized_path + '/includes/Icons/general/zuoye.png')
@@ -14896,8 +14767,6 @@ class ApplicationWindow(
         self.xinghaoLabel.setVisible(False)
         self.statusLabel.setVisible(False)
         self.ai_widget.setVisible(False)
-        self.orderWidget.setVisible(False)
-        self.shadow_label.setVisible(False)
 
         # 流转显示
         # self.lzPixmap = QIcon(self.normalized_path + '/includes/Icons/general/zuoye.png')
@@ -14921,7 +14790,8 @@ class ApplicationWindow(
         self.shebeiLabel2.setVisible(True)
         self.shebeiLabel2.setText("监控情况")
         self.todayTime.setVisible(False)
-        self.shuxian.setGeometry(2*self.width_scale, 562*self.height_scale, 3*self.width_scale, 60*self.height_scale)
+        self.shuxian.setGeometry(2 * self.width_scale, 562 * self.height_scale, 3 * self.width_scale,
+                                 60 * self.height_scale)
         self.jiankongTabel.setVisible(True)
 
         # 设备管理
@@ -14938,8 +14808,6 @@ class ApplicationWindow(
         self.xinghaoLabel.setVisible(False)
         self.statusLabel.setVisible(False)
         self.ai_widget.setVisible(False)
-        self.orderWidget.setVisible(False)
-        self.shadow_label.setVisible(False)
 
         # 流转显示
         # self.lzPixmap = QIcon(self.normalized_path + '/includes/Icons/general/zuoye.png')
@@ -14969,36 +14837,115 @@ class ApplicationWindow(
         self.shebeiLabel2.setText("设备管理")
         self.todayTime.setVisible(True)
         self.deviceScroll.setVisible(True)
-        self.shuxian.setGeometry(2*self.width_scale, 674*self.height_scale, 3*self.width_scale, 60*self.height_scale)
+        self.shuxian.setGeometry(2 * self.width_scale, 674 * self.height_scale, 3 * self.width_scale,
+                                 60 * self.height_scale)
         self.deviceDetail.setVisible(False)
 
         self.setMachinesList()
 
-    def showMachinesTitle(self):
-        local_folder = os.path.join(ytycwdpath, "localJson", "Machines")
-        if not os.path.exists(local_folder):
-            print(f"文件夹4 {local_folder} 不存在")
-            return
+    def setMachinesList(self):
+        global token
+        url = 'http://inner4.mjytech.com:22104/admin/device/selectBakingDeviceList'  # 获取设备列表
+        headers = {
+            'token': f'{token}',
+            'Content-Type': 'application/json'
+        }
+        if token:
+            response = requests.get(url, headers=headers)
+            if response.status_code == 200:
+                data2 = response.json()  # 解析返回的 JSON 数据
+                dataJson = data2['deviceList']
+                textCode = data2['code']
+                if textCode == 0 or textCode == 200:
+                    num_columns = 5  # 每行最多 4 个元素
+                    spacing = 21 * self.height_scale  # 左右间距
 
-        # 获取所有文件夹
-        subfolders = [f.path for f in os.scandir(local_folder) if f.is_dir()]
+                    # 遍历 dataJson 中的任务并添加到网格布局中
+                    for index, task in enumerate(dataJson):
+                        # 计算行列
+                        row = index // num_columns
+                        col = index % num_columns
 
-        # 初始化文件列表
-        aset_files = []
+                        backlabel = QPushButton()
+                        backlabel.setStyleSheet(
+                            f'border: 1px solid #70D0A3; border-radius: {25 * self.height_scale}px; background-color: #f5f8fc;'
+                        )
+                        backlabel.setFixedSize(300 * self.width_scale, 316 * self.height_scale)
 
-        # 遍历每个文件夹，收集其中的 .aset 文件
-        for folder in subfolders:
-            files = [os.path.join(folder, f) for f in os.listdir(folder) if f.endswith('.aset')]
-            aset_files.extend(files)
+                        # 提取所需参数
+                        machine_id = task.get('id')
+                        machine_title = task.get('deviceTypeName', '烘焙机')
+                        machine_Number = task.get('deviceSerialNumber', '序列号')
+                        machine_Model = task.get('deviceModel', '机型')
+                        machine_address = task.get('usePosition', '地址')
+                        machine_ip = task.get('deviceAddress', '设备ip')
+                        machine_jrfs = task.get('usePosition', '加热方式')
+                        img_path = task.get('deviceImg', task.get('setImg', self.normalized_path + '/includes/Icons/general/sbtx.png'))
 
-        if len(aset_files) == 0:
-            self.shebeiLabel.setText("请前往设置添加设备")
+                        backlabel.clicked.connect(lambda _, task1=task: self.showMachinesDetails(task1)) # 设备查询
 
-        else:
-            self.shebeiLabel.setText("请选择设备")
+                        # 设备图片 QLabel
+                        shebeiImg = QLabel(backlabel)
+                        shebeiImg.setGeometry(75 * self.width_scale, 23 * self.height_scale,
+                                              155 * self.width_scale, 155 * self.height_scale)
+                        shebeiImg.setStyleSheet(
+                            "border: none; background-color: transparent;border-radius: 20px"
+                            # Explicitly remove the border
+                        )
+                        shebeiImg.setScaledContents(True)
+                        if img_path and os.path.exists(img_path):  # If the image path is valid
+                            original_pixmap = QPixmap(img_path)
+                            rounded_radius = 15 * self.width_scale  # Rounded corner radius
+                            rounded_pixmap = self.setRoundedPixmap(original_pixmap, rounded_radius)
+                            shebeiImg.setPixmap(rounded_pixmap)
+                        else:  # If the image is invalid, show default text
+                            shebeiImg.setText("Image not found")
+                            shebeiImg.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-    
+                        # 设备名称
+                        self.rwmcTitle = QLabel(backlabel)
+                        self.rwmcTitle.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
+                        self.rwmcTitle.setText(machine_title)
+                        self.rwmcTitle.setGeometry(32 * self.width_scale, 194 * self.height_scale,
+                                                   260 * self.width_scale, 34 * self.height_scale)
+                        self.rwmcTitle.setStyleSheet(
+                            "color: #222222;background-color: transparent; border: none; font-size: 16px"
+                        )
+                        rwmcTitlefont = QFont(self.font_family3, 18 * self.width_scale)
+                        self.rwmcTitle.setFont(rwmcTitlefont)
 
+                        # 设备机型
+                        self.yxjTitle = QLabel(backlabel)
+                        self.yxjTitle.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
+                        self.yxjTitle.setText(
+                            f"<span style='color: #B2B1B1;'>机型: </span>{machine_Model}")
+                        self.yxjTitle.setGeometry(32 * self.width_scale, 239 * self.height_scale,
+                                                  260 * self.width_scale, 34 * self.height_scale)
+                        self.yxjTitle.setStyleSheet(
+                            "color: #222222;background-color: transparent; border: none; font-size: 16px")
+                        cgjzTitlefont = QFont(self.font_family4, 14 * self.width_scale)
+                        self.yxjTitle.setFont(cgjzTitlefont)
+
+                        # 设备地址
+                        self.yxjTitle = QLabel(backlabel)
+                        self.yxjTitle.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
+                        self.yxjTitle.setText(
+                            f"<span style='color: #B2B1B1;'>设备地址: </span>{machine_address}")
+                        self.yxjTitle.setGeometry(32 * self.width_scale, 276 * self.height_scale,
+                                                  260 * self.width_scale, 34 * self.height_scale)
+                        self.yxjTitle.setStyleSheet(
+                            "color: #222222;background-color: transparent; border: none; font-size: 16px"
+                        )
+                        self.yxjTitle.setFont(cgjzTitlefont)
+
+                        # 添加到布局并设置间距
+                        self.deviceGridLayout.addWidget(backlabel, row, col, alignment=Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignTop)
+                        self.deviceGridLayout.setHorizontalSpacing(21)
+                        self.deviceGridLayout.setVerticalSpacing(10)
+
+                        self.deviceTabel.setVisible(True)
+                else:
+                    print("连接失败")
 
     def setRoundedPixmap(self, pixmap: QPixmap, radius: int) -> QPixmap:
         """为 QPixmap 添加圆角效果"""
@@ -15020,216 +14967,106 @@ class ApplicationWindow(
 
         return rounded
 
-    def load_files(self, folder_path):
-        if os.path.exists(folder_path):
-            dir = QDir(folder_path)
-            dir.setFilter(QDir.Filter.Dirs | QDir.Filter.NoDotAndDotDot)  # 只获取子文件夹，排除 . 和 ..
-            subfolders = dir.entryList()  # 获取所有子文件夹
+    # def load_files(self, folder_path):
+    #     if os.path.exists(folder_path):
+    #         dir = QDir(folder_path)
+    #         dir.setFilter(QDir.Filter.Dirs | QDir.Filter.NoDotAndDotDot)  # 只获取子文件夹，排除 . 和 ..
+    #         subfolders = dir.entryList()  # 获取所有子文件夹
+    # 
+    #         # 将所有文件夹添加到 QComboBox 中
+    #         self.deviceNameEdit.addItems(subfolders)
+    #     else:
+    #         print(f"文件夹 {folder_path} 不存在！")
 
-            # 将所有文件夹添加到 QComboBox 中
-            self.deviceNameEdit.addItems(subfolders)
-        else:
-            print(f"文件夹 {folder_path} 不存在！")
+    # def load_files_from_folder(self):
+    #     """当选择文件夹时，加载该文件夹中的文件到 deviceModelEdit 下拉框，去掉文件后缀"""
+    #     folder_path = self.deviceNameEdit.currentText()
+    #     if folder_path:  # 如果选择了文件夹
+    #         folder_full_path = os.path.join("Machines", folder_path)
+    #         self.deviceModelEdit.clear()  # 清空现有项
+    # 
+    #         # 获取文件夹中的文件
+    #         if os.path.exists(folder_full_path):
+    #             files = [f for f in os.listdir(folder_full_path) if os.path.isfile(os.path.join(folder_full_path, f))]
+    # 
+    #             # 去掉文件的后缀，并将文件名添加到下拉框
+    #             file_names_without_extension = [os.path.splitext(f)[0] for f in files]
+    #             self.deviceModelEdit.addItems(file_names_without_extension)  # 只显示文件名部分，不显示后缀
+    # 
+    #             self.load_modbus_host()  # 加载 Modbus host 配置
+    #     else:
+    #         self.deviceModelEdit.clear()
+    # 
+    # def load_modbus_host(self):
+    #     """从选择的文件中提取 Modbus 配置中的 host 字段"""
+    #     selected_file = self.deviceModelEdit.currentText()
+    #     folder_path = self.deviceNameEdit.currentText()
+    # 
+    #     if selected_file and folder_path:
+    #         file_path = os.path.join("Machines", folder_path, selected_file + '.aset')
+    # 
+    #         # 检查文件是否存在
+    #         if not os.path.exists(file_path):
+    #             print(f"文件 {file_path} 不存在！")
+    #             self.deviceAddressEdit.setText("未找到文件")
+    #             return
+    # 
+    #         # 读取文件内容并提取 Modbus 配置中的 host 字段
+    #         with open(file_path, "r") as file:
+    #             content = file.read()
+    # 
+    #         # 使用正则表达式提取 host 字段
+    #         match = re.search(r"host\s*=\s*([\d\.]+)", content)
+    #         if match:
+    #             host = match.group(1)  # 获取 host 地址
+    #             self.deviceAddressEdit.setText(host)  # 更新 deviceAddressEdit
+    #         else:
+    #             self.deviceAddressEdit.setText("未找到 host 配置")
 
-    def load_files_from_folder(self):
-        """当选择文件夹时，加载该文件夹中的文件到 deviceModelEdit 下拉框，去掉文件后缀"""
-        folder_path = self.deviceNameEdit.currentText()
-        if folder_path:  # 如果选择了文件夹
-            folder_full_path = os.path.join("Machines", folder_path)
-            self.deviceModelEdit.clear()  # 清空现有项
+    def fhMachinesClick(self):
+        self.deviceDetail.setVisible(False)
+        self.setMachinesList()
 
-            # 获取文件夹中的文件
-            if os.path.exists(folder_full_path):
-                files = [f for f in os.listdir(folder_full_path) if os.path.isfile(os.path.join(folder_full_path, f))]
+        # self.deviceNameLineEdit.clear()
+        # self.deviceNameEdit.setCurrentIndex(-1)
+        # self.deviceModelEdit.setCurrentIndex(-1)
+        # self.deviceModelLineEdit.clear()
+        # self.deviceXLHEdit.clear()
+        # self.deviceAddressEdit.clear()
+        # self.deviceHeating.setCurrentIndex(-1)
+        # self.deviceDZEdit.clear()
 
-                # 去掉文件的后缀，并将文件名添加到下拉框
-                file_names_without_extension = [os.path.splitext(f)[0] for f in files]
-                self.deviceModelEdit.addItems(file_names_without_extension)  # 只显示文件名部分，不显示后缀
-
-                self.load_modbus_host()  # 加载 Modbus host 配置
-        else:
-            self.deviceModelEdit.clear()
-
-    def load_modbus_host(self):
-        """从选择的文件中提取 Modbus 配置中的 host 字段"""
-        selected_file = self.deviceModelEdit.currentText()
-        folder_path = self.deviceNameEdit.currentText()
-
-        if selected_file and folder_path:
-            file_path = os.path.join("Machines", folder_path, selected_file + '.aset')
-
-            # 检查文件是否存在
-            if not os.path.exists(file_path):
-                print(f"文件 {file_path} 不存在！")
-                self.deviceAddressEdit.setText("未找到文件")
-                return
-
-            # 读取文件内容并提取 Modbus 配置
-            with open(file_path, "r") as file:
-                content = file.read()
-
-            # 提取 host、deviceID、comport 信息
-            host_match = re.search(r"host\s*=\s*([\d\.]+)", content)
-            deviceID_match = re.search(r"id\s*=\s*([\d\.]+)", content)
-            com_match = re.search(r"comport\s*=\s*([\w\d]+)", content)  # comport 可能是 COM3 之类的
-
-            host = host_match.group(1) if host_match else None
-            deviceID2 = deviceID_match.group(1) if deviceID_match else None
-            com = com_match.group(1) if com_match else None
-
-            # 确保 deviceID2 是整数
-            try:
-                deviceID2_int = int(deviceID2) if deviceID2 is not None else None
-            except ValueError:
-                deviceID2_int = None
-
-            # 需要显示 IP 地址的设备 ID
-            ip_devices = {29, 79, 111, 138, 142}
-            # 需要显示串口通信的设备 ID
-            com_devices = {0, 9, 19, 53, 101, 115, 126}
-
-            if deviceID2_int in ip_devices:
-                self.deviceAddress.setText("设备IP：")
-                self.deviceAddressEdit.setText(host if host else "未知IP")
-                self.deviceAddressEdit.setVisible(True)
-                self.deviceAddressCom.setVisible(False)
-
-            elif deviceID2_int in com_devices:
-                self.deviceAddress.setText("设备串口：")
-                self.deviceAddressCom.setCurrentText(com if com else "未知串口")
-                self.deviceAddressCom.setVisible(True)
-                self.deviceAddressEdit.setVisible(False)
-
-            else:
-                self.deviceAddressEdit.setText("未找到 host 配置")
-
-    def addNewMachines(self):
-        """打开文件选择器并复制 .aset 文件到目标路径"""
-        # 打开文件选择器
-        self.deviceDetail.setVisible(True)
-        self.deviceNameEdit.setVisible(True)
-        self.deviceModelEdit.setVisible(True)
-        self.deviceNameLineEdit.setVisible(False)
-        self.deviceModelLineEdit.setVisible(False)
-
-        deviceDetailTouxiangPixmap = QPixmap(self.normalized_path + '/includes/Icons/general/sbtx.png')
-        scaled_pixmap = deviceDetailTouxiangPixmap.scaled(self.deviceDetailTouxiang.size(),
-                                                          Qt.AspectRatioMode.IgnoreAspectRatio)
-        self.deviceDetailTouxiang.setPixmap(scaled_pixmap)
-
-        folder_path = os.path.join(ytycwdpath,"localJson","Machines")  # 假设这个是你需要查看的路径
-
-        # 获取文件夹中的文件数量
-        # if os.path.exists(folder_path):
-        #     # 使用 QDir 获取文件数量
-        #     dir = QDir(folder_path)
-        #     dir.setFilter(QDir.Filter.Files)  # 获取文件而不是文件夹
-        #     files = dir.entryList()  # 获取所有文件列表
-        #
-        #     # 更新 QLineEdit 显示文件数量 + 1
-        #     file_count = len(files) + 1  # 加 1
-        #     self.deviceXLHEdit.setText(str(file_count))
-        # else:
-        #     print(f"文件夹 {folder_path} 不存在！")
-        #     self.deviceXLHEdit.setText("文件夹不存在")
-
-
-        # self.default_path = "../includes/Machines"  # 默认路径
-        # self.target_path = "localJson/Machines"  # 目标路径
-        #
-        # file_dialog = QFileDialog()
-        # file_dialog.setWindowTitle("选择机器文件")
-        # file_dialog.setNameFilter("ASET files (*.aset)")  # 仅显示 .aset 文件
-        # file_dialog.setDirectory(self.default_path)  # 设置默认路径
-        #
-        # if file_dialog.exec():  # 检查用户是否选择了文件
-        #     selected_files = file_dialog.selectedFiles()
-        #     if selected_files:
-        #         src_file = selected_files[0]  # 获取选择的文件路径
-        #
-        #         # 检查目标路径是否存在，不存在则创建
-        #         os.makedirs(self.target_path, exist_ok=True)
-        #
-        #         # 目标文件路径
-        #         target_file = os.path.join(self.target_path, os.path.basename(src_file))
-        #
-        #         try:
-        #             # 复制文件到目标路径
-        #             shutil.copy2(src_file, target_file)
-        #             self.setMachinesList()
-        #             QMessageBox.information(None, "成功", f"文件已成功复制到: {self.target_path}")
-        #         except Exception as e:
-        #             QMessageBox.critical(None, "错误", f"文件复制失败: {str(e)}")
-        #     else:
-        #         QMessageBox.warning(None, "未选择文件", "请先选择一个 .aset 文件。")
-        # else:
-        #     QMessageBox.information(None, "操作取消", "您未选择任何文件。")
-
-    def showMachinesDetails(self, filename, setJX):
+    def showMachinesDetails(self, task):
         """
         显示设备详情，并根据设备文件的内容填充表单。
         """
         self.deviceDetail.setVisible(True)
-
-        config = configparser.ConfigParser()
-        config.read(filename, encoding="utf-8")
-
-        file_with_extension = os.path.basename(filename)
-
-        # 去掉后缀，得到纯文件名
-        file_name = os.path.splitext(file_with_extension)[0]
-
-        # 提取所需参数
-        file_title = os.path.splitext(os.path.basename(filename))[0]
-        roastertype_setup = config.get("General", "roastertype_setup", fallback="N/A")
-        idNum = config.get("Device", "id", fallback="N/A")
-        roastersize_setup_default = config.get("General", "roastersize_setup_default", fallback="N/A")
-        host = config.get("Modbus", "host", fallback="N/A")
-        set_host = config.get("OtherSettings", "setHost", fallback=host)  # 优先显示 setHost
-        heating = config.get("OtherSettings", "setHeating", fallback=None)
-        comText = config.get("OtherSettings", "setcom", fallback=None)
-        img_path = config.get("OtherSettings", "setImg",
-                              fallback=self.normalized_path + '/includes/Icons/general/sbtx.png')
-        sbxl = config.get("OtherSettings", "setSBXL", fallback=None)
-        sbdz = config.get("OtherSettings", "setDZ", fallback=None)
+        machineName = task.get('deviceTypeName')
+        machineModel = task.get('deviceModel')
+        machineXLH = task.get('deviceSerialNumber')
+        machineIP = task.get('deviceAddress')
+        machinejrfs = task.get('belongingCategory')
+        machinedz = task.get('usePosition')
+        img_path = task.get('deviceImg')
 
         # 更新 UI 元素
-        self.deviceNameLineEdit.setVisible(True)
-        self.deviceModelLineEdit.setVisible(True)
+        self.deviceNameLineEdit.setText(machineName)
+        self.deviceModelLineEdit.setText(machineModel)
+        self.deviceXLHEdit.setText(machineXLH)
+        self.deviceAddressEdit.setText(machineIP)
+        if machinejrfs=='1':
+            self.deviceHeating.setText('Propane Gas (LPG)')
+        elif machinejrfs=='2':
+            self.deviceHeating.setText('Propane Gas (LPG)')
+        else:
+            self.deviceHeating.setText('Electric')
 
-        self.deviceNameEdit.setVisible(False)
-        self.deviceNameLineEdit.setText(setJX)
-        self.deviceModelEdit.setVisible(False)
-        self.deviceModelLineEdit.setText(file_name)
-        self.deviceHeating.setCurrentText(heating)
-        self.deviceAddressCom.setCurrentText(comText)
-
-        # 需要显示 IP 地址的设备 ID
-        ip_devices = {29, 79, 111, 138, 142}
-        # 需要显示串口通信的设备 ID
-        com_devices = {0, 9, 19, 53, 101, 115, 126}
-
-        if int(idNum) in ip_devices:
-            self.deviceAddress.setText("设备IP：")
-            self.deviceAddressEdit.setText(set_host)
-            self.deviceAddressEdit.setVisible(True)
-            self.deviceAddressCom.setVisible(False)
-
-        elif int(idNum) in com_devices:
-            self.deviceAddress.setText("设备串口：")
-            self.deviceAddressCom.setCurrentText(comText)
-            self.deviceAddressCom.setVisible(True)
-            self.deviceAddressEdit.setVisible(False)
-
-        self.deviceXLHEdit.setText(sbxl)
-        self.deviceDZEdit.setText(sbdz)
-        # self.deviceXLHEdit.setReadOnly(True)
-        # self.deviceAddressEdit.setText(set_host)
+        self.deviceDZEdit.setText(machinedz)
 
         # 设置图片
         if img_path and os.path.exists(img_path):  # 检查图片路径是否有效
             pixmap = QPixmap(img_path)
-            scaled_pixmap = pixmap.scaled(self.deviceDetailTouxiang.size(),Qt.AspectRatioMode.IgnoreAspectRatio)
+            scaled_pixmap = pixmap.scaled(self.deviceDetailTouxiang.size(), Qt.AspectRatioMode.IgnoreAspectRatio)
             self.deviceDetailTouxiang.setPixmap(scaled_pixmap)
             self.deviceDetailTouxiang.setStyleSheet(
                 f"border-radius: {25 * self.height_scale}px; border: 1px solid #DEE0E3;"
@@ -15242,211 +15079,17 @@ class ApplicationWindow(
             )
 
         # 绑定删除设备按钮
-        self.d_deviceBtn.clicked.connect(lambda _, fname=filename: self.onDelectMachinesClick(fname))
+        # self.d_deviceBtn.clicked.connect(lambda _, fname=filename: self.onDelectMachinesClick(fname))
 
-    def openFileDialog(self, event):
-        """ 打开文件对话框选择图片 """
-        # 使用文件对话框打开文件，并设置文件过滤器
-        filePath, _ = QFileDialog.getOpenFileName(self, "选择头像", "",
-                                                  "图片文件 (*.png *.jpg *.bmp);;所有文件 (*)",
-                                                  options=QFileDialog.Option.DontUseNativeDialog)
-
-        if filePath:
-            # 处理选择的图片
-            self.selected_image_path = filePath
-            # 调用 updateProfilePicture 函数来处理图片复制和显示
-            self.updateProfilePicture(filePath)
-
-    def updateProfilePicture(self, file_path):
-        """ 更新头像显示并将图片路径保存到设备配置中 """
-        # 将图片复制到 localJson\MachinesImg 路径下
-        target_dir = os.path.join(ytycwdpath,"localJson","MachinesImg")
-        if not os.path.exists(target_dir):
-            os.makedirs(target_dir)
-
-        # 复制图片到目标路径
-        file_name = os.path.basename(file_path)
-        target_path = os.path.join(target_dir, file_name)
-        shutil.copy(file_path, target_path)
-
-        # 更新显示图片
-        pixmap = QPixmap(target_path)
-        self.deviceDetailTouxiang.setPixmap(
-            pixmap.scaled(self.deviceDetailTouxiang.size(),Qt.AspectRatioMode.IgnoreAspectRatio))
-
-        # 保存图片路径，等待用户点击确定时写入文件
-        self.selected_image_path = target_path
-
-    def updateAsetFile(self):
-        """
-        点击按钮时，根据是否存在同名文件决定更新或新建 .aset 文件，并在源文件基础上添加新字段。
-        """
-        if self.deviceNameEdit.isVisible():
-            folder_name = self.deviceNameEdit.currentText()
-            file_name = self.deviceModelEdit.currentText()
-        else:
-            folder_name = self.deviceNameLineEdit.text()
-            file_name = self.deviceModelLineEdit.text()
-
-        if not folder_name:
-            QMessageBox.warning(self, "提示", "未选择文件夹！")
-            return
-
-        # 拼接目标文件夹路径和 .aset 文件路径
-        target_folder_path =  os.path.join(ytycwdpath,"localJson","Machines", folder_name)
-        aset_file_path = os.path.join(target_folder_path, f"{file_name}.aset")
-
-        # 配置读取对象
-        config = configparser.ConfigParser()
-
-        # 确保目标文件夹存在
-        if not os.path.exists(target_folder_path):
-            os.makedirs(target_folder_path)  # 创建文件夹
-
-        # 获取源文件路径
-        source_file_path = os.path.join("Machines", folder_name, f"{file_name}.aset")
-
-        # 检查是否为查看详情还是新建文件
-        if os.path.exists(aset_file_path):
-            # 查看详情：直接更新现有文件
-            config.read(aset_file_path, encoding="utf-8")
-            print(f"更新文件：{aset_file_path}")
-        else:
-            # 新建文件：复制源文件内容（如果存在），否则创建新文件
-            if os.path.exists(source_file_path):
-                # 复制源文件到目标位置
-                shutil.copy(source_file_path, aset_file_path)
-                print(f"文件 {source_file_path} 成功复制到 {aset_file_path}！")
-                config.read(aset_file_path, encoding="utf-8")
-            else:
-                print(f"源文件 {source_file_path} 不存在，将创建新的 .aset 文件。")
-                config.add_section("OtherSettings")
-
-        # 确保 "OtherSettings" 部分存在
-        if not config.has_section("OtherSettings"):
-            config.add_section("OtherSettings")
-
-        # 更新 setImg 字段（假设图片路径为 selected_image_path）
-        if hasattr(self, 'selected_image_path'):
-            config.set('OtherSettings', 'setImg', self.selected_image_path)
-
-        # 更新 setHost 字段（假设设备地址来自 deviceAddressEdit）
-        host = self.deviceAddressEdit.text()  # 获取设备地址
-        config.set('OtherSettings', 'setHost', host)
-
-        config.set('OtherSettings', 'setCom', self.deviceAddressCom.currentText())
-        config.set('OtherSettings', 'setComText', str(self.deviceAddressCom.currentIndex()))
-
-        # 更新 setjx 字段（设为文件夹名称）
-        config.set('OtherSettings', 'setjx', folder_name)
-
-        # 更新加热类型字段
-        config.set('OtherSettings', 'setHeating', self.deviceHeating.currentText())
-        config.set('OtherSettings', 'setHeatingType', str(self.deviceHeating.currentIndex()))
-        config.set('OtherSettings', 'setSBXL', self.deviceXLHEdit.text())
-        config.set('OtherSettings', 'setDZ', self.deviceDZEdit.text())
-
-        # 保存配置文件
-        with open(aset_file_path, 'w', encoding="utf-8") as configfile:
-            config.write(configfile)
-
-        print(f"配置文件更新成功：{aset_file_path}")
-
-        # 隐藏设备详情，并刷新设备列表
-        self.deviceDetail.setVisible(False)
-        self.setMachinesList()
-        # self.deviceHeating.clear()
-        # self.deviceNameEdit.clear()
-        # self.deviceModelEdit.clear()
-
-    def onConfirmClick(self):
-        """ 点击确定按钮时，执行写入操作 """
-        self.updateAsetFile()  # 更新 .aset 文件
-
-        self.deviceNameLineEdit.clear()
-        self.deviceNameEdit.setCurrentIndex(-1)
-        self.deviceModelEdit.setCurrentIndex(-1)
-        self.deviceModelLineEdit.clear()
-        self.deviceXLHEdit.clear()
-        self.deviceAddressEdit.clear()
-        self.deviceHeating.setCurrentIndex(-1)
-        self.deviceDZEdit.clear()
-
-    def onDelectMachinesClick(self,fname):
-        # 获取当前设备的名称
-        # device_name = self.deviceNameEdit.text()
-        # file_name = self.deviceModelEdit.currentText()
-        # folder = self.deviceNameLineEdit.text()
-        #
-        # # 构造 .aset 文件路径
-        # aset_file_path = f"localJson/Machines/{folder}/{file_name}.aset"
-        #
-        # # 打印文件路径（可选，调试用）
-        # print(f"Deleting file: {aset_file_path}")
-
-        # 检查文件是否存在
-        if os.path.exists(fname):
-            # 删除文件
-            os.remove(fname)
-            self.deviceDetail.setVisible(False)
-            self.setMachinesList()
-            # self.deviceHeating.clear()
-            # self.deviceNameEdit.clear()
-            # self.deviceModelEdit.clear()
-            print(f"File {fname} deleted successfully.")
-        else:
-            print(f"File {fname} not found.")
-
-        self.deviceNameLineEdit.clear()
-        self.deviceNameEdit.setCurrentIndex(-1)
-        self.deviceModelEdit.setCurrentIndex(-1)
-        self.deviceModelLineEdit.clear()
-        self.deviceXLHEdit.clear()
-        self.deviceAddressEdit.clear()
-        self.deviceHeating.setCurrentIndex(-1)
-        self.deviceDZEdit.clear()
-
-    def fhMachinesClick(self):
-        self.deviceDetail.setVisible(False)
-        self.setMachinesList()
-
-        self.deviceNameLineEdit.clear()
-        self.deviceNameEdit.setCurrentIndex(-1)
-        self.deviceModelEdit.setCurrentIndex(-1)
-        self.deviceModelLineEdit.clear()
-        self.deviceXLHEdit.clear()
-        self.deviceAddressEdit.clear()
-        self.deviceHeating.setCurrentIndex(-1)
-        self.deviceDZEdit.clear()
-
-
-    def process_reply(self, reply, img_label):
-        # 检查是否有错误
-        if reply.error() != QNetworkReply.NetworkError.NoError:  # 改为使用 NetworkError.NoError
-            img_label.setText("Failed to load image.")
-            print(f"Error: {reply.errorString()}")
-        else:
-            pixmap = QPixmap()
-            image_data = reply.readAll()
-            if pixmap.loadFromData(image_data):
-                img_label.setPixmap(pixmap)
-            else:
-                img_label.setText("Failed to load image data.")
-
-        # reply.deleteLater()
 
     def closeClicked(self):
-        # self.closeBack.setVisible(True)
-        self.closeEXE()
+        self.closeBack.setVisible(True)
+        # self.closeEXE()
 
     def closeHistoryClick(self):
         self.historyInfo.setVisible(False)
         self.scroll_area.setVisible(False)
-        # self.qmc.deleteLater()
-        # if hasattr(self, "matplotlib_info"):
-        #     self.matplotlib_info.setParent(None)  # 断开和 Qt 组件的连接
-        #     self.matplotlib_info = None  # 释放对象
-        # event.accept()
+        self.qmc.deleteLater()
 
     def closeAnalyseClick(self):
         self.historyAnalyse.setVisible(False)
@@ -15508,179 +15151,6 @@ class ApplicationWindow(
             """
             checkbox.setStyleSheet(new_style)
 
-    def setMachinesList(self):
-        """读取 localJson/Machines 下所有文件夹中的 .aset 文件，并显示到界面上"""
-        if not hasattr(self, 'deviceGridLayout'):
-            print("错误: deviceGridLayout 不存在")
-            return
-
-        # 清空网格布局
-        while self.deviceGridLayout.count():
-            child = self.deviceGridLayout.takeAt(0)
-            if child.widget():
-                child.widget().deleteLater()
-
-        # 本地文件夹路径
-        local_folder = os.path.join(ytycwdpath, "localJson", "Machines")
-        if not os.path.exists(local_folder):
-            print(f"文件夹 {local_folder} 不存在")
-            # 创建文件夹
-            os.makedirs(local_folder, exist_ok=True)
-
-        # 获取所有文件夹
-        try:
-            subfolders = [f.path for f in os.scandir(local_folder) if f.is_dir()]
-        except Exception as e:
-            print(f"扫描文件夹错误: {str(e)}")
-            subfolders = []
-
-        # 初始化文件列表
-        aset_files = []
-
-        # 遍历每个文件夹，收集其中的 .aset 文件
-        for folder in subfolders:
-            try:
-                files = [os.path.join(folder, f) for f in os.listdir(folder) if f.endswith('.aset')]
-                aset_files.extend(files)
-            except Exception as e:
-                print(f"读取文件夹 {folder} 错误: {str(e)}")
-
-        num_columns = 5  # 每行最多 5 个元素
-        spacing = 21 * self.height_scale  # 左右间距
-
-        # 遍历 .aset 文件并添加到网格布局中
-        for index, filepath in enumerate(aset_files):
-            # 去掉路径和 .aset 后缀
-            file_title = os.path.splitext(os.path.basename(filepath))[0]
-
-            # 计算行列
-            row = index // num_columns
-            col = index % num_columns
-
-            # 创建设备按钮
-            backlabel = QPushButton()
-            backlabel.setStyleSheet(
-                f'border: 1px solid #70D0A3; border-radius: {25 * self.height_scale}px; background-color: #f5f8fc;'
-            )
-            backlabel.setFixedSize(300 * self.width_scale, 316 * self.height_scale)
-
-            # 解析配置文件
-            config = configparser.ConfigParser()
-            try:
-                config.read(filepath, encoding="utf-8")
-            except Exception as e:
-                print(f"读取配置文件 {filepath} 错误: {str(e)}")
-                continue
-
-            # 提取所需参数
-            try:
-                roastertype_setup = config.get("General", "roastertype_setup", fallback="N/A")
-                roastersize_setup_default = config.get("General", "roastersize_setup_default", fallback="N/A")
-                host = config.get("Modbus", "host", fallback="N/A")
-                set_host = config.get("OtherSettings", "setHost", fallback=host)  # 优先显示 setHost
-                setJX = config.get("OtherSettings", "setJX", fallback="未知")  # 获取机型信息
-                img_path = config.get("OtherSettings", "setImg",
-                                      fallback=self.normalized_path + '/includes/Icons/general/sbtx.png')  # 获取图片路径
-            except Exception as e:
-                print(f"获取配置参数错误: {str(e)}")
-                continue
-
-            # backlabel.setText(file_title)
-            backlabel.clicked.connect(lambda _, fname=filepath, jx=setJX: self.showMachinesDetails(fname, jx))
-
-            # 设备图片 QLabel
-            shebeiImg = QLabel(backlabel)
-            shebeiImg.setGeometry(75 * self.width_scale, 23 * self.height_scale,
-                                  155 * self.width_scale, 155 * self.height_scale)
-            shebeiImg.setStyleSheet(
-                "border: none; background-color: transparent;border-radius: 20px"  # Explicitly remove the border
-            )
-            shebeiImg.setScaledContents(True)
-            if img_path and os.path.exists(img_path):  # If the image path is valid
-                original_pixmap = QPixmap(img_path)
-                rounded_radius = 15 * self.width_scale  # Rounded corner radius
-                rounded_pixmap = self.setRoundedPixmap(original_pixmap, rounded_radius)
-                shebeiImg.setPixmap(rounded_pixmap)
-            else:  # If the image is invalid, show default text
-                shebeiImg.setText("Image not found")
-                shebeiImg.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-            # 设备名称
-            self.rwmcTitle = QLabel(backlabel)
-            self.rwmcTitle.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
-            self.rwmcTitle.setText(file_title)
-            self.rwmcTitle.setGeometry(32 * self.width_scale, 194 * self.height_scale,
-                                       260 * self.width_scale, 34 * self.height_scale)
-            self.rwmcTitle.setStyleSheet(
-                "color: #222222;background-color: transparent; border: none; font-size: 16px"
-            )
-            rwmcTitlefont = QFont(self.font_family3, 18 * self.width_scale)
-            self.rwmcTitle.setFont(rwmcTitlefont)
-
-            # 设备机型
-            self.yxjTitle = QLabel(backlabel)
-            self.yxjTitle.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
-            self.yxjTitle.setText(
-                f"<span style='color: #B2B1B1;'>机型: </span>{setJX}")
-            self.yxjTitle.setGeometry(32 * self.width_scale, 239 * self.height_scale,
-                                      260 * self.width_scale, 34 * self.height_scale)
-            self.yxjTitle.setStyleSheet(
-                "color: #222222;background-color: transparent; border: none; font-size: 16px"
-            )
-            cgjzTitlefont = QFont(self.font_family4, 14 * self.width_scale)
-            self.yxjTitle.setFont(cgjzTitlefont)
-
-            # 设备地址
-            self.yxjTitle = QLabel(backlabel)
-            self.yxjTitle.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignLeft)
-            self.yxjTitle.setText(
-                f"<span style='color: #B2B1B1;'>设备地址: </span>{set_host}")
-            self.yxjTitle.setGeometry(32 * self.width_scale, 276 * self.height_scale,
-                                      260 * self.width_scale, 34 * self.height_scale)
-            self.yxjTitle.setStyleSheet(
-                "color: #222222;background-color: transparent; border: none; font-size: 16px"
-            )
-            self.yxjTitle.setFont(cgjzTitlefont)
-
-            # 添加到布局并设置间距
-            self.deviceGridLayout.addWidget(backlabel, row, col, alignment=Qt.AlignmentFlag.AlignTop)
-
-        # 计算 "添加" 按钮位置
-        add_index = len(aset_files)
-        add_row = add_index // num_columns
-        add_col = add_index % num_columns
-
-        # 创建 "添加" 按钮
-        add_button = QPushButton()
-        add_button.setFixedSize(300 * self.width_scale, 316 * self.height_scale)
-        add_button.setStyleSheet(f'''
-            QPushButton {{
-                border: 1px solid #DEEEFE; 
-                border-radius: {25 * self.height_scale}px; 
-                background-color: #f5f8fc;
-            }}
-        ''')
-
-        # 设置图标和图标大小
-        icon = QIcon(f"{self.normalized_path}/includes/Icons/general/addProject.png")
-        add_button.setIcon(icon)
-        add_button.setIconSize(QSize(100 * self.height_scale, 100 * self.height_scale))
-
-        # 连接点击事件
-        add_button.clicked.connect(self.addNewMachines)
-        # add_button.setIcon(QIcon(self.normalized_path + '/includes/Icons/general/addProject.png'))  # 设置图标
-
-        # 添加 "添加" 按钮到布局
-        self.deviceGridLayout.addWidget(add_button, add_row, add_col,
-                                        alignment=Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignTop)
-
-        # 设置布局的水平和垂直间距
-        self.deviceGridLayout.setHorizontalSpacing(20)
-        self.deviceGridLayout.setVerticalSpacing(20)
-
-        self.deviceTabel.setVisible(True)
-
-
     def closeEXE(self):
         # self.cap.release()
         self.destroy()  # 窗口关闭销毁
@@ -15691,14 +15161,15 @@ class ApplicationWindow(
 
     def device_issueClick(self):
         if self.sbsfycBtn.isChecked():
-            self.huakuaiRect.setGeometry(4*self.width_scale, 4*self.height_scale, 37*self.width_scale, 22*self.height_scale)
+            self.huakuaiRect.setGeometry(4 * self.width_scale, 4 * self.height_scale, 37 * self.width_scale,
+                                         22 * self.height_scale)
             self.shiTxt.setStyleSheet("background-color: transparent; border:none;color: #393939; ")  # 是
             self.fouTxt.setStyleSheet("background-color: transparent; border:none;color: #ffffff; ")
         else:
-            self.huakuaiRect.setGeometry(39*self.width_scale, 4*self.height_scale, 37*self.width_scale, 22*self.height_scale)
+            self.huakuaiRect.setGeometry(39 * self.width_scale, 4 * self.height_scale, 37 * self.width_scale,
+                                         22 * self.height_scale)
             self.shiTxt.setStyleSheet("background-color: transparent; border:none;color: #ffffff; ")
             self.fouTxt.setStyleSheet("background-color: transparent; border:none;color: #393939; ")  # 否
-
 
     def toggle_updateCloud(self):
         print('000')
@@ -15771,9 +15242,6 @@ class ApplicationWindow(
             return True  # 返回 True 表示事件已处理，不再传递给下层控件
         return super().eventFilter(obj, event)  # 默认事件处理
 
-
-
-
     # -------------------------------------------------------------------------------------------------------------------------单机版
     def add_orderDiolog(self):
         self.zhezhaoWidget_addOrder.setVisible(True)
@@ -15834,7 +15302,7 @@ class ApplicationWindow(
         # 创建 QScrollArea
         self.scrollArea_ADD = QScrollArea(self.addOrderWidget)
         self.scrollArea_ADD.setGeometry(38 * self.width_scale, 242 * self.height_scale,
-                                    550 * self.width_scale, 66 * self.height_scale)  # 滚动区域尺寸
+                                        550 * self.width_scale, 66 * self.height_scale)  # 滚动区域尺寸
         self.scrollArea_ADD.setWidgetResizable(True)  # 允许内部 widget 变化
         self.scrollArea_ADD.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)  # 隐藏横向滚动条
         self.scrollArea_ADD.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)  # 隐藏纵向滚动条
@@ -15908,6 +15376,7 @@ class ApplicationWindow(
         shengdouType.show()
         sdzl.show()
         hslkg.show()
+
     def addOrder_Json(self):
         try:
             # 确保当前阶段的输入值已保存
@@ -15970,7 +15439,7 @@ class ApplicationWindow(
                 "createTime": create_time,
                 "finishTime": self.finishContent.text(),
                 "bakingStatue": 1,
-                "bakingDeviceId": 2,
+                "bakingDeviceId": 29,
                 "taskId": task_id,
                 "formulationName": self.formulatioNameContent.text(),
                 "beanTypes": type_data,
@@ -15998,8 +15467,8 @@ class ApplicationWindow(
             # 隐藏窗口并刷新
             self.zhezhaoWidget_addOrder.setVisible(False)
             self.addOrderWidget.setVisible(False)
-            self.load_order_json()
-            self.orderWidget.update()
+            # self.load_order_json()
+            # self.orderWidget.update()
 
         except Exception as e:
             import traceback
@@ -16007,142 +15476,12 @@ class ApplicationWindow(
             print("Error saving data:", error_message)
             QMessageBox.critical(self, "错误", f"保存失败: {error_message}")
 
-    def clear_layout(self,layout):
+    def clear_layout(self, layout):
         """ 清除布局内的所有子组件 """
         while layout.count():
             item = layout.takeAt(0)
             if item.widget():
                 item.widget().deleteLater()
-
-    def load_order_json(self):
-        """从 JSON 文件加载数据到表单"""
-        try:
-            with open(os.path.join(ytycwdpath, "localJson", "order.json"), "r", encoding="utf-8") as file:
-                self.clear_layout(self.orderLayout)
-                data = json.load(file)
-                self.orderList_data = data
-                self.orders_list = []  # 初始化空列表
-                self.load_orders_from_json()  # 加载本地订单数据
-
-                # 清除布局中的旧部件
-                for i in reversed(range(self.orderLayout.count())):
-                    widget = self.orderLayout.itemAt(i).widget()
-                    if widget is not None:
-                        # widget.deleteLater()
-                        self.orderLayout.removeItem(self.orderLayout.itemAt(i))
-
-                # 遍历订单数据并生成控件
-                for order in self.orderList_data:
-                    if order.get("bakingDeviceId") == 2 and order.get("bakingStatue") == 1:
-                        ordersRect2 = QLabel()
-                        ordersRect2.setStyleSheet(
-                            f'border-radius: {25 * self.height_scale}px; background-color: #f5f8fb; border: 1px solid #e1f0fe;'
-                        )
-                        ordersRect2.setFixedSize(288 * self.width_scale, 185 * self.height_scale)
-
-                        # 创建标签和设置内容
-                        task_name_label = QLabel(ordersRect2)
-                        task_name_label.setStyleSheet("color: #222222;border:none;background-color:transparent")
-                        task_name_label.setGeometry(26 * self.width_scale, 26 * self.height_scale,
-                                                    183 * self.width_scale, 28 * self.height_scale)
-                        font = QFont(self.font_family3, 14 * self.width_scale)
-                        # font.setBold(True)
-                        task_name_label.setFont(font)
-                        task_name_label.setText(order['taskName'])
-
-                        taskMoreSet = QPushButton(ordersRect2)
-                        taskMoreSet.setGeometry(260 * self.width_scale, 25 * self.height_scale, 9 * self.width_scale,
-                                                 23 * self.height_scale)
-                        taskMoreSet.setStyleSheet(f"""
-                                    QPushButton {{
-                                        border-image: url('{self.normalized_path}/includes/Icons/yrzb/more.png');
-                                        border: none;
-                                    }}
-                                """)
-                        # taskMoreSet.clicked.connect(lambda checked, order=order: self.delectTaskClicked(order)) # taskMoreSetClicked
-                        taskMoreSet.clicked.connect(lambda checked, order=order: self.taskMoreSetClicked(order))
-
-                        taskTxt_label = QLabel(ordersRect2)
-                        taskTxt_label.setStyleSheet("color: #222222;border:none;")
-                        taskTxt_label.setGeometry(26 * self.width_scale, 68 * self.height_scale,
-                                                  73 * self.width_scale, 24 * self.height_scale)
-                        font2 = QFont(self.font_family4, 12 * self.width_scale)
-                        taskTxt_label.setFont(font2)
-                        taskTxt_label.setText(f"任务订单:")
-
-                        self.task_no_label = ScrollingLabel(f"{order['bakingBatch']}", ordersRect2)
-                        self.task_no_label.setGeometry(99 * self.width_scale, 68 * self.height_scale,
-                                                       170 * self.width_scale, 24 * self.height_scale)
-                        self.task_no_label.setFont(font2)
-
-                        deadline_label = QLabel(ordersRect2)
-                        deadline_label.setStyleSheet("color: #222222;border:none;")
-                        deadline_label.setGeometry(26 * self.width_scale, 103 * self.height_scale,
-                                                   240 * self.width_scale, 24 * self.height_scale)
-                        deadline_label.setFont(font2)
-                        deadline_label.setText(f"截止日期: {order['finishTime']}")
-
-                        order_id_label = QLabel(ordersRect2)
-                        order_id_label.setStyleSheet("color: #222222;border:none;")
-                        order_id_label.setGeometry(26 * self.width_scale, 138 * self.height_scale,
-                                                   210 * self.width_scale, 24 * self.height_scale)
-                        order_id_label.setFont(font2)
-                        order_id_label.setText(f"订单编号: {order['id']}")
-
-                        spacer_widget = QWidget()
-                        spacer_widget.setFixedHeight(15 * self.height_scale)
-
-                        # 添加控件到布局
-                        self.orderLayout.addWidget(ordersRect2)
-                        self.orderLayout.setAlignment(ordersRect2, Qt.AlignmentFlag.AlignTop)
-
-                        self.orderLayout.addWidget(spacer_widget)
-
-                        # 为 ordersRect2 添加双击事件
-                        ordersRect2.mouseDoubleClickEvent = lambda event, order=order: self.on_item_double_click(event,order)
-
-                        # 绑定鼠标事件
-                        ordersRect2.mousePressEvent = lambda event, order=order: self.on_item_press(event, order)
-                        ordersRect2.mouseReleaseEvent = lambda event: self.cancel_long_press()
-
-                # 添加按钮
-
-                self.addButton = QPushButton(self.orderWidget)
-                self.addButton.setStyleSheet(f'''
-                    QPushButton {{
-                        border-radius: {25 * self.height_scale}px;
-                        background-color: #f5f8fb;
-                        border: 1px solid #e1f0fe;
-                    }}
-                    QPushButton:hover {{
-                        background-color: #DEEEFE;
-                        border: 1px solid #b5d5fd;
-                    }}
-                    QPushButton:pressed {{
-                        background-color: #e1f0fe;
-                        border: 1px solid #91c6fc;
-                    }}
-                ''')
-
-                # 设置按钮图标
-                icon_path = f"{self.normalized_path}/includes/Icons/general/addProject.png"
-                self.addButton.setIcon(QIcon(icon_path))
-                self.addButton.setIconSize(QSize(100 * self.height_scale, 100 * self.height_scale))
-                self.addButton.setFixedSize(288 * self.width_scale, 185 * self.height_scale)
-
-                # 绑定按钮点击事件
-                self.addButton.clicked.connect(self.add_orderDiolog)
-
-                # 打印路径调试
-                print(f"Icon path: {icon_path}")
-
-                # 将按钮添加到布局
-                self.orderLayout.addWidget(self.addButton, alignment=Qt.AlignmentFlag.AlignTop)
-
-        except FileNotFoundError:
-            print(self, "警告", "JSON 文件不存在")
-        except Exception as e:
-            print(self, "错误", f"加载失败: {e}")
 
     def on_item_double_click(self, event, order):
         """处理双击事件，将点击的订单项移到列表的最前面，并更新 JSON 文件"""
@@ -16312,8 +15651,8 @@ class ApplicationWindow(
 
         # 更新 JSON 文件
         self.updateOrderJsonFile(order_id_to_remove)
-        self.load_order_json()
-        self.orderWidget.update()
+        # self.load_order_json()
+        # self.orderWidget.update()
 
     def markChargeClick(self):
         # print(self.time_left)
@@ -16335,80 +15674,97 @@ class ApplicationWindow(
         self.rudouImg.setPixmap(QPixmap(self.normalized_path + '/includes/Icons/yrzb/rd-hover.png'))
 
         self.hbList = []
+        global token
         try:
-            with open(os.path.join(ytycwdpath,"localJson","order.json"), "r", encoding="utf-8") as file:
-                data = json.load(file)
-                self.orderList_data = data
+            # 从服务器获取订单数据
+            url = "http://inner4.mjytech.com:22104//admin/task/getBakingTask"  # 获取任务列表API
+            headers = {
+                'token': f'{token}',
+                'Content-Type': 'application/json'
+            }
+            
+            # 发送请求获取订单数据
+            if token:
+                params = {'bakingDeviceId': self.sheibeiId}
+                response = requests.get(url, params, headers=headers)
+                if response.status_code == 200:
+                    data_json = response.json()
+                    if data_json['code'] == 0 or data_json['code'] == 200:
+                        order_data = data_json.get('data', [])
+                        
+                        # 遍历订单数据并生成控件
+                        for order in order_data:
+                            if order.get('bakingStatus') == 1:
+                                # 使用 .get() 取值，若不存在某字段则提供默认值 [0, 0, 0, 0]
+                                stage1 = order.get("stage1", [0, 0, 0, 0])
+                                stage2 = order.get("stage2", [0, 0, 0, 0])
+                                stage3 = order.get("stage3", [0, 0, 0, 0])
+                                stage4 = order.get("stage4", [0, 0, 0, 0])
+                                stage5 = order.get("stage5", [0, 0, 0, 0])
+                                stage6 = order.get("stage6", [0, 0, 0, 0])
 
-                if not self.orderList_data:  # 如果数据为空
-                    self.diologRect2Zhezhao.setVisible(True)
-                    self.jbCentent2.setText("请先添加订单！")
-                    return
-
-                # 遍历订单数据并生成控件
-                for order in self.orderList_data:
-                    if order.get("bakingDeviceId") == 2 and order.get("bakingStatue") == 1:
-                        # 使用 .get() 取值，若不存在某字段则提供默认值 [0, 0, 0, 0]
-                        stage1 = order.get("stage1", [0, 0, 0, 0])
-                        stage2 = order.get("stage2", [0, 0, 0, 0])
-                        stage3 = order.get("stage3", [0, 0, 0, 0])
-                        stage4 = order.get("stage4", [0, 0, 0, 0])
-                        stage5 = order.get("stage5", [0, 0, 0, 0])
-                        stage6 = order.get("stage6", [0, 0, 0, 0])
-
-                        # 将数据追加到 hbList
-                        self.hbList.append([
-                            order.get('id'),
-                            order.get('taskName'),
-                            order.get('bakingBatch'),
-                            order.get('finishTime'),
-                            order.get('taskId'),
-                            stage1,
-                            stage2,
-                            stage3,
-                            stage4,
-                            stage5,
-                            stage6,
-                            order.get('beanTypes'),
-                        ])
-
-        except FileNotFoundError:
-            QMessageBox.warning(self, "警告", "JSON 文件不存在")
+                                # 将数据追加到 hbList
+                                self.hbList.append([
+                                    order.get('id'),
+                                    order.get('taskName'),
+                                    order.get('bakingBatch'),
+                                    order.get('finishTime'),
+                                    order.get('taskId'),
+                                    stage1,
+                                    stage2,
+                                    stage3,
+                                    stage4,
+                                    stage5,
+                                    stage6,
+                                    order.get('beanTypes'),
+                                ])
+                    else:
+                        QMessageBox.warning(self, "警告", f"获取订单数据失败: {data_json.get('msg', '未知错误')}")
+                else:
+                    QMessageBox.warning(self, "警告", f"服务器连接失败: {response.status_code}")
+            else:
+                QMessageBox.warning(self, "警告", "未获取到有效token")
+                
+        except Exception as e:
+            QMessageBox.warning(self, "警告", f"获取订单数据异常: {str(e)}")
+            
+        # 如果没有获取到订单数据，直接返回
+        if not self.hbList:
+            QMessageBox.warning(self, "警告", "没有可用的订单数据")
+            return
 
         first_Value = self.hbList[0]
         self.getTPMark = first_Value
 
-        _log.info('first_Value= %s ',first_Value)
-        self.task_name_label2.setText(first_Value[1])
-        new_text = f"任务订单: {first_Value[2]}"
-        self.task_no_label2.original_text = new_text  # 更新原始文本
-        self.task_no_label2.setText(new_text)  # 更新标签的显示文本
-        # self.task_no_label2.update_text_dimensions()  # 更新宽度
-        if self.task_no_label2.text_width > self.task_no_label2.label_width:
-            self.task_no_label2.timer.start(100, Qt.TimerType.CoarseTimer, self)  # 如果文本宽度大于标签宽度，开始滚动
-        self.deadline_label2.setText(f"截止日期: {first_Value[3]}")
-        self.rightTopLabel1.setText(first_Value[2])
+        _log.info('first_Value= %s ', first_Value)
+        url = "http://inner4.mjytech.com:22104//admin/task/startBakingTaskStatus"  # 开始烘焙
+        payload = json.dumps({'id': first_Value[0]})
+        headers = {
+            'token': f'{token}',
+            'Content-Type': 'application/json'
+        }
+        if token:
+            response = requests.post(url, payload, headers=headers)
+            if response.status_code == 200:
+                data = response.json()
+                textCode = data['code']
+                if textCode == 0 or textCode == 200:
+                    print('连接成功')
+                    self.task_name_label2.setText(first_Value[1])
+                    new_text = f"任务订单: {first_Value[2]}"
+                    self.task_no_label2.original_text = new_text  # 更新原始文本
+                    self.task_no_label2.setText(new_text)  # 更新标签的显示文本
+                    # self.task_no_label2.update_text_dimensions()  # 更新宽度
+                    if self.task_no_label2.text_width > self.task_no_label2.label_width:
+                        self.task_no_label2.timer.start(100, Qt.TimerType.CoarseTimer, self)  # 如果文本宽度大于标签宽度，开始滚动
+                    self.deadline_label2.setText(f"截止日期: {first_Value[3]}")
+                    self.rightTopLabel1.setText(first_Value[2])
 
-        self.moreSet.clicked.connect(lambda checked, first_Value=first_Value: self.orderMoreClicked(first_Value))
+                    self.moreSet.clicked.connect(
+                        lambda checked, first_Value=first_Value: self.orderMoreClicked(first_Value))
 
-
-
-        try:
-            # 找到 "bakingDeviceId"=2 的第一条数据并修改 "bakingStatue" 为 2
-            current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            for order in self.orderList_data:
-                if order.get("bakingDeviceId") == 2 and order.get("bakingStatue") == 1:
-                    order["bakingStatue"] = 2
-                    order["bakingCreateTime"] = current_time
-                    break  # 修改第一条数据后退出循环
-
-            # 将修改后的数据写回 JSON 文件
-            with open(os.path.join(ytycwdpath,"localJson","order.json"), "w", encoding="utf-8") as file:
-                json.dump(self.orderList_data, file, ensure_ascii=False, indent=4)
-
-        except Exception as e:
-            QMessageBox.warning(self, "错误", f"修改 JSON 文件时发生错误: {e}")
-
+            else:
+                print('连接失败')
 
         if self.rudouTimer.isActive():
             self.rudouTimer.stop()
@@ -16424,57 +15780,11 @@ class ApplicationWindow(
         # 启动定时器
         self.fourTimer.start(self.fourInterval)
 
-    def markDropClick(self):      
-        try:
-            with open(os.path.join(ytycwdpath,"localJson","order.json"), "r", encoding="utf-8") as file:
-                data = json.load(file)
-                self.orderList_data = data
-            found_order = False
-            # 遍历订单数据并生成控件
-            for i, order in enumerate(self.orderList_data):
-                if order.get("bakingDeviceId") == 2 and order.get("bakingStatue") == 2:
-                    found_order = True
-                    # 获取当天的日期，用作文件夹名称
-                    today_str = datetime.datetime.now().strftime("%Y%m%d")
-                    history_path = os.path.join(ytycwdpath,"localJson","History",f"{today_str}")
-                    # 创建当天日期的文件夹（如果不存在）
-                    os.makedirs(history_path, exist_ok=True)
-                    self.curFile = os.path.join(history_path, f"{order['bakingBatch']}.alog")
-                    self.qmc.reset()
-                    break
-            if not found_order:
-                # 没找到符合条件的订单，弹出提示框
-                self.diologRect2Zhezhao.setVisible(True)
-                self.jbCentent2.setText("没有找到可以出仓的订单！")
-                return  # 直接返回，不执行后续代码
-        except Exception:  # pylint: disable=broad-except
-            pass
+    def markDropClick(self):
         self.zhezhaoWidget.setVisible(True)
         self.ccjlWidget.setVisible(True)
+
         
-        # self.yrqk.setVisible(False)
-        # self.jdqk.setVisible(False)
-        # self.gjxy.setVisible(True)
-        # self.resetPhase()
-        # self.status_label2.setText('已完成')
-        # self.statusLabel.setText("锅间协议")
-        # self.chukuImg.setStyleSheet(f"""
-        #                                                     QPushButton {{
-        #                                                         border-image: url('{self.normalized_path}/includes/Icons/yrzb/rd-hover.png');
-        #                                                     }}
-        #                                                 """)
-        # # self.qmc.markDrop()
-        #
-        # self.user_interacted = True  # 用户进行了交互
-        #
-        # self.resetProgressBar()
-        #
-        # self.gjxytimer.start(1000)  # 每隔 1 秒触发一次
-        #
-        # if self.jdtGJXYTimer.isActive():
-        #     self.jdtGJXYTimer.stop()
-        # else:
-        #     self.jdtGJXYTimer.start(100, self)
 
     def create_toplevel(self, title="新窗口", width=300, height=200):
         window = QMainWindow(self)
@@ -16490,7 +15800,7 @@ class ApplicationWindow(
 
         return window
 
-    def format_date(self,date_str):
+    def format_date(self, date_str):
         try:
             # 将日期字符串转换为 datetime 对象
             date_obj = datetime.datetime.strptime(date_str, "%Y%m%d")
@@ -16499,7 +15809,7 @@ class ApplicationWindow(
         except ValueError:
             return None
 
-    def get_special_dates(self,date_folder):
+    def get_special_dates(self, date_folder):
         special_dates = []
 
         # 如果文件夹存在，则列出其中的所有文件夹
@@ -16576,7 +15886,6 @@ class ApplicationWindow(
 
         self.mask_widget.hide()  # 隐藏遮罩层
 
-
     def submitCCJL(self):
         self.zhezhaoWidget.setVisible(False)
         self.ccjlWidget.setVisible(False)
@@ -16606,960 +15915,598 @@ class ApplicationWindow(
         else:
             self.jdtGJXYTimer.start(100, self)
 
+        global token
         try:
-            with open(os.path.join(ytycwdpath,"localJson","order.json"), "r", encoding="utf-8") as file:
-                data = json.load(file)
-                self.orderList_data = data
+            # 获取当前正在烘焙的订单信息
+            target_order = self.getTPMark
+                
+            # 获取 computed 数据并提供默认值
+            computed = self.computedData.get('computed', {})
+            totaltime = computed.get('totaltime', 0)
+            CHARGE_BT = computed.get('CHARGE_BT', 0)
+            TP_BT = computed.get('TP_BT', 0)
+            TP_time = computed.get('TP_time', 0)
+            DRY_BT = computed.get('DRY_BT', 0)
+            DRY_time = computed.get('DRY_time', 0)
+            FCs_BT = computed.get('FCs_BT', 0)
+            FCs_time = computed.get('FCs_time', 0)
+            SCs_BT = computed.get('SCs_BT', 0)
+            SCs_time = computed.get('SCs_time', 0)
+            DROP_BT = computed.get('DROP_BT', 0)
+            finishphasetime = computed.get('finishphasetime', 0)
+            DTR = computed.get('DTR', 0)
+            
+            # 当前时间作为完成时间
+            current_time = datetime.datetime.now()
+            finish_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
+            
+            # 构建提交数据
+            submit_data = {
+                # "id": target_order[0],
+                # "bakingBatch": target_order[2],
+                # "dehydrationRate": self.tslContent.text(),
+                # "defectRate": self.xclContent.text(),
+                # "numberOfRipe": self.slContent.text(),
+                # "agtron": self.szContent.text(),
+                # "bakingFinishTime": finish_time,
+                # "description": self.qkfhContent.toPlainText(),
+                # "agtronValue": self.agtronNum.text(),
+                # "taskTime": totaltime,
 
-            # 遍历订单数据并生成控件
-            for i, order in enumerate(self.orderList_data):
-                if order.get("bakingDeviceId") == 2 and order.get("bakingStatue") == 2:
-                    # 修改 bakingStatue 为 3
-                    order["bakingStatue"] = 3
+                "agtronValue": self.agtronNum.text(), # agtron值
+                "bakingBatch": target_order[2], # 烘焙批次号
+                "bakingScore": 3, # 烘焙评分
+                "desncription": self.qkfhContent.toPlainText(), # 烘焙描述
+                "defectiveRate": self.xclContent.text(),  # 瑕疵率
+                "dehydrationRate": self.tslContent.text(),  # 烘焙损失率
+                "numberOfBeans": self.slContent.text(),  # 熟豆数量
+                "taskTime": totaltime,
 
-                    # 获取当天的日期，用作文件夹名称
-                    today_str = datetime.datetime.now().strftime("%Y%m%d")
-                    history_path = os.path.join(ytycwdpath,"localJson","History",f"{today_str}")
-
-                    # 创建当天日期的文件夹（如果不存在）
-                    os.makedirs(history_path, exist_ok=True)
-
-                    # 创建以 bakingBatch 为文件名的 JSON 文件
-                    file_name = f"{order['bakingBatch']}.json"
-                    file_path = os.path.join(history_path, file_name)
-
-                    current_time = datetime.datetime.now()
-                    create_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
-
-
-                    # 添加额外的字段到数据中
-                    enriched_order = order.copy()
-                    _log.info("self.computedData['computed']:::%s",self.computedData['computed'])
-                    # 获取 computed 数据并提供默认值
-                    computed = self.computedData.get('computed', {})
-                    totaltime = computed.get('totaltime', 0)
-                    CHARGE_BT = computed.get('CHARGE_BT', 0)
-                    TP_BT = computed.get('TP_BT', 0)
-                    TP_time = computed.get('TP_time', 0)
-                    DRY_BT = computed.get('DRY_BT', 0)
-                    DRY_time = computed.get('DRY_time', 0)
-                    FCs_BT = computed.get('FCs_BT', 0)
-                    FCs_time = computed.get('FCs_time', 0)
-                    SCs_BT = computed.get('SCs_BT', 0)
-                    SCs_time = computed.get('SCs_time', 0)
-                    DROP_BT = computed.get('DROP_BT', 0)
-                    finishphasetime = computed.get('finishphasetime', 0)
-                    DTR = computed.get('DTR', 0)
-
-                    # 更新 enriched_order
-                    enriched_order.update({
-                        "dehydrationRate": self.tslContent.text(),
-                        "defectRate": self.xclContent.text(),
-                        "numberOfRipe": self.slContent.text(),
-                        "agtron": self.szContent.text(),
-                        "bakingFinishTime": create_time,
-                        "description": self.qkfhContent.toPlainText(),
-                        "agtronValue": self.agtronNum.text(),
-                        "taskTime": totaltime,
-                        "jsonMessage": {
-                            "totaltime": totaltime,
-                            "CHARGE_BT": CHARGE_BT,
-                            "TP_BT": TP_BT,
-                            "TP_time": TP_time,
-                            "Maillard": DRY_BT,
-                            "Maillard_time": DRY_time,
-                            "FCs_BT": FCs_BT,
-                            "FCs_time": FCs_time,
-                            "SCs_BT": SCs_BT,
-                            "SCs_time": SCs_time,
-                            "DROP_BT": DROP_BT,
-                            "finishphasetime": finishphasetime,
-                            "DTR": DTR,
-                            "target_temperature": [135, 165, 182, 192, 198, 205],  # 示例值
-                            "target_values": [30, 35, 40, 90, 80, 65],  # 示例值
-                            "actual_temperature": [135, 166, 182, 195, 200, 205],  # 示例值
-                            "actual_values": [35, 40, 40, 90, 50, 65],  # 示例值
-                            "alogJson": self.getProfile()
-                        },
-                    })
-
-                    # 将 enriched_order 写入 JSON 文件
-                    with open(file_path, "w", encoding="utf-8") as history_file:
-                        json.dump(enriched_order, history_file, ensure_ascii=False, indent=4)
-
-                    # 从 orderList_data 移除该条记录
-                    self.orderList_data.pop(i)
-
-                    # 将修改后的 orderList_data 写回 order.json
-                    with open(os.path.join(ytycwdpath,"localJson","order.json"), "w", encoding="utf-8") as file:
-                        json.dump(self.orderList_data, file, ensure_ascii=False, indent=4)
-
-                    print(f"订单已成功移至 {file_path}")
-                    self.load_order_json()
-                    self.orderWidget.update()
+                "jsonMessage": {
+                    "totaltime": totaltime,
+                    "CHARGE_BT": CHARGE_BT,
+                    "TP_BT": TP_BT,
+                    "TP_time": TP_time,
+                    "Maillard": DRY_BT,
+                    "Maillard_time": DRY_time,
+                    "FCs_BT": FCs_BT,
+                    "FCs_time": FCs_time,
+                    "SCs_BT": SCs_BT,
+                    "SCs_time": SCs_time,
+                    "DROP_BT": DROP_BT,
+                    "finishphasetime": finishphasetime,
+                    "DTR": DTR,
+                    "target_temperature": [135, 165, 182, 192, 198, 205],  # 示例值
+                    "target_values": [30, 35, 40, 90, 80, 65],  # 示例值
+                    "actual_temperature": [135, 166, 182, 195, 200, 205],  # 示例值
+                    "actual_values": [35, 40, 40, 90, 50, 65],  # 示例值
+                    "alogJson": self.getProfile()
+                }
+            }
+            
+            # 调用完成烘焙API
+            finish_url = "http://inner4.mjytech.com:22104//tablet/interaction/saveBakingCurveMsg"
+            payload = json.dumps(submit_data)
+            headers = {
+                'token': f'{token}',
+                'Content-Type': 'application/json'
+            }
+            
+            finish_response = requests.post(finish_url, data=payload, headers=headers)
+            if finish_response.status_code == 200:
+                finish_data = finish_response.json()
+                if finish_data['code'] == 0 or finish_data['code'] == 200:
+                    print("烘焙任务已成功完成")
+                    # 清空输入框
                     self.tslContent.clear()
                     self.xclContent.clear()
                     self.slContent.clear()
                     self.szContent.clear()
                     self.qkfhContent.clear()
-                    break  # 处理完第一条符合条件的订单后退出循环
-
-        except FileNotFoundError:
-            QMessageBox.warning(self, "警告", "JSON 文件不存在")
+                else:
+                    QMessageBox.warning(self, "警告", f"完成烘焙任务失败: {finish_data.get('msg', '未知错误')}")
+            else:
+                QMessageBox.warning(self, "警告", f"服务器连接失败: {finish_response.status_code}")
+                
         except Exception as e:
-            QMessageBox.warning(self, "错误", f"处理订单时发生错误: {e}")
+            QMessageBox.warning(self, "错误", f"处理订单时发生错误: {str(e)}")
 
     def historyList_Json(self):
         self.list_widget.clear()
-
-        # 获取今天日期
-        today_str = datetime.datetime.now().strftime("%Y%m%d")
-
-        # 获取文件夹路径
-        date_folder = os.path.join(ytycwdpath, "localJson", "History", today_str)
-
-        # 如果文件夹存在，则列出其中的所有文件
-        if os.path.exists(date_folder):
-            files = os.listdir(date_folder)  # 获取文件夹中的文件列表
-        else:
-            files = []  # 如果文件夹不存在，返回空列表
-
         self.list_widget2.clear()
+        # 获取今天的日期
+        today = datetime.datetime.now()
+        start_of_day = today.replace(hour=0, minute=0, second=0, microsecond=0)
+        end_of_day = today.replace(hour=23, minute=59, second=59, microsecond=999999)
+        start_time_str = start_of_day.strftime("%Y-%m-%d %H:%M")
+        end_time_str = end_of_day.strftime("%Y-%m-%d %H:%M")
+        global token
+        url = 'http://inner4.mjytech.com:22104/admin/device/getPadBakinglist'  # 获取历史任务列表
+        params = {'bakingDeviceId': self.sheibeiId, 'startTime': start_time_str,
+                  'endTime': end_time_str}
+        # params = {'bakingDeviceId': "29", 'startTime': '2025-03-10 00:00',
+        #           'endTime': '2025-03-10 23:59'}
+        headers = {
+            'token': f'{token}',
+            'Content-Type': 'application/json'
+        }
+        if token:
+            response = requests.get(url, params, headers=headers)
+            if response.status_code == 200:
+                dataJson = response.json()
+                dataJson2 = dataJson['bakingTaskList']
+                historyOrder_count = len(dataJson2)
+                textCode = dataJson['code']
+                if textCode == 0 or textCode == 200:
+                    # list_widget 历史列表
+                    self.list_widget.clear()
+                    for data in dataJson2:
 
-        history_data = []
+                        background_colors = ["#E0E9FF", "#D9F4D7", "#FDF3D0", "#FEE7CD", "#D6F0F9", "#E5D6FC"]
+                        border_colors = ["#378AF6", "#35BD4B", "#FFC60A", "#FF811A", "#3EC3F7", "#7A35F0"]
 
-        for file_name in files:
-            # 假设文件是 JSON 格式，首先构建文件路径
-            file_path = os.path.join(date_folder, file_name)
+                        # 确保 loop_count 已经初始化
+                        if not hasattr(self, "loop_count"):
+                            self.loop_count = 0
 
-            # 读取 JSON 文件内容
-            with open(file_path, 'r', encoding='utf-8') as file:
-                try:
-                    data = json.load(file)
-                except json.JSONDecodeError:
-                    print(f"无法解析文件: {file_name}")
-                    continue  # 如果文件内容无法解析为JSON，跳过该文件
+                        j = self.loop_count % 6  # 计算当前循环的索引
 
-            # 获取 create_time 字段并转化为时间戳，便于排序
-            create_time = data.get('bakingCreateTime')
-            if create_time:
-                # 如果有 create_time，将其转换为 datetime 对象（假设 create_time 格式为 'YYYY-MM-DD HH:MM:SS'）
-                create_time = datetime.datetime.strptime(create_time, '%Y-%m-%d %H:%M:%S')
-            else:
-                # 如果没有 create_time，默认设置为最小时间
-                create_time = datetime.datetime.min
+                        historyListBack = QWidget()
+                        historyListBack.setStyleSheet(
+                            f'border-radius: {12 * self.height_scale}px; background-color: {background_colors[j]}; border: 1px solid {border_colors[j]};'
+                        )
+                        timeList = QWidget()
+                        timeList.setStyleSheet(
+                            f'background-color: transparent; border: none;border-radius: 0'
+                        )
 
-            # 将文件名及相关数据一起存入 history_data 列表
-            history_data.append((create_time, data, file_name))
+                        # 递增 loop_count 以便下次循环
+                        self.loop_count += 1
 
-        # 根据 create_time 排序，时间早的在前
-        history_data.sort(key=lambda x: x[0])
+                        item_layout = QHBoxLayout(historyListBack)
+                        item_layout.setContentsMargins(20 * self.width_scale, 13 * self.height_scale,
+                                                       20 * self.width_scale, 15 * self.height_scale)  # 设置边距
+                        item_layout.setSpacing(35 * self.height_scale)  # 设置控件之间的间距
 
-        background_colors = ["#E0E9FF", "#D9F4D7", "#FDF3D0", "#FEE7CD", "#D6F0F9", "#E5D6FC"]
-        border_colors = ["#378AF6", "#35BD4B", "#FFC60A", "#FF811A", "#3EC3F7", "#7A35F0"]
+                        item_layout2 = QHBoxLayout(timeList)
+                        item_layout2.setContentsMargins(20 * self.width_scale, 13 * self.height_scale,
+                                                        20 * self.width_scale, 15 * self.height_scale)  # 设置边距
+                        item_layout2.setSpacing(35 * self.height_scale)  # 设置控件之间的间距
 
-        # 确保 loop_count 已经初始化
-        if not hasattr(self, "loop_count"):
-            self.loop_count = 0
+                        # 创建复选框
+                        checkbox = QCheckBox(historyListBack)
+                        checkbox.setStyleSheet(
+                            f"color: #222222; border:none; padding: 2px;background-color: {background_colors[j]};")
+                        checkbox.setGeometry(47 * self.width_scale, 19 * self.height_scale, 18 * self.height_scale,
+                                             18 * self.height_scale)
+                        checkbox.setFixedWidth(18 * self.width_scale)
+                        checkbox.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+                        checkbox.setProperty("bakingBatch", data.get("bakingBatch"))
+                        checkbox.setProperty("orderDetailJson", data)
+                        checkbox.stateChanged.connect(self.handle_checkbox)
 
-        # 遍历排序后的数据，创建并显示项
-        for create_time, data, file_name in history_data:
-            j = self.loop_count % 6  # 计算当前循环的索引
+                        # 创建评分图标标签
+                        fkqkImg = QLabel(historyListBack)
+                        fkqkImg.setGeometry(142 * self.width_scale, 18 * self.height_scale, 20 * self.width_scale,
+                                            20 * self.height_scale)
+                        fkqkImg.setStyleSheet("color: #222222; border:none; padding: 2px;background-color: transparent")
+                        if data.get('description', '') != '':  # 确保 'description' 字段存在
+                            fkqkImgPixmap = QPixmap(self.normalized_path + '/includes/Icons/history/pingfen2.png')
+                        else:
+                            fkqkImgPixmap = QPixmap(self.normalized_path + '/includes/Icons/history/pingfen.png')
+                        fkqkImg.setPixmap(fkqkImgPixmap)
+                        fkqkImg.setScaledContents(True)
 
-            historyListBack = QWidget()
-            historyListBack.setStyleSheet(
-                f'border-radius: {12 * self.height_scale}px; background-color: {background_colors[j]}; border: 1px solid {border_colors[j]};'
-            )
-            timeList = QWidget()
-            timeList.setStyleSheet(
-                f'background-color: transparent; border: none; border-radius: 0'
-            )
+                        # 烘焙批次标签
+                        bakingBatch_label = QLabel(historyListBack)
+                        bakingBatch_label.setStyleSheet(
+                            "color: #222222; border:none; padding: 2px;background-color: transparent")
+                        bakingBatch_label.setText(data.get('bakingBatch', ''))  # 显示文件名，假设文件名是批次号
+                        bakingBatch_label.setGeometry(271 * self.width_scale, 0, 250 * self.width_scale,
+                                                      56 * self.height_scale)
 
-            # 递增 loop_count 以便下次循环
-            self.loop_count += 1
+                        # 任务名称标签
+                        taskName_label = QLabel(historyListBack)
+                        taskName_label.setStyleSheet(
+                            "color: #222222; border:none; padding: 2px;background-color: transparent")
+                        taskName_label.setText(data.get('taskName', ''))  # 假设 JSON 中有 'taskName' 字段
+                        taskName_label.setGeometry(552 * self.width_scale, 0, 120 * self.width_scale,
+                                                   56 * self.height_scale)
+                        taskName_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
 
-            # 使用布局管理器
-            item_layout = QHBoxLayout(historyListBack)
-            item_layout.setContentsMargins(20 * self.width_scale, 13 * self.height_scale,
-                                           20 * self.width_scale, 15 * self.height_scale)  # 设置边距
-            item_layout.setSpacing(35 * self.height_scale)  # 设置控件之间的间距
+                        # 任务时间标签
+                        taskTime_label = QLabel(historyListBack)
+                        taskTime_label.setStyleSheet(
+                            "color: #222222; border:none; padding: 2px;background-color: transparent")
+                        taskTime_label.setText(str(data.get('taskTime', 0) / 60))  # 将秒转换为分钟
+                        taskTime_label.setGeometry(787 * self.width_scale, 0, 120 * self.width_scale,
+                                                   56 * self.height_scale)
+                        taskTime_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
 
-            item_layout2 = QHBoxLayout(timeList)
-            item_layout2.setContentsMargins(20 * self.width_scale, 13 * self.height_scale,
-                                            20 * self.width_scale, 15 * self.height_scale)  # 设置边距
-            item_layout2.setSpacing(35 * self.height_scale)  # 设置控件之间的间距
+                        # 创建时间标签
+                        create_time = data.get('bakingCreateTime')
+                        baking_finish_time = data.get('bakingFinishTime')
+                        createTime_label = QLabel(historyListBack)
+                        timeText = QLabel(timeList)
+                        if create_time is None or baking_finish_time is None:
+                            createTime_label.setText('-')  # 显示时间段
+                            timeText.setText(' ')  # 显示时间段
+                        else:
+                            createTime_label.setText(
+                                str(create_time[11:16]) + '-' + str(baking_finish_time[11:16]))  # 显示时间段
+                            timeText.setText(str(create_time[11:16]))  # 显示时间段
+                        createTime_label.setStyleSheet(
+                            "color: #222222; border:none; padding: 2px;background-color: transparent")
+                        createTime_label.setGeometry(1048 * self.width_scale, 0, 120 * self.width_scale,
+                                                     56 * self.height_scale)
+                        createTime_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
 
-            # 创建复选框
-            checkbox = QCheckBox(historyListBack)
-            checkbox.setStyleSheet(
-                f"color: #222222; border:none; padding: 2px;background-color: {background_colors[j]};")
-            checkbox.setGeometry(47 * self.width_scale, 19 * self.height_scale, 18 * self.height_scale,
-                                 18 * self.height_scale)
-            checkbox.setFixedWidth(18 * self.width_scale)
-            checkbox.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-            checkbox.setProperty("bakingBatch", data.get("bakingBatch"))
-            checkbox.setProperty("orderDetailJson", data)
-            checkbox.stateChanged.connect(self.handle_checkbox)
+                        timeText.setStyleSheet("color: #ABB0B7; border:none; background-color: transparent")
+                        timeText.setGeometry(0, 0, 120 * self.width_scale,
+                                             56 * self.height_scale)
+                        timeText.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
 
-            # 创建评分图标标签
-            fkqkImg = QLabel(historyListBack)
-            fkqkImg.setGeometry(142 * self.width_scale, 18 * self.height_scale, 20 * self.width_scale,
-                                20 * self.width_scale)
-            fkqkImg.setStyleSheet("color: #222222; border:none; padding: 2px;background-color: transparent")
-            if data.get('description', '') != '':  # 确保 'description' 字段存在
-                fkqkImgPixmap = QPixmap(self.normalized_path + '/includes/Icons/history/pingfen2.png')
-            else:
-                fkqkImgPixmap = QPixmap(self.normalized_path + '/includes/Icons/history/pingfen.png')
-            fkqkImg.setPixmap(fkqkImgPixmap)
-            fkqkImg.setScaledContents(True)
+                        agtronValue_label = QLabel(historyListBack)
+                        agtronValue_label.setStyleSheet(
+                            "color: #222222; border:none; padding: 2px;background-color: transparent")
+                        # item_layout.addWidget(agtronValue_label)
+                        agtronValue_label.setText(str(data.get('agtronValue', '')))
+                        agtronValue_label.setGeometry(1300 * self.width_scale, 0, 120 * self.width_scale,
+                                                      56 * self.height_scale)
+                        agtronValue_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
+                        agtronValue_label.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
 
-            # 烘焙批次标签
-            bakingBatch_label = QLabel(historyListBack)
-            bakingBatch_label.setStyleSheet("color: #222222; border:none; padding: 2px;background-color: transparent")
-            bakingBatch_label.setText(data.get('bakingBatch', ''))  # 显示文件名，假设文件名是批次号
-            bakingBatch_label.setGeometry(271 * self.width_scale, 0, 250 * self.width_scale,
-                                          56 * self.height_scale)
+                        # 添加空白项以便布局
+                        spacer = QSpacerItem(0, 40 * self.height_scale)
+                        item_layout.addItem(spacer)
+                        spacer2 = QSpacerItem(0, 40 * self.height_scale)
+                        item_layout2.addItem(spacer2)
 
-            # 任务名称标签
-            taskName_label = QLabel(historyListBack)
-            taskName_label.setStyleSheet("color: #222222; border:none; padding: 2px;background-color: transparent")
-            taskName_label.setText(data.get('taskName', ''))  # 假设 JSON 中有 'taskName' 字段
-            taskName_label.setGeometry(552 * self.width_scale, 0, 120 * self.width_scale,
-                                       56 * self.height_scale)
-            taskName_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
+                        # 设置 QWidget 的大小
+                        historyListBack.setFixedHeight(56 * self.height_scale)
+                        timeList.setFixedHeight(56 * self.height_scale)
 
-            # 任务时间标签
-            taskTime_label = QLabel(historyListBack)
-            taskTime_label.setStyleSheet(
-                "color: #222222; border:none; padding: 2px;background-color: transparent")
-            taskTime_label.setText(str(data.get('taskTime', 0) / 60))  # 将秒转换为分钟
-            taskTime_label.setGeometry(787 * self.width_scale, 0, 120 * self.width_scale,
-                                       56 * self.height_scale)
-            taskTime_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
+                        # 创建 QListWidgetItem
+                        list_item = QListWidgetItem(self.list_widget)
+                        list_item.setSizeHint(historyListBack.sizeHint())  # 设置项的大小提示
+                        list_item.setData(12, data['numberOfBeans'])  # 含水量
+                        list_item.setData(11, data['number'])  # 生豆重量
+                        list_item.setData(22, data['bakingBatch'])  # 任务编号
+                        list_item.setData(3, data['numberOfBeans'])  # 熟豆重量
+                        list_item.setData(4, data['dehydrationRate'])  # 烘焙损失率
+                        list_item.setData(5, data['bakingFinishTime'])  # 烘焙日期
+                        list_item.setData(7, data['bakingScore'])  # 烘焙评分
 
-            # 创建时间标签
-            create_time = data.get('bakingCreateTime')
-            baking_finish_time = data.get('bakingFinishTime')
-            createTime_label = QLabel(historyListBack)
-            timeText = QLabel(timeList)
-            if create_time is None or baking_finish_time is None:
-                createTime_label.setText('-')  # 显示时间段
-                timeText.setText(' ')  # 显示时间段
-            else:
-                createTime_label.setText(
-                    str(create_time[11:16]) + '-' + str(baking_finish_time[11:16]))  # 显示时间段
-                timeText.setText(str(create_time[11:16]))  # 显示时间段
-            createTime_label.setStyleSheet("color: #222222; border:none; padding: 2px;background-color: transparent")
-            createTime_label.setGeometry(1048 * self.width_scale, 0, 120 * self.width_scale,
-                                         56 * self.height_scale)
-            createTime_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
+                        if data['cuppingDetail'] not in dataJson2:
+                            list_item.setData(6, '-')  # 杯测评分
+                            list_item.setData(8, '-')  # 杯测日期
+                            list_item.setData(9, '-')  # 品控反馈
+                        else:
+                            list_item.setData(6, data['cuppingDetail']['score'])  # 杯测评分
+                            list_item.setData(8, data['cuppingDetail']['createTime'])  # 杯测日期
+                            list_item.setData(9, data['cuppingDetail']['descn'])  # 品控反馈
 
-            timeText.setStyleSheet("color: #ABB0B7; border:none; background-color: transparent")
-            timeText.setGeometry(0, 0, 120 * self.width_scale,
-                                 56 * self.height_scale)
-            timeText.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
+                        # 添加项到 QListWidget
+                        self.list_widget.addItem(list_item)
+                        self.list_widget.setItemWidget(list_item, historyListBack)
 
-            agtronValue_label = QLabel(historyListBack)
-            agtronValue_label.setStyleSheet("color: #222222; border:none; padding: 2px;background-color: transparent")
-            # item_layout.addWidget(agtronValue_label)
-            agtronValue_label.setText(data.get('agtronValue', ''))
-            agtronValue_label.setGeometry(1300 * self.width_scale, 0, 120 * self.width_scale,
-                                          56 * self.height_scale)
-            agtronValue_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
-            agtronValue_label.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+                        list_item2 = QListWidgetItem(self.list_widget2)
+                        list_item2.setSizeHint(timeList.sizeHint())  # 设置项的大小提示
+                        self.list_widget2.setItemWidget(list_item2, timeList)
 
-            # 添加空白项以便布局
-            spacer = QSpacerItem(0, 40 * self.height_scale)
-            item_layout.addItem(spacer)
-            spacer2 = QSpacerItem(0, 40 * self.height_scale)
-            item_layout2.addItem(spacer2)
-
-            # 设置 QWidget 的大小
-            historyListBack.setFixedHeight(56 * self.height_scale)
-            timeList.setFixedHeight(56 * self.height_scale)
-
-            # 创建 QListWidgetItem
-            list_item = QListWidgetItem(self.list_widget)
-            list_item.setSizeHint(historyListBack.sizeHint())  # 设置项的大小提示
-            list_item.setData(22, data.get('bakingBatch', ''))  # 任务编号
-            list_item.setData(23, today_str)  # 任务编号
-
-            # 添加项到 QListWidget
-            self.list_widget.addItem(list_item)
-            self.list_widget.setItemWidget(list_item, historyListBack)
-
-            list_item2 = QListWidgetItem(self.list_widget2)
-            list_item2.setSizeHint(timeList.sizeHint())  # 设置项的大小提示
-            self.list_widget2.setItemWidget(list_item2, timeList)
 
     def date_changed(self, date):
         self.list_widget.clear()
 
         # 获取今天日期
-        today_str = date.toString("yyyyMMdd")
+        today_str = date.toString("yyyy-MM-dd")
 
-        # 获取文件夹路径
-        date_folder = os.path.join(ytycwdpath, "localJson", "History", today_str)
+        # 转换为 datetime 对象
+        start_of_day = datetime.datetime.strptime(today_str, "%Y-%m-%d")
+        end_of_day = datetime.datetime.strptime(today_str, "%Y-%m-%d").replace(hour=23, minute=59)
 
-        # 如果文件夹存在，则列出其中的所有文件
-        if os.path.exists(date_folder):
-            files = os.listdir(date_folder)  # 获取文件夹中的文件列表
-        else:
-            files = []  # 如果文件夹不存在，返回空列表
+        # 格式化为字符串
+        start_time_str = start_of_day.strftime("%Y-%m-%d %H:%M")
+        end_time_str = end_of_day.strftime("%Y-%m-%d %H:%M")
+        global token
+        url = 'http://inner4.mjytech.com:22104/admin/device/getPadBakinglist'  # 获取历史任务列表
+        params = {'bakingDeviceId': self.sheibeiId, 'startTime': start_time_str,
+                  'endTime': end_time_str}
+        headers = {
+            'token': f'{token}',
+            'Content-Type': 'application/json'
+        }
+        if token:
+            response = requests.get(url, params, headers=headers)
+            if response.status_code == 200:
+                dataJson = response.json()
+                dataJson2 = dataJson['bakingTaskList']
+                historyOrder_count = len(dataJson2)
+                textCode = dataJson['code']
+                if textCode == 0 or textCode == 200:
+                    # list_widget 历史列表
+                    self.list_widget.clear()
+                    for data in dataJson2:
 
-        self.orderID.clear()  # 清空存储的订单 ID
-        self.orderDetail.clear()  # 清空存储的订单详情
+                        background_colors = ["#E0E9FF", "#D9F4D7", "#FDF3D0", "#FEE7CD", "#D6F0F9", "#E5D6FC"]
+                        border_colors = ["#378AF6", "#35BD4B", "#FFC60A", "#FF811A", "#3EC3F7", "#7A35F0"]
 
-        # 清空现有的复选框选择状态
-        for i in range(self.list_widget.count()):
-            item = self.list_widget.item(i)
-            widget = self.list_widget.itemWidget(item)
-            if widget:  # 确保 widget 存在
-                checkboxes = widget.findChildren(QCheckBox)  # 查找所有 QCheckBox
-                for checkbox in checkboxes:
-                    checkbox.blockSignals(True)  # 暂时禁用信号，避免触发 handle_checkbox
-                    checkbox.setChecked(False)  # 取消选中状态
-                    checkbox.blockSignals(False)  # 恢复信号
+                        # 确保 loop_count 已经初始化
+                        if not hasattr(self, "loop_count"):
+                            self.loop_count = 0
 
-        self.list_widget2.clear()
+                        j = self.loop_count % 6  # 计算当前循环的索引
 
-        # 用于存储每个文件的数据和对应的创建时间
-        items_data = []
+                        historyListBack = QWidget()
+                        historyListBack.setStyleSheet(
+                            f'border-radius: {12 * self.height_scale}px; background-color: {background_colors[j]}; border: 1px solid {border_colors[j]};'
+                        )
 
-        for file_name in files:
-            # 假设文件是 JSON 格式，首先构建文件路径
-            file_path = os.path.join(date_folder, file_name)
+                        # 递增 loop_count 以便下次循环
+                        self.loop_count += 1
 
-            # 读取 JSON 文件内容
-            with open(file_path, 'r', encoding='utf-8') as file:
-                try:
-                    data = json.load(file)
-                except json.JSONDecodeError:
-                    print(f"无法解析文件: {file_name}")
-                    continue  # 如果文件内容无法解析为JSON，跳过该文件
+                        # 使用布局管理器
+                        item_layout = QHBoxLayout(historyListBack)
+                        item_layout.setContentsMargins(20 * self.width_scale, 13 * self.height_scale,
+                                                       20 * self.width_scale, 15 * self.height_scale)  # 设置边距
+                        item_layout.setSpacing(35 * self.height_scale)  # 设置控件之间的间距
 
-            # 获取创建时间
-            create_time = data.get('bakingCreateTime')
+                        # 创建复选框
+                        checkbox = QCheckBox(historyListBack)
+                        checkbox.setStyleSheet(
+                            f"color: #222222; border:none; padding: 2px;background-color: {background_colors[j]};")
+                        checkbox.setGeometry(47 * self.width_scale, 19 * self.height_scale, 18 * self.height_scale,
+                                             18 * self.height_scale)
+                        checkbox.setFixedWidth(18 * self.width_scale)
+                        checkbox.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+                        checkbox.setProperty("bakingBatch", data.get("bakingBatch"))
+                        checkbox.setProperty("orderDetailJson", data)
+                        checkbox.stateChanged.connect(self.handle_checkbox)
 
-            # 如果没有创建时间，跳过该文件
-            if not create_time:
-                continue
+                        # 创建评分图标标签
+                        fkqkImg = QLabel(historyListBack)
+                        fkqkImg.setGeometry(142 * self.width_scale, 18 * self.height_scale, 20 * self.width_scale,
+                                            20 * self.height_scale)
+                        fkqkImg.setStyleSheet("color: #222222; border:none; padding: 2px;background-color: transparent")
+                        if data.get('description', '') != '':  # 确保 'description' 字段存在
+                            fkqkImgPixmap = QPixmap(self.normalized_path + '/includes/Icons/history/pingfen2.png')
+                        else:
+                            fkqkImgPixmap = QPixmap(self.normalized_path + '/includes/Icons/history/pingfen.png')
+                        fkqkImg.setPixmap(fkqkImgPixmap)
+                        fkqkImg.setScaledContents(True)
 
-            # 将时间转换为可以比较的格式，这里使用的是 "HH:MM" 格式的时间
-            create_time_obj = QTime.fromString(create_time[11:16], "HH:mm")
+                        # 烘焙批次标签
+                        bakingBatch_label = QLabel(historyListBack)
+                        bakingBatch_label.setStyleSheet(
+                            "color: #222222; border:none; padding: 2px;background-color: transparent")
+                        bakingBatch_label.setText(data.get('bakingBatch', ''))  # 显示文件名，假设文件名是批次号
+                        bakingBatch_label.setGeometry(271 * self.width_scale, 0, 250 * self.width_scale,
+                                                      56 * self.height_scale)
 
-            # 如果时间格式不合法，跳过该文件
-            if not create_time_obj.isValid():
-                continue
+                        # 任务名称标签
+                        taskName_label = QLabel(historyListBack)
+                        taskName_label.setStyleSheet(
+                            "color: #222222; border:none; padding: 2px;background-color: transparent")
+                        taskName_label.setText(data.get('taskName', ''))  # 假设 JSON 中有 'taskName' 字段
+                        taskName_label.setGeometry(552 * self.width_scale, 0, 120 * self.width_scale,
+                                                   56 * self.height_scale)
+                        taskName_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
 
-            # 将每个文件的数据存储起来，包括时间
-            items_data.append((data, create_time_obj))
+                        # 任务时间标签
+                        taskTime_label = QLabel(historyListBack)
+                        taskTime_label.setStyleSheet(
+                            "color: #222222; border:none; padding: 2px;background-color: transparent")
+                        taskTime_label.setText(str(data.get('taskTime', 0) / 60))  # 将秒转换为分钟
+                        taskTime_label.setGeometry(787 * self.width_scale, 0, 120 * self.width_scale,
+                                                   56 * self.height_scale)
+                        taskTime_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
 
-        # 按照创建时间排序（升序）
-        items_data.sort(key=lambda x: x[1])
+                        # 创建时间标签
+                        create_time = data.get('createTime')
+                        baking_finish_time = data.get('bakingFinishTime')
+                        createTime_label = QLabel(historyListBack)
+                        if create_time is None or baking_finish_time is None:
+                            createTime_label.setText('-')  # 显示时间段
+                        else:
+                            createTime_label.setText(
+                                str(create_time[11:16]) + '-' + str(baking_finish_time[11:16]))  # 显示时间段
+                        createTime_label.setStyleSheet(
+                            "color: #222222; border:none; padding: 2px;background-color: transparent")
+                        createTime_label.setGeometry(1048 * self.width_scale, 0, 120 * self.width_scale,
+                                                     56 * self.height_scale)
+                        createTime_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
 
-        background_colors = ["#E0E9FF", "#D9F4D7", "#FDF3D0", "#FEE7CD", "#D6F0F9", "#E5D6FC"]
-        border_colors = ["#378AF6", "#35BD4B", "#FFC60A", "#FF811A", "#3EC3F7", "#7A35F0"]
+                        agtronValue_label = QLabel(historyListBack)
+                        agtronValue_label.setStyleSheet(
+                            "color: #222222; border:none; padding: 2px;background-color: transparent")
+                        # item_layout.addWidget(agtronValue_label)
+                        agtronValue_label.setText(data.get('agtronValue', ''))
+                        agtronValue_label.setGeometry(1300 * self.width_scale, 0, 120 * self.width_scale,
+                                                      56 * self.height_scale)
+                        agtronValue_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
+                        agtronValue_label.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
 
-        # 确保 loop_count 已经初始化
-        if not hasattr(self, "loop_count"):
-            self.loop_count = 0
+                        # 添加空白项以便布局
+                        spacer = QSpacerItem(0, 40 * self.height_scale)
+                        item_layout.addItem(spacer)
 
-        # 依次添加排序后的项
-        for data, create_time_obj in items_data:
-            # 根据 loop_count 循环使用背景颜色和边框颜色
-            j = self.loop_count % 6  # 计算当前循环的索引
+                        # 设置 QWidget 的大小
+                        historyListBack.setFixedHeight(56 * self.height_scale)
 
-            historyListBack = QWidget()
-            historyListBack.setStyleSheet(
-                f'border-radius: {12 * self.height_scale}px; background-color: {background_colors[j]}; border: 1px solid {border_colors[j]};'
-            )
-            timeList = QWidget()
-            timeList.setStyleSheet(
-                f'background-color: transparent; border: none;border-radius: 0'
-            )
+                        # 创建 QListWidgetItem
+                        list_item = QListWidgetItem(self.list_widget)
+                        list_item.setSizeHint(historyListBack.sizeHint())  # 设置项的大小提示
 
-            # 递增 loop_count 以便下次循环
-            self.loop_count += 1
-            # 使用布局管理器
-            item_layout = QHBoxLayout(historyListBack)
-            item_layout.setContentsMargins(20 * self.width_scale, 13 * self.height_scale,
-                                           20 * self.width_scale, 15 * self.height_scale)  # 设置边距
-            item_layout.setSpacing(35 * self.height_scale)  # 设置控件之间的间距
+                        list_item.setData(22, data.get('bakingBatch', ''))  # 任务编号
+                        list_item.setData(23, today_str)  # 任务编号
 
-            item_layout2 = QHBoxLayout(timeList)
-            item_layout2.setContentsMargins(20 * self.width_scale, 13 * self.height_scale,
-                                            20 * self.width_scale, 15 * self.height_scale)  # 设置边距
-            item_layout2.setSpacing(35 * self.height_scale)  # 设置控件之间的间距
+                        # 添加项到 QListWidget
+                        self.list_widget.addItem(list_item)
+                        self.list_widget.setItemWidget(list_item, historyListBack)
 
-            # 创建复选框
-            checkbox = QCheckBox(historyListBack)
-            checkbox.setStyleSheet(
-                f"color: #222222; border:none; padding: 2px;background-color: {background_colors[j]};")
-            checkbox.setGeometry(47 * self.width_scale, 19 * self.height_scale, 18 * self.height_scale,
-                                 18 * self.height_scale)
-            checkbox.setFixedWidth(18 * self.width_scale)
-            checkbox.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-            checkbox.setProperty("bakingBatch", data.get("bakingBatch"))
-            checkbox.setProperty("orderDetailJson", data)
-            checkbox.stateChanged.connect(self.handle_checkbox)
-
-            # 创建评分图标标签
-            fkqkImg = QLabel(historyListBack)
-            fkqkImg.setGeometry(142 * self.width_scale, 18 * self.height_scale, 20 * self.width_scale,
-                                20 * self.height_scale)
-            fkqkImg.setStyleSheet("color: #222222; border:none; padding: 2px;background-color: transparent")
-            if data.get('description', '') != '':  # 确保 'description' 字段存在
-                fkqkImgPixmap = QPixmap(self.normalized_path + '/includes/Icons/history/pingfen2.png')
-            else:
-                fkqkImgPixmap = QPixmap(self.normalized_path + '/includes/Icons/history/pingfen.png')
-            fkqkImg.setPixmap(fkqkImgPixmap)
-            fkqkImg.setScaledContents(True)
-
-            # 烘焙批次标签
-            bakingBatch_label = QLabel(historyListBack)
-            bakingBatch_label.setStyleSheet(
-                "color: #222222; border:none; padding: 2px;background-color: transparent")
-            bakingBatch_label.setText(data.get('bakingBatch', ''))  # 显示文件名，假设文件名是批次号
-            bakingBatch_label.setGeometry(271 * self.width_scale, 0, 250 * self.width_scale,
-                                          56 * self.height_scale)
-            bakingBatch_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
-
-            # 任务名称标签
-            taskName_label = QLabel(historyListBack)
-            taskName_label.setStyleSheet(
-                "color: #222222; border:none; padding: 2px;background-color: transparent")
-            taskName_label.setText(data.get('taskName', ''))  # 假设 JSON 中有 'taskName' 字段
-            taskName_label.setGeometry(552 * self.width_scale, 0, 120 * self.width_scale,
-                                       56 * self.height_scale)
-            taskName_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
-
-            # 任务时间标签
-            taskTime_label = QLabel(historyListBack)
-            taskTime_label.setStyleSheet(
-                "color: #222222; border:none; padding: 2px;background-color: transparent")
-            taskTime_label.setText(str(data.get('taskTime', 0) / 60))  # 将秒转换为分钟
-            taskTime_label.setGeometry(787 * self.width_scale, 0, 120 * self.width_scale,
-                                       56 * self.height_scale)
-            taskTime_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
-
-            # 创建时间标签
-            create_time = data.get('bakingCreateTime')
-            baking_finish_time = data.get('bakingFinishTime')
-            createTime_label = QLabel(historyListBack)
-            timeText = QLabel(timeList)
-            if create_time is None or baking_finish_time is None:
-                createTime_label.setText('-')  # 显示时间段
-                timeText.setText(' ')
-            else:
-                createTime_label.setText(
-                    str(create_time[11:16]) + '-' + str(baking_finish_time[11:16]))  # 显示时间段
-                timeText.setText(str(create_time[11:16]))  # 显示时间段
-            createTime_label.setStyleSheet("color: #222222; border:none; padding: 2px;background-color: transparent")
-            createTime_label.setGeometry(1048 * self.width_scale, 0, 120 * self.width_scale,
-                                         56 * self.height_scale)
-            createTime_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
-
-            timeText.setStyleSheet("color: #ABB0B7; border:none; background-color: transparent")
-            timeText.setGeometry(0, 0, 120 * self.width_scale,
-                                 56 * self.height_scale)
-            timeText.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
-
-            agtronValue_label = QLabel(historyListBack)
-            agtronValue_label.setStyleSheet("color: #222222; border:none; padding: 2px;background-color: transparent")
-            # item_layout.addWidget(agtronValue_label)
-            agtronValue_label.setText(data.get('agtronValue', ''))
-            agtronValue_label.setGeometry(1300 * self.width_scale, 0, 120 * self.width_scale,
-                                          56 * self.height_scale)
-            agtronValue_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
-            agtronValue_label.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-
-            # 添加空白项以便布局
-            spacer = QSpacerItem(0, 40 * self.height_scale)
-            item_layout.addItem(spacer)
-            spacer2 = QSpacerItem(0, 40 * self.height_scale)
-            item_layout2.addItem(spacer2)
-
-            # 设置 QWidget 的大小
-            historyListBack.setFixedHeight(56 * self.height_scale)
-            timeList.setFixedHeight(56 * self.height_scale)
-
-            # 创建 QListWidgetItem
-            list_item = QListWidgetItem(self.list_widget)
-            list_item.setSizeHint(historyListBack.sizeHint())
-            list_item.setData(22, data.get('bakingBatch', ''))  # 任务编号
-            list_item.setData(23, today_str)  # 任务编号
-
-            # 添加项到 QListWidget
-            self.list_widget.addItem(list_item)
-            self.list_widget.setItemWidget(list_item, historyListBack)
-
-            list_item2 = QListWidgetItem(self.list_widget2)
-            list_item2.setSizeHint(timeList.sizeHint())  # 设置项的大小提示
-            self.list_widget2.setItemWidget(list_item2, timeList)
 
     def showHistorydetail(self, item):
-        item_id = item.data(22)  # 获取选中的项目的 ID 或文件路径
-        dateStr = item.data(23)
+        item_id = item.data(22)
 
-        # 根据 item_id 构建文件路径
-        file_path = os.path.join(ytycwdpath,"localJson","History",dateStr,f"{item_id}.json")  # 假设 ID 对应的文件名
-        self.scroll_area.setVisible(True)
-        self.historyInfo.setVisible(True)
-        # if self.historyInfo and self.historyInfo.parent():
-        #     self.historyInfo.setVisible(True)
-        # else:
-        #     print("historyInfo 或其父控件已被删除，重新创建它。")
-        #     self.historyInfo = QLabel("新的标签文本")  # 重新创建
-        #     self.historyInfo.setVisible(True)
-
-        self.scroll_area.setWidget(self.historyInfo)
         # self.qmc: tgraphcanvas = tgraphcanvas(self.historyInfo, self.dpi, self.locale_str, self)
-        # self.qmc.setGeometry(65 * self.width_scale, 104 * self.height_scale, 1481 * self.width_scale,
-        #                      600 * self.height_scale)
+        # self.qmc.setGeometry(65*self.width_scale, 104*self.height_scale, 1481*self.width_scale, 600*self.height_scale)
         # self.qmc.setVisible(True)
-        # self.qmc.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)  # 鼠标穿透
-
-
-
-        try:
-            # 读取 JSON 文件
-            with open(file_path, 'r', encoding='utf-8') as file:
-                data_json = json.load(file)
-
-            # 提取顶层数据
-            self.historyDetail_sheibei.setText(item_id)
-
-            task_name = data_json.get("taskName", "未知任务")
-            baking_batch = data_json.get("bakingBatch", "未知批次")
-            number = data_json.get("number", 0)
-            number_of_beans = data_json.get("numberOfBeans", 0)
-            dehydration_rate = data_json.get("dehydrationRate", "未知")
-            defect_rate = data_json.get("defectRate", "未知")
-            description = data_json.get("description", "")
-            agtron_value = data_json.get("agtronValue", "未知")
-            numberOfRipe = data_json.get("numberOfRipe", "未知")
-            bakingFinishTime = data_json.get("bakingFinishTime", "未知")
-
-            # 提取 jsonMessage 数据
-            json_message = data_json.get("jsonMessage", {})
-            total_time = json_message.get("totaltime", "0")
-            charge_bt = json_message.get("CHARGE_BT", "0")
-            tp_bt = json_message.get("TP_BT", "0")
-            tp_time = json_message.get("TP_time", "0")
-            maillard = json_message.get("Maillard", "0")
-            maillard_time = json_message.get("Maillard_time", "0")
-            dtr = json_message.get("DTR", "0")
-            fCs_BT = json_message.get("FCs_BT", "0")
-            fCs_time = json_message.get("FCs_time", "0")
-            finishphasetime = json_message.get("finishphasetime", "0")
-            dtr = json_message.get("DTR", "0")
-
-            obj = json_message.get("alogJson", "0")
-
-            time_data3 = obj.get("timex", "未知任务") # 时间
-            data11 = obj.get("temp2", "未知任务") # 豆温
-            data22 = obj.get("temp1", "未知任务")
-            data33 = obj.get("timeindex", "未知任务")
-
-            obj2 = obj.get("computed", "0")
-
-            # charge_idx = 0
-            # if data33[0] > -1:
-            #     charge_idx = data33[0]
-            # drop_idx = len(time_data3) - 1
-            # if data33[6] > 0:
-            #     drop_idx = data33[6]
-            # skip = max(2, min(20, int(round(5000 / self.qmc.delay))))
-            # skip2 = max(2, int(round(skip / 2)))
-            # delta2 = numpy.array(self.qmc.delta2[charge_idx + skip:drop_idx - skip2])
-
-            # 转换为 NumPy 数组
-            time_data3 = np.array(time_data3, dtype=np.float64)
-            data11 = np.array(data11, dtype=np.float64)
-
-            # 计算时间差（避免除以零）
-            time_diff = np.diff(time_data3)
-            time_diff[time_diff == 0] = np.nan  # 避免除零错误
-
-            # 计算温度变化
-            temp_diff = np.diff(data11)
-
-            # 计算 ROR（单位：°C/分钟）
-            delta2 = (temp_diff / time_diff) * 60  # 乘以 60 变成每分钟温升率
-
-            # 补 NaN 使 delta2 长度与 time_data3 相同
-            delta2 = np.append(delta2, np.nan)
-
-
-            self.matplotlib_info.refresh_chart(time_data3, data11, data22, delta2, obj2)
-
-
-
-
-            # res = self.setProfile(obj)  # 打开烘焙曲线
-            # if res:
-            #     # update etypes combo box
-            #     self.etypeComboBox.clear()
-            #     self.etypeComboBox.addItems(self.qmc.etypes)
-            #     self.qmc.fileDirtySignal.emit()
-            #     self.autoAdjustAxis()
-            #     self.qmc.redraw()
-
-            # 更新界面组件
-            # self.historyDetail_sheibei.setText(f"批次号: {baking_batch}")
-            self.hongbeishichang.setText(f"烘焙时长: {int(total_time) // 60}:{int(total_time) % 60} ")
-            self.rudouwendu.setText(f"入豆温度: {charge_bt}℃")
-            self.huiwendian.setText(f"回温点: {tp_bt}℃ / {int(tp_time) // 60}:{int(tp_time) % 60} ")
-            self.zhuanhuangdian.setText(
-                f"转黄点: {maillard}℃ / {int(maillard_time) // 60}:{int(maillard_time) % 60} ")
-            self.dtrTxt.setText(f"DTR: {dtr}%")
-            self.yibao.setText(f"一爆: {fCs_BT}℃ / {int(fCs_time) // 60}:{int(fCs_time) % 60} ")
-            self.fazhanshichang.setText(f"发展时长: {int(finishphasetime) // 60}:{int(finishphasetime) % 60} / {int(finishphasetime)/int(total_time)*100:.2f}%")
-            self.dtrTxt.setText('DTR：' + str(dtr) + '%')
-
-            self.pfTitle.setText('-')
-            self.sdzl.setText(f"{number}g")
-            self.hslTxt.setText(f"{number_of_beans}g")
-
-            self.agtronzhiNum.setText(f"#{agtron_value}")
-            self.qkfkContent.setText(f"{description}")
-            self.shoudouNum.setText(f"{numberOfRipe}g")
-            self.hbsslNum.setText(f"{dehydration_rate}%")
-            self.hbrqNum.setText(f"{bakingFinishTime}")
-
-            self.bcpfNum.setText('-')
-            self.hbpfNum.setText('-')
-            self.bcrqNum.setText('-')
-            self.pkfkTxt.setText('-')
-
-            # 更新目标和实际温湿度数据
-            target_temperatures = json_message.get("target_temperature", [])
-            target_values = json_message.get("target_values", [])
-            actual_temperatures = json_message.get("actual_temperature", [])
-            actual_values = json_message.get("actual_values", [])
-
-            for i in range(6):
-                getattr(self, f"wendu{i + 1}Txt").setText(
-                    f"{target_temperatures[i]}℃" if i < len(target_temperatures) else "N/A")
-                getattr(self, f"ckz{i + 1}Txt").setText(f"{target_values[i]}%" if i < len(target_values) else "N/A")
-                getattr(self, f"sjwendu{i + 1}Txt").setText(
-                    f"{actual_temperatures[i]}℃" if i < len(actual_temperatures) else "N/A")
-                getattr(self, f"sjckz{i + 1}Txt").setText(f"{actual_values[i]}%" if i < len(actual_values) else "N/A")
-
-            # 计算实际偏差百分比并显示
-            for i in range(6):
-                if i < len(actual_temperatures) and i < len(target_temperatures):
-                    deviation = round((actual_temperatures[i] - target_temperatures[i]) / target_temperatures[i] * 100,
-                                      2) if \
-                        target_temperatures[i] != 0 else "N/A"
-                    getattr(self, f"sjpc{i + 1}Txt").setText(f"{deviation}%")
-                else:
-                    getattr(self, f"sjpc{i + 1}Txt").setText("N/A")
-
-            print("JSON 数据加载完成")
-        except Exception as e:
-            print(f"加载 JSON 文件时出错: {e}")
-
-    def analyseClick(self):
-        """
-        Analyse click handler to populate the history analysis view.
-        """
-        # 从 orderDetail 获取数据列表
-        data_list = self.orderDetail
-        historyOrder_count = len(data_list)
-        if historyOrder_count<=1:
-            return
-        
-        # 使历史分析界面和滚动区域可见
-        self.historyAnalyse.setVisible(True)
-        self.scroll_area2.setVisible(True)
-        self.scroll_area2.setWidget(self.historyAnalyse)
-
-
-
-        # 设置控件可见性
-        self.kstTxt3.setVisible(historyOrder_count >= 3)
-        self.threeKST.setVisible(historyOrder_count >= 3)
-        self.kstTxt4.setVisible(historyOrder_count == 4)
-        self.fourKST.setVisible(historyOrder_count == 4)
-
-        # 根据 historyOrder_count 计算垂直偏移量
-        y_offset = 132 if historyOrder_count == 2 else (66 if historyOrder_count == 3 else 0)
-
-        # tsq 颜色和文本框位置
-        tsq_positions = [(409, 1371 - y_offset), (727, 1371 - y_offset), (1044, 1371 - y_offset)]
-        tsq_text_positions = [(439, 1369 - y_offset), (757, 1369 - y_offset), (1074, 1369 - y_offset)]
-
-        for i, (x, y) in enumerate(tsq_positions, start=1):
-            getattr(self, f'tsqColor{i}').setGeometry(x * self.width_scale, y * self.height_scale,
-                                                      20 * self.width_scale, 20 * self.height_scale)
-
-        for i, (x, y) in enumerate(tsq_text_positions, start=1):
-            getattr(self, f'tsqText{i}').setGeometry(x * self.width_scale, y * self.height_scale,
-                                                     60 * self.width_scale, 24 * self.height_scale)
-
-        # historyOrder 位置
-        history_positions = [(60, 1436 - y_offset), (814, 1436 - y_offset), (60, 1962 - y_offset),
-                             (814, 1962 - y_offset)]
-
-        for i, (x, y) in enumerate(history_positions, start=1):
-            getattr(self, f'historyOrder{i}').setGeometry(x * self.width_scale, y * self.height_scale,
-                                                          724 * self.width_scale, 495 * self.height_scale)
-
-
-        # 遍历数据列表并动态填充数据
-        for i, order in enumerate(data_list):
-            # 动态设置设备和订单标题
-            getattr(self, f'history_sheibei{i + 1}').setText(str(order.get('bakingBatch', '-')))
-            getattr(self, f'historyOrder{i + 1}_Title').setText(str(order.get('bakingBatch', '-')))
-
-            # 动态设置任务时间
-            task_time_minutes = int(order.get('taskTime', 0)) // 60
-            task_time_seconds = int(order.get('taskTime', 0)) % 60
-            getattr(self, f'historyOrder{i + 1}_Time').setText(f"{task_time_minutes}:{task_time_seconds}")
-
-            # 动态设置创建时间、脱水率、烘焙评分、Agtron值 historyOrder_hbrq1_Data
-            getattr(self, f'historyOrder_hbrq{i + 1}_Data').setText(str(order.get('bakingFinishTime', '-')))
-            getattr(self, f'historyOrder_hbssl{i + 1}_Data').setText(str(order.get('dehydrationRate', '-')))
-            getattr(self, f'historyOrder_Agtron{i + 1}_Data').setText(str(order.get('agtronValue', '-')))
-
-            # 设置烘焙阶段信息
-            msgdata = order.get('jsonMessage', {})
-            if msgdata:
-                # 获取 alogJson 数据
-                alogJson = msgdata.get('alogJson', {})
-
-                # 获取不同的 timex 数组
-                timex_list = []
-                temp_list = []
-                for index in range(4):  # 假设我们有 4 个可能的条目（下标 0 到 3）
-                    try:
-                        # 获取 timex 数据，如果为空字符串或不存在，使用空列表
-                        timex_data = data_list[index]['jsonMessage']['alogJson'].get('timex', "")
-                        if timex_data == "":  # 判断为空字符串的情况
-                            timex_list.append([])
-                        else:
-                            timex_list.append(timex_data)
-                    except (IndexError, KeyError, TypeError):
-                        timex_list.append([])
-
-                    try:
-                        # 获取 temp1 数据，如果为空字符串或不存在，使用空列表
-                        temp_data = data_list[index]['jsonMessage']['alogJson'].get('temp1', "")
-                        if temp_data == "":  # 判断为空字符串的情况
-                            temp_list.append([])
-                        else:
-                            temp_list.append(temp_data)
-                    except (IndexError, KeyError, TypeError):
-                        temp_list.append([])
-
-                # 找到最长的 timex
-                timex_lengths = [len(timex) for timex in timex_list]
-                max_len_index = timex_lengths.index(max(timex_lengths))  # 获取最长 timex 的索引
-
-                # 使用最长的 timex
-                timex = timex_list[max_len_index]
-
-                # 获取四个温度数据
-                temp1, temp2, temp3, temp4 = temp_list[0], temp_list[1], temp_list[2], temp_list[3]
-
-                # 更新图表
-                self.matplotlib_widget.update_plot(timex, temp1, temp2, temp3, temp4)
-
-                # 显示阶段点文本和几何
-                stages = ['onekst', 'twokst', 'threekst', 'fourkst']
-                stage_labels = ['CHARGE_BT', 'TP_BT', 'TP_time', 'Maillard', 'Maillard_time', 'FCs_BT', 'FCs_time']
-                stage_positions = ['Txt1', 'Txt2', 'Txt3']
-                total_time = int(msgdata.get('totaltime', 1))
-                max_time_in_seconds = max(total_time, 930)  # Default max time
-
-                order_count = historyOrder_count
-                totaltimeList = []
-                for i in range(order_count):
-                    totaltimeList.append(total_time)
-
-                max_time_in_seconds = max(totaltimeList)
-                max_time_in_minutes = int(max_time_in_seconds) // 60
-
-                # 仅在第一次时创建 timeNumWidget，避免重复创建
-                if not hasattr(self, "timeNumWidget"):
-                    self.timeNumWidget = QWidget(self.historyAnalyse)
-                    self.timeNumWidget.setStyleSheet("background-color: transparent; border:none; color: #222222;")
-                    self.timeNumLayout = QHBoxLayout(self.timeNumWidget)
-
-                # 先清除 timeNumLayout 中已有的小部件，避免重复添加
-                while self.timeNumLayout.count():
-                    item = self.timeNumLayout.takeAt(0)
-                    if item.widget():
-                        item.widget().deleteLater()  # 删除 QLabel 实例
-
-                # 重新生成时间轴
-                for minute in range(max_time_in_minutes):
-                    analyseTimeNum = QLabel(f"{minute}", self.historyAnalyse)
-                    analyseTimeNum.setFixedHeight(30)
-                    analyseTimeNum.setStyleSheet("background-color: transparent; border:none;color: #292827;")
-
-                    # 设置字体
-                    analyseTimeNumfont = QFont(self.font_family4, 18 * self.width_scale)
-                    analyseTimeNum.setFont(analyseTimeNumfont)
-
-                    # 将 QLabel 添加到布局
-                    self.timeNumLayout.addWidget(analyseTimeNum)
-
-                # 设置 timeNumWidget 的大小
-                self.timeNumWidget.setFixedHeight(34 * self.height_scale)
-                self.timeNumWidget.setGeometry(148 * self.width_scale, (1290-y_offset) * self.height_scale,
-                                               1384 * self.width_scale, 34 * self.height_scale)
-                self.timeNumWidget.show()
-
-                for idx, stage in enumerate(stages):
-                    if idx >= len(data_list):
-                        break
-                    stage_data = data_list[idx].get('jsonMessage', {})
-                    if not stage_data:
-                        continue
-
-                    phase_data = [
-                        f"入豆温度: {stage_data['CHARGE_BT']}℃   回温点: {stage_data['TP_BT']}℃/{stage_data['TP_time']}",
-                        f"转黄点: {stage_data['Maillard']}℃/{stage_data['Maillard_time']}",
-                        f"一爆: {stage_data['FCs_BT']}℃/{stage_data['FCs_time']}"
-                    ]
-
-                    # Ensure total_time and other divisors are not zero
-                    if total_time != 0:
-                        maillard_time = int(stage_data['Maillard_time']) if int(stage_data['Maillard_time']) != 0 else 1
-                        fcs_time = int(stage_data['FCs_time']) if int(stage_data['FCs_time']) != 0 else 1
-
-                        phase_lengths = [
-                            (total_time - maillard_time - fcs_time) / total_time,
-                            maillard_time / total_time,
-                            fcs_time / total_time
-                        ]
-                    else:
-                        # Handle the case where total_time is 0, possibly raising an error or setting default values
-                        phase_lengths = [0, 0, 0]  # Default values in case of division by zero
-                        print("Error: total_time is zero, cannot perform division.")
-
-                    position_offset = 16  # Initial offset
-                    for txt_idx, txt in enumerate(stage_positions):
-                        text_control = getattr(self, f"{stage}{txt}")
-
-                        # Check if total_time and max_time_in_seconds are not zero
-                        if total_time != 0 and max_time_in_seconds != 0:
-                            geometry_width = phase_lengths[txt_idx] * 1385 * (
-                                        total_time / max_time_in_seconds) * self.width_scale
-                        else:
-                            geometry_width = 0  # Set to zero or another fallback value if division by zero is detected
-
-                        text_control.setText(phase_data[txt_idx])
-                        text_control.setGeometry(
-                            position_offset * self.width_scale,
-                            3 * self.height_scale,
-                            geometry_width,
-                            60 * self.height_scale
-                        )
-                        position_offset += geometry_width + 1  # Increment position for next stage
-
-    def toggle_analyse_dw(self):
-        """切换豆温曲线的显示状态"""
-        is_visible = self.analyse_dw.styleSheet() == f'border-radius: {16*self.height_scale}px;background-color: #FBF8F5;border: 2px solid #D18F65'
-
-        data_list = self.orderDetail
-
-        if is_visible:
-            # 隐藏豆温曲线
-            self.analyse_dw.setStyleSheet(f'border-radius: {16*self.height_scale}px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
-            self.matplotlib_widget.update_plot([], [], [], [], [])  # 清空图表
+        # self.qmc.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)#鼠标穿透
+
+        self.sdzl.setText(str(item.data(12))+'kg')
+        self.hslTxt.setText(str(item.data(11))+'kg')
+        self.hbrqNum.setText(str(item.data(5)))
+        self.bcpfNum.setText(str(item.data(6))+'分')
+        self.hbpfNum.setText(str(item.data(7))+'分')
+        self.bcrqNum.setText(str(item.data(8)))
+        self.pkfkTxt.setText(str(item.data(9)))
+
+        # order_id = "ORDER-2202409111052390111_2-0,ORDER-2202409111052390111_2-1"
+        url = "http://inner4.mjytech.com:22104/admin/device/lookFormulaCurve" # 查看烘焙详情
+        params = {'bakingBatchList': item_id}
+        response = requests.get(url, params)
+        if response.status_code == 200:
+            self.historyInfo.setVisible(True)
+            self.scroll_area.setVisible(True)
+            self.scroll_area.setWidget(self.historyInfo)
+            dataJson = response.json()
+            data = dataJson['data']
+            textCode = dataJson['code']
+            if textCode == 0 or textCode == 200:
+                self.historyDetail_sheibei.setText(item_id)
+
+                # self.fileLoad()
+                obj = data[0]['jsonMessage']['alogJson']
+
+                time_data3 = obj.get("timex", "未知任务")  # 时间
+                data11 = obj.get("temp2", "未知任务")  # 豆温
+                data22 = obj.get("temp1", "未知任务")
+                data33 = obj.get("timeindex", "未知任务")
+
+                obj2 = obj.get("computed", "0")
+
+                # charge_idx = 0
+                # if data33[0] > -1:
+                #     charge_idx = data33[0]
+                # drop_idx = len(time_data3) - 1
+                # if data33[6] > 0:
+                #     drop_idx = data33[6]
+                # skip = max(2, min(20, int(round(5000 / self.qmc.delay))))
+                # skip2 = max(2, int(round(skip / 2)))
+                # delta2 = numpy.array(self.qmc.delta2[charge_idx + skip:drop_idx - skip2])
+
+                # 转换为 NumPy 数组
+                time_data3 = np.array(time_data3, dtype=np.float64)
+                data11 = np.array(data11, dtype=np.float64)
+
+                # 计算时间差（避免除以零）
+                time_diff = np.diff(time_data3)
+                time_diff[time_diff == 0] = np.nan  # 避免除零错误
+
+                # 计算温度变化
+                temp_diff = np.diff(data11)
+
+                # 计算 ROR（单位：°C/分钟）
+                delta2 = (temp_diff / time_diff) * 60  # 乘以 60 变成每分钟温升率
+
+                # 补 NaN 使 delta2 长度与 time_data3 相同
+                delta2 = np.append(delta2, np.nan)
+
+                self.matplotlib_info.refresh_chart(time_data3, data11, data22, delta2, obj2)
+
+                self.hbscContent = str(int(data[0]['jsonMessage']['totaltime']) // 60) + ':' + str(
+                    int(data[0]['jsonMessage']['totaltime']) % 60)
+                self.hongbeishichang.setText('烘焙时长：' + str(self.hbscContent))
+
+                self.rdwdContent = data[0]['jsonMessage']['CHARGE_BT']
+                self.rudouwendu.setText('入豆温度：' + str(self.rdwdContent) + '℃')
+
+                self.hwdContent = str(data[0]['jsonMessage']['TP_BT']) + '/' + str(
+                    int(data[0]['jsonMessage']['TP_time']) // 60) + ':' + str(
+                    int(data[0]['jsonMessage']['TP_time']) % 60)
+                self.huiwendian.setText('回温点：' + str(self.hwdContent))
+
+                self.zhdContent = str(data[0]['jsonMessage']['Maillard']) + '/' + str(
+                    int(data[0]['jsonMessage']['Maillard_time']) // 60) + ':' + str(
+                    int(data[0]['jsonMessage']['Maillard_time']) % 60)
+                self.zhuanhuangdian.setText('转黄点：' + self.zhdContent)
+
+                self.ybContent = str(data[0]['jsonMessage']['FCs_BT']) + '/' + str(
+                    int(data[0]['jsonMessage']['FCs_time']) // 60) + ':' + str(
+                    int(data[0]['jsonMessage']['FCs_time']) % 60)
+                self.yibao.setText('一爆：' + self.ybContent)
+
+                self.fzscContent = str(int(data[0]['jsonMessage']['finishphasetime']) // 60) + ':' + str(
+                    int(data[0]['jsonMessage']['finishphasetime']) % 60)
+                self.fazhanshichang.setText('发展时长：' + self.fzscContent)
+
+                self.dtrContent = data[0]['jsonMessage']['DTR']
+                self.dtrTxt.setText('DTR：' + str(self.dtrContent) + '%')
+
+                self.wendu1Txt.setText(str(data[0]['jsonMessage']['target_temperature'][0]) + '℃')
+                self.ckz1Txt.setText(str(data[0]['jsonMessage']['target_values'][0]) + 'RH%')
+
+                self.wendu2Txt.setText(str(data[0]['jsonMessage']['target_temperature'][1]) + '℃')
+                self.ckz2Txt.setText(str(data[0]['jsonMessage']['target_values'][1]) + 'RH%')
+
+                self.wendu3Txt.setText(str(data[0]['jsonMessage']['target_temperature'][2]) + '℃')
+                self.ckz3Txt.setText(str(data[0]['jsonMessage']['target_values'][2]) + 'RH%')
+
+                self.wendu4Txt.setText(str(data[0]['jsonMessage']['target_temperature'][3]) + '℃')
+                self.ckz4Txt.setText(str(data[0]['jsonMessage']['target_values'][3]) + '%')
+
+                self.wendu5Txt.setText(str(data[0]['jsonMessage']['target_temperature'][4]) + '℃')
+                self.ckz5Txt.setText(str(data[0]['jsonMessage']['target_values'][4]) + '%')
+
+                self.wendu6Txt.setText(str(data[0]['jsonMessage']['target_temperature'][5]) + '℃')
+                self.ckz6Txt.setText(str(data[0]['jsonMessage']['target_values'][5]) + '%')
+
+                self.sjwendu1Txt.setText(str(data[0]['jsonMessage']['actual_temperature'][0]) + '℃')
+                self.sjckz1Txt.setText(str(data[0]['jsonMessage']['actual_values'][0]) + 'RH%')
+
+                self.sjwendu2Txt.setText(str(data[0]['jsonMessage']['actual_temperature'][1]) + '℃')
+                self.sjckz2Txt.setText(str(data[0]['jsonMessage']['actual_values'][1]) + 'RH%')
+
+                self.sjwendu3Txt.setText(str(data[0]['jsonMessage']['actual_temperature'][2]) + '℃')
+                self.sjckz3Txt.setText(str(data[0]['jsonMessage']['actual_values'][2]) + 'RH%')
+
+                self.sjwendu4Txt.setText(str(data[0]['jsonMessage']['actual_temperature'][3]) + '℃')
+                self.sjckz4Txt.setText(str(data[0]['jsonMessage']['actual_values'][3]) + '%')
+
+                self.sjwendu5Txt.setText(str(data[0]['jsonMessage']['actual_temperature'][4]) + '℃')
+                self.sjckz5Txt.setText(str(data[0]['jsonMessage']['actual_values'][4]) + '%')
+
+                self.sjwendu6Txt.setText(str(data[0]['jsonMessage']['actual_temperature'][5]) + '℃')
+                self.sjckz6Txt.setText(str(data[0]['jsonMessage']['actual_values'][5]) + '%')
+
+                self.sjpc1Txt.setText(str(round(
+                    (data[0]['jsonMessage']['actual_values'][0] - data[0]['jsonMessage']['target_values'][0]) /
+                    data[0]['jsonMessage']['actual_values'][0] * 100)) + '%')
+                self.sjpc2Txt.setText(str(round(
+                    (data[0]['jsonMessage']['actual_values'][1] - data[0]['jsonMessage']['target_values'][1]) /
+                    data[0]['jsonMessage']['actual_values'][1] * 100)) + '%')
+                self.sjpc3Txt.setText(str(round(
+                    (data[0]['jsonMessage']['actual_values'][2] - data[0]['jsonMessage']['target_values'][2]) /
+                    data[0]['jsonMessage']['actual_values'][2] * 100)) + '%')
+                self.sjpc4Txt.setText(str(round(
+                    (data[0]['jsonMessage']['actual_values'][3] - data[0]['jsonMessage']['target_values'][3]) /
+                    data[0]['jsonMessage']['actual_values'][3] * 100)) + '%')
+                self.sjpc5Txt.setText(str(round(
+                    (data[0]['jsonMessage']['actual_values'][4] - data[0]['jsonMessage']['target_values'][4]) /
+                    data[0]['jsonMessage']['actual_values'][4] * 100)) + '%')
+                self.sjpc6Txt.setText(str(round(
+                    (data[0]['jsonMessage']['actual_values'][5] - data[0]['jsonMessage']['target_values'][5]) /
+                    data[0]['jsonMessage']['actual_values'][5] * 100)) + '%')
+
+                self.qkfkContent.setText(data[0].get('desncription'))
+                self.agtronzhiNum.setText('#' + str(data[0].get('agtronValue')))
+
+            else:
+                print('连接失败')
         else:
-            # 显示豆温曲线
-            self.analyse_dw.setStyleSheet(f'border-radius: {16*self.height_scale}px;background-color: #FBF8F5;border: 2px solid #D18F65')
+            print('连接失败')
 
-            # 获取不同的 timex 数组
-            timex_list = []
-            temp_list = []
-            for index in range(4):  # 假设我们有 4 个可能的条目（下标 0 到 3）
-                try:
-                    # 获取 timex 数据，如果为空字符串或不存在，使用空列表
-                    timex_data = data_list[index]['jsonMessage']['alogJson'].get('timex', "")
-                    if timex_data == "":  # 判断为空字符串的情况
-                        timex_list.append([])
-                    else:
-                        timex_list.append(timex_data)
-                except (IndexError, KeyError, TypeError):
-                    timex_list.append([])
 
-                try:
-                    # 获取 temp1 数据，如果为空字符串或不存在，使用空列表
-                    temp_data = data_list[index]['jsonMessage']['alogJson'].get('temp1', "")
-                    if temp_data == "":  # 判断为空字符串的情况
-                        temp_list.append([])
-                    else:
-                        temp_list.append(temp_data)
-                except (IndexError, KeyError, TypeError):
-                    temp_list.append([])
-
-            # 找到最长的 timex
-            timex_lengths = [len(timex) for timex in timex_list]
-            max_len_index = timex_lengths.index(max(timex_lengths))  # 获取最长 timex 的索引
-
-            # 使用最长的 timex
-            timex = timex_list[max_len_index]
-
-            # 获取四个温度数据
-            temp1, temp2, temp3, temp4 = temp_list[0], temp_list[1], temp_list[2], temp_list[3]
-
-            # 更新图表
-            self.matplotlib_widget.update_plot(timex, temp1, temp2, temp3, temp4)
-    def toggle_analyse_fw(self):
-        """切换风温曲线的显示状态"""
-        is_visible = self.analyse_fw.styleSheet() == f'border-radius: {16*self.height_scale}px;background-color: #FBF8F5;border: 2px solid #AC3230'
-        data_list = self.orderDetail
-
-        if is_visible:
-            # 隐藏风温曲线
-            self.analyse_fw.setStyleSheet(f'border-radius: {16*self.height_scale}px;background-color: #FBF8F5;border: 2px solid #CAC6C2')
-            self.matplotlib_widget.update_plot([], [], [], [], [])  # 清空图表
-        else:
-            # 显示风温曲线
-            self.analyse_fw.setStyleSheet(f'border-radius: {16*self.height_scale}px;background-color: #FBF8F5;border: 2px solid #AC3230')
-
-            # 获取不同的 timex 数组
-            timex_list = []
-            temp_list = []
-            for index in range(4):  # 假设我们有 4 个可能的条目（下标 0 到 3）
-                try:
-                    # 获取 timex 数据，如果为空字符串或不存在，使用空列表
-                    timex_data = data_list[index]['jsonMessage']['alogJson'].get('timex', "")
-                    if timex_data == "":  # 判断为空字符串的情况
-                        timex_list.append([])
-                    else:
-                        timex_list.append(timex_data)
-                except (IndexError, KeyError, TypeError):
-                    timex_list.append([])
-
-                try:
-                    # 获取 temp1 数据，如果为空字符串或不存在，使用空列表
-                    temp_data = data_list[index]['jsonMessage']['alogJson'].get('temp2', "")
-                    if temp_data == "":  # 判断为空字符串的情况
-                        temp_list.append([])
-                    else:
-                        temp_list.append(temp_data)
-                except (IndexError, KeyError, TypeError):
-                    temp_list.append([])
-
-            # 找到最长的 timex
-            timex_lengths = [len(timex) for timex in timex_list]
-            max_len_index = timex_lengths.index(max(timex_lengths))  # 获取最长 timex 的索引
-
-            # 使用最长的 timex
-            timex = timex_list[max_len_index]
-
-            # 获取四个温度数据
-            temp1, temp2, temp3, temp4 = temp_list[0], temp_list[1], temp_list[2], temp_list[3]
-
-            # 更新图表
-            self.matplotlib_widget.update_plot(timex, temp1, temp2, temp3, temp4)
 
     def blockTicks(self) -> int:
         return max(1, int(round(self.sampling_seconds_to_block_quantifiction / (self.qmc.delay / 1000))) + 1)
@@ -17578,7 +16525,6 @@ class ApplicationWindow(
         # 获取文本的宽度
         text_width = fm.horizontalAdvance(label.text())
         return text_width
-
 
     def read_rtsp_from_ini(self, ini_file_path):
         # 读取 INI 文件中的 RTSP 地址
@@ -18803,8 +17749,8 @@ class ApplicationWindow(
             self.ConfMenu.addMenu(menu)
 
     def populateMachineMenu(self) -> None:
-        self.populateListMenu(os.path.join(ytycwdpath,"localJson","Machines"), '.aset', self.openMachineSettings, self.machineMenu)
-
+        self.populateListMenu(os.path.join(ytycwdpath, "localJson", "Machines"), '.aset', self.openMachineSettings,
+                              self.machineMenu)
 
     # def openMachineSettings(self, file_path: str, _checked: bool = False) -> None:
     #     # 重定向输出日志
@@ -19136,7 +18082,6 @@ class ApplicationWindow(
     #     except Exception as e:  # pylint: disable=broad-except
     #         _log.exception(e)
 
-
     @pyqtSlot(bool)
     def openMachineSettings(self, file_path: str, _checked: bool = False) -> None:
         action = self.sender()
@@ -19176,28 +18121,28 @@ class ApplicationWindow(
                     config = configparser.ConfigParser()
                     config.read(file_path, encoding='utf-8')  # 读取文件
                     # 提取 `sethost` 值
-                    if 'OtherSettings' in config:
+                    if 'OtherSettings' in config and 'sethost' in config['OtherSettings']:
                         sbxl = config['OtherSettings'].get('setsbxl', ' ')
-                        self.xinghaoLabel.setText(str(sbxl))
+                        # self.xinghaoLabel.setText(str(sbxl))
                         shebeiType_setup = config['General'].get('roastertype_setup', ' ')
-                        self.shebeiLabel.setText(shebeiType_setup)
+                        # self.shebeiLabel.setText(shebeiType_setup)
                         self.modbus.host = config['OtherSettings'].get('sethost', self.modbus.host)
-                        # self.modbus.comport = config['OtherSettings'].get('setcom', self.modbus.comport)
-                        # self.ser.comport = config['OtherSettings'].get('setcom', self.ser.comport)
                         orgResi = config['OtherSettings'].get('setheatingtype', '2')
                         self.qmc.device = toInt(config['Device'].get('id', self.qmc.device))
                         self.s7.host = config['OtherSettings'].get('sethost', self.s7.host)
                         self.modbus.type = toInt(config['Modbus'].get('type', self.modbus.type))
                         # keep original information to Cancel
                         self.qmc.machinesetup = config['OtherSettings'].get('setjx', self.qmc.machinesetup)
-                        self.ws.host =  config['OtherSettings'].get('sethost', self.ws.host)
-                        # self.modbus.comport = config['Modbus'].get('comport', self.modbus.comport)
-                        self.qmc.roastersize_setup = toFloat(config['General'].get('roastersize_setup_default', self.qmc.roastersize_setup))
+                        self.ws.host = config['OtherSettings'].get('sethost', self.ws.host)
+                        self.modbus.comport = config['Modbus'].get('comport', self.modbus.comport)
+                        self.qmc.roastersize_setup = toFloat(
+                            config['General'].get('roastersize_setup_default', self.qmc.roastersize_setup))
 
                 except Exception as e:
                     print(f"Error reading INI file for 'sethost': {e}")
                 # orgResi = 1
-                _log.info('lj 15945: %s,%s,%s,%s',self.modbus.host, self.qmc.roasterheating, self.qmc.roastersize,self.modbus.type)
+                _log.info('lj 15945: %s,%s,%s,%s', self.modbus.host, self.qmc.roasterheating, self.qmc.roastersize,
+                          self.modbus.type)
 
                 if hasattr(action, 'text'):
                     print(self.modbus.host, self.qmc.roasterheating, self.qmc.roastersize)
@@ -19299,10 +18244,12 @@ class ApplicationWindow(
                     elif (self.qmc.device in {0, 9, 19, 53, 101, 115, 126} or (
                             (self.qmc.device == 29 or 29 in self.qmc.extradevices) and self.modbus.type in {0, 1, 2}) or
                           (self.qmc.device == 134 and self.santokerSerial) or
-                          (self.qmc.device == 138 and self.kaleidoSerial)):  # Fuji, Center301, TC4, Hottop, Behmor or MODBUS serial, HB/ARC
+                          (
+                                  self.qmc.device == 138 and self.kaleidoSerial)):  # Fuji, Center301, TC4, Hottop, Behmor or MODBUS serial, HB/ARC
                         select_device_name = None
                         # as default we offer the current settings serial/modbus port, or if this is set to its default as after a factory reset (self.ser.default_comport or self.modbus.default_comport) we take the one from the machine setup
-                        defaultComPort: str = ((self.modbus.comport if org_modbus_comport == self.modbus.default_comport else org_modbus_comport) if self.qmc.device == 29 else (
+                        defaultComPort: str = ((
+                                                   self.modbus.comport if org_modbus_comport == self.modbus.default_comport else org_modbus_comport) if self.qmc.device == 29 else (
                             self.ser.comport if org_comport == self.ser.default_comport else org_comport))
                         select_modbus_serial_port: bool = self.qmc.device == 29 or (
                                 29 in self.qmc.extradevices and self.qmc.device not in {0, 9, 19, 53, 101, 115, 126,
@@ -19316,17 +18263,15 @@ class ApplicationWindow(
                         #                                                       title=serial_port_dialog_title,
                         #                                                       selection=defaultComPort,
                         #                                                       select_device_name=select_device_name)
-                        # res = bool(commPort_dlg.exec())
-                        # if res:
-                        #     new_port = commPort_dlg.getSelection()
-                        #     if new_port is not None:
-                        #         if select_modbus_serial_port:  # MODBUS serial
-                        #             self.modbus.comport = new_port
-                        #         else:  # Fuji or HOTTOP
-                        #             self.ser.comport = new_port
-                        self.ser.comport = org_comport
-                        # self.modbus.comport = org_modbus_comport
-                    elif self.qmc.device == 142:  # I KAWA
+                        res = bool(commPort_dlg.exec())
+                        if res:
+                            new_port = commPort_dlg.getSelection()
+                            if new_port is not None:
+                                if select_modbus_serial_port:  # MODBUS serial
+                                    self.modbus.comport = new_port
+                                else:  # Fuji or HOTTOP
+                                    self.ser.comport = new_port
+                    elif self.qmc.device == 142:  # IKAWA
                         # we request Bluetooth permission
                         permission_status: Optional[bool] = self.app.getBluetoothPermission(request=True)
                         if permission_status is False:
@@ -31383,7 +30328,7 @@ class ApplicationWindow(
             self.modbus.PID_ON_action = s2a(toString(settings.value('PID_ON_action', self.modbus.PID_ON_action)))
             # restore MODBUS TCP/UDP settings
             self.modbus.type = toInt(settings.value('type', self.modbus.type))
-            _log.info('lj 28088 : %s',self.modbus.type)
+            _log.info('lj 28088 : %s', self.modbus.type)
             self.modbus.host = toString(settings.value('host', self.modbus.host))
             self.modbus.port = toInt(settings.value('port', self.modbus.port))
             self.modbus.reset_socket = bool(toBool(settings.value('reset_socket', self.modbus.reset_socket)))
@@ -32434,8 +31379,8 @@ class ApplicationWindow(
 
             # if filename is None and self.full_screen_mode_active:
             self.showFullScreen()
-                # if not (platform.system() == 'Darwin' and self.qmc.locale_str == 'en'):
-                #     self.fullscreenAction.setChecked(True)
+            # if not (platform.system() == 'Darwin' and self.qmc.locale_str == 'en'):
+            #     self.fullscreenAction.setChecked(True)
 
             if filename is None and self.plus_account is not None:
                 try:
