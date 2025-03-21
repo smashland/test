@@ -2522,6 +2522,7 @@ class serialport:
     # if force, do retrieve fresh readings and ignore the optimizers cached values
     def MODBUSread(self, force:bool = False) -> Tuple[float, float]:
         # fill the MODBUS optimizer (if active and not an oversampling call) with data for all read requests specified in the device MODBUS tab using block reads
+        _log.info('lj comm 2525 force', force)
         if not force:
 #            start = libtime.time()
 
@@ -2538,12 +2539,16 @@ class serialport:
 
         res:List[float] = [-1]*self.aw.modbus.channels
 
+        _log.info('lj comm 2542 res', res)
+        _log.info('lj comm 2543 channels', self.aw.modbus.channels)
+        _log.info('lj comm 2544 inputSlaves', self.aw.modbus.inputSlaves)
         for i in range(self.aw.modbus.channels):
             if self.aw.modbus.inputSlaves[i] and not force: # in force mode (second request in oversampling mode) read only first two channels (ET/BT)
                 if not self.aw.modbus.optimizer or force:
                     self.aw.modbus.sleepBetween() # we start with a sleep, as it could be that just a send command happened before the semaphore was caught
                 rf:Optional[float]
                 ri:Optional[int]
+
                 if self.aw.modbus.inputFloats[i]:
                     rf = self.aw.modbus.readFloat(
                                 self.aw.modbus.inputSlaves[i],
@@ -2552,6 +2557,7 @@ class serialport:
                                 force)
                     if rf is not None:
                         res[i] = rf
+                    _log.info('lj comm 2560 rf', rf)
                 elif self.aw.modbus.inputFloatsAsInt[i]:
                     ri = self.aw.modbus.readInt32(
                                 self.aw.modbus.inputSlaves[i],
@@ -2561,6 +2567,7 @@ class serialport:
                                 signed=self.aw.modbus.inputSigned[i])
                     if ri is not None:
                         res[i] = ri
+                    _log.info('lj comm 2570 ri', ri)
                 elif self.aw.modbus.inputBCDs[i]:
                     ri = self.aw.modbus.readBCD(
                                 self.aw.modbus.inputSlaves[i],
@@ -2569,6 +2576,7 @@ class serialport:
                                 force)
                     if ri is not None:
                         res[i] = ri
+                    _log.info('lj comm 2579 ri', ri)
                 elif self.aw.modbus.inputBCDsAsInt[i]:
                     ri = self.aw.modbus.readBCDint(
                                 self.aw.modbus.inputSlaves[i],
@@ -2577,6 +2585,7 @@ class serialport:
                                 force)
                     if ri is not None:
                         res[i] = ri
+                    _log.info('lj comm 2588 ri', ri)
                 else:
                     ri = self.aw.modbus.readSingleRegister(
                                 self.aw.modbus.inputSlaves[i],
@@ -2586,8 +2595,11 @@ class serialport:
                                 signed=self.aw.modbus.inputSigned[i])
                     if ri is not None:
                         res[i] = ri
+                    _log.info('lj comm 2598 ri', ri)
                 rf = self.processChannelData(res[i],self.aw.modbus.inputDivs[i],self.aw.modbus.inputModes[i])
+                _log.info('lj comm 2600 rf', rf)
                 res[i] = rf
+        _log.info('lj comm 2602 res', res)
         self.aw.extraMODBUStemps = res[:]
         return res[1], res[0]
 

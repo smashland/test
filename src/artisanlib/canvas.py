@@ -324,7 +324,7 @@ class tgraphcanvas(FigureCanvas):
         #default palette of colors
         self.locale_str:str = locale
         self.alpha:Dict[str,float] = {'analysismask':0.4,'statsanalysisbkgnd':1.0,'legendbg':0.4}
-        self.palette: Dict[str, str] = {'background': '#F1EBE700', 'grid': '#e5e5e5', 'ylabel': '#7D7A79',
+        self.palette: Dict[str, str] = {'background': '#F7F5F200', 'grid': '#e5e5e5', 'ylabel': '#7D7A79',
                                         'xlabel': '#292827', 'title': 'red',
                                         'title_focus': 'red', 'title_hidden': 'red',
                                         'rect1': '#e5e5e5', 'rect2': '#b2b2b2', 'rect3': '#e5e5e5', 'rect4': '#bde0ee',
@@ -4325,14 +4325,11 @@ class tgraphcanvas(FigureCanvas):
                 self.aw.processInfoLabel) + self.aw.calculate_text_width(self.aw.processInfoLabel_point)) * self.aw.width_scale,
                                       26 * self.aw.height_scale, 16 * self.aw.width_scale, 18 * self.aw.height_scale)
 
+            _log.info('lj 测试 豆温风温', btstr, etstr)
 
 
 
 
-
-
-            # self.aw.lookBtstr = btstr
-            # self.aw.lookEtstr = etstr
 
             ## Delta LCDs:
             deltaetstr = resLCD
@@ -8431,11 +8428,11 @@ class tgraphcanvas(FigureCanvas):
                                 c1 = 'rect5'
                                 c2 = 'background'
                                 if i == 0:
-                                    color = '#f1ebe7' #self.palette["rect3"] # brown
+                                    color = '#F7F5F2' #self.palette["rect3"] # brown
                                 elif i%2:
-                                    color = '#f1ebe7' #self.palette["rect2"] # orange # the uneven ones
+                                    color = '#F7F5F2' #self.palette["rect2"] # orange # the uneven ones
                                 else:
-                                    color = '#f1ebe7' #self.palette["rect1"] # green # the even ones
+                                    color = '#F7F5F2' #self.palette["rect1"] # green # the even ones
                                 if i != 10: # don't draw the first and the last bar in clamp mode
                                     rectEvent = patches.Rectangle(
                                         (0,barposition),
