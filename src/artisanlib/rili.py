@@ -64,48 +64,73 @@ class Calendar(QDialog):
         xialaIMG = f"{self.normalized_path}/includes/Icons/general/xiala2.png"
         # 定义统一的样式
         combo_style = f"""
-            QComboBox {{
-                border: 1px solid #CCCCCC;
-                border-radius: 5px;
-                background: white;
-                color: black;
-                text-align: center;  /* 设置文本居中 */
-                text-align-last: center;
-                text-align-vertical: center;
-            }}
-            QComboBox::drop-down {{
-                border-left: 1px solid #CCCCCC;
+                     QComboBox {{
+                    border: 1px solid #CCCCCC;
+                    border-radius: 5px;
+                    background: white;
+                    color: black;
+                    text-align: center;
+                    text-align-last: center;
+                    text-align-vertical: center;
+                }}
+                QComboBox:editable {{
+                    background: white;
+                }}
+                QComboBox:focus {{
+                    outline: none;
+                    border: 1px solid #CCCCCC; /* 保持边框样式 */
+                }}
+                QComboBox QLineEdit {{
+                    border: none;  /* 移除 QLineEdit 的边框 */
+                    background: transparent; /* 让背景透明 */
+                }}
+                QComboBox QLineEdit:focus {{
+                    border: none;
+                    outline: none;
+                }}
+                QComboBox QAbstractItemView::item:focus {{
+                    border: none;
+                    outline: none;
+                    background: white;
+                }}
+                QComboBox::drop-down {{
+                    border-left: 1px solid #CCCCCC;
+                    border-top-right-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                    background: white;
+                    width: 20px;
+                    color: black;
+                }}
+                QComboBox::down-arrow {{
+                    width: 5;
+                    height: 5;
+                    background-Image: url(".venv/xiala.png");    
+                }}
+                QComboBox QAbstractItemView {{
+                    outline: none;
+                    border: 1px solid #CCCCCC;
+                    border-radius: 5px;
+                    background: #808080;
+                    selection-background-color: #D3D3D3;
+                    border: 1px solid #FFFFFF;
+                    color: black;
+                }}
+                QComboBox QAbstractItemView::item {{
+                    height: 25px;
+                    padding-left: 5px;
+                    background-color: #FFFFFF;
+                    color: black;
+                    min-width: 150px;
+                }}
+                QComboBox QAbstractItemView::item:hover {{
+                    background-color: #CCCCCC;
+                    color: #808080;
+                }}
+                QComboBox QAbstractItemView::item:selected {{
+                    border: none;
+                }}
 
-                border-top-right-radius: 5px;
-                border-bottom-right-radius: 5px;
-                background: white;
-                width: 20px;
-                color: black;
-            }}
-            QComboBox::down-arrow {{
-                width: 14;
-                height: 14;
-                background-Image: url({xialaIMG});
-            }}
-            QComboBox QAbstractItemView {{
-                border-radius: 5px;
-                background: #808080;
-                selection-background-color: #D3D3D3;
-                border: 1px solid #CCCCCC;
-                color: black;
-            }}
-            QComboBox QAbstractItemView::item {{
-                height: 25px;
-                padding-left: 5px;
-                background-color: #FFFFFF;  /* 浅灰色背景 */
-                color: black;
-            }}
-            QComboBox QAbstractItemView::item:hover {{
-                background-color: #CCCCCC;  /* Hover color */
-                color: #808080;  /* Text color when hovered */
-            }}
-
-        """
+                """
 
         # 年份选择
         self.year_combo = QComboBox()

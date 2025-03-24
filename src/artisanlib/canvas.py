@@ -1208,6 +1208,9 @@ class tgraphcanvas(FigureCanvas):
         #self.temp1 = ET ; self.temp2 = BT; self.delta1 = deltaMET; self.delta2 = deltaBT
         self.temp1:List[float] = []
         self.temp2:List[float] = []
+         # 添加Agtron色值数组
+        self.agtron_values:List[float] = []
+        self.delta1:List[float] = []
         self.delta1:List[Optional[float]] = []
         self.delta2:List[Optional[float]] = []
         self.stemp1:List[float] = [] # smoothed versions of temp1/temp2 used in redraw()
@@ -4325,10 +4328,24 @@ class tgraphcanvas(FigureCanvas):
                 self.aw.processInfoLabel) + self.aw.calculate_text_width(self.aw.processInfoLabel_point)) * self.aw.width_scale,
                                       26 * self.aw.height_scale, 16 * self.aw.width_scale, 18 * self.aw.height_scale)
 
-            _log.info('lj 测试 豆温风温', btstr, etstr)
+            _log.info('lj 测试 豆温风温', '000', '999')
 
-
-
+           # Agtron色值计算和显示
+            try:
+                # 检查是否已经烘焙超过5分钟且有足够数据点
+                if self.flagstart and len(self.timex) > 10 and self.timex[-1] > 300:
+                    # 每秒更新一次Agtron色值
+                    from artisanlib.agtron_predictor import predict_agtron_color
+                    predicted_agtron = predict_agtron_color(
+                        self.timex, 
+                        self.temp2, 
+                        getattr(self.aw, 'beans_name', '未知豆种')
+                    )
+                    # 更新显示
+                    if predicted_agtron is not None:
+                        self.aw.agtronNum.setText(str(predicted_agtron))
+            except Exception as e:
+                _log.exception(f"Agtron计算错误: {str(e)}")
 
 
             ## Delta LCDs:
@@ -7863,6 +7880,38 @@ class tgraphcanvas(FigureCanvas):
                 label = self.aw.arabicReshape(QApplication.translate('Label', 'BT')))
             self.ax.grid(True, linestyle='--')  # 图表虚线
 
+    def drawAgtron(self, temp:'npt.NDArray[numpy.double]') -> None:
+        if self.ax is not None and len(self.timex) > 0 and len(self.agtron_values) > 0:
+            # 确保agtron_values长度与timex一致
+            if len(self.agtron_values) < len(self.timex):
+                # 用最后一个值填充
+                last_value = self.agtron_values[-1] if self.agtron_values else 0
+                while len(self.agtron_values) < len(self.timex):
+                    self.agtron_values.append(last_value)
+
+            # 创建第二个Y轴用于显示Agtron色值
+            if not hasattr(self, 'agtron_ax') or self.agtron_ax is None:
+                self.agtron_ax = self.ax.twinx()
+                self.agtron_ax.set_ylabel('Agtron值', color='#6BAE76')  # 咖啡色
+                self.agtron_ax.tick_params(axis='y', labelcolor='#6BAE76')
+
+                # 设置Agtron值的范围（通常在0-100之间）
+                self.agtron_ax.set_ylim(0, 100)
+
+            # 绘制Agtron曲线
+            if hasattr(self, 'l_agtron'):
+                self.l_agtron.remove()
+
+            self.l_agtron, = self.agtron_ax.plot(
+                self.timex,
+                numpy.array(self.agtron_values),
+                linewidth=2,
+                linestyle='-',
+                alpha=0.8,
+                color='#6BAE76',  # 咖啡色
+            )
+
+
     def drawDeltaET(self, trans:Transform, start:int, end:int) -> None:
         if self.DeltaETflag and self.ax is not None:
             try:
@@ -8056,6 +8105,8 @@ class tgraphcanvas(FigureCanvas):
         if self.delta_ax is not None and xlimit_min is not None and xlimit is not None and zlimit_min is not None and zlimit is not None:
             self.delta_ax.set_xlim(xlimit_min, xlimit)
             self.delta_ax.set_ylim(zlimit_min, zlimit)
+
+    
 
     #Redraws data
     # if recomputeAllDeltas, the delta arrays and if smooth the smoothed line arrays are recomputed (incl. those of the background curves)
@@ -9900,6 +9951,10 @@ class tgraphcanvas(FigureCanvas):
                     else:
                         self.drawBT(visible_bt)
                         self.drawET(visible_et)
+
+                    # 添加绘制Agtron曲线
+                    if hasattr(self, 'agtron_values') and len(self.agtron_values) > 0 and self.timex and len(self.timex) > 0 and self.timex[-1] > 300:
+                        self.drawAgtron()
 
                     if self.ETcurve and self.l_temp1 is not None:
                         self.handles.append(self.l_temp1)
