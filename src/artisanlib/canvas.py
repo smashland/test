@@ -4333,7 +4333,7 @@ class tgraphcanvas(FigureCanvas):
            # Agtron色值计算和显示
             try:
                 # 检查是否已经烘焙超过5分钟且有足够数据点
-                if self.flagstart and len(self.timex) > 10 and self.timex[-1] > 300:
+                if self.flagstart and len(self.timex) > 10 and self.timex[-1] > 180:
                     # 每秒更新一次Agtron色值
                     from artisanlib.agtron_predictor import predict_agtron_color
                     model_path = os.path.join(ytycwdpath, "models", "agtron_model", "")
@@ -4346,8 +4346,7 @@ class tgraphcanvas(FigureCanvas):
                     )
                     # 更新显示
                     if predicted_agtron is not None:
-                        if self.changeBool == True:
-                            self.aw.agtronNum.setText(f"{predicted_agtron:.1f}")
+                        self.aw.agtronNum.setText(f"{predicted_agtron:.1f}")
 
             except Exception as e:
                 _log.exception(f"Agtron计算错误: {str(e)}")

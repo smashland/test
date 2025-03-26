@@ -3538,44 +3538,7 @@ class ApplicationWindow(
         more_jdfont = QFont(self.font_family3, 12*self.width_scale)
         self.more_ddxq.setFont(more_jdfont)
 
-        # 创建阴影 QLabel
-        self.shadow_label = QLabel(self)
-        self.shadow_label.setGeometry(190 * self.width_scale, 1080 * self.height_scale - 48 * self.height_scale,
-                                      1680 * self.width_scale, 30 * self.height_scale)  # 40px 高度
 
-        # 创建渐变图片
-        gradient_pixmap = QPixmap(1920 * self.width_scale, 30 * self.height_scale)  # 创建空白 pixmap
-        gradient_pixmap.fill(Qt.GlobalColor.transparent)  # 先填充透明背景
-
-        # 开始绘制
-        painter = QPainter()
-        painter.begin(gradient_pixmap)  # 开始绘制
-        painter.setRenderHint(QPainter.RenderHint.Antialiasing)  # 使渐变更平滑
-
-        # 创建线性渐变 (注意方向从下到上)
-        gradient = QLinearGradient(0, 40, 0, 0)  # 从底部 (40px) 渐变到顶部 (0px)
-
-        # 设置颜色
-        color1 = QColor("#e1eaf6")
-        color1.setAlpha(0)  # 顶部完全透明#e1eaf6
-
-        color2 = QColor("#e1eaf6")
-        color2.setAlpha(255)  # 底部完全不透明
-
-        # 应用渐变颜色
-        gradient.setColorAt(0.0, color2)  # 0.0 = 底部最深
-        gradient.setColorAt(1.0, color1)  # 1.0 = 顶部透明
-
-        # 设置画刷并填充
-        painter.setBrush(QBrush(gradient))
-        painter.setPen(Qt.PenStyle.NoPen)  # 不要边框
-        painter.drawRect(0, 0, 1920 * self.width_scale, 40 * self.height_scale)
-
-        painter.end()  # 结束绘制
-
-        # 设置渐变背景
-        self.shadow_label.setPixmap(gradient_pixmap)
-        self.shadow_label.setScaledContents(True)
 
         # self.ordersRect_typeList = QLabel(self.ordersRect_More)
         # self.ordersRect_typeList.setStyleSheet(
@@ -4983,6 +4946,45 @@ class ApplicationWindow(
         self.ccBtn.setEnabled(False)
         self.zhdImg.setEnabled(False)
         self.yibaoImg.setEnabled(False)
+
+        # 创建订单下滑阴影 QLabel
+        self.shadow_label = QLabel(self)
+        self.shadow_label.setGeometry(156 * self.width_scale, 996 * self.height_scale,
+                                      1746 * self.width_scale, 68 * self.height_scale)  # 40px 高度
+
+        # 创建渐变图片
+        # gradient_pixmap = QPixmap(1920 * self.width_scale, 30 * self.height_scale)  # 创建空白 pixmap
+        # gradient_pixmap.fill(Qt.GlobalColor.transparent)  # 先填充透明背景
+        #
+        # # 开始绘制
+        # painter = QPainter()
+        # painter.begin(gradient_pixmap)  # 开始绘制
+        # painter.setRenderHint(QPainter.RenderHint.Antialiasing)  # 使渐变更平滑
+        #
+        # # 创建线性渐变 (注意方向从下到上)
+        # gradient = QLinearGradient(0, 40, 0, 0)  # 从底部 (40px) 渐变到顶部 (0px)
+        #
+        # # 设置颜色
+        # color1 = QColor("#e1eaf6")
+        # color1.setAlpha(0)  # 顶部完全透明#e1eaf6
+        #
+        # color2 = QColor("#e1eaf6")
+        # color2.setAlpha(255)  # 底部完全不透明
+        #
+        # # 应用渐变颜色
+        # gradient.setColorAt(0.0, color2)  # 0.0 = 底部最深
+        # gradient.setColorAt(1.0, color1)  # 1.0 = 顶部透明
+        #
+        # # 设置画刷并填充
+        # painter.setBrush(QBrush(gradient))
+        # painter.setPen(Qt.PenStyle.NoPen)  # 不要边框
+        # painter.drawRect(0, 0, 1920 * self.width_scale, 40 * self.height_scale)
+        #
+        # painter.end()  # 结束绘制
+        gradient_pixmap = QPixmap(self.normalized_path + '/includes/Icons/general/orderMore.png')
+        # 设置渐变背景
+        self.shadow_label.setPixmap(gradient_pixmap)
+        self.shadow_label.setScaledContents(True)
 
 
 
@@ -16846,7 +16848,7 @@ class ApplicationWindow(
         self.deadline_label2.setText(f"截止日期: {first_Value[3]}")
         self.rightTopLabel1.setText(first_Value[2])
         self.getFormulationName = first_Value[12]
-        self.cksezLabel.setText(str(self.getFormulationName))
+        # self.cksezLabel.setText(str(self.getFormulationName))
 
         self.moreSet.clicked.connect(lambda checked, first_Value=first_Value: self.orderMoreClicked(first_Value))
 
@@ -17771,7 +17773,7 @@ class ApplicationWindow(
         # 遍历数据列表并动态填充数据
         for i, order in enumerate(data_list):
             # 动态设置设备和订单标题
-            getattr(self, f'history_sheibei{i + 1}').setText(str(order.get('bakingBatch', '-')))
+            getattr(self, f'history_sheibei{i + 1}').setText(str(order.get('taskName', '-')))
             getattr(self, f'historyOrder{i + 1}_Title').setText(str(order.get('bakingBatch', '-')))
 
             # 动态设置任务时间
