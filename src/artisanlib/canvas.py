@@ -127,7 +127,7 @@ except Exception: # pylint: disable=broad-except
 
 
 _log: Final[logging.Logger] = logging.getLogger(__name__)
-
+ytycwdpath=os.getcwd()
 
 #######################################################################################
 #################### Ambient Data Collection  #########################################
@@ -4336,16 +4336,23 @@ class tgraphcanvas(FigureCanvas):
                 if self.flagstart and len(self.timex) > 10 and self.timex[-1] > 300:
                     # 每秒更新一次Agtron色值
                     from artisanlib.agtron_predictor import predict_agtron_color
+                    model_path = os.path.join(ytycwdpath, "models", "agtron_model", "")
+                    formulation_name = getattr(self.aw, 'getFormulationName', '')
                     predicted_agtron = predict_agtron_color(
-                        self.timex, 
-                        self.temp2, 
-                        getattr(self.aw, 'beans_name', '未知豆种')
+                        self.timex,
+                        temp2,
+                        formulation_name,
+                        model_path
                     )
                     # 更新显示
                     if predicted_agtron is not None:
-                        self.aw.agtronNum.setText(str(predicted_agtron))
+                        if self.changeBool == True:
+                            self.aw.agtronNum.setText(f"{predicted_agtron:.1f}")
+
             except Exception as e:
                 _log.exception(f"Agtron计算错误: {str(e)}")
+
+
 
 
             ## Delta LCDs:
@@ -12629,6 +12636,7 @@ class tgraphcanvas(FigureCanvas):
                                 tx = self.timex[self.timeindex[0]]
                                 self.ystep_down,self.ystep_up = self.findtextgap(0,0,temp,temp,d)
                                 time_temp_annos = self.annotate(temp,st1,tx,temp,self.ystep_up,self.ystep_down,draggable_anno_key=0)
+                                self.aw.rudouImg_down.setText(f'{temp}℃')
                                 if time_temp_annos is not None:
                                     self.l_annotations += time_temp_annos
 
@@ -12712,6 +12720,10 @@ class tgraphcanvas(FigureCanvas):
                     d = self.ylimit - self.ylimit_min
                     self.ystep_down,self.ystep_up = self.findtextgap(self.ystep_down,self.ystep_up,temp,temp,d)
                     time_temp_annos = self.annotate(temp,st1,self.timex[self.TPalarmtimeindex],temp,self.ystep_up,self.ystep_down,0,1.,draggable_anno_key=-1)
+                    self.aw.tpMark.setVisible(False)
+                    self.aw.tpMark_up.setVisible(False)
+                    self.aw.tpMark_down.setText(f'({self.timex[self.TPalarmtimeindex]}-{temp}℃)')
+                    self.aw.rudouBar.setValue(13)
                     if time_temp_annos is not None:
                         self.l_annotations += time_temp_annos
                     self.updateBackground() # but we need to update the background cache with the new annotation
@@ -12794,6 +12806,8 @@ class tgraphcanvas(FigureCanvas):
                                 else:
                                     self.ystep_down,self.ystep_up = self.findtextgap(self.ystep_down,self.ystep_up,temp,temp,d)
                                 time_temp_annos = self.annotate(temp,st1,self.timex[self.timeindex[1]],temp,self.ystep_up,self.ystep_down,draggable_anno_key=1)
+                                self.aw.zhd_down.setText(f'{temp}℃')
+                                self.aw.rudouBar.setValue(40)
                                 if time_temp_annos is not None:
                                     self.l_annotations += time_temp_annos
                                 if not self.flagstart or self.alignEvent not in {1, 7}: # in this case the updateBackground is triggered by the redraw of timealign below
@@ -12911,6 +12925,7 @@ class tgraphcanvas(FigureCanvas):
                                 else:
                                     self.ystep_down,self.ystep_up = self.findtextgap(self.ystep_down,self.ystep_up,temp,temp,d)
                                 time_temp_annos = self.annotate(temp,st1,self.timex[self.timeindex[2]],temp,self.ystep_up,self.ystep_down,draggable_anno_key=2)
+                                self.aw.rudouBar.setValue(72)
                                 if time_temp_annos is not None:
                                     self.l_annotations += time_temp_annos
                                 if not self.flagstart or self.alignEvent not in {2, 7}: # in this case the updateBackground is triggered by the redraw of timealign below
@@ -13399,6 +13414,7 @@ class tgraphcanvas(FigureCanvas):
                                     else:
                                         self.ystep_down,self.ystep_up = self.findtextgap(self.ystep_down,self.ystep_up,temp,temp,d)
                                 time_temp_annos = self.annotate(temp,st1,self.timex[self.timeindex[6]],temp,self.ystep_up,self.ystep_down,draggable_anno_key=6)
+                                self.aw.rudouBar.setValue(100)
                                 if time_temp_annos is not None:
                                     self.l_annotations += time_temp_annos
                                 if not self.flagstart or self.alignEvent not in {6, 7}: # in this case the updateBackground is triggered by the redraw of timealign below
