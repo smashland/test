@@ -4338,7 +4338,7 @@ class tgraphcanvas(FigureCanvas):
                     beantemp = self.temp2
                     formulation_name = getattr(self.aw, 'getFormulationName', '')
                     # 模型路径，根据实际情况调整
-                    model_path = os.path.join(ytycwdpath, "models", "agtron_model", "")
+                    model_path = os.path.join(ytycwdpath, "localJson", "models", "agtron_model", "")
 
                     predicted_agtron = predict_agtron_color(beantimex, beantemp, formulation_name, model_path)
                     # 更新显示
