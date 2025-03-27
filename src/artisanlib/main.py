@@ -1899,7 +1899,7 @@ class ApplicationWindow(
                  'extraeventsactionslastvalue',
                  'org_extradevicesettings', 'eventslidervalues', 'eventslidervisibilities',
                  'eventsliderKeyboardControl', 'eventsliderAlternativeLayout', 'eventslideractions',
-                 'eventslidercommands', 'eventslideroffsets',
+                 'eventslidercommands','eventsbuttoncommands', 'eventbuttonactions','eventslideroffsets',
                  'eventsliderfactors', 'eventslidermin', 'eventsMaxValue', 'eventslidermax', 'eventslidersflags',
                  'eventsliderBernoulli', 'eventslidercoarse',
                  'eventslidertemp', 'eventsliderunits', 'eventslidermoved', 'SVslidermoved', 'eventquantifieractive',
@@ -10037,8 +10037,10 @@ class ApplicationWindow(
         self.eventslidervisibilities: List[int] = [0] * self.eventsliders
         self.eventsliderKeyboardControl: bool = True  # 如果使用向上/向下键无法移动错误滑块
         self.eventsliderAlternativeLayout: bool = False  # 如果为True，则组合滑块1+4和2+3，而不是滑块1+2和3+4
+        self.eventbuttonactions: List[int] = [0] * self.eventsliders
         self.eventslideractions: List[int] = [0] * self.eventsliders  # 0:无，1:串行命令，2: Modbus命令，3: DTA命令，4:调用程序，5:热顶加热器，6:热顶风扇
         self.eventslidercommands: List[str] = [''] * self.eventsliders
+        self.eventsbuttoncommands: List[str] = [''] * self.eventsliders
         self.eventslideroffsets: List[float] = [0] * self.eventsliders
         self.eventsliderfactors: List[float] = [1.0] * self.eventsliders
         self.eventslidermin: List[int] = [0] * self.eventsliders
@@ -16776,6 +16778,7 @@ class ApplicationWindow(
     def markChargeClick(self):
         # print(self.time_left)
         # self.qmc.markCharge()
+        self.fireslideraction2(1)
         self.statusLabel.setText("烘焙中...")
         self.start_countdown()
         self.status_label2.setText('进行中')
@@ -16891,6 +16894,7 @@ class ApplicationWindow(
                 data = json.load(file)
                 self.orderList_data = data
             found_order = False
+            self.fireslideraction2(2)
             # 遍历订单数据并生成控件
             for i, order in enumerate(self.orderList_data):
                 if order.get("bakingDeviceId") == 2 and order.get("bakingStatue") == 2:
@@ -19598,6 +19602,44 @@ class ApplicationWindow(
     #     except Exception as e:  # pylint: disable=broad-except
     #         _log.exception(e)
 
+    def parse_command_string(self,command_str: str) -> list:
+        """
+        将包含多个Modbus写入命令的字符串转换为命令列表
+
+        Args:
+            command_str: 包含多个写入命令的字符串，如 '"writeWord(1,602,{})","writeWord(1,597,{})","writeWord(1,595,{})"'
+
+        Returns:
+            list: 命令列表，如 ['writeWord(1,602,{})', 'writeWord(1,597,{})', 'writeWord(1,595,{})']
+        """
+        # 移除字符串开头和结尾的引号（如果存在）
+        command_str = command_str.strip('"')
+        command_str =command_str.replace(" ", "")
+        commands =command_str.split('","')
+        commands = [cmd.replace('")', "") for cmd in commands]
+
+        # # 分割命令字符串
+        # commands = []
+        # current_command = ''
+        # in_quotes = False
+        #
+        # for char in command_str:
+        #     if char == '"' and (not current_command or current_command[-1] != '\\'):
+        #         in_quotes = not in_quotes
+        #         continue
+        #
+        #     if char == ',' and not in_quotes:
+        #         if current_command:
+        #             commands.append(current_command.strip())
+        #             current_command = ''
+        #         continue
+        #
+        #     current_command += char
+        #
+        # if current_command:
+        #     commands.append(current_command.strip())
+
+        return commands
 
     @pyqtSlot(bool)
     def openMachineSettings(self, file_path: str, _checked: bool = False) -> None:
@@ -19663,7 +19705,11 @@ class ApplicationWindow(
                             self.processInfotimer.timeout.disconnect(self.checkTextChanged)
                         except TypeError:
                             pass  # 如果连接不存在，则忽略错误
-
+                    if 'Button' in config.sections():
+                        buttonas= config['Button'].get('buttonactions', self.eventbuttonactions)
+                        self.eventbuttonactions = [item.strip() for item in re.split(r'\s*,\s*', buttonas)]
+                        buttoncommands=config['Button'].get('buttoncommands', self.eventsbuttoncommands)
+                        self.eventsbuttoncommands = self.parse_command_string(buttoncommands)
                     if 'OtherSettings' in config.sections():
                         sbxl = config['OtherSettings'].get('setsbxl', ' ')
                         self.xinghaoLabel.setText(str(sbxl))
@@ -19677,6 +19723,7 @@ class ApplicationWindow(
                         self.ws.host = config['OtherSettings'].get('sethost', self.ws.host)
                         self.qmc.roastersize_setup = toFloat(
                             config['General'].get('roastersize_setup_default', self.qmc.roastersize_setup))
+
 
 
 
@@ -22484,6 +22531,42 @@ class ApplicationWindow(
                     (QApplication.translate('Error Message', 'Exception:') + ' fireslideraction() {0}').format(str(e)),
                     getattr(exc_tb, 'tb_lineno', '?'))
 
+
+    def fireslideraction2(self, n: int) -> None:
+        action = self.eventbuttonactions[n]
+        if action:
+            try:
+                # before adaption:
+                # action =0 (None), =1 (Serial), =2 (Modbus), =3 (DTA Command), =4 (Call Program [with argument])
+                #  =5 (Hottop Heater), =6 (Hottop Fan), =7 (Hottop Command), =8 (Fuji Command), =9 (PWM Command), =10 (VOUT Command)
+                #  =11 (IO Command), =12 (S7 Command), =13 (Aillio R1 Heater Command), =14 (Aillio R1 Fan Command), =15 (Aillio R1 Drum Command)
+                #  =16 (Artisan Command), 17= (RC Command)
+                action = (action + 2 if action > 1 else action)  # skipping (2 Call Program and 3 Multiple Event)
+                if action > 5:
+                    action = action + 1  # skip the 6:IO Command
+                    if 15 > action > 10:
+                        action = action + 1  # skip the 11 p-i-d action
+                        if action == 15:
+                            action = 6  # map IO Command back
+                    if action > 18:
+                        action = action + 1  # skip the 19: Aillio PRS
+                # after adaption: (see eventaction)
+                value = self.calcSliderSendValue(n)
+                if action not in [6, 14, 15, 21]:  # only for IO, VOUT, S7 and RC Commands we keep the floats
+                    value = int(round(value))
+                if action in {8, 9, 16, 17, 18}:  # for Hottop/R1 Heater or Fan, we just forward the value
+                    cmd = str(int(round(value)))
+                else:
+                    cmd = self.eventsbuttoncommands[n]
+                    cmd = cmd.format(*(tuple([value] * cmd.count('{}'))))
+                self.eventaction(action, cmd)  # cmd needs to be a string!
+            except Exception as e:  # pylint: disable=broad-except
+                _log.exception(e)
+                _, _, exc_tb = sys.exc_info()
+                self.qmc.adderror(
+                    (QApplication.translate('Error Message', 'Exception:') + ' fireslideraction() {0}').format(str(e)),
+                    getattr(exc_tb, 'tb_lineno', '?'))
+
     # from a given value and the event type number, calc the event value respecting the event types slider offset, factor and bernulli settings
     def calcEventValue(self, n: int, slider_value: float) -> float:
         if self.eventsliderBernoulli[n]:
@@ -22797,6 +22880,9 @@ class ApplicationWindow(
                         cmds = filter(None, cmd_str.split(
                             ';'))  # allows for sequences of commands like in "<cmd>;<cmd>;...;<cmd>"
                         followupCmd = 0.  # contains the required sleep time
+                        # 检查设备标签是否为MB-01，如果是则处理最后一位数值为浮点数
+                        is_mb01 = hasattr(self, 'shebeiLabel') and self.shebeiLabel.text() == 'MB-01'
+                        _log.info('lj 22840', cmd_str, is_mb01)
                         for c in cmds:
                             cs = c.strip().replace('_', ('0' if self.modbus.lastReadResult is None else str(
                                 self.modbus.lastReadResult)))  # the last read value can be accessed via the "_" symbol
@@ -22806,6 +22892,32 @@ class ApplicationWindow(
                             if lastbuttonpressed != -1 and len(self.buttonlist) > lastbuttonpressed:
                                 last = self.buttonStates[lastbuttonpressed]
                             cs = cs.replace('$', str(last))
+
+                            # 如果是MB-01设备，将最后一位数值转换为浮点数
+                            if is_mb01 and '(' in cs and ')' in cs:
+                                try:
+                                    # 提取命令中的参数部分
+                                    cmd_part = cs[:cs.find('(')]
+                                    params_part = cs[cs.find('(') + 1:cs.rfind(')')]
+                                    params = [p.strip() for p in params_part.split(',')]
+                                    _log.info('lj 22858', cmd_part, params_part, params)
+                                    # 如果有参数，尝试将最后一个参数转换为浮点数
+                                    if params and cmd_part not in ['sleep']:  # 排除sleep命令
+                                        try:
+                                            last_param = params[-1]
+                                            # 检查最后一个参数是否为数值
+                                            if last_param.replace('.', '', 1).isdigit() or (
+                                                    last_param.startswith('-') and last_param[1:].replace('.', '',
+                                                                                                          1).isdigit()):
+                                                # 转换为浮点数
+                                                params[-1] = str(float(last_param))
+                                                # 重建命令字符串
+                                                cs = f"{cmd_part}({','.join(params)})"
+                                                _log.info('lj 22871', cs)
+                                        except (ValueError, IndexError):
+                                            pass  # 如果转换失败，保持原样
+                                except Exception:
+                                    pass  # 如果解析失败，保持原样
                             if followupCmd:
                                 if followupCmd == 0.08:
                                     self.modbus.sleepBetween(write=True)
@@ -32555,6 +32667,15 @@ class ApplicationWindow(
                 map(str, list(toStringList(settings.value('slidercommands', self.eventslidercommands)))))
             if len(eventslidercommands) == self.eventsliders:
                 self.eventslidercommands = eventslidercommands
+
+            eventbuttonactions = list(map(toInt, toList(settings.value('buttonactions', self.eventbuttonactions))))
+            if len(eventbuttonactions) == self.eventsliders:
+                self.eventbuttonactions = eventbuttonactions
+            eventsbuttoncommands = list(
+                map(str, list(toStringList(settings.value('buttoncommands', self.eventsbuttoncommands)))))
+            if len(eventsbuttoncommands) == self.eventsliders:
+                self.eventsbuttoncommands = eventsbuttoncommands
+
             eventslideroffsets = list(map(toFloat, toList(settings.value('slideroffsets', self.eventslideroffsets))))
             if len(eventslideroffsets) == self.eventsliders:
                 self.eventslideroffsets = eventslideroffsets
@@ -34499,6 +34620,8 @@ class ApplicationWindow(
                                   self.eventsliderAlternativeLayout, read_defaults)
             self.settingsSetValue(settings, default_settings, 'slideractions', self.eventslideractions, read_defaults)
             self.settingsSetValue(settings, default_settings, 'slidercommands', self.eventslidercommands, read_defaults)
+            self.settingsSetValue(settings, default_settings, 'buttonactions', self.eventbuttonactions, read_defaults)
+            self.settingsSetValue(settings, default_settings, 'buttoncommands', self.eventsbuttoncommands, read_defaults)
             self.settingsSetValue(settings, default_settings, 'slideroffsets', self.eventslideroffsets, read_defaults)
             self.settingsSetValue(settings, default_settings, 'sliderfactors', self.eventsliderfactors, read_defaults)
             self.settingsSetValue(settings, default_settings, 'slidermin', self.eventslidermin, read_defaults)
@@ -40310,6 +40433,8 @@ class ApplicationWindow(
             self.buttonpalette_label = copy[25]
             self.eventquantifieraction = copy[26][:]
             self.eventquantifierSV = copy[27][:]
+            self.eventbuttonactions = copy[28][:]
+            self.eventsbuttoncommands = copy[29][:]
             #
             self.buttonlistmaxlen = self.buttonpalettemaxlen[pindex]
             self.realignbuttons()
@@ -40381,6 +40506,8 @@ class ApplicationWindow(
             self.eventslidervisibilities[:],
             self.eventslideractions[:],
             self.eventslidercommands[:],
+            self.eventbuttonactions[:],
+            self.eventsbuttoncommands[:],
             self.eventslideroffsets[:],
             self.eventsliderfactors[:],
             #

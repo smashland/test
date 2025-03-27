@@ -74,6 +74,8 @@ class EventsDlg(ArtisanResizeablDialog):
         self.eventslidervisibilities:List[int] = [0,0,0,0]
         self.eventslideractions:List[int] = [0,0,0,0]
         self.eventslidercommands:List[str] = ['','','','']
+        self.eventbuttonactions: List[int] = [0, 0, 0, 0]
+        self.eventbuttoncommands: List[str] = ['', '', '', '']
         self.eventslideroffsets:List[float] = [0.,0.,0.,0.]
         self.eventsliderfactors:List[float] = [1.0,1.0,1.0,1.0]
         self.eventslidermin:List[int] = [0,0,0,0]
