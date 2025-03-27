@@ -22792,6 +22792,7 @@ class ApplicationWindow(
                             # if self.extraeventsactions[buttonnumber] != 3:   #avoid calling other buttons with multiple actions to avoid possible infinite loops
                             self.recordextraevent(buttonnumber, parallel=False, updateButtons=False)
                 elif action == 4:  # MODBUS Command
+
                     if cmd_str:
                         cmds = filter(None, cmd_str.split(
                             ';'))  # allows for sequences of commands like in "<cmd>;<cmd>;...;<cmd>"

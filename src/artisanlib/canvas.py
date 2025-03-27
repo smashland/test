@@ -4328,8 +4328,6 @@ class tgraphcanvas(FigureCanvas):
                 self.aw.processInfoLabel) + self.aw.calculate_text_width(self.aw.processInfoLabel_point)) * self.aw.width_scale,
                                       26 * self.aw.height_scale, 16 * self.aw.width_scale, 18 * self.aw.height_scale)
 
-
-
            # Agtron色值计算和显示
             try:
                 # 检查是否已经烘焙超过5分钟且有足够数据点
@@ -4338,12 +4336,11 @@ class tgraphcanvas(FigureCanvas):
                     from artisanlib.agtron_predictor import predict_agtron_color
                     beantimex = self.timex
                     beantemp = self.temp2
-                    product = '哥伦比亚'
-
+                    formulation_name = getattr(self.aw, 'getFormulationName', '')
                     # 模型路径，根据实际情况调整
                     model_path = os.path.join(ytycwdpath, "models", "agtron_model", "")
 
-                    predicted_agtron = predict_agtron_color(beantimex, beantemp, product, model_path)
+                    predicted_agtron = predict_agtron_color(beantimex, beantemp, formulation_name, model_path)
                     # 更新显示
                     if predicted_agtron is not None:
                         self.aw.agtronNum.setText(f"{predicted_agtron:.1f}")
@@ -4351,9 +4348,6 @@ class tgraphcanvas(FigureCanvas):
                         _log.exception(f"Agtron计算错误: {str(e)}")
             except Exception as e:
                 _log.exception(f"Agtron计算错误: {str(e)}")
-
-
-
 
             ## Delta LCDs:
             deltaetstr = resLCD
@@ -12636,7 +12630,7 @@ class tgraphcanvas(FigureCanvas):
                                 tx = self.timex[self.timeindex[0]]
                                 self.ystep_down,self.ystep_up = self.findtextgap(0,0,temp,temp,d)
                                 time_temp_annos = self.annotate(temp,st1,tx,temp,self.ystep_up,self.ystep_down,draggable_anno_key=0)
-                                self.aw.rudouImg_down.setText(f'{temp}℃')
+                                self.aw.rudouImg_down.setText(f'{round(temp, 1)}℃')
                                 if time_temp_annos is not None:
                                     self.l_annotations += time_temp_annos
 
@@ -12720,9 +12714,9 @@ class tgraphcanvas(FigureCanvas):
                     d = self.ylimit - self.ylimit_min
                     self.ystep_down,self.ystep_up = self.findtextgap(self.ystep_down,self.ystep_up,temp,temp,d)
                     time_temp_annos = self.annotate(temp,st1,self.timex[self.TPalarmtimeindex],temp,self.ystep_up,self.ystep_down,0,1.,draggable_anno_key=-1)
-                    self.aw.tpMark.setVisible(False)
-                    self.aw.tpMark_up.setVisible(False)
-                    self.aw.tpMark_down.setText(f'({self.timex[self.TPalarmtimeindex]}-{temp}℃)')
+                    self.aw.tpMark.setVisible(True)
+                    self.aw.tpMark_up.setVisible(True)
+                    self.aw.tpMark_down.setText(f'({round(self.timex[self.TPalarmtimeindex])}-{round(temp, 1)}℃)')
                     self.aw.rudouBar.setValue(13)
                     if time_temp_annos is not None:
                         self.l_annotations += time_temp_annos
@@ -12806,7 +12800,7 @@ class tgraphcanvas(FigureCanvas):
                                 else:
                                     self.ystep_down,self.ystep_up = self.findtextgap(self.ystep_down,self.ystep_up,temp,temp,d)
                                 time_temp_annos = self.annotate(temp,st1,self.timex[self.timeindex[1]],temp,self.ystep_up,self.ystep_down,draggable_anno_key=1)
-                                self.aw.zhd_down.setText(f'{temp}℃')
+                                self.aw.zhd_down.setText(f'{round(temp, 1)}℃')
                                 self.aw.rudouBar.setValue(40)
                                 if time_temp_annos is not None:
                                     self.l_annotations += time_temp_annos
