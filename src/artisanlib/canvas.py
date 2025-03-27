@@ -4341,11 +4341,15 @@ class tgraphcanvas(FigureCanvas):
                     model_path = os.path.join(ytycwdpath, "localJson", "models", "agtron_model", "")
 
                     predicted_agtron = predict_agtron_color(beantimex, beantemp, formulation_name, model_path)
+                    _log.exception(f"beantimex: {beantimex}")
+                    _log.exception(f"beantemp: {beantemp}")
+                    _log.exception(f"formulation_name: {formulation_name}")
+                    _log.exception(f"model_path: {model_path}")
                     # 更新显示
                     if predicted_agtron is not None:
                         self.aw.agtronNum.setText(f"{predicted_agtron:.1f}")
                     else:
-                        _log.exception(f"Agtron计算错误: {str(e)}")
+                        _log.exception(f"错误: predicted_agtron = none")
             except Exception as e:
                 _log.exception(f"Agtron计算错误: {str(e)}")
 
