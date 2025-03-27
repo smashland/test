@@ -301,8 +301,3 @@ copy_file(r'localJson', TARGET + 'localJson')
 make_dir(TARGET + 'localJson\\History')
 make_dir(TARGET + 'localJson\\Machines')
 
-make_dir(TARGET + 'models')
-copy_file(r'models', TARGET + 'models')
-
-
-make_dir(TARGET + 'models\\agtron_model')
