@@ -4328,26 +4328,27 @@ class tgraphcanvas(FigureCanvas):
                 self.aw.processInfoLabel) + self.aw.calculate_text_width(self.aw.processInfoLabel_point)) * self.aw.width_scale,
                                       26 * self.aw.height_scale, 16 * self.aw.width_scale, 18 * self.aw.height_scale)
 
-            _log.info('lj 测试 豆温风温', '000', '999')
+
 
            # Agtron色值计算和显示
             try:
                 # 检查是否已经烘焙超过5分钟且有足够数据点
-                if self.flagstart and len(self.timex) > 10 and self.timex[-1] > 180:
+                if len(self.timex) > 30:
                     # 每秒更新一次Agtron色值
                     from artisanlib.agtron_predictor import predict_agtron_color
+                    beantimex = self.timex
+                    beantemp = self.temp2
+                    product = '哥伦比亚'
+
+                    # 模型路径，根据实际情况调整
                     model_path = os.path.join(ytycwdpath, "models", "agtron_model", "")
-                    formulation_name = getattr(self.aw, 'getFormulationName', '')
-                    predicted_agtron = predict_agtron_color(
-                        self.timex,
-                        temp2,
-                        formulation_name,
-                        model_path
-                    )
+
+                    predicted_agtron = predict_agtron_color(beantimex, beantemp, product, model_path)
                     # 更新显示
                     if predicted_agtron is not None:
                         self.aw.agtronNum.setText(f"{predicted_agtron:.1f}")
-
+                    else:
+                        _log.exception(f"Agtron计算错误: {str(e)}")
             except Exception as e:
                 _log.exception(f"Agtron计算错误: {str(e)}")
 
