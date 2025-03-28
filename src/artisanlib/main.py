@@ -16531,10 +16531,10 @@ class ApplicationWindow(
 
                         self.orderLayout.addWidget(spacer_widget)
 
-                        # 为 ordersRect2 添加双击事件
+                        # 双击事件顶置订单
                         ordersRect2.mouseDoubleClickEvent = lambda event, order=order: self.on_item_double_click(event,order)
 
-                        # 绑定鼠标事件
+                        # 长按删除订单
                         ordersRect2.mousePressEvent = lambda event, order=order: self.on_item_press(event, order)
                         ordersRect2.mouseReleaseEvent = lambda event: self.cancel_long_press()
 
@@ -22558,7 +22558,7 @@ class ApplicationWindow(
                     cmd = str(int(round(value)))
                 else:
                     cmd = self.eventsbuttoncommands[n]
-                    cmd = cmd.format(*(tuple([value] * cmd.count('{}'))))
+                    cmd = cmd.format(True * cmd.count('{}'))
                 self.eventaction(action, cmd)  # cmd needs to be a string!
             except Exception as e:  # pylint: disable=broad-except
                 _log.exception(e)

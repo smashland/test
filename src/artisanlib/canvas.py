@@ -4332,7 +4332,7 @@ class tgraphcanvas(FigureCanvas):
            # Agtron色值计算和显示
             try:
                 # 检查是否已经烘焙超过5分钟且有足够数据点
-                model_path = os.path.join(ytycwdpath, "localJson", "models", "agtron_model")
+
                 if len(self.timex) > 30:
                     # 每秒更新一次Agtron色值
 
@@ -4340,7 +4340,7 @@ class tgraphcanvas(FigureCanvas):
                     beantemp = self.temp2
                     formulation_name = getattr(self.aw, 'getFormulationName', '')
                     # 模型路径，根据实际情况调整
-                    # model_path = os.path.join(ytycwdpath, "localJson", "models", "agtron_model", "")
+                    model_path = os.path.join(ytycwdpath, "localJson", "models", "agtron_model", "")
 
                     predicted_agtron = predict_agtron_color(beantimex, beantemp, formulation_name, model_path)
                     _log.exception(f"beantimex: {beantimex}")

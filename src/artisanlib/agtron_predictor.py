@@ -3,6 +3,8 @@ import ast
 import pickle
 import numpy as np
 import pandas as pd
+import logging
+from typing import Final, Optional, List, Dict, Callable, Tuple, Union, Any, Sequence, cast, TYPE_CHECKING
 
 # 常量定义
 SECONDS_PER_MINUTE = 60
@@ -11,6 +13,7 @@ THREE_MINUTES = 3 * SECONDS_PER_MINUTE
 FIVE_MINUTES = 5 * SECONDS_PER_MINUTE
 ROR_PERIOD = 15  # 升温速率计算周期（秒）
 
+_log: Final[logging.Logger] = logging.getLogger(__name__)
 def calculate_roast_features(timex, beantemp):
     """从时间和温度数据计算预测特征。
     
@@ -21,6 +24,7 @@ def calculate_roast_features(timex, beantemp):
     返回:
         dict: 用于预测的特征，如果出错则返回None
     """
+    _log.exception(f"测试: {timex}{beantemp}")
     try:
         # 转换为numpy数组并确保为浮点类型
         timex = np.array(timex, dtype=float)
@@ -33,6 +37,7 @@ def calculate_roast_features(timex, beantemp):
         
         if len(timex) == 0 or len(beantemp) == 0:
             print("过滤后没有有效的时间/温度数据点")
+            _log.exception(f"过滤后没有有效的时间/温度数据点")
             return None
         
         # 创建插值温度曲线
@@ -101,6 +106,7 @@ def calculate_roast_features(timex, beantemp):
         return features
     except Exception as e:
         print(f"计算烘焙特征出错: {str(e)}")
+        _log.exception(f"计算烘焙特征出错: {str(e)}")
         return None
 
 def load_model_components(model_path='./'):
@@ -117,7 +123,8 @@ def load_model_components(model_path='./'):
         if os.path.exists(f'{model_path}moe_model.pkl'):
             with open(f'{model_path}moe_model.pkl', 'rb') as f:
                 return pickle.load(f)
-        
+
+        _log.exception(f"beantimex: {model_path}")
         # 否则加载各个组件
         components = {}
         
@@ -146,6 +153,7 @@ def load_model_components(model_path='./'):
         
         if not experts:
             print("未找到专家模型")
+            _log.exception("未找到专家模型")
             return None
             
         components['experts'] = experts
@@ -153,6 +161,7 @@ def load_model_components(model_path='./'):
         
     except Exception as e:
         print(f"加载模型组件出错: {str(e)}")
+        _log.exception(f"加载模型组件出错: {str(e)}")
         return None
 
 def predict_agtron(features, product=None, model_path='./'):
@@ -204,6 +213,7 @@ def predict_agtron(features, product=None, model_path='./'):
         return final_prediction
     except Exception as e:
         print(f"预测Agtron值出错: {e}")
+        _log.exception(f"预测Agtron值出错: {e}")
         return None
 
 def predict_agtron_color(timex, beantemp, product=None, model_path='./'):
@@ -223,6 +233,7 @@ def predict_agtron_color(timex, beantemp, product=None, model_path='./'):
     features = calculate_roast_features(timex, beantemp)
     if not features:
         print("计算烘焙特征失败")
+        _log.exception("计算烘焙特征失败")
         return None
     
     # 预测Agtron值
