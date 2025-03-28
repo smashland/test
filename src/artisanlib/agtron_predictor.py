@@ -4,6 +4,7 @@ import pickle
 import numpy as np
 import pandas as pd
 import logging
+import sklearn
 from typing import Final, Optional, List, Dict, Callable, Tuple, Union, Any, Sequence, cast, TYPE_CHECKING
 
 # 常量定义
