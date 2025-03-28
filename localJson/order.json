@@ -1,3 +1,228 @@
 [
-   
+    {
+        "id": 1,
+        "taskName": "55",
+        "bakingBatch": "20250320104516",
+        "createTime": "2025-03-20 10:45:29",
+        "finishTime": "2025-03-23 23:59",
+        "bakingStatue": 2,
+        "bakingDeviceId": 2,
+        "taskId": "340348492868691606",
+        "formulationName": "5",
+        "beanTypes": {
+            "type1": {
+                "name": "5",
+                "number": "5",
+                "numberOfBeans": "5"
+            }
+        },
+        "stage1": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage2": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage3": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage4": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage5": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage6": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "bakingCreateTime": "2025-03-27 15:04:05"
+    },
+    {
+        "id": 2,
+        "taskName": "33",
+        "bakingBatch": "20250326102231",
+        "createTime": "2025-03-26 10:22:31",
+        "finishTime": "2025-03-28 23:59",
+        "bakingStatue": 2,
+        "bakingDeviceId": 2,
+        "taskId": "040608914453499789",
+        "formulationName": "33",
+        "beanTypes": {
+            "type1": {
+                "name": "33",
+                "number": "3",
+                "numberOfBeans": "1"
+            }
+        },
+        "targetAgtron": "33",
+        "remark": "333",
+        "stage1": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage2": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage3": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage4": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage5": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage6": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "bakingCreateTime": "2025-03-27 15:09:50"
+    },
+    {
+        "id": 3,
+        "taskName": "西内",
+        "bakingBatch": "20250326110951",
+        "createTime": "2025-03-26 11:09:51",
+        "finishTime": "2025-03-28 23:59",
+        "bakingStatue": 2,
+        "bakingDeviceId": 2,
+        "taskId": "797724138993489910",
+        "formulationName": "小星星",
+        "beanTypes": {
+            "type1": {
+                "name": "eee",
+                "number": "10",
+                "numberOfBeans": "1"
+            }
+        },
+        "targetAgtron": "70",
+        "remark": "我问问",
+        "stage1": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage2": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage3": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage4": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage5": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage6": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "bakingCreateTime": "2025-03-27 16:18:07"
+    },
+    {
+        "id": 4,
+        "taskName": "111",
+        "bakingBatch": "20250328144303",
+        "createTime": "2025-03-28 14:43:03",
+        "finishTime": "2025-03-30 23:59",
+        "bakingStatue": 2,
+        "bakingDeviceId": 2,
+        "taskId": "861560497281841952",
+        "formulationName": "111",
+        "beanTypes": {
+            "type1": {
+                "name": "11",
+                "number": "1",
+                "numberOfBeans": "1"
+            }
+        },
+        "targetAgtron": "11",
+        "remark": "11",
+        "stage1": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage2": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage3": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage4": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage5": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage6": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "bakingCreateTime": "2025-03-28 14:43:07"
+    }
 ]

@@ -1,0 +1,656 @@
+{
+    "id": 3,
+    "taskName": "烘焙任务",
+    "bakingBatch": "task-2-20241220145200",
+    "createTime": "2024-12-20 14:52:00",
+    "finishTime": "2024-12-20 23:59",
+    "number": "11",
+    "numberOfBeans": "15",
+    "bakingStatue": 3,
+    "bakingDeviceId": 2,
+    "taskId": "065168552208575105",
+    "stage1": [
+        100,
+        60,
+        43,
+        62
+    ],
+    "stage2": [
+        152,
+        70,
+        43,
+        63
+    ],
+    "stage3": [
+        175,
+        50,
+        43,
+        63
+    ],
+    "stage4": [
+        185,
+        40,
+        43,
+        62
+    ],
+    "stage5": [
+        195,
+        30,
+        43,
+        62
+    ],
+    "stage6": [
+        186,
+        30,
+        42,
+        62
+    ],
+    "dehydrationRate": "1",
+    "defectRate": "1",
+    "numberOfRipe": "1",
+    "bakingFinishTime": "2025-01-20 17:34:07",
+    "description": "1",
+    "agtronValue": "42",
+    "taskTime": 0,
+    "jsonMessage": {
+        "totaltime": 0,
+        "CHARGE_BT": 0,
+        "TP_BT": 0,
+        "TP_time": 0,
+        "Maillard": 0,
+        "Maillard_time": 0,
+        "FCs_BT": 0,
+        "FCs_time": 0,
+        "SCs_BT": 0,
+        "SCs_time": 0,
+        "DROP_BT": 0,
+        "finishphasetime": 0,
+        "DTR": 0,
+        "target_temperature": [
+            135,
+            165,
+            182,
+            192,
+            198,
+            205
+        ],
+        "target_values": [
+            30,
+            35,
+            40,
+            90,
+            80,
+            65
+        ],
+        "actual_temperature": [
+            135,
+            166,
+            182,
+            195,
+            200,
+            205
+        ],
+        "actual_values": [
+            35,
+            40,
+            40,
+            90,
+            50,
+            65
+        ],
+        "alogJson": {
+            "recording_version": "2.10.4",
+            "recording_revision": "",
+            "recording_build": "0",
+            "version": "2.10.4",
+            "revision": "c3db9d5+",
+            "build": "0",
+            "artisan_os": "Windows",
+            "artisan_os_version": "10",
+            "artisan_os_arch": "AMD64",
+            "mode": "C",
+            "viewerMode": false,
+            "timeindex": [
+                -1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "flavors": [
+                5.0,
+                5.0,
+                5.0,
+                5.0,
+                5.0,
+                5.0,
+                5.0,
+                5.0,
+                5.0
+            ],
+            "flavorlabels": [
+                "Acidity",
+                "Aftertaste",
+                "Clean Cup",
+                "Head",
+                "Fragrance",
+                "Sweetness",
+                "Aroma",
+                "Balance",
+                "Body"
+            ],
+            "flavorstartangle": 90,
+            "flavoraspect": 1.0,
+            "title": "",
+            "locale": "en",
+            "beans": "",
+            "weight": [
+                15000.0,
+                0,
+                "g"
+            ],
+            "volume": [
+                0,
+                0,
+                "l"
+            ],
+            "density": [
+                0,
+                "g",
+                1,
+                "l"
+            ],
+            "density_roasted": [
+                0,
+                "g",
+                1,
+                "l"
+            ],
+            "roastertype": "CTE Ghibli Touch",
+            "roastersize": 0.0,
+            "roasterheating": 2,
+            "machinesetup": "Ghibli_Touch",
+            "operator": "",
+            "organization": "",
+            "drumspeed": "",
+            "heavyFC": false,
+            "lowFC": false,
+            "lightCut": false,
+            "darkCut": false,
+            "drops": false,
+            "oily": false,
+            "uneven": false,
+            "tipping": false,
+            "scorching": false,
+            "divots": false,
+            "whole_color": 0,
+            "ground_color": 0,
+            "color_system": "",
+            "volumeCalcWeightIn": "",
+            "volumeCalcWeightOut": "",
+            "roastdate": "Mon Jan 20 2025",
+            "roastisodate": "2025-01-20",
+            "roasttime": "17:33:58",
+            "roastepoch": 1737365638,
+            "roasttzoffset": -28800,
+            "roastbatchnr": 0,
+            "roastbatchprefix": "",
+            "roastbatchpos": 1,
+            "roastUUID": "cec1ff8b2fa048eaa7d9d55a7436e269",
+            "beansize_min": "0",
+            "beansize_max": "0",
+            "specialevents": [
+                8,
+                8,
+                8
+            ],
+            "specialeventstype": [
+                3,
+                0,
+                1
+            ],
+            "specialeventsvalue": [
+                0.0,
+                4.0,
+                4.0
+            ],
+            "specialeventsStrings": [
+                "0",
+                "30",
+                "30"
+            ],
+            "default_etypes": [
+                true,
+                true,
+                true,
+                true,
+                true
+            ],
+            "etypes": [
+                "Air",
+                "Drum",
+                "Damper",
+                "Burner",
+                "--"
+            ],
+            "roastingnotes": "",
+            "cuppingnotes": "",
+            "timex": [
+                0.0598561,
+                1.0598562,
+                2.0598422,
+                3.0598461,
+                4.059854,
+                5.0598439,
+                6.0598471,
+                7.0598502,
+                8.0598638
+            ],
+            "temp1": [
+                -1.0,
+                -1.0,
+                -1.0,
+                -1.0,
+                -1.0,
+                -1.0,
+                -1.0,
+                -1.0,
+                -1.0
+            ],
+            "temp2": [
+                -1.0,
+                -1.0,
+                -1.0,
+                -1.0,
+                -1.0,
+                -1.0,
+                -1.0,
+                -1.0,
+                -1.0
+            ],
+            "phases": [
+                300,
+                306,
+                391,
+                450
+            ],
+            "zmax": 25,
+            "zmin": 0,
+            "ymax": 275,
+            "ymin": 0,
+            "xmin": 0.0,
+            "xmax": 600.0,
+            "ambientTemp": 0.0,
+            "ambient_humidity": 0.0,
+            "ambient_pressure": 0.0,
+            "moisture_greens": 0.0,
+            "greens_temp": 0.0,
+            "moisture_roasted": 0.0,
+            "extradevices": [],
+            "extraname1": [],
+            "extraname2": [],
+            "extratimex": [],
+            "extratemp1": [],
+            "extratemp2": [],
+            "extramathexpression1": [],
+            "extramathexpression2": [],
+            "extradevicecolor1": [],
+            "extradevicecolor2": [],
+            "extraLCDvisibility1": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "extraLCDvisibility2": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "extraCurveVisibility1": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+            ],
+            "extraCurveVisibility2": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+            ],
+            "extraDelta1": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "extraDelta2": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "extraFill1": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "extraFill2": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "extramarkersizes1": [],
+            "extramarkersizes2": [],
+            "extramarkers1": [],
+            "extramarkers2": [],
+            "extralinewidths1": [],
+            "extralinewidths2": [],
+            "extralinestyles1": [],
+            "extralinestyles2": [],
+            "extradrawstyles1": [],
+            "extradrawstyles2": [],
+            "externalprogram": "test.py",
+            "externaloutprogram": "out.py",
+            "extraNoneTempHint1": [],
+            "extraNoneTempHint2": [],
+            "alarmsetlabel": "",
+            "alarmflag": [
+                1,
+                1,
+                1,
+                1
+            ],
+            "alarmguard": [
+                -1,
+                -1,
+                -1,
+                -1
+            ],
+            "alarmnegguard": [
+                -1,
+                -1,
+                -1,
+                -1
+            ],
+            "alarmtime": [
+                -1,
+                0,
+                6,
+                6
+            ],
+            "alarmoffset": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "alarmcond": [
+                1,
+                1,
+                1,
+                0
+            ],
+            "alarmsource": [
+                8,
+                8,
+                8,
+                8
+            ],
+            "alarmtemperature": [
+                4.0,
+                6.0,
+                8.0,
+                1.0
+            ],
+            "alarmaction": [
+                16,
+                13,
+                14,
+                14
+            ],
+            "alarmbeep": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "alarmstrings": [
+                "Charge state",
+                "Drop state",
+                "Cool state",
+                "Cool state (alt)"
+            ],
+            "backgroundpath": "",
+            "svLabel": "",
+            "svValues": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "svRamps": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "svSoaks": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "svActions": [
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1
+            ],
+            "svBeeps": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "svDescriptions": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "devices": [
+                "MODBUS"
+            ],
+            "elevation": 0,
+            "computed": {
+                "total_ts": 0,
+                "total_ts_ET": 0,
+                "total_ts_BT": 0,
+                "AUC": 0,
+                "AUCbegin": "TP",
+                "AUCbase": 100,
+                "AUCfromeventflag": 0,
+                "dry_phase_AUC": 0,
+                "mid_phase_AUC": 0,
+                "finish_phase_AUC": 0,
+                "weight_loss": 100.0,
+                "volumein": 0,
+                "volumeout": 0,
+                "weightin": 15000.0,
+                "weightout": 0,
+                "BTU_preheat": 0.0,
+                "CO2_preheat": 0.0,
+                "BTU_bbp": 0.0,
+                "CO2_bbp": 0.0,
+                "BTU_cooling": 0.0,
+                "CO2_cooling": 0.0,
+                "BTU_LPG": 0.0,
+                "BTU_NG": 0.0,
+                "BTU_ELEC": 0.0,
+                "BTU_batch": 0.0,
+                "BTU_batch_per_green_kg": 0.0,
+                "BTU_roast": 0.0,
+                "BTU_roast_per_green_kg": 0.0,
+                "CO2_batch": 0.0,
+                "CO2_batch_per_green_kg": 0.0,
+                "CO2_roast": 0.0,
+                "CO2_roast_per_green_kg": 0.0,
+                "KWH_batch_per_green_kg": 0.0,
+                "KWH_roast_per_green_kg": 0.0
+            },
+            "anno_positions": [],
+            "flag_positions": [],
+            "loadlabels": [
+                "Heater",
+                "",
+                "",
+                ""
+            ],
+            "loadratings": [
+                1.55,
+                0.0,
+                0.0,
+                0.0
+            ],
+            "ratingunits": [
+                3,
+                0,
+                0,
+                0
+            ],
+            "sourcetypes": [
+                2,
+                0,
+                0,
+                0
+            ],
+            "load_etypes": [
+                4,
+                0,
+                0,
+                0
+            ],
+            "presssure_percents": [
+                false,
+                false,
+                false,
+                false
+            ],
+            "loadevent_zeropcts": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "loadevent_hundpcts": [
+                100,
+                100,
+                100,
+                100
+            ],
+            "preheatDuration": 0,
+            "preheatenergies": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+            ],
+            "betweenbatchDuration": 0,
+            "betweenbatchenergies": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+            ],
+            "coolingDuration": 0,
+            "coolingenergies": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+            ],
+            "betweenbatch_after_preheat": true,
+            "electricEnergyMix": 0
+        }
+    }
+}

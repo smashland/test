@@ -1,5 +1,6 @@
 [General]
 Delay=1000
+Oversampling=true
 roastertype_setup=IMF RM
 
 [CurveStyles]

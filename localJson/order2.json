@@ -1,0 +1,422 @@
+[
+    {
+        "id": 21,
+        "taskName": "风风火火",
+        "bakingBatch": "20250221092808",
+        "createTime": "2025-02-21 09:28:08",
+        "finishTime": "2025-02-28 23:59",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "675414821813735910",
+        "formulationName": "白云",
+        "beanTypes": {
+            "type1": {
+                "name": "5",
+                "number": "6",
+                "numberOfBeans": "7"
+            },
+            "type2": {
+                "name": "5",
+                "number": "6",
+                "numberOfBeans": "7"
+            },
+            "type3": {
+                "name": "5",
+                "number": "6",
+                "numberOfBeans": "7"
+            }
+        },
+        "stage1": [
+            187,
+            7,
+            7,
+            7
+        ],
+        "stage2": [
+            7,
+            7,
+            7,
+            7
+        ],
+        "stage3": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage4": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage5": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage6": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "bakingCreateTime": "2025-03-03 18:10:11"
+    },
+    {
+        "id": 22,
+        "taskName": "666",
+        "bakingBatch": "20250221105216",
+        "createTime": "2025-02-21 10:52:16",
+        "finishTime": "2025-02-21 23:59",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "697256106340510900",
+        "formulationName": "666",
+        "beanTypes": {
+            "type1": {
+                "name": "布西迪西",
+                "number": "6",
+                "numberOfBeans": "7"
+            },
+            "type2": {
+                "name": "5",
+                "number": "6",
+                "numberOfBeans": "7"
+            },
+            "type3": {
+                "name": "5",
+                "number": "6",
+                "numberOfBeans": "7"
+            }
+        },
+        "stage1": [
+            6,
+            6,
+            0,
+            0
+        ],
+        "stage2": [
+            110,
+            6,
+            6,
+            0
+        ],
+        "stage3": [
+            0,
+            0,
+            6,
+            0
+        ],
+        "stage4": [
+            0,
+            0,
+            6,
+            0
+        ],
+        "stage5": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage6": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "bakingCreateTime": "2025-03-03 18:11:11"
+    },
+    {
+        "id": 23,
+        "taskName": "uuuu",
+        "bakingBatch": "20250221105505",
+        "createTime": "2025-02-21 10:55:05",
+        "finishTime": "2025-02-26 23:59",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "423565477743750529",
+        "formulationName": "uuu",
+        "beanTypes": {
+            "type1": {
+                "name": "5",
+                "number": "6",
+                "numberOfBeans": "7"
+            },
+            "type2": {
+                "name": "5",
+                "number": "6",
+                "numberOfBeans": "7"
+            },
+            "type3": {
+                "name": "5",
+                "number": "6",
+                "numberOfBeans": "7"
+            }
+        },
+        "stage1": [
+            330,
+            30,
+            0,
+            0
+        ],
+        "stage2": [
+            10,
+            0,
+            0,
+            0
+        ],
+        "stage3": [
+            0,
+            7,
+            0,
+            0
+        ],
+        "stage4": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage5": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage6": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    {
+        "id": 24,
+        "taskName": "eeeee",
+        "bakingBatch": "20250221110142",
+        "createTime": "2025-02-21 11:01:42",
+        "finishTime": "2025-02-26 23:59",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "771142357137165978",
+        "formulationName": "rr",
+        "beanTypes": {
+            "type1": {
+                "name": "5",
+                "number": "6",
+                "numberOfBeans": "7"
+            },
+            "type2": {
+                "name": "5",
+                "number": "6",
+                "numberOfBeans": "7"
+            },
+            "type3": {
+                "name": "5",
+                "number": "6",
+                "numberOfBeans": "7"
+            }
+        },
+        "stage1": [
+            0,
+            6,
+            0,
+            0
+        ],
+        "stage2": [
+            0,
+            6,
+            0,
+            0
+        ],
+        "stage3": [
+            0,
+            6,
+            6,
+            0
+        ],
+        "stage4": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage5": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stage6": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    {
+        "id": 25,
+        "taskName": "熟邦贝蜜处理",
+        "bakingBatch": "20250227143423",
+        "createTime": "2025-02-27 14:35:58",
+        "finishTime": "2025-02-28 23:59",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "923305667583553985",
+        "formulationName": "熟邦贝蜜处理",
+        "beanTypes": {
+            "type1": {
+                "name": "熟邦贝蜜处理",
+                "number": "7",
+                "numberOfBeans": "1"
+            }
+        },
+        "stage1": [
+            1,
+            1,
+            1,
+            1
+        ],
+        "stage2": [
+            2,
+            2,
+            2,
+            2
+        ],
+        "stage3": [
+            3,
+            3,
+            3,
+            3
+        ],
+        "stage4": [
+            4,
+            4,
+            4,
+            4
+        ],
+        "stage5": [
+            5,
+            5,
+            5,
+            5
+        ],
+        "stage6": [
+            6,
+            6,
+            6,
+            6
+        ]
+    },
+    {
+        "id": 26,
+        "taskName": "熟甜蜜日晒",
+        "bakingBatch": "20250227143601",
+        "createTime": "2025-02-27 14:36:30",
+        "finishTime": "2025-02-28 23:59",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "024212637692450418",
+        "formulationName": "熟甜蜜日晒",
+        "beanTypes": {
+            "type1": {
+                "name": "熟邦贝蜜处理",
+                "number": "7",
+                "numberOfBeans": "1"
+            }
+        },
+        "stage1": [
+            13,
+            13,
+            13,
+            13
+        ],
+        "stage2": [
+            2,
+            2,
+            2,
+            2
+        ],
+        "stage3": [
+            3,
+            3,
+            3,
+            3
+        ],
+        "stage4": [
+            4,
+            4,
+            4,
+            4
+        ],
+        "stage5": [
+            5,
+            5,
+            5,
+            5
+        ],
+        "stage6": [
+            6,
+            6,
+            6,
+            6
+        ]
+    },
+    {
+        "id": 27,
+        "taskName": "熟小星星",
+        "bakingBatch": "20250227143632",
+        "createTime": "2025-02-27 14:37:12",
+        "finishTime": "2025-02-28 23:59",
+        "bakingStatue": 1,
+        "bakingDeviceId": 2,
+        "taskId": "145405933602534546",
+        "formulationName": "熟小星星",
+        "beanTypes": {
+            "type1": {
+                "name": "熟邦贝蜜处理",
+                "number": "7",
+                "numberOfBeans": "1"
+            }
+        },
+        "stage1": [
+            134,
+            6,
+            6,
+            6
+        ],
+        "stage2": [
+            2,
+            2,
+            2,
+            2
+        ],
+        "stage3": [
+            3,
+            3,
+            3,
+            3
+        ],
+        "stage4": [
+            4,
+            4,
+            4,
+            4
+        ],
+        "stage5": [
+            5,
+            5,
+            5,
+            5
+        ],
+        "stage6": [
+            6,
+            6,
+            6,
+            6
+        ]
+    }
+]

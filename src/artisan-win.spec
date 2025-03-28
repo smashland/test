@@ -300,3 +300,4 @@ copy_file(r'localJson', TARGET + 'localJson')
 
 make_dir(TARGET + 'localJson\\History')
 make_dir(TARGET + 'localJson\\Machines')
+

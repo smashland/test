@@ -4,9 +4,6 @@ Oversampling=true
 roastertype_setup=Aillio Bullet R1
 roastersize_setup=1
 
-[Units]
-weight=g
-
 [Style]
 ETname=DT
 
@@ -36,7 +33,7 @@ extraname1={3}, BT RoR, Voltage, State
 extraname2={0}, {1}, Exhaust, Fan RPM
 
 [events]
-default_etypes_set=1, 0, 0, 1, 0
+etypes=Fan, Drum, Damper, Heater, --
 
 [ExtraEventButtons]
 buttonlistmaxlen=11

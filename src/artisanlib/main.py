@@ -79,6 +79,7 @@ from pathlib import Path
 from bidi.algorithm import get_display  # type:ignore
 from artisanlib.rili import Calendar, global_calendar
 import datetime
+import sklearn
 # import pickle
 import serial.tools.list_ports
 
