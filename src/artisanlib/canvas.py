@@ -35,6 +35,7 @@ import logging
 import re
 import functools
 import random
+import sklearn
 from bisect import bisect_right
 import psutil
 from psutil._common import bytes2human
@@ -4331,27 +4332,21 @@ class tgraphcanvas(FigureCanvas):
 
            # Agtron色值计算和显示
             try:
-                # 检查是否已经烘焙超过5分钟且有足够数据点
-
-                if len(self.timex) > 30:
-                    # 每秒更新一次Agtron色值
-
-                    beantimex = self.timex
-                    beantemp = self.temp2
-                    formulation_name = getattr(self.aw, 'getFormulationName', '')
-                    # 模型路径，根据实际情况调整
-                    model_path = os.path.join(ytycwdpath, "localJson", "models", "agtron_model", "")
-
-                    predicted_agtron = predict_agtron_color(beantimex, beantemp, formulation_name, model_path)
-                    _log.exception(f"beantimex: {beantimex}")
-                    _log.exception(f"beantemp: {beantemp}")
-                    _log.exception(f"formulation_name: {formulation_name}")
-                    _log.exception(f"model_path: {model_path}")
-                    # 更新显示
-                    if predicted_agtron is not None:
-                        self.aw.agtronNum.setText(f"{predicted_agtron:.1f}")
-                    else:
-                        _log.exception(f"错误: predicted_agtron = none")
+                beantimex = self.timex
+                beantemp = self.temp2
+                formulation_name = getattr(self.aw, 'getFormulationName', '')
+                # 模型路径，根据实际情况调整
+                model_path = os.path.join(ytycwdpath, "localJson", "models", "agtron_model", "")
+                predicted_agtron = predict_agtron_color(beantimex, beantemp, formulation_name, model_path)
+                _log.exception(f"beantimex: {beantimex}")
+                _log.exception(f"beantemp: {beantemp}")
+                _log.exception(f"formulation_name: {formulation_name}")
+                _log.exception(f"model_path: {model_path}")
+                # 更新显示
+                if predicted_agtron is not None:
+                    self.aw.agtronNum.setText(f"{predicted_agtron:.1f}")
+                else:
+                    _log.exception(f"错误: predicted_agtron = none")
             except Exception as e:
                 _log.exception(f"Agtron计算错误: {str(e)}")
 

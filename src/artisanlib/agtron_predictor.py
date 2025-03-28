@@ -4,6 +4,7 @@ import pickle
 import numpy as np
 import pandas as pd
 import logging
+import sklearn
 from typing import Final, Optional, List, Dict, Callable, Tuple, Union, Any, Sequence, cast, TYPE_CHECKING
 
 # 常量定义
@@ -177,7 +178,7 @@ def predict_agtron(features, product=None, model_path='./'):
     """
     try:
         model_components = load_model_components(model_path)
-        
+        _log.exception(f"model_components: {model_components}")
         if not model_components:
             return None
             
@@ -186,7 +187,7 @@ def predict_agtron(features, product=None, model_path='./'):
         scaler = model_components['scaler']
         feature_cols = model_components['feature_cols']
         product_offsets = model_components['product_offsets']
-        
+        _log.exception(f"product_offsets: {product_offsets}")
         # 准备特征值数组
         X_new = np.array([[features[col] for col in feature_cols]])
         X_new_scaled = scaler.transform(X_new)
