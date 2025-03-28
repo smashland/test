@@ -89,9 +89,9 @@ if /i "%APPVEYOR%" == "True" (
 set file=artisan-%ARTISAN_SPEC%-%ARTISAN_VERSION%.zip
 set min_size=170000000
 for %%A in (%file%) do set size=%%~zA
-::if %size% LSS %min_size% (
-::   echo *** Zip file is smaller than expected
-::   exit /b 1
-:: ) else (
+if %size% LSS %min_size% (
+    echo *** Zip file is smaller than expected
+    exit /b 1
+) else (
     echo **** Success: %file% is larger than minimum %min_size% bytes
-::)
+)

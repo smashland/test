@@ -92,8 +92,7 @@ logging.info("** ARTISAN_LEGACY: %s", ARTISAN_LEGACY)
 logging.info("** QT_TRANSL: %s",QT_TRANSL)
 
 ##
-TARGET = 'dist\\artisan\\'
-TARGETINTER = 'dist\\artisan\\_internal\\includes\\'
+TARGET = 'dist\\' + NAME + '\\'
 PYTHON_PACKAGES = PYTHON + r'\Lib\site-packages'
 PYQT_QT = PYTHON_PACKAGES + r'\PyQt' + PYQT + r'\Qt'
 PYQT_QT_BIN = PYQT_QT + r'\bin'
@@ -134,7 +133,7 @@ a = Analysis(['artisan.py'],
              datas=[],
              hookspath=[],
              runtime_hooks=[],
-             excludes=['PyQt5'],
+             excludes=[],
              hiddenimports=hiddenimports_list,
              win_no_prefer_redirects=False,
              win_private_assemblies=False,
@@ -149,7 +148,7 @@ exe = EXE(pyz,
           debug=False,
           strip=False, # =True fails
           upx=True, # not installed
-          icon='fwkx.ico',
+          icon='artisan.ico',
           version='version_info-win.txt',
           console=False) # was True
 
@@ -168,19 +167,16 @@ copy_file(r'..\vc_redist.x64.exe', TARGET)
 copy_file('README.txt',TARGET)
 copy_file(r'..\LICENSE', TARGET + r'\LICENSE.txt')
 #os.system('copy qt-win.conf ' + TARGET + 'qt.conf')
-make_dir(TARGETINTER + 'Wheels')
-make_dir(TARGETINTER + r'Wheels\Cupping')
-make_dir(TARGETINTER + r'Wheels\Other')
-make_dir(TARGETINTER + r'Wheels\Roasting')
+make_dir(TARGET + 'Wheels')
+make_dir(TARGET + r'Wheels\Cupping')
+make_dir(TARGET + r'Wheels\Other')
+make_dir(TARGET + r'Wheels\Roasting')
+copy_file(r'Wheels\Cupping\*', TARGET + r'Wheels\Cupping')
+copy_file(r'Wheels\Other\*', TARGET + r'Wheels\Other')
+copy_file(r'Wheels\Roasting\*', TARGET + r'Wheels\Roasting')
 
-
-copy_file(r'Wheels\Cupping\*', TARGETINTER + r'Wheels\Cupping')
-copy_file(r'Wheels\Other\*', TARGETINTER + r'Wheels\Other')
-copy_file(r'Wheels\Roasting\*', TARGETINTER + r'Wheels\Roasting')
-copy_file(r'Wheels\Roasting\*', TARGETINTER + r'Wheels\Roasting')
-
-make_dir(TARGETINTER + 'translations')
-copy_file(r'translations\*.qm', TARGETINTER + 'translations')
+make_dir(TARGET + 'translations')
+copy_file(r'translations\*.qm', TARGET + 'translations')
 for tr in [
     'qtbase_ar.qm',
     'qtbase_de.qm',
@@ -204,7 +200,7 @@ for tr in [
 #    'qtconnectivity_ko.qm',
 #    'qtconnectivity_tr.qm',
     ]:
-    copy_file(QT_TRANSL + '\\' + tr, TARGETINTER + 'translations',False)
+    copy_file(QT_TRANSL + '\\' + tr, TARGET + 'translations',False)
 # Add the translations not available in PyQt5 for legacy Windows.
 if not ARTISAN_LEGACY=='True':
     for tr in [
@@ -221,11 +217,11 @@ if not ARTISAN_LEGACY=='True':
 #        'qtconnectivity_pt_BR.qm',
 #        'qtconnectivity_zh_CN.qm',
         ]:
-        copy_file(QT_TRANSL + '\\' + tr, TARGETINTER + 'translations',False)
+        copy_file(QT_TRANSL + '\\' + tr, TARGET + 'translations',False)
 
 
 # this directory no longer exists
-#remove_dir(TARGETINTER + 'mpl-data\sample_data',False)
+#remove_dir(TARGET + 'mpl-data\sample_data',False)
 
 # YOCTO HACK BEGIN: manually copy over the dlls
 make_dir(TARGET + r'_internal\yoctopuce\cdll')
@@ -283,21 +279,8 @@ for fn in [
 make_dir(TARGET + 'Machines')
 xcopy_files(r'includes\Machines', TARGET + 'Machines')
 
-make_dir(TARGETINTER + 'Themes')
-xcopy_files(r'includes\Themes', TARGETINTER + 'Themes')
+make_dir(TARGET + 'Themes')
+xcopy_files(r'includes\Themes', TARGET + 'Themes')
 
-make_dir(TARGETINTER + 'Icons')
-xcopy_files(r'includes\Icons', TARGETINTER + 'Icons')
-
-make_dir(TARGET + 'Fonts')
-xcopy_files(r'includes\Fonts', TARGET + 'Fonts')
-
-make_dir(TARGETINTER + 'Fonts')
-xcopy_files(r'includes\Fonts', TARGETINTER + 'Fonts')
-make_dir(TARGET + 'localJson')
-copy_file(r'localJson', TARGET + 'localJson')
-
-
-make_dir(TARGET + 'localJson\\History')
-make_dir(TARGET + 'localJson\\Machines')
-
+make_dir(TARGET + 'Icons')
+xcopy_files(r'includes\Icons', TARGET + 'Icons')
