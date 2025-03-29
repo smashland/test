@@ -35,7 +35,6 @@ import logging
 import re
 import functools
 import random
-import sklearn
 from bisect import bisect_right
 import psutil
 from psutil._common import bytes2human

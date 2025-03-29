@@ -4,7 +4,6 @@ import pickle
 import numpy as np
 import pandas as pd
 import logging
-import sklearn
 from typing import Final, Optional, List, Dict, Callable, Tuple, Union, Any, Sequence, cast, TYPE_CHECKING
 
 # 常量定义
@@ -110,56 +109,134 @@ def calculate_roast_features(timex, beantemp):
         _log.exception(f"计算烘焙特征出错: {str(e)}")
         return None
 
+# def load_model_components(model_path='./'):
+#     """从磁盘加载所有模型组件。
+#
+#     参数:
+#         model_path (str): 模型文件路径
+#
+#     返回:
+#         dict: 加载的模型组件，如果出错则返回None
+#     """
+#     try:
+#         # 尝试首先加载组合模型
+#         if os.path.exists(f'{model_path}moe_model.pkl'):
+#             with open(f'{model_path}moe_model.pkl', 'rb') as f:
+#                 return pickle.load(f)
+#
+#         _log.exception(f"beantimex: {model_path}")
+#         # 否则加载各个组件
+#         components = {}
+#
+#         with open(f'{model_path}gmm.pkl', 'rb') as f:
+#             components['gmm'] = pickle.load(f)
+#
+#         with open(f'{model_path}scaler.pkl', 'rb') as f:
+#             components['scaler'] = pickle.load(f)
+#
+#         with open(f'{model_path}feature_cols.pkl', 'rb') as f:
+#             components['feature_cols'] = pickle.load(f)
+#
+#         with open(f'{model_path}product_offsets.pkl', 'rb') as f:
+#             components['product_offsets'] = pickle.load(f)
+#
+#         # 加载专家模型
+#         experts = []
+#         i = 0
+#         while True:
+#             try:
+#                 with open(f'{model_path}expert_{i}.pkl', 'rb') as f:
+#                     experts.append(pickle.load(f))
+#                 i += 1
+#             except FileNotFoundError:
+#                 break
+#
+#         if not experts:
+#             print("未找到专家模型")
+#             _log.exception("未找到专家模型")
+#             return None
+#
+#         components['experts'] = experts
+#         return components
+#
+#     except Exception as e:
+#         print(f"加载模型组件出错: {str(e)}")
+#         _log.exception(f"加载模型组件出错: {str(e)}")
+#         return None
+
 def load_model_components(model_path='./'):
     """从磁盘加载所有模型组件。
-    
+
     参数:
         model_path (str): 模型文件路径
-        
+
     返回:
         dict: 加载的模型组件，如果出错则返回None
     """
     try:
+        # 添加兼容性处理，解决sklearn模块路径变更问题
+        import sys
+        import pickle
+
+        # 自定义unpickler来处理模块路径变更
+        class CustomUnpickler(pickle.Unpickler):
+            def find_class(self, module, name):
+                # 处理sklearn.mixture模块路径变更
+                if module == 'sklearn.mixture':
+                    try:
+                        # 尝试从新路径导入
+                        import sklearn.mixture
+                        return getattr(sklearn.mixture, name)
+                    except (ImportError, AttributeError):
+                        # 如果新路径不存在，尝试从sklearn直接导入
+                        try:
+                            from sklearn import mixture
+                            return getattr(mixture, name)
+                        except (ImportError, AttributeError):
+                            _log.exception(f"无法导入 {module}.{name}")
+                            raise
+                return super().find_class(module, name)
+
         # 尝试首先加载组合模型
         if os.path.exists(f'{model_path}moe_model.pkl'):
             with open(f'{model_path}moe_model.pkl', 'rb') as f:
-                return pickle.load(f)
+                return CustomUnpickler(f).load()
 
         _log.exception(f"beantimex: {model_path}")
         # 否则加载各个组件
         components = {}
-        
+
         with open(f'{model_path}gmm.pkl', 'rb') as f:
-            components['gmm'] = pickle.load(f)
-            
+            components['gmm'] = CustomUnpickler(f).load()
+
         with open(f'{model_path}scaler.pkl', 'rb') as f:
-            components['scaler'] = pickle.load(f)
-            
+            components['scaler'] = CustomUnpickler(f).load()
+
         with open(f'{model_path}feature_cols.pkl', 'rb') as f:
-            components['feature_cols'] = pickle.load(f)
-            
+            components['feature_cols'] = CustomUnpickler(f).load()
+
         with open(f'{model_path}product_offsets.pkl', 'rb') as f:
-            components['product_offsets'] = pickle.load(f)
-        
+            components['product_offsets'] = CustomUnpickler(f).load()
+
         # 加载专家模型
         experts = []
         i = 0
         while True:
             try:
                 with open(f'{model_path}expert_{i}.pkl', 'rb') as f:
-                    experts.append(pickle.load(f))
+                    experts.append(CustomUnpickler(f).load())
                 i += 1
             except FileNotFoundError:
                 break
-        
+
         if not experts:
             print("未找到专家模型")
             _log.exception("未找到专家模型")
             return None
-            
+
         components['experts'] = experts
         return components
-        
+
     except Exception as e:
         print(f"加载模型组件出错: {str(e)}")
         _log.exception(f"加载模型组件出错: {str(e)}")
