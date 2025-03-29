@@ -735,9 +735,9 @@ try:
 
             # 设置日志文件路径
             if app.artisanviewerMode:
-                conf['handlers']['file']['filename'] = os.path.join(log_dir, 'artisanViewer.log')
+                conf['handlers']['file']['filename'] = os.path.join(log_dir, 'roastheadViewer.log')
             else:
-                conf['handlers']['file']['filename'] = os.path.join(log_dir, 'artisan.log')
+                conf['handlers']['file']['filename'] = os.path.join(log_dir, 'roasthead.log')
         except Exception as e:  # 捕获异常，避免影响主程序
             print(f"Error setting log file path: {e}")
         logging.config.dictConfig(conf)

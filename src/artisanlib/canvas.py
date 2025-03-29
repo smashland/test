@@ -231,7 +231,7 @@ class tgraphcanvas(FigureCanvas):
         'ambient_humidity_device', 'elevation', 'temperaturedevicefunctionlist', 'humiditydevicefunctionlist', 'pressuredevicefunctionlist', 'moisture_greens', 'moisture_roasted',
         'greens_temp', 'beansize', 'beansize_min', 'beansize_max', 'whole_color', 'ground_color', 'color_systems', 'color_system_idx', 'heavyFC_flag', 'lowFC_flag', 'lightCut_flag',
         'darkCut_flag', 'drops_flag', 'oily_flag', 'uneven_flag', 'tipping_flag', 'scorching_flag', 'divots_flag', 'timex',
-        'temp1', 'temp2', 'delta1', 'delta2', 'stemp1', 'stemp2', 'tstemp1', 'tstemp2', 'ctimex1', 'ctimex2', 'ctemp1', 'ctemp2', 'unfiltereddelta1', 'unfiltereddelta2',  'unfiltereddelta1_pure', 'unfiltereddelta2_pure',
+        'temp1', 'temp2', 'agtron_values','delta1', 'delta2', 'stemp1', 'stemp2', 'tstemp1', 'tstemp2', 'ctimex1', 'ctimex2', 'ctemp1', 'ctemp2', 'unfiltereddelta1', 'unfiltereddelta2',  'unfiltereddelta1_pure', 'unfiltereddelta2_pure',
         'on_timex', 'on_temp1', 'on_temp2', 'on_ctimex1', 'on_ctimex2', 'on_ctemp1', 'on_ctemp2','on_tstemp1', 'on_tstemp2', 'on_unfiltereddelta1',
         'on_unfiltereddelta2', 'on_delta1', 'on_delta2', 'on_extratemp1', 'on_extratemp2', 'on_extratimex', 'on_extractimex1', 'on_extractemp1', 'on_extractimex2', 'on_extractemp2', 'BTprojection_tx', 'BTprojection_temp', 'ETprojection_tx', 'ETprojection_temp', 'DeltaBTprojection_tx', 'DeltaBTprojection_temp', 'DeltaETprojection_tx', 'DeltaETprojection_temp',
         'timeindex', 'ETfunction', 'BTfunction', 'DeltaETfunction', 'DeltaBTfunction', 'safesaveflag', 'pid', 'background', 'backgroundprofile', 'backgroundprofile_moved_x', 'backgroundprofile_moved_y', 'backgroundDetails',
@@ -277,7 +277,7 @@ class tgraphcanvas(FigureCanvas):
         'locktimex_end', 'xgrid', 'ygrid', 'zgrid', 'gridstyles', 'gridlinestyle', 'gridthickness', 'gridalpha', 'xrotation',
         'statisticsheight', 'statisticsupper', 'statisticslower', 'autosaveflag', 'autosaveprefix', 'autosavepath', 'autosavealsopath',
         'autosaveaddtorecentfilesflag', 'autosaveimage', 'autosaveimageformat', 'autoasaveimageformat_types', 'ystep_down', 'ystep_up', 'backgroundETcurve', 'backgroundBTcurve',
-        'l_temp1', 'l_temp2', 'l_delta1', 'l_delta2', 'l_back1', 'l_back2', 'l_back3', 'l_back4', 'l_delta1B', 'l_delta2B', 'l_BTprojection', 'l_DeltaETprojection', 'l_DeltaBTprojection',
+        'l_temp1', 'l_temp2', 'l_agtron', 'l_delta1', 'l_delta2', 'l_back1', 'l_back2', 'l_back3', 'l_back4', 'l_delta1B', 'l_delta2B', 'l_BTprojection', 'l_DeltaETprojection', 'l_DeltaBTprojection',
         'l_ETprojection', 'l_AUCguide', 'l_horizontalcrossline', 'l_verticalcrossline', 'l_timeline', 'legend', 'l_eventtype1dots', 'l_eventtype2dots',
         'l_eventtype3dots', 'l_eventtype4dots', 'l_eteventannos', 'l_bteventannos', 'l_eventtype1annos', 'l_eventtype2annos', 'l_eventtype3annos',
         'l_eventtype4annos', 'l_annotations', 'l_background_annotations', 'l_annotations_dict', 'l_annotations_pos_dict', 'l_event_flags_dict',
@@ -1859,6 +1859,7 @@ class tgraphcanvas(FigureCanvas):
         # generates first "empty" plot (lists are empty) of temperature and deltaT
         self.l_temp1:Optional['Line2D'] = None
         self.l_temp2:Optional['Line2D'] = None
+        self.l_agtron:Optional['Line2D'] = None
         self.l_delta1:Optional['Line2D'] = None
         self.l_delta2:Optional['Line2D'] = None
         self.l_back1:Optional['Line2D'] = None
@@ -4349,7 +4350,26 @@ class tgraphcanvas(FigureCanvas):
                     _log.exception(f"model_path: {model_path}")
                     # 更新显示
                     if predicted_agtron is not None:
-                        self.aw.agtronNum.setText(f"{predicted_agtron:.1f}")
+                        predicted_agtron = float(predicted_agtron)  # 确保是数值
+                        if predicted_agtron < 0:
+                            self.aw.agtronNum.setText("0")  # 处理负值
+                        elif predicted_agtron > 100:
+                            self.aw.agtronNum.setText("0")
+                        else:
+                            predicted_agtron2 = 100 - predicted_agtron
+                            self.aw.agtronNum.setText(f"{predicted_agtron2:.1f}")
+                            # 将计算得到的Agtron值添加到agtron_values数组
+                            if not hasattr(self, 'agtron_values'):
+                                self.agtron_values = []
+
+                            # 确保agtron_values长度不超过timex
+                            if len(self.agtron_values) < len(self.timex):
+                                # 添加新的Agtron值
+                                self.agtron_values.append(predicted_agtron2)
+                            else:
+                                # 更新最后一个值
+                                self.agtron_values[-1] = predicted_agtron2
+
                     else:
                         _log.exception(f"错误: predicted_agtron = none")
             except Exception as e:
@@ -7887,37 +7907,47 @@ class tgraphcanvas(FigureCanvas):
                 label = self.aw.arabicReshape(QApplication.translate('Label', 'BT')))
             self.ax.grid(True, linestyle='--')  # 图表虚线
 
-    def drawAgtron(self, temp:'npt.NDArray[numpy.double]') -> None:
+    def drawAgtron(self, temp: 'npt.NDArray[numpy.double]') -> None:
         if self.ax is not None and len(self.timex) > 0 and len(self.agtron_values) > 0:
+            try:
+                if self.l_agtron is not None:
+                    self.l_agtron.remove()
+            except Exception:  # pylint: disable=broad-except
+                pass
+
             # 确保agtron_values长度与timex一致
-            if len(self.agtron_values) < len(self.timex):
+            agtron_data = self.agtron_values[:]
+            if len(agtron_data) < len(self.timex):
                 # 用最后一个值填充
-                last_value = self.agtron_values[-1] if self.agtron_values else 0
-                while len(self.agtron_values) < len(self.timex):
-                    self.agtron_values.append(last_value)
+                last_value = agtron_data[-1] if agtron_data else 0
+                agtron_data.extend([last_value] * (len(self.timex) - len(agtron_data)))
+
+            # 转换为numpy数组并处理无效值
+            agtron_array = numpy.array(agtron_data)
+            agtron_array = numpy.ma.masked_where(agtron_array <= 0, agtron_array)  # 不绘制0或负值
 
             # 创建第二个Y轴用于显示Agtron色值
             if not hasattr(self, 'agtron_ax') or self.agtron_ax is None:
                 self.agtron_ax = self.ax.twinx()
-                self.agtron_ax.set_ylabel('Agtron值', color='#6BAE76')  # 咖啡色
+                self.agtron_ax.set_ylabel('Agtron值', color='#6BAE76')
                 self.agtron_ax.tick_params(axis='y', labelcolor='#6BAE76')
-
-                # 设置Agtron值的范围（通常在0-100之间）
                 self.agtron_ax.set_ylim(0, 100)
 
             # 绘制Agtron曲线
-            if hasattr(self, 'l_agtron'):
-                self.l_agtron.remove()
-
             self.l_agtron, = self.agtron_ax.plot(
                 self.timex,
-                numpy.array(self.agtron_values),
+                agtron_array,
+                markersize=2,
+                marker='',
+                sketch_params=None,
+                path_effects=self.line_path_effects(self.glow, self.patheffects, self.aw.light_background_p, 2),
                 linewidth=2,
                 linestyle='-',
+                drawstyle='default',
+                color='#6BAE76',
                 alpha=0.8,
-                color='#6BAE76',  # 咖啡色
+                label='Agtron'
             )
-
 
     def drawDeltaET(self, trans:Transform, start:int, end:int) -> None:
         if self.DeltaETflag and self.ax is not None:
@@ -9960,8 +9990,8 @@ class tgraphcanvas(FigureCanvas):
                         self.drawET(visible_et)
 
                     # 添加绘制Agtron曲线
-                    if hasattr(self, 'agtron_values') and len(self.agtron_values) > 0 and self.timex and len(self.timex) > 0 and self.timex[-1] > 300:
-                        self.drawAgtron()
+                    if hasattr(self, 'agtron_values') and self.agtron_values:
+                        self.drawAgtron(numpy.array([]))
 
                     if self.ETcurve and self.l_temp1 is not None:
                         self.handles.append(self.l_temp1)
