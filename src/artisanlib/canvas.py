@@ -4334,7 +4334,7 @@ class tgraphcanvas(FigureCanvas):
             try:
                 # 检查是否已经烘焙超过5分钟且有足够数据点
 
-                if len(self.timex) > 30:
+                if len(self.timex) > 300:
                     # 每秒更新一次Agtron色值
 
                     beantimex = self.timex
