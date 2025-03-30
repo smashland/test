@@ -16799,7 +16799,10 @@ class ApplicationWindow(
         try:
             with open(os.path.join(ytycwdpath,"localJson","order.json"), "r", encoding="utf-8") as file:
                 data = json.load(file)
-                self.orderList_data = data
+                filtered_data = [order for order in data if order.get("bakingStatue") == 1]
+
+                # 赋值给 self.orderList_data
+                self.orderList_data = filtered_data
 
                 if not self.orderList_data:  # 如果数据为空
                     self.diologRect2Zhezhao.setVisible(True)
