@@ -13347,30 +13347,31 @@ class ApplicationWindow(
 
         if self.qmc.tpChangeBool:
             for i in range(5, 11):
-                if i == 10 and current_temp > first_Value[i - 1][0]:
-                    new_phase = i - 4
-                    if new_phase > self.current_phase:
-                        self.current_phase = new_phase
-                        self.jieduanNum.setText(str(self.current_phase))
-                        self.mbwdNum.setText(str(first_Value[i][0]))
-                        self.hlNumR.setText(str(first_Value[i][1]))
-                        self.fmNumR.setText(str(first_Value[i][2]))
-                        self.zsNumR.setText(str(first_Value[i][3]))
-                        print(f"阶段 {self.current_phase}")
-                        self.updateSliders(first_Value[i])
-                        break
-                elif current_temp >= first_Value[i][0] and current_temp < first_Value[i + 1][0]:
-                    new_phase = i - 4
-                    if new_phase > self.current_phase:
-                        self.current_phase = new_phase
-                        self.jieduanNum.setText(str(self.current_phase + 1))
-                        self.mbwdNum.setText(str(first_Value[i + 1][0]))
-                        self.hlNumR.setText(str(first_Value[i + 1][1]))
-                        self.fmNumR.setText(str(first_Value[i + 1][2]))
-                        self.zsNumR.setText(str(first_Value[i + 1][3]))
-                        print(f"阶段 {self.current_phase}")
-                        self.updateSliders(first_Value[i + 1])
-                        break
+                if i < len(first_Value) and i + 1 < len(first_Value):
+                    if i == 10 and current_temp > first_Value[i - 1][0]:
+                        new_phase = i - 4
+                        if new_phase > self.current_phase:
+                            self.current_phase = new_phase
+                            self.jieduanNum.setText(str(self.current_phase))
+                            self.mbwdNum.setText(str(first_Value[i][0]))
+                            self.hlNumR.setText(str(first_Value[i][1]))
+                            self.fmNumR.setText(str(first_Value[i][2]))
+                            self.zsNumR.setText(str(first_Value[i][3]))
+                            print(f"阶段 {self.current_phase}")
+                            self.updateSliders(first_Value[i])
+                            break
+                    elif current_temp >= first_Value[i][0] and current_temp < first_Value[i + 1][0]:
+                        new_phase = i - 4
+                        if new_phase > self.current_phase:
+                            self.current_phase = new_phase
+                            self.jieduanNum.setText(str(self.current_phase + 1))
+                            self.mbwdNum.setText(str(first_Value[i + 1][0]))
+                            self.hlNumR.setText(str(first_Value[i + 1][1]))
+                            self.fmNumR.setText(str(first_Value[i + 1][2]))
+                            self.zsNumR.setText(str(first_Value[i + 1][3]))
+                            print(f"阶段 {self.current_phase}")
+                            self.updateSliders(first_Value[i + 1])
+                            break
         else:
             if self.current_phase != 0:
                 self.current_phase = 0
